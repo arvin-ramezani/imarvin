@@ -2,7 +2,7 @@
 
 Status: draft public-flow contract | Updated: 2026-10-03.
 Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R26; A04, A09, A11–A12.
-Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard accessibility is deferred to owner UX. No rendered accessibility or visual validation has occurred.
+Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). No rendered accessibility or visual validation has occurred.
 
 Grounding: W3C guidance for [tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/), [text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), and [reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), checked 2026-10-03. The 44px target is our proposed product target, not a claim about an AA minimum.
 
@@ -60,4 +60,4 @@ Future zoom/pan of media must have button/keyboard equivalents and a reset; it c
 | AR08 | Later signature-composition review | Identity/composition remains distinctive while hierarchy, contrast, and focus stay usable |
 
 Later verification combines manual tasks, accessibility inspection, and representative rendered states. Automated checks alone cannot certify usability. These numerical targets are proposed design acceptance thresholds, not a compliance certification.
-Visual tokens, dimensions, breakpoints, animations, and component/library choices remain open. Preserve these outcomes when selecting a visual target; do not use accessibility as a reason to restore the rejected CV layout.
+Proposed palette/type/spacing/responsive modes are in [Signal Studio](visual-system-spec.md); component states are in [components](components-interaction-spec.md). Actual rendered values and library choices remain unapproved. Preserve these outcomes when selecting a visual target; do not use accessibility as a reason to restore the rejected CV layout.

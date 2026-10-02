@@ -1,7 +1,7 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.5 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01 Personal Studio and P05–P07 public-flow choices are owner-approved; P02–P04 remain proposals. Concept acceptance does not approve the entire PRD.
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.6 | Updated: 2026-10-03  
+Status: revised draft. Confirmed constraints: C01–C10. P01–P09 are owner-approved high-level choices. P10–P12 and detailed specifications remain proposals; the complete PRD is not approved.
 
 ## 1. Product intent
 
@@ -48,12 +48,12 @@ A company is the organization; experience is Arvin's role; a project is a body o
 | R13 | Manage identity/personal context, experience, stories and their decisions/evidence, contact, featured work, grouping and order |
 | R14 | Associate work with companies; support multiple projects and the main product without duplicated stories |
 | R15 | Preview the public layout privately; show unsaved/saved and private/published states |
-| R16 | Proposed publishing: Save private draft; Publish new content; Update published content explicitly |
+| R16 | Explicit publishing: Save private draft; Publish new content; Update published content explicitly |
 | R17 | Saving edits leaves existing public content intact; publish/update failure preserves it |
 | R18 | Retain input on validation/save failures; warn before discarding changes; confirm deletion and show affected references |
 | R19 | Unauthenticated visitors cannot read drafts/previews/unpublished assets or perform owner actions |
 
-Complete lifecycle, linked-story, and removal behavior awaits P02 and subsequent specifications.
+P02 is accepted. [Owner UX](docs/specs/owner-ux-spec.md) and [content/publishing](docs/specs/content-publishing-spec.md) define detailed lifecycle/reference/removal proposals. Structured editing (P08) controls content, not arbitrary page layouts.
 
 ## 5. Experience quality
 
@@ -67,7 +67,7 @@ R26: Later design must establish a recognizable composition/identity beyond unif
 
 ## 6. V1 boundaries
 
-Proposed: one owner, English public content, email/professional contact links, no contact form. Include curated existing work and contextual decisions/evidence; one coherent exploration model.
+Accepted P03–P04: one owner, English public content, email/professional contact links, no contact form. Include curated existing work and contextual decisions/evidence; one coherent exploration model.
 
 Exclude public accounts, community, blog/newsletter, customer portal, booking/payment, AI generation, multilingual publishing, analytics dashboards, mandatory 3D/game navigation, and runnable simulations as baseline scope. Interactive evidence must not execute untrusted project code.
 
@@ -94,4 +94,6 @@ Targets are unverified until later design/implementation review. Liking a concep
 
 ## 8. Next gate
 
-Resolve P02–P04; confirm missing facts in [content inventory](docs/content-inventory.md). Review the drafted [public UX](docs/specs/public-ux-spec.md), [navigation/state](docs/specs/navigation-state-spec.md), and [accessibility/responsive](docs/specs/accessibility-responsive-spec.md) contracts. Complete the remaining [planned specifications](docs/specification-plan.md) before separately authorizing images or implementation. These drafts do not resolve publishing, owner UX, architecture, or visual approval.
+Review the complete written design contract in [design review](docs/design-review.md). Signal Studio (P09) is selected; the [visual system](docs/specs/visual-system-spec.md) and [components](docs/specs/components-interaction-spec.md) are draft design intent.
+
+Confirm O01–O03 and review detailed UX/publishing/visual proposals. Actual visual/interaction validation remains pending; no images or code were requested. Complete the later architecture and bounded implementation request only after product-design review; stack selection is not a prerequisite to written visual exploration.

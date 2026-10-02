@@ -69,14 +69,14 @@ Company pages may contextualize shared story content but cannot create a second 
 ## 6. Personal context and contact
 
 Personal context explains confirmed interests, learning, and perspective; avoid invented mission statements or expert labels. It stays directly reachable from entry, browsing, and detail.
-Contact is accessible from every public state without completing exploration. Proposed presentation under P03: approved email/professional destinations, with clear labels; no form, booking, or availability promise.
+Contact is accessible from every public state without completing exploration. Accepted P03 presentation: approved email/professional destinations, with clear labels; no form, booking, or availability promise.
 Actual destinations and wording remain O03. Do not ship placeholder addresses or dead contact controls; resolving contact is required for A01.
 
 ## 7. Review scenarios
 
 | ID | Given / action | Expected result | PRD |
 | --- | --- | --- | --- |
-| PU01 | Published feature; open it from Home | Clear summary, contribution, one selected section, and return path | A01, A10 |
+| PU01 | Published feature with Problem and Evidence; open it from Home | Clear summary, contribution, one selected section, and return path | A01, A10 |
 | PU02 | Company filter active; open story, change section, return | Same filter, item, and collection position | A03, A11 |
 | PU03 | Story has no media or demo | Full summary/text evidence; no blank media box or dead link | A04 |
 | PU04 | Open Unixsee and main-shop experience | Project choices for Unixsee; shop directly under shared company header | A02 |
@@ -89,5 +89,5 @@ Validate later with task observation and actual rendered interaction. These are 
 
 ## 8. Open scope and agent boundary
 
-Resolve O01–O03 for factual content and contact; P03–P04 for public scope; O04 for visual identity. P02 publishing and owner UX are separate specifications.
+Resolve O01–O03 for factual content/contact and O04 for rendered visual approval. P02–P04 now confirm explicit publishing and focused V1. See [owner UX](owner-ux-spec.md), [content/publishing](content-publishing-spec.md), and [Signal Studio](visual-system-spec.md); their detailed contracts remain drafts.
 Agents must use this flow with the navigation and accessibility contracts, retain requirement IDs, and flag missing inputs. Do not infer components, framework APIs, schema, animation timing, palette, or implementation authorization from these documents.
