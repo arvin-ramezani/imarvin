@@ -1,6 +1,6 @@
 # Design Direction
 
-Status: Personal Studio (A), proposed P01. Purpose: a creative personal web app; no résumé/portfolio layout. Not a final visual specification.
+Status: Personal Studio (A/P01), owner-approved concept. Purpose: a creative personal web app; no résumé/portfolio layout. Detailed interaction contracts below remain drafts; this is not a final visual specification.
 
 ## Product contract
 
@@ -60,4 +60,4 @@ Signature motif, palette, fonts, type scale, layout measurements, and theme poli
 
 Reject a design whose distinctiveness is only a new accent color, oversized name, decorative gradient, or animation on a conventional CV. Also reject a crowded app dashboard, inaccessible spatial navigation, or a creative treatment that obscures purpose and actions.
 
-Concept review now evaluates these contracts. Visual quality and usability remain untested.
+The selected concept guides the next UX specifications. Review the draft contracts before implementation; visual quality and usability remain untested.

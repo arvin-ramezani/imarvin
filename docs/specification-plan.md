@@ -1,10 +1,10 @@
 # Specification Plan
 
-Phase: product/UX documents only. The creative product model is proposed; no implementation, images, or visual approval.
+Phase: product/UX documents only. Personal Studio (P01) is selected; remaining product choices and detailed contracts are under review; no implementation, images, or visual approval.
 
 ## Gates
 
-1. Review creative concepts; approve P01 and resolve P02–P04.
+1. P01 concept selection is complete: Personal Studio. Resolve P02–P04 before finalizing dependent specifications.
 2. Confirm work content, decisions, evidence, and grouping without inventing missing facts.
 3. Write/review the specifications below, resolving states/navigation/publishing/privacy.
 4. Select a visual target only when the owner requests visual work; approve usable composition/tokens.
@@ -33,6 +33,6 @@ Define behavior before component, library, database, or endpoint choices. Resolv
 
 ## Implementation readiness
 
-Owner approves the chosen product model/specs and assigns implementation. Navigation/publishing privacy is resolved; evidence remains accurate; each task names states and checks; a visual target precedes frontend UI work. No restoration of the old CV homepage.
+The product model is selected. Owner approval of detailed specifications and a separate implementation request are still required. Navigation/publishing privacy is resolved; evidence remains accurate; each task names states and checks; a visual target precedes frontend UI work. No restoration of the old CV homepage.
 
 AI agents read README/AGENTS/decisions/PRD plus relevant approved specs. Missing media, metrics, or live URLs do not justify fabricated content. Documentation is not evidence of usability or production readiness.

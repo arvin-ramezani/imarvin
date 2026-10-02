@@ -1,10 +1,10 @@
 # Design Concepts
 
-Status: three written alternatives, proposed. Owner rejects the previous résumé/editorial framing. No concept or visual target is approved.
+Status: Personal Studio (A/P01) selected by the owner. Work Atlas and Story Explorer remain unselected alternatives for decision history. Owner rejects the previous résumé/editorial framing. No final visual target is approved.
 
 Shared content: projects, decisions, evidence, company context, personality, contact. Company entries retain logos only. Concepts differ in the visitor's actions and navigation, not just colors.
 
-## A. Personal Studio — recommended
+## A. Personal Studio — selected
 
 Promise: enter Arvin's space and inspect what he makes and how he thinks.
 
@@ -20,7 +20,7 @@ No-media case: a well-composed problem/decision object with honest text evidence
 
 Risk: resembling an admin dashboard. Mitigation: identity and authored work dominate; remove metrics, dense sidebars, SaaS chrome, and generic equal-card grids.
 
-## B. Work Atlas
+## B. Work Atlas — unselected
 
 Promise: discover connections between Arvin's projects and the problems/decisions they share.
 
@@ -34,7 +34,7 @@ No-media/mobile case: linked work summaries expose exactly the same relationship
 
 Risk: visual complexity disproportionate to a small collection. Mitigation: start from one relationship; never invent nodes or add empty subjects. Highest specification cost.
 
-## C. Story Explorer
+## C. Story Explorer — unselected
 
 Promise: experience one real project through the choices and constraints behind it.
 
@@ -48,8 +48,8 @@ No-media case: decision alternatives and consequences communicate the story with
 
 Risk: forced storytelling hides useful information. Mitigation: skip/jump controls, visible context, deep links, direct contact, and no mandatory autoplay.
 
-## Recommendation and review
+## Selection and next review
 
-P01 proposes A: best fit for a small existing body of work, varied evidence, and one private publishing dashboard. B and C are alternatives, not three modules to combine into V1.
+P01 accepted on 2026-10-03. Owner instruction: “I choose Personal Studio.” A is the product model for subsequent specifications. B and C stay in decision history; they are not V1 modules.
 
-Approve an interaction model before choosing visual styling. Ask: what can a visitor do, what changes, why does it matter, and how do they get back? See [direction](design-direction.md) and [UX principles](ux-principles.md).
+This selects the concept, not every draft interaction detail, visual treatment, or other proposal. Next define triggers, visible changes, return paths, and mobile/keyboard behavior. See [direction](design-direction.md), [UX principles](ux-principles.md), and [specification plan](specification-plan.md).

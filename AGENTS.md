@@ -4,6 +4,8 @@
 
 Source of truth: arvin-ramezani/imarvin. Current task: concise English product/UX documents only.
 
+P01 Personal Studio is owner-approved. Use it as the product model; do not reopen the concept choice or combine unselected alternatives into V1 without owner direction. Detailed behavior, visual choices, and P02–P04 remain under review.
+
 The owner wants a creative personal web app and rejects a portfolio/résumé product. Do not restore a fixed introduction/experience/projects/about/contact homepage, chronological CV, or uniform résumé entries. Retain truthful work as content, not as a prescribed page template.
 
 Do not create images, application code, dependencies, prototype, or deployment without a separate owner request. Do not inherit the older imarvin implementation, UI, P01–P06, or review gates.

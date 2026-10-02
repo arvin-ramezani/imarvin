@@ -1,7 +1,7 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.3 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01–P04 remain proposals.
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.4 | Updated: 2026-10-03  
+Status: revised draft. Confirmed constraints: C01–C10. P01 Personal Studio is owner-approved; P02–P04 remain proposals. Concept acceptance does not approve the entire PRD.
 
 ## 1. Product intent
 
@@ -9,7 +9,7 @@ A creative personal web app where visitors explore Arvin's work, thinking, and p
 
 Job and freelance conversations remain desired outcomes. The product is not a portfolio/résumé site. The former five-section homepage is superseded; evidence about work remains useful content.
 
-Proposed model: Personal Studio. Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [UX principles](docs/ux-principles.md).
+Selected model: Personal Studio (P01). Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [UX principles](docs/ux-principles.md).
 
 ## 2. Users and outcomes
 
@@ -94,4 +94,4 @@ Targets are unverified until later design/implementation review. Liking a concep
 
 ## 8. Next gate
 
-Resolve P01–P04; confirm missing facts in [content inventory](docs/content-inventory.md). Then write the [planned specifications](docs/specification-plan.md) before separately authorizing images or implementation. Proposed concepts and visual decisions remain unapproved.
+Resolve P02–P04; confirm missing facts in [content inventory](docs/content-inventory.md). Then write the [planned specifications](docs/specification-plan.md) before separately authorizing images or implementation. Personal Studio is selected; detailed UX, visual, and technical specifications still require review.

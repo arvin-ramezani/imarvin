@@ -1,6 +1,6 @@
 # Decisions
 
-Updated: 2026-10-03. Confirmed = owner instruction. Proposed = review needed. Open = missing decision/fact. Superseded = do not implement.
+Updated: 2026-10-03. Confirmed = owner constraint. Accepted = owner-approved product choice. Proposed = review needed. Open = missing decision/fact. Superseded = do not implement.
 
 Authority: arvin-ramezani/imarvin only. No inheritance from the previous imarvin project. Merging documentation does not accept every proposal or authorize code.
 
@@ -27,16 +27,21 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the previous imarvin
 - Problem/contribution/decision/outcome remains an internal story model, not a screen template.
 - C09 overrides conflicting prior presentation guidance; logos-only company entries remain.
 
+## Accepted choices
+
+| ID | Accepted choice | Evidence and scope |
+| --- | --- | --- |
+| P01 | A. Personal Studio: select work, inspect decisions/evidence, retain context | 2026-10-03: owner said “I choose Personal Studio.” Replaces former P01; B/C remain unselected alternatives. Detailed UX/visual choices, P02–P04, and implementation are not approved by this selection. |
+
 ## Proposed choices
 
 | ID | Current proposal | Implication |
 | --- | --- | --- |
-| P01 | A. Personal Studio: select work, inspect decisions/evidence, retain context | Replaces former P01 recommendation; B/C are alternatives, not added modules |
 | P02 | Save private draft → preview → explicit Publish/Update; prior public version stays until success | Publishing lifecycle pending owner review |
 | P03 | One owner, English public content, email/professional links, no contact form | Bounds account/language/contact scope |
 | P04 | Curated existing work and contextual decisions/evidence; exclude blog/community/customer portal/AI generation | Creative exploration does not require a new content platform |
 
-Proposal changes affect PRD R01–R02, R07, R09–R11, R13, R24 and new R25–R26; A01/A03/A05/A09 revised, A11–A12 added. Record approval of the new P01 explicitly; prior recommendation does not imply acceptance.
+Proposal changes affect PRD R01–R02, R07, R09–R11, R13, R24 and new R25–R26; A01/A03/A05/A09 revised, A11–A12 added. The owner's P01 selection is recorded above; it does not imply approval of other proposals or the entire PRD.
 
 ## Open items
 
