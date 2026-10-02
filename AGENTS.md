@@ -4,7 +4,7 @@
 
 Source of truth: arvin-ramezani/imarvin. Current task: concise English product/UX documents only.
 
-P01 Personal Studio is owner-approved. Use it as the product model; do not reopen the concept choice or combine unselected alternatives into V1 without owner direction. Detailed behavior, visual choices, and P02–P04 remain under review.
+P01 Personal Studio is owner-approved. Use it as the product model; do not reopen the concept choice or combine unselected alternatives into V1 without owner direction. P05–P07 select one featured work, projects-first browsing, and summary then sections. Remaining detailed behavior, visual choices, and P02–P04 remain under review. Read the three draft public-flow specs together; their presence does not authorize code.
 
 The owner wants a creative personal web app and rejects a portfolio/résumé product. Do not restore a fixed introduction/experience/projects/about/contact homepage, chronological CV, or uniform résumé entries. Retain truthful work as content, not as a prescribed page template.
 

@@ -32,6 +32,9 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the previous imarvin
 | ID | Accepted choice | Evidence and scope |
 | --- | --- | --- |
 | P01 | A. Personal Studio: select work, inspect decisions/evidence, retain context | 2026-10-03: owner said “I choose Personal Studio.” Replaces former P01; B/C remain unselected alternatives. Detailed UX/visual choices, P02–P04, and implementation are not approved by this selection. |
+| P05 | Homepage leads with one featured work item | 2026-10-03: owner chose “One featured work”; actual story remains O02. Trace: R01–R02, A01. |
+| P06 | Projects-first browsing; company context is secondary | 2026-10-03: owner chose “Projects first”; company-filter details are draft behavior. Trace: R03–R07, A02–A03. |
+| P07 | Detail summary followed by selectable sections | 2026-10-03: owner chose “Summary then sections”; exact section/history/evidence behavior awaits review. Trace: R06, R09, R24–R25, A10–A11. |
 
 ## Proposed choices
 
@@ -41,7 +44,7 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the previous imarvin
 | P03 | One owner, English public content, email/professional links, no contact form | Bounds account/language/contact scope |
 | P04 | Curated existing work and contextual decisions/evidence; exclude blog/community/customer portal/AI generation | Creative exploration does not require a new content platform |
 
-Proposal changes affect PRD R01–R02, R07, R09–R11, R13, R24 and new R25–R26; A01/A03/A05/A09 revised, A11–A12 added. The owner's P01 selection is recorded above; it does not imply approval of other proposals or the entire PRD.
+Proposal changes affect PRD R01–R02, R07, R09–R11, R13, R24 and new R25–R26; A01/A03/A05/A09 revised, A11–A12 added. P01 and P05–P07 are accepted choices, not approval of other proposals or the entire PRD. New public-flow specifications are drafts: [public UX](specs/public-ux-spec.md), [navigation/state](specs/navigation-state-spec.md), and [accessibility/responsive](specs/accessibility-responsive-spec.md).
 
 ## Open items
 

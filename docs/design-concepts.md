@@ -52,4 +52,4 @@ Risk: forced storytelling hides useful information. Mitigation: skip/jump contro
 
 P01 accepted on 2026-10-03. Owner instruction: “I choose Personal Studio.” A is the product model for subsequent specifications. B and C stay in decision history; they are not V1 modules.
 
-This selects the concept, not every draft interaction detail, visual treatment, or other proposal. Next define triggers, visible changes, return paths, and mobile/keyboard behavior. See [direction](design-direction.md), [UX principles](ux-principles.md), and [specification plan](specification-plan.md).
+This selects the concept, not every draft interaction detail, visual treatment, or other proposal. P05–P07 now select featured-work entry, projects-first browsing, and summary then sections. Draft triggers, visible changes, return paths, and mobile/keyboard behavior are in [Public UX](specs/public-ux-spec.md) and its companions. See [direction](design-direction.md), [UX principles](ux-principles.md), and [specification plan](specification-plan.md).
