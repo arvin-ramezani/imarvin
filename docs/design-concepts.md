@@ -1,53 +1,55 @@
 # Design Concepts
 
-Status: three written proposals. No visual target, mockup, or implementation has been selected. Existing homepage order and company-card constraints apply to all options.
+Status: three written alternatives, proposed. Owner rejects the previous résumé/editorial framing. No concept or visual target is approved.
 
-## A. Engineering Practice — recommended
+Shared content: projects, decisions, evidence, company context, personality, contact. Company entries retain logos only. Concepts differ in the visitor's actions and navigation, not just colors.
 
-Central idea: visit Arvin's professional practice and understand how he works.
+## A. Personal Studio — recommended
 
-Homepage: a brief introduction, experience with one concrete contribution per company, then selected work summarized by problem and decision. About explains the direction of growth; contact is easy to find.
+Promise: enter Arvin's space and inspect what he makes and how he thinks.
 
-Company page: a calm context header followed by real work. Unixsee opens into three separate stories; the previous company's core shop unfolds immediately.
+Entry: expressive identity plus one curated work object; one primary action opens it. Browse other work and contact are supporting paths. Keep the first view focused rather than displaying every feature.
 
-Story: a short summary for scanning, then responsibilities, constraints, consequential decisions, and outcome/lesson. Optional evidence sits next to the explanation it supports.
+Interaction: select a work item → open its context → switch between problem, decisions, and evidence → return to the collection with selection/filter position preserved.
 
-Distinctive quality: the visitor can see judgment and responsibility across different projects. The content works with logos alone.
+Structure: a curated collection and contextual inspector; company context is a route into work, not the organizing homepage. Company details still support multi-project and main-product cases.
 
-Risk: too much technical explanation. Mitigation: concise summaries, optional deeper sections, and plain-language outcomes.
+Signature: deliberate asymmetry, expressive readable display type, contrasting content scale, and a consistent motif tied to real work. Final motif/assets remain open.
 
-## B. Problems and Solutions
+No-media case: a well-composed problem/decision object with honest text evidence. This is a deliberate design, not an empty screenshot box.
 
-Central idea: understand Arvin through the practical problems he helps solve.
+Risk: resembling an admin dashboard. Mitigation: identity and authored work dominate; remove metrics, dense sidebars, SaaS chrome, and generic equal-card grids.
 
-Homepage keeps company experience first, but selected-work summaries emphasize the initial problem and resulting capability. Clients can recognize a relevant need quickly.
+## B. Work Atlas
 
-Company page: contextual responsibilities followed by problem/approach/outcome stories. The main company app is shown as one continuous solution.
+Promise: discover connections between Arvin's projects and the problems/decisions they share.
 
-Distinctive quality: problem relevance gives freelance visitors a clear entry point.
+Entry: one featured relationship and a clear Explore action. A relationship view reveals adjacent work; a direct browse list is always available.
 
-Risk: suggesting services or measurable business results that are not established. Keep claims within confirmed contributions; no invented service packages.
+Interaction: select work → inspect a connection/decision → move to a related story → return to the previous selection. Only authored relationships appear.
 
-## C. Career Chapters
+Signature: spatial composition and relationship-led transitions; the visual map never substitutes for readable titles or accessible links.
 
-Central idea: understand how Arvin's responsibility and thinking developed across companies.
+No-media/mobile case: linked work summaries expose exactly the same relationships.
 
-Homepage keeps the agreed order; experience emphasizes roles and progression. Selected work shows representative moments from those roles.
+Risk: visual complexity disproportionate to a small collection. Mitigation: start from one relationship; never invent nodes or add empty subjects. Highest specification cost.
 
-Company page: context, responsibility, work, and lessons; the single core product sits directly within that chapter.
+## C. Story Explorer
 
-Distinctive quality: cancelled and unfinished work have a natural place in an honest professional story.
+Promise: experience one real project through the choices and constraints behind it.
 
-Risk: chronology can hide relevant skills or client needs. Keep concrete work visible and selected projects independently accessible.
+Entry: one problem and a clear Open story action; browse/contact remain accessible.
 
-## Recommendation
+Interaction: move among authored stages: problem, responsibility, decision, result/lesson. Inspect optional evidence; jump to any stage and exit without completing a sequence.
 
-Use A as the proposed primary direction, with B's clear problem language and C's honest career context. This combines existing work into one coherent experience without adding a new content platform.
+Signature: changing composition and evidence focus as the story progresses; a continuous direct-reading path remains available.
 
-The recommendation is P01, not an accepted decision. Review [design direction](design-direction.md) for its implications.
+No-media case: decision alternatives and consequences communicate the story without fabricated images.
 
-## Review questions
+Risk: forced storytelling hides useful information. Mitigation: skip/jump controls, visible context, deep links, direct contact, and no mandatory autoplay.
 
-Can a visitor identify Arvin's own contribution? Can they see why a decision was made? Is the experience still complete with no screenshots or live demos? Does the content help a job/client decision?
+## Recommendation and review
 
-The next stage is to settle the concept and write UX specifications. Visual exploration and implementation are later, separately authorized work.
+P01 proposes A: best fit for a small existing body of work, varied evidence, and one private publishing dashboard. B and C are alternatives, not three modules to combine into V1.
+
+Approve an interaction model before choosing visual styling. Ask: what can a visitor do, what changes, why does it matter, and how do they get back? See [direction](design-direction.md) and [UX principles](ux-principles.md).

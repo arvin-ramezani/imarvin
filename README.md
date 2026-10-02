@@ -1,28 +1,27 @@
 # imarvin
 
-Arvin Ramezani's personal web app for employment and freelance opportunities.
+Arvin Ramezani's creative personal web app.
 
-Phase: product and design foundations. All proposed directions remain under review. Application implementation is not authorized by this documentation PR.
+Phase: product and UX foundations. Written proposals are under review; no images, prototype, application code, or deployment is authorized.
 
 ## Read in order
 
 | Document | Purpose |
 | --- | --- |
-| [PRD](PRD.md) | Product goal, scope, requirements, and acceptance criteria |
-| [Branding principles](docs/branding-principles.md) | Knowledge behind positioning and evidence |
-| [Design concepts](docs/design-concepts.md) | Three written concepts and a recommendation |
-| [Design direction](docs/design-direction.md) | How the recommended concept shapes the experience |
+| [PRD](PRD.md) | User outcomes, scope, requirements, acceptance |
+| [Design concepts](docs/design-concepts.md) | Three distinct product/interaction models |
+| [Design direction](docs/design-direction.md) | Proposed Personal Studio experience |
+| [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |
+| [Branding principles](docs/branding-principles.md) | Identity, evidence, and truthful storytelling |
 | [Content inventory](docs/content-inventory.md) | Known work and missing facts |
-| [Decisions](docs/decisions.md) | Confirmed constraints, proposals, and open questions |
-| [Specification plan](docs/specification-plan.md) | Documents and review gates before agent implementation |
-| [Agent rules](AGENTS.md) | Scope and source-of-truth rules |
+| [Decisions](docs/decisions.md) | Confirmed constraints, superseded direction, proposals |
+| [Specification plan](docs/specification-plan.md) | Next documentation phase before implementation |
+| [Agent rules](AGENTS.md) | Source-of-truth and AI context rules |
 
 ## Current review
 
-Review concept A, Engineering Practice, then resolve P01–P04 in the decision register. A PR merge records documentation; it does not authorize development.
+The owner rejects a portfolio/résumé product. The former fixed homepage sequence and résumé/editorial treatment are superseded.
 
-This repository is a fresh start. Documents and accepted decisions in second-brain/05-Projects/imarvin are not inherited.
+Proposed concept A: Personal Studio. Visitors select work and inspect its problem, decisions, and evidence. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
 
-## Next phase
-
-After product direction is approved, write the behavioral and technical specifications listed in the specification plan. Keep every specification traceable to PRD requirements. No application code, prototype, imagery, or deployment belongs in this phase.
+Review P01–P04 before detailed specifications. A documentation merge does not authorize development. This repository is a fresh start; the older second-brain imarvin project is not inherited.

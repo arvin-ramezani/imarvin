@@ -24,11 +24,11 @@ Present this product directly within the company experience page. It is the empl
 
 Need: company name/logo, role/dates, team context, scope of ownership, main features, important decisions, outcome, and permitted evidence. The earlier GitHub lookup found backup-tarsim with only a README on its default branch; the application repository/branch still needs resolution.
 
-## Other work and homepage selection
+## Curated work and entry selection
 
 The owner earlier mentioned three projects, two offline; later described the three Unixsee projects plus the previous company's product. Final featured selection and availability are unconfirmed. Do not assign live/offline status to individual entries by guessing.
 
-Choose featured work by contribution, relevance, and evidence. A live deployment is not a requirement. Avoid duplicating the same story across company and project pages.
+Choose featured work by curiosity, contribution, relevance, and evidence. A live deployment is not a requirement. Work/decision/company views reuse one story. Entry selection supports a creative exploration surface, not a résumé homepage.
 
 ## Capture worksheet
 

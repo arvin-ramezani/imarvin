@@ -1,6 +1,6 @@
 # Branding Principles
 
-Status: reusable knowledge applied to this product; proposed positioning remains under review.
+Status: reusable knowledge for a creative personal web app; positioning remains proposed. Identity informs exploration and interaction, not a résumé layout.
 
 ## Source
 
@@ -21,7 +21,7 @@ Status: reusable knowledge applied to this product; proposed positioning remains
 
 ## Working positioning
 
-Proposed association: a full-stack developer who takes responsibility for practical applications, explains decisions, and learns through real work.
+Proposed association: a curious full-stack builder whose work, decisions, and experiments reveal his personality. Concrete professional responsibility remains visible within stories.
 
 A learner in one area can be experienced in another. Do not label Arvin an expert in every technology or reduce existing professional work to beginner status.
 

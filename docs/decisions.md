@@ -1,45 +1,53 @@
 # Decisions
 
-Updated: 2026-10-03. Confirmed = explicitly stated by the owner. Proposed = included for review. Open = needs an owner decision or verified facts.
+Updated: 2026-10-03. Confirmed = owner instruction. Proposed = review needed. Open = missing decision/fact. Superseded = do not implement.
 
-This register applies only to arvin-ramezani/imarvin. C/P/O IDs are independent of the older project's decisions. PR approval/merge does not automatically accept every proposed item unless the owner says so.
+Authority: arvin-ramezani/imarvin only. No inheritance from the previous imarvin project. Merging documentation does not accept every proposal or authorize code.
 
 ## Confirmed constraints
 
 | ID | Decision |
 | --- | --- |
-| C01 | Fresh personal web app, separate from the previous imarvin project |
-| C02 | Primary outcomes: better job opportunities and freelance clients |
-| C03 | Content editing through a private dashboard |
-| C04 | Company cards use logos only, with no company photographs or screenshot covers |
-| C05 | Cards open details of work; company experience supports multiple projects and one main company application |
-| C06 | Appearance should be premium and simple, with concise communication |
-| C07 | This task produces concepts/knowledge/documents and a PR; no code, images, or prototype |
-| C08 | New source-of-truth repository: arvin-ramezani/imarvin; name the product requirements file PRD.md |
+| C01 | Fresh personal web app, separate from the older project |
+| C02 | Desired opportunities: employment and freelance clients; these do not prescribe a CV layout |
+| C03 | Private dashboard for content editing |
+| C04 | Company entries use logos only; no company photos or screenshot covers |
+| C05 | Company work details support several projects or the company's main application directly |
+| C06 | Premium/simple and concise; interpreted as focused/intentional, not mandatory visual quietness |
+| C07 | Current task is documents only; no generated images, prototype, code, or deployment |
+| C08 | New repository arvin-ramezani/imarvin; requirements file is PRD.md |
+| C09 | Owner rejects portfolio/résumé product and the current boring direction; create a creative personal web app |
+| C10 | Document product design and UX as concise, structured AI context |
 
-The homepage sequence discussed in the conversation is the working baseline in PRD R01. It was suggested by the assistant; record any owner revision explicitly.
+## Superseded direction — 2026-10-03
 
-## Proposed product choices
+- The assistant-proposed homepage sequence introduction/experience/projects/about/contact is no longer a layout requirement (R01 revised).
+- Former P01 Engineering Practice as a résumé/editorial public concept is rejected.
+- Quiet/neutral/editorial styling and chronology are not defaults.
+- Problem/contribution/decision/outcome remains an internal story model, not a screen template.
+- C09 overrides conflicting prior presentation guidance; logos-only company entries remain.
 
-| ID | Proposal | Why it matters |
+## Proposed choices
+
+| ID | Current proposal | Implication |
 | --- | --- | --- |
-| P01 | Engineering Practice concept A, using problems, responsibility, decisions, and outcomes | Defines a distinctive content-led experience |
-| P02 | Save private draft → preview → explicit Publish/Update; preserve existing public content until success | Determines the owner publishing lifecycle |
-| P03 | V1 has one owner, English public content, email/professional links, and no contact form | Bounds editing, language, and inquiry scope |
-| P04 | V1 excludes blog/community/customer portal/AI generation; keep selected work and About | Prevents feature growth before work evidence is ready |
+| P01 | A. Personal Studio: select work, inspect decisions/evidence, retain context | Replaces former P01 recommendation; B/C are alternatives, not added modules |
+| P02 | Save private draft → preview → explicit Publish/Update; prior public version stays until success | Publishing lifecycle pending owner review |
+| P03 | One owner, English public content, email/professional links, no contact form | Bounds account/language/contact scope |
+| P04 | Curated existing work and contextual decisions/evidence; exclude blog/community/customer portal/AI generation | Creative exploration does not require a new content platform |
 
-Docs are written in English; English public-site content remains part of P03. Next.js/TypeScript is a frontend preference; no backend/storage/auth/deployment choice is accepted here.
+Proposal changes affect PRD R01–R02, R07, R09–R11, R13, R24 and new R25–R26; A01/A03/A05/A09 revised, A11–A12 added. Record approval of the new P01 explicitly; prior recommendation does not imply acceptance.
 
 ## Open items
 
-| ID | Missing input | When needed |
+| ID | Input needed | Gate |
 | --- | --- | --- |
-| O01 | Company identities, roles, dates, and exact contributions, especially waiting room | Before factual story approval |
-| O02 | Final featured selection, per-project status and public availability, permitted evidence | Before content and public UX specification approval |
-| O03 | Public contact destinations and honest availability statement | Before contact flow approval |
-| O04 | Palette/type/theme and later visual target | Before UI implementation |
-| O05 | Backend/storage/authentication/account recovery/hosting and operating approach | Before technical specification approval |
+| O01 | Company identities, roles, dates, personal responsibility | Before factual story approval |
+| O02 | Featured work, actual decisions/evidence, status/availability, useful grouping | Before public/content UX approval |
+| O03 | Public contact destinations and accurate availability | Before contact-flow approval |
+| O04 | Signature motif, palette/type/theme and selected visual target | Before UI implementation |
+| O05 | Backend/storage/auth/recovery/hosting/operations | Before technical-spec approval |
 
-## Change procedure
+English documents are required; public-site language remains P03. Next.js/TypeScript is a preference, not an approved architecture.
 
-When a choice is accepted, record the owner's decision, date, and affected requirement/specification. When an assumption changes, update its authoritative document and references in the same PR. Never present recommendations or unfinished evidence as confirmed facts.
+On acceptance/change: record owner instruction/date and affected requirement/specification. Keep factual unknowns separate from design proposals.

@@ -1,92 +1,97 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.2 | Updated: 2026-10-03  
-Status: draft for review. C01–C08 are confirmed constraints; all other product defaults are proposed until accepted.
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.3 | Updated: 2026-10-03  
+Status: revised draft. Confirmed constraints: C01–C10. P01–P04 remain proposals.
 
-## 1. Purpose
+## 1. Product intent
 
-Help employers and freelance clients assess Arvin's work and judgment, then contact him. Give Arvin a private dashboard to maintain accurate public content.
+A creative personal web app where visitors explore Arvin's work, thinking, and personality through meaningful interaction. It should feel like entering his own digital space.
 
-Proposed concept: an engineering practice showing the relationship between problems, contributions, decisions, and outcomes. Distinction comes from real experience and perspective. See [concepts](docs/design-concepts.md) and [direction](docs/design-direction.md).
+Job and freelance conversations remain desired outcomes. The product is not a portfolio/résumé site. The former five-section homepage is superseded; evidence about work remains useful content.
 
-## 2. Audience and success
+Proposed model: Personal Studio. Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [UX principles](docs/ux-principles.md).
 
-| Audience | Main question | Useful outcome |
+## 2. Users and outcomes
+
+| User | Intent | Successful experience |
 | --- | --- | --- |
-| Employer / technical reviewer | What did Arvin own, and how does he think? | Assess fit and start a job conversation |
-| Freelance client | Has he solved a problem relevant to mine? | Understand his contribution and contact him |
-| Arvin | Can I keep my work accurate and current? | Edit, preview, and publish without source-file changes |
+| Curious visitor | Discover what interests Arvin and what he builds | Understand one memorable work story and choose where to explore next |
+| Employer / technical reviewer | Assess responsibility and judgment | Inspect concrete work and contact without navigating a CV |
+| Freelance client | Find relevant problem-solving experience | Recognize applicable work and start a conversation |
+| Arvin | Curate his personal space | Edit, preview, organize, and publish through a private dashboard |
 
-Success signal: relevant job/freelance inquiries referencing the work. No invented conversion or traffic targets. Start with practical web applications and ecommerce experience; describe AI or architecture expertise only where evidence supports it.
+Success hypotheses: visitors understand a contribution/decision, recognize Arvin's perspective, and can reach relevant work/contact without confusion. Relevant job/client inquiries are a longer-term signal. No invented metrics or usability claims.
 
 ## 3. Public requirements
 
 | ID | Requirement |
 | --- | --- |
-| R01 | Homepage order: Introduction → Work experience → Selected projects → About → Contact |
-| R02 | Introduction communicates what Arvin builds; work and contact are easy to reach |
-| R03 | Company cards show logo/name, role, dates, and one specific contribution; use a company-name fallback for missing logos |
-| R04 | Cards contain no company photographs or screenshot covers and open a shareable company experience page |
-| R05 | Experience pages share a header but adapt the work section: multiple project summaries, or the main company product shown directly |
-| R06 | Each story explains problem, personal responsibility/tasks, decisions, and outcome/current status; show stack where relevant |
-| R07 | Selected projects reuse the same story as company experience; a single-product story is directly linkable without duplicated content |
-| R08 | Separate ongoing/completed/cancelled status from public availability; offline work remains presentable |
-| R09 | Optional project evidence can include existing screenshots/recordings within the story; external links appear only when usable and public |
-| R10 | About connects real experience with current learning; Contact offers a clear route for job and freelance conversations |
-| R11 | Navigation, back paths, absent content, and unavailable pages have understandable behavior |
+| R01 | Entry is an authored exploration surface with one clear primary action; no mandated résumé section sequence |
+| R02 | Identity and purpose are clear; work, personal context, and contact remain discoverable |
+| R03 | Company entries show logo/name, role, dates, and a concrete contribution; name fallback for absent logo; placement is contextual rather than homepage-first |
+| R04 | Company entries use logos only, no company photos/screenshot covers; open shareable experience details |
+| R05 | Experience shares a context header; show several project choices or the company's main product directly |
+| R06 | Each story supports problem, personal tasks/responsibility, decisions, outcomes/status, and relevant stack |
+| R07 | Exploring by work, decision, or company resolves to one underlying story; main-product content remains directly linkable |
+| R08 | Ongoing/completed/cancelled status is separate from public availability; offline work remains complete |
+| R09 | Optional project evidence supports inspection; static/text explanation is sufficient when media or demos are absent; only usable public external links appear |
+| R10 | Personal context communicates real interests/learning; contact is available independently of completing exploration |
+| R11 | Navigation, back/reset, absent content, and unavailable destinations have understandable behavior |
 
-A company is the employer/organization; experience is Arvin's role there; a project is a body of work. These are conceptual relationships, not a database schema. One main company product requires no intermediate project-card click. Independent projects can exist without a company.
+A company is the organization; experience is Arvin's role; a project is a body of work. Engineering Practice is retained only as an internal story structure, not the public visual concept. Standalone work is allowed. Decisions/evidence are parts of a story, not a required new blog or separate publishing system.
 
-## 4. Private dashboard requirements
+## 4. Owner requirements
 
 | ID | Requirement |
 | --- | --- |
-| R12 | Owner sign-in/out; no public registration; authorize owner operations server-side |
-| R13 | Manage introduction, experience, projects, evidence, about, contact, featured selection, and display order |
-| R14 | Associate projects with company experience; support both work-section presentations without duplicating stories |
-| R15 | Preview the intended public layout privately and show unsaved/saved and private/published states |
-| R16 | Proposed publishing contract: Save stores a private draft; Publish exposes new content; Update published content explicitly replaces its public version |
-| R17 | Saving changes to published content leaves its current public version intact; publishing failure preserves it |
-| R18 | Validation/save failures retain input; warn before discarding unsaved edits; confirm destructive removal and show affected references |
-| R19 | Drafts, private previews, draft assets, and owner actions remain inaccessible to unauthenticated visitors |
+| R12 | Owner sign-in/out; no public registration; server-side authorization |
+| R13 | Manage identity/personal context, experience, stories and their decisions/evidence, contact, featured work, grouping and order |
+| R14 | Associate work with companies; support multiple projects and the main product without duplicated stories |
+| R15 | Preview the public layout privately; show unsaved/saved and private/published states |
+| R16 | Proposed publishing: Save private draft; Publish new content; Update published content explicitly |
+| R17 | Saving edits leaves existing public content intact; publish/update failure preserves it |
+| R18 | Retain input on validation/save failures; warn before discarding changes; confirm deletion and show affected references |
+| R19 | Unauthenticated visitors cannot read drafts/previews/unpublished assets or perform owner actions |
 
-The complete publishing, removal, linked-story, and recovery behavior will be specified after P02 is approved. R16–R19 describe proposed requirements, not a migration of any previous admin design.
+Complete lifecycle, linked-story, and removal behavior awaits P02 and subsequent specifications.
 
-## 5. Quality
+## 5. Experience quality
 
-R20: Mobile and desktop layouts, including 320px, avoid horizontal overflow and retain the core journeys.  
-R21: Keyboard access, clear labels, visible focus, sufficient contrast, readable text, and reduced-motion support.  
-R22: Stable shareable URLs and useful page titles/share descriptions; public output and indexing expose only published content.  
-R23: Logos and optional evidence have suitable text alternatives; missing media does not create broken layouts.  
-R24: Employers can scan role/responsibility quickly; deeper technical decisions stay available through progressive detail.
+R20: Mobile/desktop/320px retain the core loop without horizontal overflow.  
+R21: Keyboard, labels, visible focus, contrast, readable text, and reduced-motion support.  
+R22: Stable deep links and appropriate page/share descriptions; only published data is publicly delivered/indexed.  
+R23: Media alternatives and complete layouts with no logo, screenshots, video, or live demo.  
+R24: Progressive depth: quick understanding first, decisions/evidence on request; preserve context when returning.  
+R25: Exploration changes meaningful visible content/state; selection/back/reset are clear; no essential hover-only or animation-only controls.  
+R26: Later design must establish a recognizable composition/identity beyond uniform cards, résumé rows, or cosmetic color changes; creativity remains usable and focused.
 
-## 6. V1 scope
+## 6. V1 boundaries
 
-Proposed defaults: one owner account, English public content, email/professional contact links, and no contact form. The confirmed dashboard decision does not yet approve an authentication mechanism.
+Proposed: one owner, English public content, email/professional contact links, no contact form. Include curated existing work and contextual decisions/evidence; one coherent exploration model.
 
-Include public work stories and owner editing/publishing. Exclude blog/newsletter, public accounts, comments/community, customer portal, booking/payment, AI content generation, multilingual publishing, and analytics dashboards.
+Exclude public accounts, community, blog/newsletter, customer portal, booking/payment, AI generation, multilingual publishing, analytics dashboards, mandatory 3D/game navigation, and runnable simulations as baseline scope. Interactive evidence must not execute untrusted project code.
 
-Next.js/TypeScript is an intended frontend preference, not an approved architecture. Backend, storage, authentication, hosting, and operations must be resolved in a later technical specification.
+Next.js/TypeScript is a frontend preference only. Backend/storage/authentication/hosting require a later technical decision. Screenshots, diagrams, transitions, and demos are future options, not assets produced or features approved now.
 
-## 7. Acceptance
+## 7. Acceptance targets
 
 | ID | Observable outcome | Requirements |
 | --- | --- | --- |
-| A01 | Visitor understands positioning, opens work, and reaches contact without dead ends | R01–R02, R10–R11 |
-| A02 | Unixsee shows separate projects; the previous company's main shop appears directly | R03–R05, R14 |
-| A03 | Selected work and company work resolve to one consistent story; no unnecessary click for the main product | R06–R07 |
-| A04 | Offline/cancelled work has a complete truthful story; missing logo/evidence is handled | R08–R09, R23 |
-| A05 | Owner creates/edits/associates/reorders/previews/publishes content without editing files | R12–R16 |
-| A06 | Saving leaves public content intact; successful explicit update changes it; failure retains the prior version and input | R16–R18 |
-| A07 | Unauthenticated requests cannot access owner actions, drafts, previews, or unpublished assets | R12, R19, R22 |
-| A08 | Empty/loading/error/not-found and destructive-action states give an appropriate next action | R11, R18 |
-| A09 | Core public/owner journeys work at desktop/mobile/320px and with keyboard/reduced motion | R20–R21 |
-| A10 | Work communicates individual responsibility and decisions without fabricated results | R06, R24 |
+| A01 | Entry explains the space and offers a clear exploration action plus discoverable contact | R01–R02, R10–R11 |
+| A02 | Unixsee supports several projects; the previous company's core shop is shown directly | R03–R05, R14 |
+| A03 | Work/decision/company paths and deep links resolve consistently without duplicating content | R06–R07 |
+| A04 | Offline/cancelled work remains truthful and complete without optional media | R08–R09, R23 |
+| A05 | Owner curates/edits/associates/previews/publishes without editing source files | R12–R16 |
+| A06 | Save does not publish; explicit successful update does; failure preserves public content and input | R16–R18 |
+| A07 | Owner actions/drafts/previews/unpublished assets are private | R12, R19, R22 |
+| A08 | Empty/loading/error/not-found/removal states have a next action | R11, R18 |
+| A09 | Core loop works on desktop/mobile/320px, keyboard, and reduced motion | R20–R21, R25 |
+| A10 | Stories show real individual contribution and judgment with no invented outcomes | R06, R24 |
+| A11 | Visitor selects work, reveals a decision/evidence, and returns with context; this changes content, not just decoration | R11, R24–R25 |
+| A12 | Design review identifies a concrete signature composition and purposeful interaction; standard CV layout is not accepted | R01, R26 |
 
-These are future acceptance targets, not completed test claims.
+Targets are unverified until later design/implementation review. Liking a concept does not prove usability.
 
-## 8. Readiness
+## 8. Next gate
 
-[Content inventory](docs/content-inventory.md) separates known work from missing facts. [Decisions](docs/decisions.md) records confirmed constraints and proposals. [Specification plan](docs/specification-plan.md) defines the next documentation phase.
-
-Approve product/concept choices first. Then define behavioral, content, accessibility, technical, and acceptance specifications before authorizing agent implementation.
+Resolve P01–P04; confirm missing facts in [content inventory](docs/content-inventory.md). Then write the [planned specifications](docs/specification-plan.md) before separately authorizing images or implementation. Proposed concepts and visual decisions remain unapproved.

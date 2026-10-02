@@ -1,38 +1,38 @@
 # Specification Plan
 
-Phase: product/design foundations now; implementation specifications next. No application work is authorized.
+Phase: product/UX documents only. The creative product model is proposed; no implementation, images, or visual approval.
 
-## Sequence and review gates
+## Gates
 
-1. Review PRD and written concepts; resolve P01–P04 and any product-scope changes.
-2. Confirm content structure with the owner's work; separate missing facts from publishable copy.
-3. Write and review the specifications below. Resolve behavior and technical dependencies before assigning agent code.
-4. After owner approval and a separate implementation request, divide work into bounded tasks tied to requirement IDs.
-5. Review implementation against approved specifications and acceptance evidence. Deployment requires its own instruction.
+1. Review creative concepts; approve P01 and resolve P02–P04.
+2. Confirm work content, decisions, evidence, and grouping without inventing missing facts.
+3. Write/review the specifications below, resolving states/navigation/publishing/privacy.
+4. Select a visual target only when the owner requests visual work; approve usable composition/tokens.
+5. After owner-approved specs and a separate code request, assign bounded agent tasks with requirement IDs.
+6. Review actual implementation and exact head; deployment remains separately authorized.
 
-Documentation approval is distinct from implementation authorization. Visual exploration, when requested later, is a separate design activity; no visual target or visual-validation claim exists in this PR.
+## Specifications to write next
 
-## Documents to write next
-
-| Planned file | Required decisions/coverage | PRD trace |
+| Planned file | Coverage | PRD trace |
 | --- | --- | --- |
-| public-ux-spec.md | Routes and anchors; homepage; experience multi-project vs main-product; canonical selected-story links; contact; navigation and empty/loading/error/not-found states | R01–R11, R24 |
-| owner-ux-spec.md | Sign-in/out/recovery UX, editing/association/order/feature selection, uploads, preview, confirmation and failure recovery | R12–R15, R18 |
-| content-publishing-spec.md | Content fields/relationships; drafts vs public versions; publish/update/unpublish/delete; linked-story and evidence visibility; broken-reference prevention | R06–R09, R13–R19 |
-| accessibility-responsive-spec.md | Keyboard/focus, labels/contrast, reading hierarchy, reduced motion, touch, desktop/mobile/320px, media alternatives | R20–R21, R23–R24 |
-| architecture-spec.md | Approved frontend/backend/storage, auth/account recovery, asset access, public delivery/cache freshness, deployment and backup/restore; justify choices with scope | R12–R19, R22 |
-| acceptance-spec.md | Testable scenarios and evidence for A01–A10; define failures/security/privacy checks and requirement-to-scenario mapping | R01–R24 |
+| public-ux-spec.md | Entry/core loop; collection/selection; decision/evidence inspection; company multi/main-product cases; direct personal context/contact; responsive view changes | R01–R11, R24–R26 |
+| navigation-state-spec.md | Routes/deep links; browser Back; selection/filter context; reset; loading/empty/error/unavailable states; mobile/keyboard equivalents | R07, R11, R20–R22, R24–R25 |
+| owner-ux-spec.md | Auth/recovery; story/decision/evidence editing; grouping/feature/order; uploads; private preview; confirmation/error recovery | R12–R15, R18 |
+| content-publishing-spec.md | Fields/relationships; story/evidence reuse; draft/public versions; publish/update/unpublish/delete; linked-item visibility; broken-reference prevention | R06–R09, R13–R19 |
+| accessibility-responsive-spec.md | Type/readability; focus/contrast; collection-to-detail behavior; touch/320px; media alternatives and reduced motion | R20–R21, R23–R26 |
+| architecture-spec.md | Justified frontend/backend/storage/auth/assets; safe public delivery and cache freshness; account recovery, hosting, backups | R12–R19, R22 |
+| acceptance-spec.md | A01–A12 scenarios; core-loop and anti-résumé review; failures/privacy; actual evidence methods and requirement mapping | R01–R26 |
 
-Planned filenames are not claims that these files already exist. Choose a docs/specs location when this phase starts; all links must be updated together. Do not create empty shells that look approved.
+These are planned files, not approved specifications. Use docs/specs when this phase starts; do not create empty shells masquerading as finished contracts.
 
-## Agent implementation readiness
+## Specification format
 
-- Owner has accepted product/concept/scope and assigned implementation.
-- Each task names approved specs, requirements, affected states, and verification.
-- Publishing/link behavior is resolved; privacy includes asset and preview access, not only UI hiding.
-- Stack/auth decisions are justified and approved; no agent silently imports its preferred framework.
-- A visual target/tokens are approved before frontend UI implementation.
-- Factual content blockers are documented; missing metrics or live URLs are never fabricated.
-- Review records the exact implementation head and actual evidence.
+Each document: status/dependencies → requirement IDs → entities or states → user triggers/results → back/reset/failure → mobile/keyboard/accessibility → acceptance → non-goals/open decisions.
 
-AI prompts should instruct agents to read README, AGENTS, decisions, PRD, and only relevant approved specs. Include non-goals and stop conditions. The current documents are a foundation, not a production-readiness certificate.
+Define behavior before component, library, database, or endpoint choices. Resolve conceptual UX without prescribing arbitrary animation or visual assets.
+
+## Implementation readiness
+
+Owner approves the chosen product model/specs and assigns implementation. Navigation/publishing privacy is resolved; evidence remains accurate; each task names states and checks; a visual target precedes frontend UI work. No restoration of the old CV homepage.
+
+AI agents read README/AGENTS/decisions/PRD plus relevant approved specs. Missing media, metrics, or live URLs do not justify fabricated content. Documentation is not evidence of usability or production readiness.
