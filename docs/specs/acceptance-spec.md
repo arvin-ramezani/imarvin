@@ -24,7 +24,7 @@ Scope: complete public/owner product-design contract. Does not certify implement
 ## Review procedure
 
 1. Contract review now: check accepted decisions, scopes, source authority, cross-flow consistency, required states, and truthful unknowns.
-2. Owner review: evaluate proposed detailed behaviors/values, including unpublish/delete/conflict handling. Accepted high-level choices do not auto-approve every detail.
+2. Owner review: P10 publishing/removal/concurrency and P12 owner save/recovery/conflict behavior are approved. Remaining review concerns factual inputs, runtime evidence, and architecture mechanisms.
 3. Rendered wide light/dark direction was owner-approved on 2026-10-03. Remaining design validation uses real featured content plus no-media/long-title/empty/error cases and compares narrow/responsive and owner/public states against that approved direction.
 4. Implemented-interaction review only after separate authorization: execute public and owner tasks, failure/concurrency/privacy checks, and record exact head/environment/evidence.
 
