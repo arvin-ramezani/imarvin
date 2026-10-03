@@ -1,7 +1,7 @@
 # Content and Publishing Specification
 
-Status: draft lifecycle contract | Updated: 2026-10-03.
-P02 accepted: saving is private; publishing/updating is explicit. Detailed removal/reference/concurrency rules below are proposals for review.
+Status: owner-approved lifecycle behavior contract (P02/P10) | Updated: 2026-10-03.
+Saving is private; publishing/updating is explicit. Removal/reference/concurrency behavior below is approved; implementation mechanisms remain O05 architecture.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [owner UX](owner-ux-spec.md). Trace: R06–R09, R12–R19, R22; A03–A08, A10.
 
 ## 1. Content model, not database schema
@@ -95,4 +95,4 @@ Authentication, sanitization, asset delivery, cache removal, backups, retry iden
 | CP10 | Unpublish → edit → republish | Same identity; explicit new public candidate; no unsolicited dependent publication |
 | CP11 | Publish a new main-product experience and story | Context-first sequence works without circular prerequisites or automatic publication |
 
-Review these proposals with the owner. Implementation checks must verify failures/concurrency/privacy, not just happy-path screen labels.
+P10 is owner-approved. Implementation checks must verify failures/concurrency/privacy, not just happy-path screen labels.
