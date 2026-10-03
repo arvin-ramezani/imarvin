@@ -1,6 +1,6 @@
 # Components and Interaction Contract
 
-Status: draft design contract | Updated: 2026-10-03 | Working proposal: Signal Studio (P09/P13); no final visual approval.
+Status: draft component/state behavior contract | Updated: 2026-10-03 | Signal Studio visual treatment approved (P09/P11/P13/P14); behavior details remain subject to validation.
 Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R27; A01–A12.
 Names describe design responsibilities, not React components, library choices, database models, or coding assignments.
 
