@@ -1,7 +1,7 @@
 # Personal Studio: Visual Exploration
 
-Status: VS-A Signal Studio retained as working proposal (P09/P13); VS-B/VS-C retained as unselected written alternatives | Updated: 2026-10-03.
-Method: Product Design knowledge applied to hierarchy, layout, attention, and interaction before decoration. No images or rendered evaluation; these are art-direction briefs, not visual targets.
+Status: VS-A Signal Studio approved (P09/P11/P13/P14); VS-B/VS-C retained as unselected written alternatives | Updated: 2026-10-03.
+Method: Product Design knowledge applied to hierarchy, layout, attention, and interaction before decoration. These began as written art-direction briefs; Signal Studio was subsequently rendered in light/dark public and owner screens and approved by the owner.
 Shared authority: [public UX](specs/public-ux-spec.md), [design direction](design-direction.md), [decisions](decisions.md). All three preserve Personal Studio and P05–P07; they do not reopen the product concept.
 
 ## Fixed across all directions
@@ -9,7 +9,7 @@ Shared authority: [public UX](specs/public-ux-spec.md), [design direction](desig
 One featured work; projects-first exploration; summary then sections; optional inline evidence; contextual return; direct Contact. Company entries use logos only. A small real collection works without images, demos, invented categories, or dashboards.
 No prescribed CV sections, equal-card walls, technology clouds, simulated terminals, scroll hijacking, or forced journeys. Owner authoring remains structured and operationally clear.
 
-## VS-A. Signal Studio — working proposal
+## VS-A. Signal Studio — approved
 
 Personality: expressive, precise, confident. Bright neutral surface, dark ink, one cobalt signal color; bold readable sans display and restrained technical annotations.
 Homepage composition: compact identity in an offset margin, one large authored problem/contribution fragment on the main stage, and a clearly attached Open work action. The work object, not an oversized name, is the focal point.
@@ -48,5 +48,5 @@ Risk: an editorial résumé in warm colors. Keep the inspectable object/section 
 | No-media strategy | Problem/choice fragment | Text object with focused contrast | Labeled decision/contribution specimen |
 | Main risk to test later | Cosmetic minimalism | Dashboard/gaming appearance | Editorial résumé appearance |
 
-PR #1 recorded the written Signal Studio choice. Current owner instruction retains it as a proposal to refine; palette, motifs, background, and tab styling are not finalized. Keep unselected directions as history; do not combine their motifs by default.
-The [visual system](specs/visual-system-spec.md), [component/state contract](specs/components-interaction-spec.md), and [design review](design-review.md) now document that direction. These remain written intent; no rendered visual target has been produced or evaluated.
+PR #1 recorded the written Signal Studio direction. On 2026-10-03 the owner approved the refined rendered light/dark treatment and requested PR #2 record final visual approval. Keep unselected directions as history; do not combine their motifs by default.
+The [visual system](specs/visual-system-spec.md) is the approved visual authority; [component/state contract](specs/components-interaction-spec.md) retains behavior details for later validation. Representative rendered screens were approved outside the repository and are not implementation assets.
