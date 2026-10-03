@@ -54,6 +54,10 @@ Prefer a VPS/vhost where OpenLiteSpeed can be managed directly.
 If the chosen VPS is DirectAdmin-managed, use DirectAdmin-supported custom templates/includes so regeneration cannot overwrite the app proxy/TLS config.
 Do not manually patch generated DirectAdmin/OpenLiteSpeed files and assume they will persist.
 No Docker, Kubernetes, Redis, queue, or second app node is required for V1.
+Daily development happens locally; do not edit or run the working tree directly on the production VPS.
+Use a staging deployment early enough to exercise Ubuntu/OpenLiteSpeed/systemd/filesystem behavior before production.
+Staging may share the VPS only if domain, systemd service, port, database, upload directory, environment file, and credentials are isolated from production.
+Release flow: local development/tests → reviewed PR → staging smoke/critical checks → production deployment.
 
 ## 4. Backup and restore — T06
 
@@ -72,10 +76,12 @@ Perform and document a restore test at least quarterly and before relying on a c
 
 ## 5. Small observability layer — T07
 
-Use Pino for structured JSON application logs written to stdout/stderr.
+Use Pino for structured JSON application logs written to stdout/stderr through one shared server-only logger module.
 Let systemd/journald own persistence and rotation; do not add ELK, Loki, OpenTelemetry, or an external log database initially.
 Add a request/correlation ID at app boundaries and include it in important server logs.
 Redact authorization headers, cookies, passwords, tokens, database URLs, auth secrets, and uploaded private metadata.
+Application code must not use direct `console.*` logging or import/configure Pino outside the logging module; enforce this with lint rules and tests.
+Logging tests must verify redaction and representative important events so agents cannot satisfy the contract with prose only.
 
 Log at minimum:
 - application start/shutdown and unexpected fatal errors;
@@ -90,7 +96,17 @@ Cap journal disk use/retention at the host level; start with roughly 14 days or 
 Provide a minimal health endpoint returning only healthy/unhealthy; include app process and database reachability, not sensitive diagnostics.
 Use systemd restart-on-failure and one external HTTPS uptime check; provider choice is operational and may use a free tier.
 
-## 6. Production boundaries
+## 6. Configuration contract
+
+Validate server configuration from `process.env` through one server-only Zod schema/module; `.env` files are inputs, not the source of truth.
+Missing or invalid required production configuration must fail fast before the app accepts traffic; never silently default secrets, database URLs, auth origins, or storage paths.
+Optional settings may have explicit documented defaults, for example `LOG_LEVEL=info`.
+Keep a committed `.env.example` with variable names and safe sample values only; never commit real secrets.
+Local development may use `.env.local`/test env files; production uses the root-owned systemd environment file.
+Client-visible environment variables require an explicit allowlist; server secrets must never cross into Client Components or `NEXT_PUBLIC_*`.
+Any config change must update the schema, example file, and tests in the same PR.
+
+## 7. Production boundaries
 
 TLS is mandatory in production; owner cookies are Secure/HttpOnly/SameSite according to the auth library's supported production configuration.
 Authorization is checked on every owner route/action and every private-media read.
