@@ -61,7 +61,7 @@ components/ui/          shadcn-based primitives
 components/shared/      cross-feature composed UI
 lib/db/                 Prisma client and transaction helpers
 lib/validation/         shared Zod schemas when genuinely shared
-lib/auth/               auth/session adapter after O05 auth decision
+lib/auth/               Better Auth/session/authorization adapter
 prisma/                 schema and migrations
 tests/                  shared integration/E2E support when needed
 ```
@@ -77,7 +77,7 @@ Use revision/version checks for stale edits and publication conflicts; never sil
 Keep private working state and public state distinguishable at the data model level.
 Published responses must be derived only from approved published state, never from draft data.
 Exact revision/snapshot tables are defined by the publishing implementation spec, not invented globally here.
-Assets used by public content and draft-only assets must remain distinguishable; storage choice is still open.
+Assets used by public content and draft-only assets must remain distinguishable; filesystem/media rules are in [runtime operations](runtime-operations.md).
 
 ## 6. UI and CSS rules
 
@@ -100,13 +100,13 @@ Every bug fix adds the smallest regression test at the lowest useful level.
 
 Authorization is enforced server-side on every owner read/write; UI hiding is not authorization.
 Do not expose Prisma errors, draft identifiers/content, secrets, or private asset locations publicly.
-Use secure environment variables and production-safe session cookies after auth is selected.
+Use secure environment variables and Better Auth production-safe session/cookie configuration.
 Database migrations are reviewed and applied through deployment workflow; no ad-hoc production schema edits.
-Backups, restore testing, logging/monitoring, hosting, auth/recovery, and media/object storage remain O05 follow-up decisions.
+Auth/recovery, filesystem media, VPS deployment, off-host backup, and logging are resolved in [runtime operations](runtime-operations.md).
 
 ## 9. Architecture gates
 
-Before application implementation, resolve only the technical choices that a first feature truly depends on.
+O05 baseline choices are resolved; feature/bootstrap specs now pin exact commands, paths, allowlists, and package versions only when needed.
 Bootstrap spec must pin exact package versions/commands and confirm compatibility; avoid speculative dependencies.
 Feature specs own feature-specific schema/API/UI decisions and must reference this baseline.
 Revisit this architecture only when a measured requirement invalidates a default, not for theoretical scale.
