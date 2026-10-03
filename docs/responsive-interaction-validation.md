@@ -7,7 +7,7 @@ Authority: [decisions](decisions.md), [visual system](specs/visual-system-spec.m
 ## 1. Review boundary
 
 Signal Studio, the rendered wide public/owner direction, and Light/Dark/System are owner-approved; O04 stays resolved. Compare adaptations with that target, without reopening the concept or restoring a CV/card-grid homepage.
-This work reviews contracts and prepares observable checks. No responsive screens, task sessions, code, or images were produced or inspected in this phase. P10/P12 and detailed public behaviors remain proposals; writing a check does not approve its behavior.
+This work reviews contracts and prepares observable checks. No responsive screens, task sessions, code, or images were produced or inspected in this phase. P10/P12 are owner-approved behavioral contracts. Other behaviors explicitly marked proposed remain proposals; writing a check does not approve them.
 
 | Stage | Current result | Evidence needed to advance |
 | --- | --- | --- |
@@ -70,7 +70,7 @@ A01–A06/A08–A12 receive responsive/interaction coverage. A07 security/privac
 | F03 | Owner contract omits explicit caret/on-screen-keyboard and short-height dialog handling | Clarified owner contract: retain input/caret; usable scrolling and reachable dialog title/actions |
 | F04 | Plan's component/acceptance trace ends at R26 despite theme coverage | Corrected inventory to R27; no requirement or acceptance IDs changed |
 | F05 | Return, zero/one-section behavior, candidate preview and removal already defined | Retained canonical contracts; tests introduce no alternate widget behavior |
-| F06 | Detailed behaviors, factual content and runtime evidence remain incomplete | Preserve P10/P12 proposal status, O01–O03/O05 and Pending execution; no mobile approval inferred |
+| F06 | Factual content, technical mechanisms and runtime evidence remain incomplete | Preserve approved P10/P12 behavior, O01–O03/O05 and Pending execution; no mobile/runtime approval inferred |
 
 This is an author-led documentation review, not independent research, a screenshot audit or accessibility certification.
 
@@ -85,7 +85,7 @@ The canonical specifications were cross-read against RV01–RV14. At the contrac
 | RV11–RV12 theme/accessibility | PASS — theme, focus, reflow, keyboard and reduced-motion contracts agree | Pending |
 | RV13–RV14 absence/signature | PASS — empty/error/removal and approved Signal Studio adaptation rules agree | Pending |
 
-No contract contradiction or missing recovery path was found in this reasoning pass. P10/P12 and other behaviors explicitly marked proposed remain proposals; this PASS means the documents are coherent, not that runtime behavior has been observed.
+No contract contradiction or missing recovery path was found in this reasoning pass. P10/P12 are approved; other behaviors explicitly marked proposed remain proposals. This PASS means the documents are coherent, not that runtime behavior has been observed.
 
 Runtime-only claims remain Pending: actual reflow/overflow, browser history restoration, focus movement/trapping, on-screen-keyboard behavior, theme first-paint/persistence, unsaved-input retention across real UI changes, session/concurrency/atomic delivery, and assistive-technology output.
 
