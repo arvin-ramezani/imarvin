@@ -2,11 +2,11 @@
 
 Arvin Ramezani's creative personal web app.
 
-Phase: written product/UX/design review. Personal Studio is selected; Signal Studio is a working visual proposal being refined. Detailed contracts remain drafts. No images, prototype, application code, or deployment is authorized.
+Phase: product/UX design review. Personal Studio and Signal Studio are selected; the current light/dark visual direction is owner-approved. Detailed behavioral contracts still include drafts. No application code or deployment is authorized.
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
-Current visual review: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). Both distinguish written contracts from unrun rendered checks.
+Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
 ## Read in order
 
@@ -20,7 +20,7 @@ Current visual review: [Visual refinement](docs/visual-refinement-review.md). Fo
 | [Accessibility/responsive specification](docs/specs/accessibility-responsive-spec.md) | Public-flow mobile, keyboard, reading, motion contracts |
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |
 | [Content/publishing](docs/specs/content-publishing-spec.md) | Private/public versions, dependencies, removal and conflicts |
-| [Visual exploration](docs/visual-exploration.md) | Three written directions; Signal Studio retained as a working proposal |
+| [Visual exploration](docs/visual-exploration.md) | Three written directions; Signal Studio approved |
 | [Visual system](docs/specs/visual-system-spec.md) | Refined surface/control policy, visual hierarchy, draft light/dark palettes, theme behavior and responsive modes |
 | [Components/interactions](docs/specs/components-interaction-spec.md) | Public/owner roles, behaviors and states |
 | [Integrated acceptance](docs/specs/acceptance-spec.md) | A01–A12 coverage and later verification evidence |
@@ -37,4 +37,4 @@ The owner rejects a portfolio/résumé product. The former fixed homepage sequen
 
 Selected concept A: Personal Studio (P01, owner-approved). Visitors select work and inspect its problem, decisions, and evidence. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
 
-P02–P04 confirm explicit publishing and focused English V1. P05–P07 select featured entry, projects-first browse, and summary/sections. P08 selects structured authoring; P09 retains Signal Studio as a working proposal; P13 defines visual-first communication, short supporting labels, and selective decoration. Public/owner/publishing/visual/component contracts are drafted and mapped to acceptance. Detailed proposals and factual content remain for review; actual visual/interaction checks and architecture are pending. A documentation merge does not authorize development. This repository is a fresh start; the older second-brain imarvin project is not inherited.
+P02–P04 confirm explicit publishing and focused English V1. P05–P07 select featured entry, projects-first browse, and summary/sections. P08 selects structured authoring; P09/P11 approve Signal Studio and the current rendered light/dark visual target; P13 defines visual-first communication, short supporting labels, and selective decoration; P14 defines System/Light/Dark behavior. P10/P12, factual content, responsive/interaction/accessibility validation, and architecture remain for review. A documentation merge does not authorize development. This repository is a fresh start; the older second-brain imarvin project is not inherited.
