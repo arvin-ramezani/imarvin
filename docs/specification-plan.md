@@ -7,7 +7,7 @@ Phase: complete written product-design contract for review. P01–P09/P13 record
 1. Owner UX + publishing/content: drafted against P02–P04/P08; review detailed removal, dependencies, conflicts, and recovery.
 2. Three written visual directions: explored; Signal Studio (P09) is the retained working proposal; styling refinement follows P13.
 3. Visual system/components/responsive/interactions: drafted for the selected direction.
-4. Current visual refinement: [refinement review](visual-refinement-review.md) records surface/control rules and public/owner wide/narrow contracts; no rendered screen review.
+4. Current visual refinement: [refinement review](visual-refinement-review.md) records surface/control rules, Light/Dark/System support, and public/owner wide/narrow contracts; no rendered screen review.
 5. Complete UX/design: document review recorded in [design review](design-review.md); rendered and implemented validation pending.
 6. Later: confirm real content/contact and evaluate an actual visual target when separately requested.
 7. After product-design review: write architecture; then assign bounded implementation only with explicit authorization.
@@ -23,7 +23,7 @@ Stack selection is not required before visual design. These documents do not cre
 | [Owner UX](specs/owner-ux-spec.md) | Draft authoring/preview/confirmation/recovery and owner accessibility; OU01–OU09 | R12–R21 |
 | [Content/publishing](specs/content-publishing-spec.md) | Draft units/versions/reference/bootstrap/removal/concurrency; CP01–CP11 | R06–R09, R12–R19, R22 |
 | [Accessibility/responsive](specs/accessibility-responsive-spec.md) | Draft public parity + shared reading/perception targets; AR01–AR08 | R20–R26 |
-| [Visual system](specs/visual-system-spec.md) | Draft Signal Studio composition/tokens/type/space/responsive; VS01–VS05 | R01–R02, R20–R26 |
+| [Visual system](specs/visual-system-spec.md) | Draft Signal Studio composition, light/dark roles, theme controls, responsive states; VS01–VS05, TH01–TH06 | R01–R02, R20–R27 |
 | [Components/interactions](specs/components-interaction-spec.md) | Draft public/owner responsibilities, states, behaviors | R01–R26 |
 | [Acceptance](specs/acceptance-spec.md) | Draft integrated A01–A12 with stage-appropriate evidence | R01–R26 |
 | architecture-spec.md | Planned after product-design review: auth/recovery/storage/assets, atomic delivery/cache, operations | R12–R19, R22 |

@@ -1,7 +1,7 @@
 # Visual System: Signal Studio
 
 Status: working visual proposal retained for refinement (P09/P13); detailed values draft. Updated: 2026-10-03.
-Authority: [decisions](../decisions.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R26; A01, A09, A12.
+Authority: [decisions](../decisions.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R27; A01, A09, A12.
 No images, coded UI, rendered target, or aesthetic validation. [Refinement review](../visual-refinement-review.md) records this documentation phase.
 
 ## 1. Visual communication
@@ -30,21 +30,27 @@ Grouping and recognizable control shapes precede explanatory text. Work titles, 
 
 For each accent, name its job and affected relationship/state. Remove it if it competes with work, repeats without meaning, or creates noise. It cannot impersonate evidence, telemetry, or a control.
 
-## 3. Retained palette proposal
+## 3. Light and dark palette proposals
 
-| Role | Value | Usage |
-| --- | --- | --- |
-| Canvas | #F4F2ED | Open neutral base |
-| Surface | #FFFFFF | Evidence/editor grouping when needed |
-| Ink | #171A1F | Primary content and identity |
-| Muted ink | #515861 | Supporting labels/context, still readable |
-| Signal | #244BDB | Local action/link/focus accent; no mandated active edge |
-| Signal wash | #E4EAFF | Optional bounded grouping; no default active-card fill |
-| Boundary | #747C8A | Essential control outlines where needed |
-| Destructive | #AE2634 | Error/destructive emphasis with clear meaning |
+Dark mode is the same Signal Studio composition, not the unselected Night Instrument direction. Use neutral charcoal, readable light text, and restrained blue accents; no added glow, grid, or neon treatment.
 
-Values are starting proposals, not approved styling. Solid-pair calculations in [design review](../design-review.md) remain historical numerical checks only.
-Use white text only on verified dark fills; no color-only state, accent body paragraphs, or faint essential labels. Proposed V1 theme remains light-only; final palette/theme requires later rendered review.
+| Role | Light | Dark | Usage |
+| --- | --- | --- | --- |
+| Canvas | #F4F2ED | #15171B | Open neutral base |
+| Surface | #FFFFFF | #1E2128 | Evidence/editor grouping when needed |
+| Ink | #171A1F | #F1F3F6 | Primary content/identity |
+| Muted ink | #515861 | #B4BBC6 | Readable supporting labels/context |
+| Signal | #244BDB | #93ABFF | Link/focus/local accent; not a required active edge |
+| Signal wash | #E4EAFF | #252F4D | Optional bounded grouping; no default active-card fill |
+| Boundary | #747C8A | #737E90 | Essential control outlines where needed |
+| Destructive | #AE2634 | #FF8792 | Error/destructive text/icon emphasis |
+| Action fill | #244BDB | #3B63EF | Primary filled action, when needed |
+| Action ink | #FFFFFF | #FFFFFF | Text/icon on Action fill only |
+
+Values remain proposals; theme support/default is accepted P14. Do not put white text on dark-theme Signal/Destructive: these are foreground roles, not button fills. Destructive actions use a clear label/icon and verified outline/text treatment; any future filled variant needs its own checked pair.
+No color-only state, accent body paragraphs, or faint labels. Recheck opacity/hover/disabled/overlay combinations in both modes; solid-pair calculations alone do not validate a rendered screen.
+Evidence is not inverted or recolored; keep original screenshot/logo appearance. Use a neutral framed surface if contrast requires it; company-name fallback remains available.
+Historical light calculations are in [design review](../design-review.md); current dark checks and limits are in [refinement review](../visual-refinement-review.md).
 
 ## 4. Type, icons, shape, spacing
 
@@ -83,3 +89,24 @@ Publish/Update and Unpublish/Delete are not interchangeable icon actions. Review
 Hover offers restrained affordance feedback; focus has an independent visible indicator; active selection persists. Loading is scoped; error pairs a recognizable cue with explanation/recovery.
 Optional 120–180ms transitions connect cause/result; no decorative loops, scroll hijacking, or animation waits. Reduced motion keeps immediate feedback.
 [Components](components-interaction-spec.md) define states; [refinement review](../visual-refinement-review.md) compares public/owner wide/narrow cases in prose only. Actual visual quality, icon comprehension, layout, and usability remain unverified.
+
+## 7. Theme behavior — P14 / R27
+
+Default preference is System; available choices are System, Light, Dark. With no saved choice, follow the device appearance; if that cannot be resolved, use Light. A saved explicit choice takes priority.
+System follows device changes while open; explicit Light/Dark stays fixed. Choosing System removes the manual override. Remember the preference in this browser across routes/reloads when persistence is available; otherwise honor it for the current visit, then resume the default. Storage/first-paint mechanisms are deferred to architecture.
+Apply the resolved theme consistently to public pages, sign-in, owner editor, private preview, dialogs, and feedback. This is a local viewing preference, not editable/published content; no account sync or theme publishing control.
+Changing theme never navigates, changes browser history, moves reading position, resets filter/story/section/evidence, saves/publishes, or discards input. Preserve open dialogs and focus. Do not reload to switch.
+Place a compact theme utility in shared navigation, secondary to work/contact. Sun/moon/system icons may lead; its accessible name states preference and resolved mode, e.g. Theme: System, currently Dark. Its single-choice selector shows all three short visible labels and current choice. Avoid three competing primary buttons or a permanent pill strip.
+Use ordinary keyboard/touch selection; selection closes the utility and returns focus to its trigger. A later system-driven change must not steal focus or announce as a blocking message.
+Resolve the initial appearance before visible rendering to avoid an opposite-theme flash, including sign-in/preview. No animated full-page color sweep; reduced motion uses immediate changes.
+
+| ID | Later review scenario | Expected result |
+| --- | --- | --- |
+| TH01 | Fresh visit, device dark/light, preference unavailable | System matches device; unavailable detection falls back to Light |
+| TH02 | Choose explicit mode → route/reload → device changes | Browser choice retained where possible; explicit mode unaffected by device |
+| TH03 | Choose System → device changes while open | Resolved mode updates; content/focus/state unchanged |
+| TH04 | Unsaved editor/open dialog/inspection → switch theme | Input, dialog, reading position, selection and draft/public state preserved |
+| TH05 | Keyboard/320px/reduced motion in both modes | Clear choice/focus/status/error; full public/owner tasks available |
+| TH06 | Evidence/logo + initial visit/preview/sign-in in both modes | Original media intact, readable frame/name; no opposite-theme flash |
+
+These are unexecuted UX/rendering checks. Dark mode adds no new product concept, decorative background policy, or implementation authorization.

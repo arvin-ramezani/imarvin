@@ -1,7 +1,7 @@
 # Accessibility and Responsive Specification
 
 Status: draft public-flow contract | Updated: 2026-10-03.
-Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R26; A04, A09, A11–A12.
+Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R27; A04, A09, A11–A12.
 Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). No rendered accessibility or visual validation has occurred.
 
 Grounding: W3C guidance for [tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/), [text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), and [reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), checked 2026-10-03. The 44px target is our proposed product target, not a claim about an AA minimum.
@@ -46,6 +46,12 @@ Screenshots/diagrams have descriptive alternatives and contextual captions. Comp
 Future video/audio evidence requires appropriate captions/transcript before publication; controls do not autoplay. V1 does not require producing such assets.
 Reduced motion removes spatial travel, parallax, and decorative looping. Content changes and selection feedback remain immediate and understandable. No scroll hijacking, flashing, or animation wait before work/contact access.
 Future zoom/pan of media must have button/keyboard equivalents and a reset; it cannot replace the text explanation or create page-level overflow. This does not add a media-editor requirement.
+
+## Theme parity
+
+Apply the same reading, contrast, focus, touch, reflow, and motion targets in Light and Dark. System is a preference, not a third palette. Check status, pending, error, disabled, selected, dialog, and sign-in states; do not rely on glow/shadow on dark surfaces.
+Theme selection has a clear accessible name/current choice and visible System/Light/Dark option labels. Preserve focus, open-dialog context, and unsaved input; no theme-change reload or motion-dependent feedback. Evidence/logo colors remain authentic.
+Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR08 in both modes. First-appearance/no-flash and persistence implementation remain architecture-dependent.
 
 ## 5. Review scenarios
 

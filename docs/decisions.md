@@ -33,13 +33,14 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P08 | Structured authoring; design controls page layout | 2026-10-03: chose Structured content; R13–R15, A05 |
 | P09 | VS-A Signal Studio, retained as a working proposal | Written-direction choice recorded in PR #1; current instruction: Refine the proposal. Palette/motifs/control styling are not finalized; R26, A12 |
 | P13 | Hierarchy/icons/shape/spacing/state first; short supporting labels; selective decoration | 2026-10-03: owner chose Refine the proposal and supplied this visual-priority preference. Styling in visual-system-spec; essential action meanings remain clear. |
+| P14 | Light + Dark across public/owner views; System default with System/Light/Dark choice | 2026-10-03: owner requested dark mode and chose Follow system. R27; palette and exact control styling remain draft. |
 
 ## Proposed detailed choices
 
 | ID | Proposal | Canonical contract |
 | --- | --- | --- |
 | P10 | Atomic per-unit publication; context-first main-product bootstrap; safe unpublish projections; referenced-delete blocking | [Content/publishing](specs/content-publishing-spec.md) |
-| P11 | Refined visual values, optional local accents, light-only theme, responsive modes; no mandated background pattern/active edge/tab skin | [Visual system](specs/visual-system-spec.md) |
+| P11 | Refined visual values, optional local accents, light/dark palettes and theme-control styling, responsive modes; no mandated background pattern/active edge/tab skin | [Visual system](specs/visual-system-spec.md) |
 | P12 | Explicit save, candidate review, conflict/session recovery, accessible owner confirmations | [Owner UX](specs/owner-ux-spec.md) |
 
 Public navigation/history, detailed component behavior, and acceptance scenarios also remain draft contracts. High-level acceptance never silently approves detailed proposals or the whole PRD.
@@ -57,6 +58,8 @@ Public navigation/history, detailed component behavior, and acceptance scenarios
 Next.js/TypeScript is a preference, not approved architecture. Finish product-design review before stack/implementation work.
 
 ## Superseded direction
+
+Light-only V1 theme guidance is superseded by P14. Dark mode adapts Signal Studio; it does not select Night Instrument.
 
 Former P01 Engineering Practice as a résumé/editorial public model, fixed introduction/experience/projects/about/contact sequence, quiet/neutral defaults, and career chronology are superseded. Problem/contribution/decision/outcome remains a shared content model. Work Atlas/Story Explorer and VS-B/VS-C are unselected history, not V1 modules.
 

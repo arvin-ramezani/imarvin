@@ -1,7 +1,7 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.7 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01–P09 and P13 record owner-confirmed high-level choices; Signal Studio remains a working styling proposal. P10–P12 and detailed specifications remain proposals; the complete PRD is not approved.
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.8 | Updated: 2026-10-03  
+Status: revised draft. Confirmed constraints: C01–C10. P01–P09 and P13–P14 record owner-confirmed high-level choices; Signal Studio remains a working styling proposal. P10–P12 and detailed specifications remain proposals; the complete PRD is not approved.
 
 ## 1. Product intent
 
@@ -63,7 +63,8 @@ R22: Stable deep links and appropriate page/share descriptions; only published d
 R23: Media alternatives and complete layouts with no logo, screenshots, video, or live demo.  
 R24: Progressive depth: quick understanding first, decisions/evidence on request; preserve context when returning.  
 R25: Exploration changes meaningful visible content/state; selection/back/reset are clear; no essential hover-only or animation-only controls.  
-R26: Later design must establish a recognizable composition/identity beyond uniform cards, résumé rows, or cosmetic color changes; creativity remains usable and focused.
+R26: Later design must establish a recognizable composition/identity beyond uniform cards, résumé rows, or cosmetic color changes; creativity remains usable and focused.  
+R27: Light and Dark support public/owner/preview states; default System with System/Light/Dark choice. Theme switching preserves navigation, reading position, focus, selections and unsaved edits; it never saves or publishes content.
 
 ## 6. V1 boundaries
 
@@ -85,10 +86,10 @@ Next.js/TypeScript is a frontend preference only. Backend/storage/authentication
 | A06 | Save does not publish; explicit successful update does; failure preserves public content and input | R16–R18 |
 | A07 | Owner actions/drafts/previews/unpublished assets are private | R12, R19, R22 |
 | A08 | Empty/loading/error/not-found/removal states have a next action | R11, R18 |
-| A09 | Core loop works on desktop/mobile/320px, keyboard, and reduced motion | R20–R21, R25 |
+| A09 | Core loop works in Light/Dark/System on desktop/mobile/320px, keyboard, and reduced motion | R20–R21, R25, R27 |
 | A10 | Stories show real individual contribution and judgment with no invented outcomes | R06, R24 |
 | A11 | Visitor selects work, reveals a decision/evidence, and returns with context; this changes content, not just decoration | R11, R24–R25 |
-| A12 | Design review identifies a concrete signature composition and purposeful interaction; standard CV layout is not accepted | R01, R26 |
+| A12 | Design review identifies a concrete signature composition and purposeful interaction; standard CV layout is not accepted | R01, R26–R27 |
 
 Targets are unverified until later design/implementation review. Liking a concept does not prove usability.
 

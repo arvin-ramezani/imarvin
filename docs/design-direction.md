@@ -6,7 +6,7 @@ Status: Personal Studio (P01) selected; Signal Studio retained as a working visu
 
 Enter Arvin's space → choose work → inspect decisions/evidence → explore again or contact. P05–P07 fix one featured entry, projects-first browsing, and summary then sections.
 
-Signal Studio retains work-led readable type, offset identity, open space, and a main inspection stage with contextual return. Communicate first through hierarchy, icons, shape, spacing, and state changes; keep supporting labels short. Palette and detailed values remain proposals.
+Signal Studio retains work-led readable type, offset identity, open space, and a main inspection stage with contextual return. Communicate first through hierarchy, icons, shape, spacing, and state changes; keep supporting labels short. P14 adds Light and Dark, defaulting to System, for public/owner/preview views. Theme changes preserve content/navigation/editing state. Palette and detailed values remain proposals.
 
 Selective decoration may reinforce meaning/personality. Dot grids, decorative background shadow lines, glow fields, repeated ornamental motifs, and generic pill/segmented tab treatments are not baseline requirements. No mandatory active bracket/edge or filled card. See [visual system](specs/visual-system-spec.md) for the canonical policy.
 

@@ -4,6 +4,8 @@ Arvin Ramezani's creative personal web app.
 
 Phase: written product/UX/design review. Personal Studio is selected; Signal Studio is a working visual proposal being refined. Detailed contracts remain drafts. No images, prototype, application code, or deployment is authorized.
 
+Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
+
 Current visual review: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). Both distinguish written contracts from unrun rendered checks.
 
 ## Read in order
@@ -19,7 +21,7 @@ Current visual review: [Visual refinement](docs/visual-refinement-review.md). Fo
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |
 | [Content/publishing](docs/specs/content-publishing-spec.md) | Private/public versions, dependencies, removal and conflicts |
 | [Visual exploration](docs/visual-exploration.md) | Three written directions; Signal Studio retained as a working proposal |
-| [Visual system](docs/specs/visual-system-spec.md) | Refined surface/control policy, visual hierarchy, draft palette/type and responsive modes |
+| [Visual system](docs/specs/visual-system-spec.md) | Refined surface/control policy, visual hierarchy, draft light/dark palettes, theme behavior and responsive modes |
 | [Components/interactions](docs/specs/components-interaction-spec.md) | Public/owner roles, behaviors and states |
 | [Integrated acceptance](docs/specs/acceptance-spec.md) | A01–A12 coverage and later verification evidence |
 | [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |

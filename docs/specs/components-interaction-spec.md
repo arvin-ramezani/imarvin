@@ -1,13 +1,14 @@
 # Components and Interaction Contract
 
 Status: draft design contract | Updated: 2026-10-03 | Working proposal: Signal Studio (P09/P13); no final visual approval.
-Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R26; A01–A12.
+Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R27; A01–A12.
 Names describe design responsibilities, not React components, library choices, database models, or coding assignments.
 
 ## 1. Public component roles
 
 | Role | Required content / action | States / variation | Narrow and keyboard contract |
 | --- | --- | --- | --- |
+| Theme utility | System/Light/Dark; current preference/resolved appearance | System default, explicit override, persistence unavailable | Icons lead; short option labels; keyboard/touch; focus returns to trigger |
 | Studio navigation | Identity, Work, personal context, Contact | Current destination; private owner entry need not be promoted | Links wrap or use labeled menu; Contact directly discoverable |
 | Featured work object | Title, authored hook, progress, Open work | Available, fallback, no work; no image slot required | Work-first hierarchy; one main link, normal focus |
 | Work collection | Curated objects, optional company selection | All, filtered, loading, empty, request error | Readable sequence; aligned visual/focus order; clear reset |
@@ -45,6 +46,8 @@ During a pending write, prevent duplicate confirmation but keep safe navigation/
 Publication/destructive operations keep explicit short wording even when an icon leads visually. Save draft / Preview / Publish / Update published content / Unpublish / Delete remain distinguishable; do not collapse them into unlabeled utility icons.
 Unavailable buttons have an adjacent reason and resolution path; do not rely on a disabled hover tooltip. Private preview and public view always use distinguishable labels.
 
+Theme utility is shared by public, sign-in, owner, and private-preview surfaces. Its actions alter local appearance only; never Save/Publish, history, filter/story/section/evidence, open dialog, or unsaved editor input. Light/dark palette roles and detailed behavior are canonical in visual-system-spec section 7.
+
 ## 3. Interaction boundaries
 
 Navigation/history/focus transitions belong to navigation-state-spec; content lifecycle belongs to content-publishing-spec. Components expose those contracts rather than inventing local alternatives.
@@ -56,6 +59,7 @@ Do not invent empty cards, fake screenshots, dates, author quotes, telemetry, or
 
 | Surface | Required representative states |
 | --- | --- |
+| Theme | System resolves light/dark; explicit modes; device change; remembered/fallback preference; first appearance; editor/dialog/media parity |
 | Home/collection | Feature available/removed; zero/one/many work; company selected/cleared/empty; long title |
 | Story/experience | Multi/main product; zero/one/three sections; cancelled/offline; no logo/media; evidence failure; unavailable link |
 | Editor | New incomplete draft; unsaved public edit; validation/upload failure; concurrent conflict; expired session |
