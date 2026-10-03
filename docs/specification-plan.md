@@ -5,10 +5,10 @@ Phase: complete written product-design contract for review. P01–P09/P13 record
 ## Order and current status
 
 1. Owner UX + publishing/content: drafted against P02–P04/P08; review detailed removal, dependencies, conflicts, and recovery.
-2. Three written visual directions: explored; Signal Studio (P09) is the retained working proposal; styling refinement follows P13.
+2. Three written visual directions: explored; Signal Studio (P09) is approved; refinement follows P11/P13/P14.
 3. Visual system/components/responsive/interactions: drafted for the selected direction.
-4. Current visual refinement: [refinement review](visual-refinement-review.md) records surface/control rules, Light/Dark/System support, and public/owner wide/narrow contracts; no rendered screen review.
-5. Complete UX/design: document review recorded in [design review](design-review.md); rendered and implemented validation pending.
+4. Current visual refinement: [refinement review](visual-refinement-review.md) records approved surface/control rules, Light/Dark/System support, and owner-approved rendered wide public/owner direction.
+5. Complete UX/design: visual direction is approved; narrow/responsive, interaction, accessibility, empty/error, and implemented validation remain pending.
 6. Later: confirm real content/contact and evaluate an actual visual target when separately requested.
 7. After product-design review: write architecture; then assign bounded implementation only with explicit authorization.
 
@@ -32,8 +32,8 @@ Stack selection is not required before visual design. These documents do not cre
 
 Each specification states status/dependencies, IDs, triggers/results, recovery/parity, scenarios, and open decisions. Read relevant contracts together; do not turn conceptual entities into a schema or components into a library mandate.
 
-O01–O03 are factual gates; O04 requires exact typeface/rendered evaluation; O05 requires technical contracts. Written checks and palette calculations are not usability/security proof. Planned architecture is not an empty approved shell.
+O01–O03 are factual gates; O04 is resolved by the approved rendered visual direction; O05 requires technical contracts. Exact production font/library remains an implementation detail, not a product-design blocker. Written checks and palette calculations are not usability/security proof. Planned architecture is not an empty approved shell.
 
 ## Implementation readiness
 
-Require reviewed behavioral/technical specifications, accurate evidence/contact, approved rendered visual target, and a bounded owner code request. Current documents-only instruction remains in force. No automatic merge, deployment, or restoration of the old CV homepage.
+Require remaining reviewed behavioral/technical specifications, accurate evidence/contact, responsive/interaction validation, and a bounded owner code request before implementation. The rendered visual target is approved. No automatic deployment or restoration of the old CV homepage.
