@@ -1,0 +1,62 @@
+# Decisions
+
+Updated: 2026-10-03. Confirmed = owner constraint. Accepted = owner-approved choice. Proposed = detailed behavior/value for review. Open = missing input. Superseded = do not implement.
+
+Authority: arvin-ramezani/imarvin only. No inheritance from the older project. Documentation and concept selection do not authorize code, images, merge, or deployment.
+
+## Confirmed constraints
+
+| ID | Decision |
+| --- | --- |
+| C01 | Fresh personal web app, separate from the older project |
+| C02 | Employment/freelance outcomes do not prescribe a CV layout |
+| C03 | Private dashboard for content editing |
+| C04 | Company entries use logos only; no company photos/screenshot covers |
+| C05 | Experience supports several projects or the company's main application directly |
+| C06 | Premium/simple means focused/intentional, not mandatory visual quietness |
+| C07 | Current work is documents/knowledge only; no images, prototype, code, deployment |
+| C08 | Source repository arvin-ramezani/imarvin; requirements file PRD.md |
+| C09 | Creative personal web app; rejected portfolio/résumé and boring editorial direction |
+| C10 | Concise English, structured AI context; factual unknowns remain explicit |
+
+## Accepted choices
+
+| ID | Choice | Owner evidence / trace |
+| --- | --- | --- |
+| P01 | Personal Studio: select work, inspect decisions/evidence, retain context | 2026-10-03: “I choose Personal Studio”; product model, not every detailed contract |
+| P02 | Save private draft → preview → explicit Publish/Update; old public version stays until success | 2026-10-03: chose Explicit publishing; R16–R18, A06 |
+| P03 | One owner, English public content, email/professional links, no contact form | 2026-10-03: chose Yes, focused V1; R10, R12, A01 |
+| P04 | Curated work/decisions/evidence; no blog/community/customer portal/AI generation | 2026-10-03: chose Yes, focused V1; PRD V1 boundaries |
+| P05 | Entry leads with one featured work | 2026-10-03: chose One featured work; actual story remains O02; R01–R02 |
+| P06 | Projects-first browse; secondary company context | 2026-10-03: chose Projects first; filter details draft; R03–R07 |
+| P07 | Summary then selectable sections | 2026-10-03: chose Summary then sections; exact state/history details draft; R06, R24–R25 |
+| P08 | Structured authoring; design controls page layout | 2026-10-03: chose Structured content; R13–R15, A05 |
+| P09 | VS-A Signal Studio | 2026-10-03: chose Signal Studio; written visual direction only; R26, A12 |
+
+## Proposed detailed choices
+
+| ID | Proposal | Canonical contract |
+| --- | --- | --- |
+| P10 | Atomic per-unit publication; context-first main-product bootstrap; safe unpublish projections; referenced-delete blocking | [Content/publishing](specs/content-publishing-spec.md) |
+| P11 | Signal Studio palette/type/spacing, light-only theme, content-driven responsive modes | [Visual system](specs/visual-system-spec.md) |
+| P12 | Explicit save, candidate review, conflict/session recovery, accessible owner confirmations | [Owner UX](specs/owner-ux-spec.md) |
+
+Public navigation/history, detailed component behavior, and acceptance scenarios also remain draft contracts. High-level acceptance never silently approves detailed proposals or the whole PRD.
+
+## Open inputs
+
+| ID | Needed | Gate |
+| --- | --- | --- |
+| O01 | Company identity, role/dates, responsibility/team boundaries | Factual publication |
+| O02 | Actual featured work, decisions/evidence, availability, curated grouping/order | Content-backed public design review |
+| O03 | Real contact destinations/availability wording | Contact/publication |
+| O04 | Exact licensed typeface and rendered target; review proposed visual values | Actual visual/UI approval |
+| O05 | Authentication/recovery, storage/assets, publication atomicity, safe delivery/cache/operations | Architecture before implementation |
+
+Next.js/TypeScript is a preference, not approved architecture. Finish product-design review before stack/implementation work.
+
+## Superseded direction
+
+Former P01 Engineering Practice as a résumé/editorial public model, fixed introduction/experience/projects/about/contact sequence, quiet/neutral defaults, and career chronology are superseded. Problem/contribution/decision/outcome remains a shared content model. Work Atlas/Story Explorer and VS-B/VS-C are unselected history, not V1 modules.
+
+On change, record the owner's instruction/date and affected requirement/spec. Keep [design review](design-review.md) honest about written versus rendered/implemented evidence.
