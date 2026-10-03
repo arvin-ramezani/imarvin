@@ -1,8 +1,8 @@
 # Visual System: Signal Studio
 
-Status: working visual proposal retained for refinement (P09/P13); detailed values draft. Updated: 2026-10-03.
+Status: owner-approved visual system target (P09/P11/P13/P14); implementation libraries/tokens and responsive validation pending. Updated: 2026-10-03.
 Authority: [decisions](../decisions.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R27; A01, A09, A12.
-No images, coded UI, rendered target, or aesthetic validation. [Refinement review](../visual-refinement-review.md) records this documentation phase.
+Owner approved representative rendered wide light/dark public and owner screens on 2026-10-03. The reviewed images are approval evidence but are not stored here as implementation assets. [Refinement review](../visual-refinement-review.md) records the approval and remaining validation.
 
 ## 1. Visual communication
 
@@ -30,7 +30,7 @@ Grouping and recognizable control shapes precede explanatory text. Work titles, 
 
 For each accent, name its job and affected relationship/state. Remove it if it competes with work, repeats without meaning, or creates noise. It cannot impersonate evidence, telemetry, or a control.
 
-## 3. Light and dark palette proposals
+## 3. Approved light and dark palette target
 
 Dark mode is the same Signal Studio composition, not the unselected Night Instrument direction. Use neutral charcoal, readable light text, and restrained blue accents; no added glow, grid, or neon treatment.
 
@@ -47,7 +47,7 @@ Dark mode is the same Signal Studio composition, not the unselected Night Instru
 | Action fill | #244BDB | #3B63EF | Primary filled action, when needed |
 | Action ink | #FFFFFF | #FFFFFF | Text/icon on Action fill only |
 
-Values remain proposals; theme support/default is accepted P14. Do not put white text on dark-theme Signal/Destructive: these are foreground roles, not button fills. Destructive actions use a clear label/icon and verified outline/text treatment; any future filled variant needs its own checked pair.
+These values are the approved design target; implementation may adjust a value only for measured accessibility/technical reasons while preserving the approved appearance, with material changes returned for review. Theme support/default is accepted P14. Do not put white text on dark-theme Signal/Destructive: these are foreground roles, not button fills. Destructive actions use a clear label/icon and verified outline/text treatment; any future filled variant needs its own checked pair.
 No color-only state, accent body paragraphs, or faint labels. Recheck opacity/hover/disabled/overlay combinations in both modes; solid-pair calculations alone do not validate a rendered screen.
 Evidence is not inverted or recolored; keep original screenshot/logo appearance. Use a neutral framed surface if contrast requires it; company-name fallback remains available.
 Historical light calculations are in [design review](../design-review.md); current dark checks and limits are in [refinement review](../visual-refinement-review.md).
@@ -88,7 +88,7 @@ Saved privately, Published, Private changes, Error, and Cancelled are distinct m
 Publish/Update and Unpublish/Delete are not interchangeable icon actions. Reviews and confirmations identify operation and effect.
 Hover offers restrained affordance feedback; focus has an independent visible indicator; active selection persists. Loading is scoped; error pairs a recognizable cue with explanation/recovery.
 Optional 120–180ms transitions connect cause/result; no decorative loops, scroll hijacking, or animation waits. Reduced motion keeps immediate feedback.
-[Components](components-interaction-spec.md) define states; [refinement review](../visual-refinement-review.md) compares public/owner wide/narrow cases in prose only. Actual visual quality, icon comprehension, layout, and usability remain unverified.
+[Components](components-interaction-spec.md) define states; [refinement review](../visual-refinement-review.md) records the approved visual direction and remaining checks. Aesthetic direction is approved; icon comprehension, responsive layout behavior, focus/accessibility, and usability remain unverified.
 
 ## 7. Theme behavior — P14 / R27
 
