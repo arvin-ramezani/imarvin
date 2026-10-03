@@ -54,7 +54,7 @@ No Docker, Kubernetes, Redis, queue, or second app node is required for V1.
 
 Use restic for encrypted, deduplicated backups and rclone as the Google Drive transport.
 Google Drive is the off-VPS copy; do not treat a second directory on the same VPS as disaster recovery.
-Create a dedicated Google Drive folder/remote and a dedicated restic repository password.
+Create a dedicated Google Drive folder/remote and a dedicated restic repository password; configure rclone with your own Google OAuth client rather than relying on its retiring shared client ID.
 Keep the rclone token and restic password in root-only files and a separate password manager/recovery record.
 
 Do not back up PostgreSQL's live data directory as application backup.
