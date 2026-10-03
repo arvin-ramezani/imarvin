@@ -1,6 +1,6 @@
 # Specification Plan
 
-Phase: architecture/spec-driven implementation planning. Product behavior/visual direction and the technical baseline are approved; runtime validation and remaining O05 operational decisions remain. Updated: 2026-10-03.
+Phase: architecture/spec-driven implementation planning. Product behavior/visual direction and O05 technical/runtime baseline are approved; runtime validation and feature implementation remain. Updated: 2026-10-03.
 
 ## Order and current status
 
@@ -10,7 +10,7 @@ Phase: architecture/spec-driven implementation planning. Product behavior/visual
 4. Current visual refinement: [refinement review](visual-refinement-review.md) records approved surface/control rules, Light/Dark/System support, and owner-approved rendered wide public/owner direction.
 5. [Responsive & Interaction Validation](responsive-interaction-validation.md): written contract review complete; RV01–RV14 define profiles, tasks, recovery and evidence. Rendered narrow/responsive, interaction, accessibility, empty/error, and implemented checks remain Pending.
 6. Confirm real content/contact (O01–O03); separately authorized responsive rendered/task review compares with the approved wide target.
-7. Technical baseline and spec-driven workflow are documented; next resolve feature-dependent O05 choices, then implement only through bounded issue/spec PRs.
+7. O05 baseline is resolved; next create bounded bootstrap/feature issues/specs and implement only through reviewed PRs.
 
 The selected stack is recorded in [technical architecture](architecture/architecture.md). These documents do not implement the product.
 
@@ -27,15 +27,16 @@ The selected stack is recorded in [technical architecture](architecture/architec
 | [Components/interactions](specs/components-interaction-spec.md) | Draft public/owner responsibilities, states, behaviors | R01–R27 |
 | [Acceptance](specs/acceptance-spec.md) | Draft integrated A01–A12 with stage-appropriate evidence | R01–R27 |
 | [Responsive/interaction validation](responsive-interaction-validation.md) | Written review complete; RV01–RV14 execution Pending | A01–A06, A08–A12; architecture-dependent parts remain separate |
-| [Technical architecture](architecture/architecture.md) | Accepted T01 stack/style/rendering/data/testing defaults; auth/storage/hosting/ops remain open | R12–R19, R22 |
+| [Technical architecture](architecture/architecture.md) | Accepted T01 stack/style/rendering/data/testing defaults | R12–R19, R22 |
+| [Runtime operations](architecture/runtime-operations.md) | Accepted T03–T07 auth/storage/deployment/backup/logging baseline | R12, R19, R22 |
 | [Spec-driven development](engineering/spec-driven-development.md) | Accepted T02 issue/spec/PR/review workflow | Engineering process |
 
 ## Agent context
 
 Each specification states status/dependencies, IDs, triggers/results, recovery/parity, scenarios, and open decisions. Read relevant contracts together; do not turn conceptual entities into a schema or components into a library mandate.
 
-O01–O03 are factual gates; O04 is resolved. O05 is partially resolved by T01; auth/recovery, object/media storage, hosting/deployment, backups/restore and observability remain feature/bootstrap decisions. Exact production font/library remains an implementation detail, not a product-design blocker. Written checks and palette calculations are not usability/security proof. Planned architecture is not an empty approved shell.
+O01–O03 are factual gates; O04 and O05 are resolved at design/architecture level. Exact auth bootstrap, media allowlist/paths, VPS unit/vhost, backup commands/credentials, and log retention settings are implementation-spec details, not open architecture decisions. Exact production font/library remains an implementation detail, not a product-design blocker. Written checks and palette calculations are not usability/security proof. Planned architecture is not an empty approved shell.
 
 ## Implementation readiness
 
-Require a bounded issue plus accepted/linked implementation spec, needed O05 decisions, and appropriate evidence before each implementation PR. The rendered visual target is approved. No automatic deployment or restoration of the old CV homepage.
+Require a bounded issue plus accepted/linked implementation spec and appropriate evidence before each implementation PR. The rendered visual target is approved. No automatic deployment or restoration of the old CV homepage.
