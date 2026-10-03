@@ -18,6 +18,7 @@ Grounding: W3C guidance for [tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs
 
 Choose layout changes when content no longer fits, not from device names. Resizing must not reset selected story, section, evidence, or origin. Desktop inspector and mobile detail are presentations of one public destination, not separate content copies.
 At 320 CSS px, navigation labels/section controls may wrap; no essential control relies on horizontal scrolling. Media scales to available width. Long titles, mixed technical strings, and URLs must wrap without page overflow.
+On a layout change, retain focus on the same control when it remains available. If presentation replaces it, restore focus to its equivalent control or a meaningful heading within the current task; do not jump to Home or reset selection/origin. Visual rearrangement must preserve logical reading/tab order. Sticky navigation and overlays must not obscure the focused control at zoom or in a short viewport.
 
 ## 2. Semantic interaction and focus
 
@@ -66,5 +67,6 @@ Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR0
 | AR07 | Resize with evidence open and company filter stored | Same selected content and valid return context |
 | AR08 | Later signature-composition review | Identity/composition remains distinctive while hierarchy, contrast, and focus stay usable |
 
+The [responsive/interaction validation matrix](../responsive-interaction-validation.md) owns review profiles and evidence status; AR01–AR08 remain the canonical accessibility scenarios.
 Later verification combines manual tasks, accessibility inspection, and representative rendered states. Automated checks alone cannot certify usability. These numerical targets are proposed design acceptance thresholds, not a compliance certification.
 Approved visual palette/type/spacing intent and responsive modes are in [Signal Studio](visual-system-spec.md); component states are in [components](components-interaction-spec.md). The rendered wide light/dark direction is approved, but actual responsive values, focus behavior, icon comprehension, and library choices still require accessibility validation. Preserve the approved visual character without using accessibility as a reason to restore the rejected CV layout.

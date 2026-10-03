@@ -9,7 +9,7 @@ Accepted: Personal Studio; featured work entry; projects-first browse; summary t
 
 | Requested step | Written result | Evidence limit |
 | --- | --- | --- |
-| Owner UX + publishing/content | [Owner UX](specs/owner-ux-spec.md), [content/publishing](specs/content-publishing-spec.md) | Detailed deletion/recovery/reference rules are draft proposals |
+| Owner UX + publishing/content | [Owner UX](specs/owner-ux-spec.md), [content/publishing](specs/content-publishing-spec.md) | P10/P12 behavior later approved in PR #3; implementation mechanisms remain O05 |
 | Three Personal Studio directions | [Visual exploration](visual-exploration.md): Signal Studio, Night Instrument, Specimen Desk | Written briefs; no generated images |
 | Choose and specify | Owner selected Signal Studio; [visual system](specs/visual-system-spec.md), [components](specs/components-interaction-spec.md) | Historical PR #1 state; PR #2 later records rendered light/dark approval |
 | Complete UX/design validation | Contract consistency and coverage reviewed; [A01–A12 acceptance](specs/acceptance-spec.md) mapped | Actual aesthetic/usability/accessibility/security checks unrun |
@@ -59,7 +59,7 @@ All 11 tested pairs pass their stated numerical targets. This covers those solid
 - O01–O03: actual company/role/date/contribution facts, selected featured story/evidence, confirmed contact.
 - O04: resolved in PR #2 by owner approval of the rendered wide light/dark Signal Studio direction; responsive/no-media/empty/error/accessibility checks remain separate validation.
 - O05: architecture after product-design review; authentication/recovery, assets/storage, atomicity/retries/conflicts, safe public delivery/cache, operations.
-- Owner: P11 visual system is later approved in PR #2; P10 and P12 remain detailed proposals.
+- Owner: P11 visual system was approved in PR #2; P10 and P12 behavioral contracts were approved in PR #3.
 - Later execution: public/owner task observation, keyboard/screen-reader/reflow checks, publication failure/concurrency/privacy tests, and exact-head evidence.
 
 Written design work requested here is documented. No code, images, prototype, merge, or deployment. Use this review to accept/refine the design contracts before proceeding to architecture or separately requested rendered exploration.

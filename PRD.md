@@ -1,7 +1,7 @@
 # PRD
 
 Product: imarvin | Owner: Arvin Ramezani | Version: 0.8 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01–P09, P11, and P13–P14 are owner-approved choices; Signal Studio and its current light/dark visual target are approved. P10 and P12 plus remaining detailed behavioral specifications remain proposals; the complete PRD is not blanket-approved.
+Status: revised draft. Confirmed constraints: C01–C10. P01–P14 are owner-approved where listed in decisions; P10 publishing/removal/concurrency behavior and P12 owner save/recovery/conflict behavior are approved. Remaining open items are factual inputs, runtime validation, and architecture; the complete PRD is not blanket implementation approval.
 
 ## 1. Product intent
 
@@ -53,7 +53,7 @@ A company is the organization; experience is Arvin's role; a project is a body o
 | R18 | Retain input on validation/save failures; warn before discarding changes; confirm deletion and show affected references |
 | R19 | Unauthenticated visitors cannot read drafts/previews/unpublished assets or perform owner actions |
 
-P02 is accepted. [Owner UX](docs/specs/owner-ux-spec.md) and [content/publishing](docs/specs/content-publishing-spec.md) define detailed lifecycle/reference/removal proposals. Structured editing (P08) controls content, not arbitrary page layouts.
+P02, P10, and P12 are accepted. [Owner UX](docs/specs/owner-ux-spec.md) and [content/publishing](docs/specs/content-publishing-spec.md) define the approved behavioral contracts; architecture still chooses implementation mechanisms. Structured editing (P08) controls content, not arbitrary page layouts.
 
 ## 5. Experience quality
 

@@ -32,18 +32,15 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P07 | Summary then selectable sections | 2026-10-03: chose Summary then sections; exact state/history details draft; R06, R24–R25 |
 | P08 | Structured authoring; design controls page layout | 2026-10-03: chose Structured content; R13–R15, A05 |
 | P09 | VS-A Signal Studio — approved visual direction | 2026-10-03: owner approved the refined rendered direction after light/dark review; R26, A12 |
+| P10 | Atomic per-unit publication; context-first main-product bootstrap; safe unpublish projections; referenced-delete blocking | 2026-10-03: owner approved the reviewed publishing/removal/concurrency contract. [Content/publishing](specs/content-publishing-spec.md). |
+| P12 | Explicit save, candidate review, conflict/session recovery, accessible owner confirmations | 2026-10-03: owner approved the reviewed owner save/recovery/conflict contract. [Owner UX](specs/owner-ux-spec.md). |
 | P13 | Hierarchy/icons/shape/spacing/state first; short supporting labels; selective decoration | 2026-10-03: owner chose Refine the proposal and supplied this visual-priority preference. Styling in visual-system-spec; essential action meanings remain clear. |
 | P14 | Light + Dark across public/owner views; System default with System/Light/Dark choice | 2026-10-03: owner approved light/dark support and current dark treatment. R27; implementation mechanism remains technical. |
 | P11 | Current Signal Studio visual system: refined hierarchy/surfaces/controls, approved light/dark palette target, responsive composition intent | 2026-10-03: owner approved the rendered public/owner visual direction and requested PR #2 record that approval. [Visual system](specs/visual-system-spec.md). |
 
-## Proposed detailed choices
+## Remaining detailed review
 
-| ID | Proposal | Canonical contract |
-| --- | --- | --- |
-| P10 | Atomic per-unit publication; context-first main-product bootstrap; safe unpublish projections; referenced-delete blocking | [Content/publishing](specs/content-publishing-spec.md) |
-| P12 | Explicit save, candidate review, conflict/session recovery, accessible owner confirmations | [Owner UX](specs/owner-ux-spec.md) |
-
-Public navigation/history, detailed component behavior, and acceptance scenarios also remain draft contracts. High-level acceptance never silently approves detailed proposals or the whole PRD.
+Public navigation/history and component behavior remain contracts to validate at runtime. Approval of P10/P12 does not choose storage, auth, retry, cache, or concurrency mechanisms; those belong to O05 architecture.
 
 ## Open inputs
 

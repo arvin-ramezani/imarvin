@@ -24,13 +24,14 @@ Scope: complete public/owner product-design contract. Does not certify implement
 ## Review procedure
 
 1. Contract review now: check accepted decisions, scopes, source authority, cross-flow consistency, required states, and truthful unknowns.
-2. Owner review: evaluate proposed detailed behaviors/values, including unpublish/delete/conflict handling. Accepted high-level choices do not auto-approve every detail.
+2. Owner review: P10 publishing/removal/concurrency and P12 owner save/recovery/conflict behavior are approved. Remaining review concerns factual inputs, runtime evidence, and architecture mechanisms.
 3. Rendered wide light/dark direction was owner-approved on 2026-10-03. Remaining design validation uses real featured content plus no-media/long-title/empty/error cases and compares narrow/responsive and owner/public states against that approved direction.
 4. Implemented-interaction review only after separate authorization: execute public and owner tasks, failure/concurrency/privacy checks, and record exact head/environment/evidence.
 
 Repeat public/owner/state reviews in both Light and Dark and with System resolved to each. TH01–TH06 cover preference, persistence/fallback, device changes, preserved editing/reading state, and first appearance; these are not executed checks.
 
 Use published-story, draft-edit, cancelled/offline, main-product, multi-project, missing evidence, stale dependency, and empty collection fixtures. Real publication needs O01–O03; synthetic test fixtures must be labeled and never mistaken for public claims.
+Use [Responsive & Interaction Validation](../responsive-interaction-validation.md) for RV01–RV14, viewport/input/theme conditions, written findings and the Pending execution ledger. Existing scenario IDs remain canonical; this matrix does not add scope or approve draft behavior.
 Pass/fail must identify observed behavior and evidence. Unknown/unrun is Pending, not Pass. If a requirement fails, record the smallest contract/design/implementation change and recheck its affected paths.
 
 Apply P13's [visual refinement review](../visual-refinement-review.md) to A09/A12. Icon-first presentation preserves understandable actions and accessible names; tab semantics stay stable while styling is refined.
