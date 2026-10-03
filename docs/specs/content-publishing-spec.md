@@ -1,7 +1,7 @@
 # Content and Publishing Specification
 
 Status: owner-approved lifecycle behavior contract (P02/P10) | Updated: 2026-10-03.
-Saving is private; publishing/updating is explicit. Removal/reference/concurrency behavior below is approved; implementation mechanisms remain O05 architecture.
+Saving is private; publishing/updating is explicit. Removal/reference/concurrency behavior below is approved; T01–T07 provide the architecture/runtime defaults and feature specs define exact mechanisms.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [owner UX](owner-ux-spec.md). Trace: R06–R09, R12–R19, R22; A03–A08, A10.
 
 ## 1. Content model, not database schema
@@ -70,14 +70,14 @@ Before unpublishing, show affected homepage feature/order, company main-product/
 Public views resolve only currently published relationship targets; retained stale references never disclose unpublished names/assets or create dead selection controls. Main-product mode does not silently switch to multi-project mode; missing main product shows an honest empty explanation.
 Unpublishing an experience does not scrub employer names manually written in other published story text. Show that limitation in the impact review; edit those stories explicitly if removal is intended.
 Delete never erases related stories. Incoming saved or published references must first be detached/updated. Show each reference with an editing destination; only currently unpublished, unreferenced units can be deleted.
-Assets stay available while any public snapshot references them. Draft-only assets remain private; remove unused assets after confirming no draft/public reference. Retention/backup details remain O05, not a promised recoverability feature.
+Assets stay available while any public snapshot references them. Draft-only assets remain private; remove unused assets after confirming no draft/public reference. T04/T06 define filesystem storage and off-host backup; application-level historical restore is still not a promised product feature.
 Existing public deep links to removed units receive the neutral unavailable response in [navigation/state](navigation-state-spec.md); nonexistence, removal, and private state are not distinguished publicly.
 
 ## 6. Concurrency and privacy
 
 Save and publication check both candidate revision and relevant public/dependency revisions. A conflict retains local input/working copy and requests review; no silent last-write-wins. Changed destructive-action impact requires renewed confirmation.
 Public HTML/data/metadata/indexes/filter counts/assets contain published material only. Private preview is authorized and excluded from public sharing/indexing; an obscured URL or noindex alone is not access control.
-Authentication, sanitization, asset delivery, cache removal, backups, retry identity, and atomicity mechanisms require the later architecture spec. These contracts do not prove security or production readiness.
+T01–T07 define auth, storage, deployment, backup, and logging defaults. Publishing feature specs must still define transaction/revision/cache details and verify them in implementation; these contracts alone do not prove security or production readiness.
 
 ## 7. Review scenarios
 
