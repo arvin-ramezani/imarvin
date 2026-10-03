@@ -49,9 +49,11 @@ Large features should be decomposed into independently reviewable issues; do not
 5. Keep Server Components/server data access by default; justify new client boundaries/dependencies.
 6. Add/update tests at the lowest useful level.
 7. Run affected lint/type/test/build checks defined by the project.
-8. Self-review diff for scope, accessibility, privacy, logical CSS, and spec traceability.
-9. Open a PR linked to the issue/spec with exact evidence.
-10. Stop for review; do not merge merely because automated checks pass.
+8. For config changes, update the central Zod env schema, `.env.example`, and validation tests together.
+9. For important operations, use the shared logger; never bypass it with `console.*` or feature-local Pino setup.
+10. Self-review diff for scope, accessibility, privacy, logical CSS, config/logging rules, and spec traceability.
+11. Open a PR linked to the issue/spec with exact evidence.
+12. Stop for review; do not merge merely because automated checks pass.
 
 Agents must not invent missing content, architecture, credentials, metrics, dependencies, or product behavior.
 
@@ -85,6 +87,8 @@ Vitest integration: server actions/functions, Prisma/database rules, transaction
 E2E: only critical user journeys whose confidence cannot be obtained cheaply below the browser level.
 Do not duplicate the same assertion at every test layer.
 Runtime product-design checks from RV01–RV14 are executed when the implemented surface exists and recorded as evidence.
+CI/lint must reject direct application `console.*` use and direct Pino imports outside the shared logging module.
+Tests must cover env-schema failure for missing/invalid required config and logger redaction for sensitive fields.
 
 ## 8. UI implementation guardrails
 
@@ -96,7 +100,7 @@ Framer Motion must preserve reduced-motion behavior and must not be required to 
 
 ## 9. Definition of done
 
-A feature is done when implementation matches its accepted spec, required tests pass, review findings are resolved, and evidence is recorded.
+A feature is done when implementation matches its accepted spec, required tests pass, configuration/logging guardrails pass, review findings are resolved, and evidence is recorded.
 Done does not mean every future architecture/runtime validation item is closed; only the issue's declared acceptance must be satisfied.
 Any intentional deviation updates the authoritative spec/decision before or with the implementation PR.
 No undocumented product behavior becomes precedent merely because code was merged.
