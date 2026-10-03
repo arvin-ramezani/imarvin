@@ -1,7 +1,7 @@
 # Owner UX Specification
 
-Status: draft detailed contract | Updated: 2026-10-03.
-Accepted: P02 explicit publishing; P03–P04 focused V1; P08 structured editing. These choices do not approve every behavior below.
+Status: owner-approved behavior contract for P12; remaining technical mechanisms deferred | Updated: 2026-10-03.
+Accepted: P02 explicit publishing; P03–P04 focused V1; P08 structured editing; P12 explicit save/candidate review/conflict/session recovery/accessible confirmations.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [content/publishing](content-publishing-spec.md). Trace: R12–R21; A05–A09.
 
 ## 1. Owner's job and workspace
@@ -81,4 +81,4 @@ Lists work as readable stacked entries when tables do not fit. Reordering announ
 
 ## 8. Open boundaries
 
-Detailed behavior is for review. O01–O03 block truthful publication; O05 blocks authentication/recovery, upload, and persistence implementation. No autosave, bulk publishing, scheduling, reusable page blocks, revision-history UI, or multi-owner workflows in this draft.
+P12 behavior is approved. O01–O03 block truthful publication; O05 blocks authentication/recovery, upload, persistence, and other implementation mechanisms. No autosave, bulk publishing, scheduling, reusable page blocks, revision-history UI, or multi-owner workflows in this draft.
