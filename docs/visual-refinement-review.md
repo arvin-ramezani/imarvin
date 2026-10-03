@@ -1,12 +1,12 @@
 # Visual Refinement Review
 
-Status: written design refinement for review; no rendered/interaction validation. Updated: 2026-10-03.
+Status: owner-approved visual refinement and rendered wide light/dark direction; responsive/interaction/accessibility validation pending. Updated: 2026-10-03.
 Base: merged PR #1, main at 342f9b657e1cb71dae665a20e2dab3d5f067d170. New work is a separate documentation PR.
 Authority: [decisions](decisions.md), [visual system](specs/visual-system-spec.md), [components](specs/components-interaction-spec.md). No code, images, or generated assets.
 
 ## Owner brief
 
-Retain Signal Studio as a proposal to refine. Use hierarchy, icons, shape, spacing, and state changes first; keep text labels short and secondary. Selective decoration is allowed.
+Signal Studio is approved. Use hierarchy, icons, shape, spacing, and state changes first; keep text labels short and secondary. Selective decoration is allowed. Light and dark rendered directions are approved with System as the default preference.
 Personal Studio flows, company logos-only, offline/no-media support, and explicit private-save/publish remain intact. P14 adds Light/Dark with System default, across public/owner/preview; palettes/control details remain proposals.
 
 ## What changes
@@ -18,7 +18,7 @@ Personal Studio flows, company logos-only, offline/no-media support, and explici
 | Tab semantics with unconstrained visual skin | Preserve tab behavior; icon-and-short-label styling integrated with content |
 | Icons only supplement labels | Visual cues may lead; short visible labels resolve ambiguity; utilities may be icon-only with accessible names |
 | Sparse background guidance | Explicit surface policy excludes dotted/shadow-line wallpaper and generic glow/gradient baseline |
-| Written direction marked selected | Retained working proposal; detailed look/feel is not approved or rendered |
+| Written direction marked selected | Refined Signal Studio look/feel and representative rendered light/dark screens are owner-approved |
 | Light-only proposal | Light/Dark accepted; System default; same composition/state contracts |
 
 Dots and decorative background shadow lines were not required by PR #1's documents. This refinement makes their exclusion from the baseline explicit; it does not claim an unseen image was audited.
@@ -47,11 +47,11 @@ These are document-level comparisons, not measured screen results. Actual wide/n
 - A12: work-led composition and inspection are distinctive without relying on patterned backgrounds or generic active controls.
 - Visual-first does not mean text-free: content, essential labels, and publication consequences remain readable.
 - Agents read visual-system-spec for styling and state/lifecycle specs for behavior; do not infer an icon library, CSS, fonts, animations, or asset generation.
-- O04 remains open: final styling, licensed typeface, actual rendered target/review. Architecture and implementation follow product-design review with separate authorization.
+- O04 is resolved: owner approved the current rendered light/dark Signal Studio direction on 2026-10-03. Exact production font/library selection is an implementation detail and must preserve the approved visual character.
 
 ## Validation record
 
-Previous visual-refinement revision checked 125 links, 47 tables, and 42 scenarios. This revision adds R27/P14, six theme scenarios, dark palette roles, and theme parity to review contracts; existing requirement/scenario IDs are retained. Current checks: 127 relative links, 49 Markdown tables, retained R01–R26/A01–A12 plus added R27, and 48 scenario definitions with valid acceptance references. Eleven Markdown files changed in this dark-mode revision. No rendered screen or interaction validation is claimed.
+Previous visual-refinement revision checked 125 links, 47 tables, and 42 scenarios. The dark-mode revision added R27/P14, six theme scenarios, dark palette roles, and theme parity. On 2026-10-03 the owner then reviewed representative public and owner screens in both themes and approved the visual direction. That approval covers art direction, not responsive/interaction/accessibility execution. The rendered images are not stored in this repository as implementation assets.
 This is an author-led contract review. Refine/approve these written rules before separately requesting visual or implementation work.
 
 ## Dark palette calculation
