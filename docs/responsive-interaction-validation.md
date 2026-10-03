@@ -34,7 +34,7 @@ Dimensions below are test viewports in CSS px, not mandatory breakpoints. The [v
 Run core public and owner loops at all four main profiles in both Light and Dark. Add keyboard-only wide/minimum runs, touch narrow runs, screen-reader public/owner runs, reduced motion, and System resolving to each theme. Apply stress profiles to affected rows; do not claim every combination was tested.
 Resize with a section/evidence selected and company filter/origin stored; separately resize an unsaved editor/open dialog. Include an on-screen keyboard: keyboard/browser chrome can reduce available height.
 
-Required fixtures: published story with all sections; summary-only and one-section stories; cancelled/offline and no-media stories; long title/URL; logo-only and missing-logo experiences; multi-project and main-product cases; zero work and zero filter results; unsaved public edit; missing/stale dependency; save/upload failure, conflict and expired session.
+Required fixtures: published story with all sections; summary-only and one-section stories; cancelled/offline and no-media stories; long title/URL; logo-only and missing-logo experiences; multi-project and main-product cases; zero work and zero filter results; unsaved edit to a published story; missing/stale dependency; save/upload failure, conflict and expired session.
 Use confirmed content where available. Synthetic fixtures must be labeled test data, never public employment/results claims. O01–O03 remain factual gates; no invented featured story or contact address.
 
 ## 3. Check matrix
@@ -74,7 +74,22 @@ A01–A06/A08–A12 receive responsive/interaction coverage. A07 security/privac
 
 This is an author-led documentation review, not independent research, a screenshot audit or accessibility certification.
 
-## 5. Execution and evidence handoff
+## 5. Document reasoning result
+
+The canonical specifications were cross-read against RV01–RV14. At the contract level, all 14 cases are internally consistent and have a defined expected outcome and recovery path.
+
+| Group | Document reasoning | Runtime evidence |
+| --- | --- | --- |
+| RV01–RV06 public navigation/detail | PASS — public UX, navigation/state, accessibility and publishing contracts agree | Pending |
+| RV07–RV10 owner/recovery | PASS — owner UX and publishing contracts agree on save/preview/conflict/removal/dialog behavior | Pending |
+| RV11–RV12 theme/accessibility | PASS — theme, focus, reflow, keyboard and reduced-motion contracts agree | Pending |
+| RV13–RV14 absence/signature | PASS — empty/error/removal and approved Signal Studio adaptation rules agree | Pending |
+
+No contract contradiction or missing recovery path was found in this reasoning pass. P10/P12 and other behaviors explicitly marked proposed remain proposals; this PASS means the documents are coherent, not that runtime behavior has been observed.
+
+Runtime-only claims remain Pending: actual reflow/overflow, browser history restoration, focus movement/trapping, on-screen-keyboard behavior, theme first-paint/persistence, unsaved-input retention across real UI changes, session/concurrency/atomic delivery, and assistive-technology output.
+
+## 6. Execution and evidence handoff
 
 1. Review responsive/focus refinements and detailed behavior proposals with the owner.
 2. When separately authorized, compare narrow/medium rendered public/owner states with the approved target; record viewport/theme/content. Static comparison does not close interaction cases.
