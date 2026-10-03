@@ -1,6 +1,6 @@
 # Specification Plan
 
-Phase: complete written product-design contract for review. P01–P09/P13 record high-level choices; Signal Studio remains a working styling proposal; detailed behavior/visual values draft. Updated: 2026-10-03.
+Phase: product-design validation. P01–P09/P11/P13/P14 are approved visual/product choices; P10/P12 and some behavior contracts remain drafts. Updated: 2026-10-03.
 
 ## Order and current status
 
@@ -23,7 +23,7 @@ Stack selection is not required before visual design. These documents do not cre
 | [Owner UX](specs/owner-ux-spec.md) | Draft authoring/preview/confirmation/recovery and owner accessibility; OU01–OU09 | R12–R21 |
 | [Content/publishing](specs/content-publishing-spec.md) | Draft units/versions/reference/bootstrap/removal/concurrency; CP01–CP11 | R06–R09, R12–R19, R22 |
 | [Accessibility/responsive](specs/accessibility-responsive-spec.md) | Draft public parity + shared reading/perception targets; AR01–AR08 | R20–R26 |
-| [Visual system](specs/visual-system-spec.md) | Draft Signal Studio composition, light/dark roles, theme controls, responsive states; VS01–VS05, TH01–TH06 | R01–R02, R20–R27 |
+| [Visual system](specs/visual-system-spec.md) | Approved Signal Studio composition, light/dark roles and theme behavior; responsive states still require validation; VS01–VS05, TH01–TH06 | R01–R02, R20–R27 |
 | [Components/interactions](specs/components-interaction-spec.md) | Draft public/owner responsibilities, states, behaviors | R01–R26 |
 | [Acceptance](specs/acceptance-spec.md) | Draft integrated A01–A12 with stage-appropriate evidence | R01–R26 |
 | architecture-spec.md | Planned after product-design review: auth/recovery/storage/assets, atomic delivery/cache, operations | R12–R19, R22 |
