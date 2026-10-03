@@ -2,7 +2,7 @@
 
 Arvin Ramezani's creative personal web app.
 
-Phase: product/UX design review. Personal Studio, Signal Studio, P10 publishing behavior, and P12 owner recovery behavior are owner-approved. Runtime validation and architecture remain. No application code or deployment is authorized.
+Phase: architecture/spec-driven implementation planning. Product/visual/P10/P12 behavior and the technical baseline are owner-approved; runtime validation and remaining O05 operational choices remain. No application code or deployment is authorized.
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
@@ -27,6 +27,8 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Components/interactions](docs/specs/components-interaction-spec.md) | Public/owner roles, behaviors and states |
 | [Integrated acceptance](docs/specs/acceptance-spec.md) | A01–A12 coverage and later verification evidence |
 | [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) | Next-phase conditions, check matrix, written findings and Pending evidence |
+| [Technical architecture](docs/architecture/architecture.md) | Next.js/PostgreSQL/Prisma server-first modular-monolith baseline |
+| [Spec-driven development](docs/engineering/spec-driven-development.md) | Issue → spec → implementation → PR → review → merge workflow |
 | [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |
 | [Branding principles](docs/branding-principles.md) | Identity, evidence, and truthful storytelling |
 | [Content inventory](docs/content-inventory.md) | Known work and missing facts |
@@ -40,4 +42,4 @@ The owner rejects a portfolio/résumé product. The former fixed homepage sequen
 
 Selected concept A: Personal Studio (P01, owner-approved). Visitors select work and inspect its problem, decisions, and evidence. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
 
-P02–P04 confirm explicit publishing and focused English V1. P05–P07 select featured entry, projects-first browse, and summary/sections. P08 selects structured authoring; P09/P11 approve Signal Studio and the current rendered light/dark visual target; P10 approves publication/removal/concurrency behavior; P12 approves owner save/recovery/conflict behavior; P13 defines visual-first communication; P14 defines System/Light/Dark behavior. Factual content, runtime responsive/interaction/accessibility validation, and architecture remain. A documentation merge does not authorize development. This repository is a fresh start; the older second-brain imarvin project is not inherited.
+P02–P14 decisions are recorded in the product docs. T01/T02 define the technical baseline and spec-driven delivery workflow. Factual content, runtime responsive/interaction/accessibility evidence, and remaining O05 auth/storage/hosting/operations choices remain. A documentation merge does not authorize application development. This repository is a fresh start; the older second-brain imarvin project is not inherited.
