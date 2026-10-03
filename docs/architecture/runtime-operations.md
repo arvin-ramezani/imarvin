@@ -98,7 +98,7 @@ Use systemd restart-on-failure and one external HTTPS uptime check; provider cho
 
 ## 6. Configuration contract
 
-Validate server configuration from `process.env` through one server-only Zod schema/module; `.env` files are inputs, not the source of truth.
+Validate server configuration from `process.env` through one server-only Zod schema/module; `.env` files are inputs, not the source of truth, and application modules do not read `process.env` directly.
 Missing or invalid required production configuration must fail fast before the app accepts traffic; never silently default secrets, database URLs, auth origins, or storage paths.
 Optional settings may have explicit documented defaults, for example `LOG_LEVEL=info`.
 Keep a committed `.env.example` with variable names and safe sample values only; never commit real secrets.
