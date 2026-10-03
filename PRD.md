@@ -1,7 +1,7 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.6 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01–P09 are owner-approved high-level choices. P10–P12 and detailed specifications remain proposals; the complete PRD is not approved.
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.7 | Updated: 2026-10-03  
+Status: revised draft. Confirmed constraints: C01–C10. P01–P09 and P13 record owner-confirmed high-level choices; Signal Studio remains a working styling proposal. P10–P12 and detailed specifications remain proposals; the complete PRD is not approved.
 
 ## 1. Product intent
 
@@ -94,6 +94,6 @@ Targets are unverified until later design/implementation review. Liking a concep
 
 ## 8. Next gate
 
-Review the complete written design contract in [design review](docs/design-review.md). Signal Studio (P09) is selected; the [visual system](docs/specs/visual-system-spec.md) and [components](docs/specs/components-interaction-spec.md) are draft design intent.
+Review the complete written design contract in [design review](docs/design-review.md). Signal Studio (P09) is retained as a working visual proposal; P13 prioritizes hierarchy/icons/shape/spacing/state with short supporting labels and selective decoration; the [visual system](docs/specs/visual-system-spec.md) and [components](docs/specs/components-interaction-spec.md) are draft design intent.
 
 Confirm O01–O03 and review detailed UX/publishing/visual proposals. Actual visual/interaction validation remains pending; no images or code were requested. Complete the later architecture and bounded implementation request only after product-design review; stack selection is not a prerequisite to written visual exploration.

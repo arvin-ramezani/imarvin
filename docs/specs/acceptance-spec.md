@@ -19,7 +19,7 @@ Scope: complete public/owner product-design contract. Does not certify implement
 | A09 | NS06, AR01–AR07, OU08; R20–R21, R25 | Public and owner core loops work at 320px, keyboard, text enlargement, reduced motion | Manual accessibility/responsive tasks; actual focus/reflow evidence |
 | A10 | PU01, PU03, PU05; R06, R24 | Summary identifies personal contribution; decisions/outcomes grounded in approved facts | Content review and visitor explanation task |
 | A11 | PU02, PU05, NS01–NS03; R11, R24–R25 | Selection reveals meaningful content; return restores origin and collection state | State/history interaction walkthrough |
-| A12 | PU08, AR08, VS01–VS05; R01, R26 | Signal Studio's offset work stage, hierarchy, active edge, and inspection are recognizable without CV/grid skeleton | Rendered composition review with rationale; not prose approval alone |
+| A12 | PU08, AR08, VS01–VS05; R01, R26 | Work-led offset stage, hierarchy, and meaningful inspection are recognizable without CV/grid skeleton; background effects, active edge, and pill tabs are not prescribed | Rendered composition review with rationale; not prose approval alone |
 
 ## Review procedure
 
@@ -30,6 +30,8 @@ Scope: complete public/owner product-design contract. Does not certify implement
 
 Use published-story, draft-edit, cancelled/offline, main-product, multi-project, missing evidence, stale dependency, and empty collection fixtures. Real publication needs O01–O03; synthetic test fixtures must be labeled and never mistaken for public claims.
 Pass/fail must identify observed behavior and evidence. Unknown/unrun is Pending, not Pass. If a requirement fails, record the smallest contract/design/implementation change and recheck its affected paths.
+
+Apply P13's [visual refinement review](../visual-refinement-review.md) to A09/A12. Icon-first presentation preserves understandable actions and accessible names; tab semantics stay stable while styling is refined.
 
 ## Remaining readiness boundaries
 

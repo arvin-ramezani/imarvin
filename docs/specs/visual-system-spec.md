@@ -1,73 +1,85 @@
 # Visual System: Signal Studio
 
-Status: selected written direction (P09); proposed visual system for review | Updated: 2026-10-03.
-Authority: [visual exploration](../visual-exploration.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R26; A01, A09, A12.
-No images, coded UI, rendered target, or aesthetic validation. Values below make future design review specific; they are not approved implementation tokens.
+Status: working visual proposal retained for refinement (P09/P13); detailed values draft. Updated: 2026-10-03.
+Authority: [decisions](../decisions.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R26; A01, A09, A12.
+No images, coded UI, rendered target, or aesthetic validation. [Refinement review](../visual-refinement-review.md) records this documentation phase.
 
-## 1. Signature composition
+## 1. Visual communication
 
-VS01: identity is a compact offset anchor; the featured work's problem/contribution is the dominant object. One attached Open work action leads into inspection; Browse/Contact remain clearly available.
-VS02: a slim cobalt signal edge and aligned label mark the active work/section. Repeat the same alignment rule through collection, detail, and evidence; no ornamental brackets scattered around unrelated text.
-VS03: selected work owns a large inspection stage; context/return occupies a narrower rail when space permits. Selection changes meaningful content while title and return context stay anchored.
-VS04: work objects share an open surface and vary in emphasis by authored priority. Do not enclose the entire app in a card or turn every item into the same bordered rectangle.
-VS05: identity, asymmetry, contrasting scale, and inspectable work together constitute the signature. Accent color, oversized name, or animation alone cannot pass A12.
+Owner preference: communicate first through hierarchy, icons, shape, spacing, and visible state changes; labels are short and visually secondary. Selective decoration may reinforce an identifiable relationship or personality.
 
-## 2. Proposed semantic palette
+VS01: compact identity is an offset anchor; featured work's problem/contribution dominates. One attached Open work action leads into inspection; Browse/Contact remain discoverable.
+VS02: active work/section uses stable position, weight, icon/shape, and optional local accent. A cobalt edge, bracket, tinted card, or filled pill is not a required signature. Focus and active selection remain distinct.
+VS03: selected work owns a large inspection stage; context/return sits beside it when space permits. Content changes while title and return stay anchored.
+VS04: work objects share an open surface with authored variations in emphasis. Do not enclose the app in a card or make every item an identical tile.
+VS05: offset composition, work-led scale, and purposeful inspection form the signature. Background effects or generic active-control styling cannot substitute for it.
+
+Grouping and recognizable control shapes precede explanatory text. Work titles, story content, and consequential private/public states remain understandable. Secondary labels are visible/readable, not hidden or low contrast.
+
+## 2. Surface and decoration policy
+
+| Treatment | Contract |
+| --- | --- |
+| Base | Open neutral canvas; no dot grid, decorative shadow-line grid, patterned wallpaper, glow field, or ornamental gradient as the baseline |
+| Separation | Space/alignment first; subtle divider or bounded surface when grouping needs it |
+| Selective accent | Local shape, small rule, or surface contrast may connect context/content or express personality |
+| Shape | Explains grouping/control/selection; no arbitrary blob behind every object |
+| Shadow | Actual overlay separation when needed; no decorative shadow lines or floating-card wall |
+| Selected state | Weight/position/shape/icon plus modest local emphasis; no default wash/glow/border stack |
+| Section controls | Compact icon-and-label selectors integrated into the story; no automatic pill strip or boxed segmented-control look |
+
+For each accent, name its job and affected relationship/state. Remove it if it competes with work, repeats without meaning, or creates noise. It cannot impersonate evidence, telemetry, or a control.
+
+## 3. Retained palette proposal
 
 | Role | Value | Usage |
 | --- | --- | --- |
-| Canvas | #F4F2ED | Bright neutral base; no decorative gradient |
-| Surface | #FFFFFF | Evidence/editing surface only when grouping needs it |
-| Ink | #171A1F | Primary text and strong identity |
-| Muted ink | #515861 | Secondary readable context; never disabled-looking essential text |
-| Signal | #244BDB | Primary action, active edge, links, focus |
-| Signal wash | #E4EAFF | Selected-state grouping where an edge alone is insufficient |
-| Boundary | #747C8A | Essential control outlines; ordinary groups can use spacing alone |
-| Destructive | #AE2634 | Destructive action/error emphasis with explicit text |
+| Canvas | #F4F2ED | Open neutral base |
+| Surface | #FFFFFF | Evidence/editor grouping when needed |
+| Ink | #171A1F | Primary content and identity |
+| Muted ink | #515861 | Supporting labels/context, still readable |
+| Signal | #244BDB | Local action/link/focus accent; no mandated active edge |
+| Signal wash | #E4EAFF | Optional bounded grouping; no default active-card fill |
+| Boundary | #747C8A | Essential control outlines where needed |
+| Destructive | #AE2634 | Error/destructive emphasis with clear meaning |
 
-Use white text only on verified dark action fills. Never use Signal wash as text color or accent-colored body paragraphs. State includes labels/icons where appropriate, not color alone.
-Proposed theme: one light Signal Studio theme for V1. No theme switch or inherited Night Instrument palette. A future dark theme requires separate complete state/contrast review.
+Values are starting proposals, not approved styling. Solid-pair calculations in [design review](../design-review.md) remain historical numerical checks only.
+Use white text only on verified dark fills; no color-only state, accent body paragraphs, or faint essential labels. Proposed V1 theme remains light-only; final palette/theme requires later rendered review.
 
-## 3. Typography and density
+## 4. Type, icons, shape, spacing
 
 | Role | Proposed size / line height | Constraint |
 | --- | --- | --- |
-| Annotation/status | 14 / 20 px | Short labels; never long explanatory paragraphs |
-| Body/control | 16 / 24 px | Stable readable baseline |
-| Lead/summary | 20 / 30 px | Short work hook, not every paragraph |
-| Section title | 28 / 36 px | Clear hierarchy without competing with work title |
-| Work focal type | 32 / 40 px narrow; up to 64 / 72 px wide | One short authored fragment; wraps naturally |
-| Identity | 24 / 32 px | Recognizable but subordinate to featured work |
+| Supporting label/status | 14 / 20px | Short, secondary; consequential meaning explicit |
+| Body/control | 16 / 24px | Readable baseline |
+| Lead/summary | 20 / 30px | Concise work hook |
+| Section title | 28 / 36px | Clear hierarchy |
+| Featured work | 32 / 40px narrow; up to 64 / 72px wide | One authored fragment; wraps |
+| Identity | 24 / 32px | Recognizable, subordinate to work |
 
-Typeface intent: readable grotesk sans for display/body; optional system monospace for brief technical annotations only. Maximum two families. Exact licensed font and weights remain a later rendered-design decision; no font dependency is chosen here.
-Long reading stays around 45–65 characters per line. Use normal case and moderate weight; do not compress copy into tiny type. If a hook is long, recompose/wrap it rather than clipping or shrinking below readable sizes.
+Readable grotesk sans is the intent; optional system monospace only for short technical annotations. Maximum two families; exact licensed font/weight is open. Reading measure approximately 45–65 characters per line.
+Icons use one coherent family, clear silhouettes, and consistent optical weight. A 16–20px icon is a starting size; hit area follows accessibility targets. No icon assets/library are chosen here.
+Icons lead visually where useful; short labels remain visible when meaning is unfamiliar. Familiar icon-only utilities need accessible names. Section, publication, and destructive actions retain visible wording; no essential tooltip-only meaning.
+Shape follows function: proposed 4px control corners, up to 8px grouped evidence/editor areas. Do not turn every status, tab, and action into a pill.
+Proposed spacing: 4, 8, 12, 16, 24, 32, 48, 64, 96px. Tighter within relationships, larger between tasks. Starting maximum width 1440px; gutters 16px narrow and 24–48px wider.
 
-## 4. Space, shape, and surfaces
+## 5. Responsive composition
 
-Proposed spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96 px. Use tighter spacing within a meaning group and larger gaps between tasks.
-Canvas maximum working width: 1440px; narrow gutters start at 16px, wider gutters 24–48px. These are design starting values, not guaranteed breakpoints.
-Work objects use type, alignment, and space first. Controls use a modest 4px corner; grouped evidence/editor areas may use 8px. No default pill badges or rounded-card wall. Elevation is reserved for true overlays, not every object.
-The signal edge belongs outside reading text and never reduces the contrast of the selected content. Icons, if later used, supplement labels; no invented illustration system is required.
-
-## 5. Responsive composition rules
-
-| Layout mode | Starting range to explore | Public composition | Owner composition |
+| Mode | Starting range | Public composition | Owner composition |
 | --- | --- | --- | --- |
-| Wide | Around 1100px+ usable width | Narrow context rail, main work stage; collection/inspector may coexist | Navigation and editor with side-by-side review fields where readable |
-| Medium | Around 720–1099px | Context above stage; fewer simultaneous work objects | Navigation above editor; review groups stack as needed |
-| Narrow | 320–719px | Identity, focal work; focused detail with return/title above summary | Stacked fields/review; primary actions wrap without obscuring input |
+| Wide | Around 1100px+ usable width | Context beside work stage; collection/inspection may coexist | Navigation/editor; readable comparison groups side by side |
+| Medium | Around 720–1099px | Context above stage; fewer simultaneous objects | Navigation above editor; review groups stack |
+| Narrow | 320–719px | Focused work/detail; return/title above summary | Stacked fields/review; actions wrap without covering input |
 
-Select the actual transition when rail + stage + gaps/gutters stop fitting, including enlarged text. Do not force desktop columns onto a tablet just because its width exceeds a number.
-Collection visual order follows reading/focus order. Emphasize the first curated item with scale/space, then vary secondary items within aligned groups; no masonry reorder or canvas drag. Empty/one-item collections remain intentional without duplicate filler objects.
-The summary persists across section changes, but need not be sticky. No sticky rail/action area may cover content, focused fields, or error summaries at zoom/320px.
+Transition when content stops fitting, including enlarged text. Reading/focus/visual order stays aligned; no masonry/canvas reordering.
+Do not remove all mobile labels to preserve a desktop arrangement; wrap/stack and use shorter approved labels. Selection/context survives resize. Optional decoration may disappear without losing meaning.
+At 320px/zoom, focus, errors, and essential actions remain visible. No sticky rail/action area covers content.
 
-## 6. Public and owner relationship
+## 6. Public/owner states and motion
 
-Share palette, type, focus, labels, and action meanings. Public space has expressive composition; owner space uses conventional structured fields and clear private/public state.
-Signal marks an active edit context, not successful publication. Saved privately, Published, Private changes, Error, and Cancelled are separate textual states. Do not imply saving publishes through a color transition.
-
-## 7. Motion and future visual review
-
-Proposed motion: brief 120–180ms state emphasis where useful; no delay before usable content, choreographed loading sequence, scroll control, or animated counters. Reduced motion uses immediate changes. Duration is draft intent, not a chosen animation library.
-Later review compares entry, collection, section detail, evidence, editor, publication review, and removal/error states at wide/narrow widths, long text, no media, zoom, keyboard, and reduced motion.
-Check actual typeface, measured contrast, focus visibility, wrapping, and the recognizable signature. Written palette checks cannot validate final typography, layout, aesthetic quality, or perceived creativity.
+Public composition is expressive; owner editing stays structured. Share visual language without turning the editor into a decorative workspace.
+Saved privately, Published, Private changes, Error, and Cancelled are distinct meanings. Use shape/icon/state plus concise text; never imply Save publishes through a visual transition.
+Publish/Update and Unpublish/Delete are not interchangeable icon actions. Reviews and confirmations identify operation and effect.
+Hover offers restrained affordance feedback; focus has an independent visible indicator; active selection persists. Loading is scoped; error pairs a recognizable cue with explanation/recovery.
+Optional 120–180ms transitions connect cause/result; no decorative loops, scroll hijacking, or animation waits. Reduced motion keeps immediate feedback.
+[Components](components-interaction-spec.md) define states; [refinement review](../visual-refinement-review.md) compares public/owner wide/narrow cases in prose only. Actual visual quality, icon comprehension, layout, and usability remain unverified.

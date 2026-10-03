@@ -1,6 +1,6 @@
 # Product UX and Design Review
 
-Status: written contract review complete; owner review and rendered/implemented validation pending. Updated: 2026-10-03.
+Status: historical PR #1 written contract review; see [current visual refinement](visual-refinement-review.md). owner review and rendered/implemented validation pending. Updated: 2026-10-03.
 Starting PR #1 head: 05deeb4afbba1fcfd5b4b4ea9ad11382808b465b. Final commit/head is reported in the PR handoff; no circular self-SHA claim in this file.
 
 ## Fast owner review

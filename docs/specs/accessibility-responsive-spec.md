@@ -22,8 +22,9 @@ At 320 CSS px, navigation labels/section controls may wrap; no essential control
 ## 2. Semantic interaction and focus
 
 - One meaningful main heading per destination; section/evidence headings reflect hierarchy. Provide a skip-to-main path.
-- Navigation uses links; state changes use appropriately labeled controls. Avoid clickable containers with nested competing actions.
+- Navigation uses links; state changes use appropriately labeled controls. Icon/shape can lead visually with short supporting text (P13), but names, contrast, and discoverability remain clear. Familiar icon-only utilities require accessible names; unfamiliar/section/publication/destructive actions retain visible labels. Avoid clickable containers with nested competing actions.
 - Section selectors expose an accessible tab list with selected state and associated panel. Arrow keys move between available tabs; Home/End reach first/last; Enter/Space activates. Manual activation avoids unwanted requests while moving focus. Tab proceeds to panel content/actions.
+- Tab behavior is semantic: it does not require pill tabs, boxed segments, or a generic active fill. Selection may use weight/shape/icon and restrained emphasis; preserve the selected state and associated panel.
 - Keep selection/focus visibly distinct. Unpublished or absent sections are omitted from tab order and accessibility tree.
 - Filtering uses a clearly labeled control with All work/reset. Result changes announce count politely; focus stays at the filter.
 - New destinations focus their title; section changes retain the selector focus. Evidence opens inline, focuses its heading, and closes back to its trigger. No focus trap for inline inspection.

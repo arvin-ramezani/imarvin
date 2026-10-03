@@ -1,6 +1,6 @@
 # Components and Interaction Contract
 
-Status: draft design contract | Updated: 2026-10-03 | Direction: Signal Studio (P09).
+Status: draft design contract | Updated: 2026-10-03 | Working proposal: Signal Studio (P09/P13); no final visual approval.
 Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R26; A01–A12.
 Names describe design responsibilities, not React components, library choices, database models, or coding assignments.
 
@@ -11,16 +11,18 @@ Names describe design responsibilities, not React components, library choices, d
 | Studio navigation | Identity, Work, personal context, Contact | Current destination; private owner entry need not be promoted | Links wrap or use labeled menu; Contact directly discoverable |
 | Featured work object | Title, authored hook, progress, Open work | Available, fallback, no work; no image slot required | Work-first hierarchy; one main link, normal focus |
 | Work collection | Curated objects, optional company selection | All, filtered, loading, empty, request error | Readable sequence; aligned visual/focus order; clear reset |
-| Work object | Title, hook, progress, optional company context | Default, hover, focus, active | Selection edge plus text; never whole-object nested links |
+| Work object | Title, hook, progress, optional company context | Default, hover, focus, active | Persistent selection cue plus short label; never whole-object nested links |
 | Context rail/header | Selected title, company/role context, return | Collection/company/previous-story origin or All work fallback | Rail folds above content; return label retains real destination |
 | Story summary | Problem, contribution/tasks, progress/outcome, stack | Complete without media; absent optional fields omitted | Readable text; one hierarchy, no badge inventory |
-| Section controls/panel | Problem, Decisions, Evidence | Two-plus: tabs; one: heading/content; zero: summary only | W3C tab behavior; wrapping labels; selected state announced |
+| Section controls/panel | Problem, Decisions, Evidence | Two-plus: tabs; one: heading/content; zero: summary only | Tab semantics with icon-and-short-label styling; wrap labels; selected state announced |
 | Decision object | Constraint, alternatives, choice, consequence/lesson | Authored content, absent section | Strong choice hierarchy; text supports meaning without diagram |
 | Evidence item/inspection | Caption, proof limits, alternative, Open/Close | Text-only, media loading, failed, unavailable | Inline heading focus; Close returns to trigger; Retry keeps story |
 | Experience context | Company name/logo, role/dates/contribution | Logo/name fallback; multi-project or direct main story | Logo-only company treatment; no extra main-product click |
 | Contact destination | Approved destination label and address/link | Available only with confirmed destination | Independent navigation; no form/placeholder links |
 | Feedback area | Loading/error/empty/unavailable explanation | State-specific next action | Text and accessible announcement, never color alone |
 
+Visual priority: hierarchy, icon/shape, spacing, and state change. Labels support these cues without becoming long instructions. Retain visible names for sections and consequential actions; no tooltip-only meaning.
+Section selectors integrate into the reading surface: proposed icon plus short label, selected weight/shape/local mark. No obligatory pill strip, boxed segmented control, glow, or large tinted active tile. Tab semantics do not prescribe tab styling.
 Hover offers a small emphasis only. Keyboard focus remains clearly visible; active selection is a separate marker. No required information appears exclusively on hover.
 Every public component uses published data. Missing media does not change the core hierarchy or disable exploration. Errors do not replace the whole application when only an evidence area fails.
 
@@ -40,6 +42,7 @@ Every public component uses published data. Missing media does not change the co
 | Conflict/session recovery | Reason, retained input, Copy text/Reload or Sign in | No silent overwrite; recheck after recovery | Clear next action; no unusable background submission |
 
 During a pending write, prevent duplicate confirmation but keep safe navigation/recovery meaningful; leaving does not promise cancellation of a server operation. Determine the actual outcome before retrying.
+Publication/destructive operations keep explicit short wording even when an icon leads visually. Save draft / Preview / Publish / Update published content / Unpublish / Delete remain distinguishable; do not collapse them into unlabeled utility icons.
 Unavailable buttons have an adjacent reason and resolution path; do not rely on a disabled hover tooltip. Private preview and public view always use distinguishable labels.
 
 ## 3. Interaction boundaries
@@ -59,4 +62,4 @@ Do not invent empty cards, fake screenshots, dates, author quotes, telemetry, or
 | Preview/review | Saved candidate; missing dependency; public/private comparison; pending/failed/successful update |
 | Removal | Feature/main-product/related impacts; blocked delete; safe cancel; unpublish success/failure |
 
-These are design-review inputs, not screens already drawn or checks already executed. Use [acceptance](acceptance-spec.md) and [design review](../design-review.md) to record evidence at the correct stage.
+These are design-review inputs, not screens already drawn or checks already executed. See [refinement review](../visual-refinement-review.md) for public/owner wide/narrow contracts. Use [acceptance](acceptance-spec.md) and [design review](../design-review.md) to record evidence at the correct stage.

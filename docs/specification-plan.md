@@ -1,15 +1,16 @@
 # Specification Plan
 
-Phase: complete written product-design contract for review. P01–P09 accepted as high-level choices; detailed behavior/visual values draft. Updated: 2026-10-03.
+Phase: complete written product-design contract for review. P01–P09/P13 record high-level choices; Signal Studio remains a working styling proposal; detailed behavior/visual values draft. Updated: 2026-10-03.
 
 ## Order and current status
 
 1. Owner UX + publishing/content: drafted against P02–P04/P08; review detailed removal, dependencies, conflicts, and recovery.
-2. Three written visual directions: explored; owner selected Signal Studio (P09).
+2. Three written visual directions: explored; Signal Studio (P09) is the retained working proposal; styling refinement follows P13.
 3. Visual system/components/responsive/interactions: drafted for the selected direction.
-4. Complete UX/design: document review recorded in [design review](design-review.md); rendered and implemented validation pending.
-5. Later: confirm real content/contact and evaluate an actual visual target when separately requested.
-6. After product-design review: write architecture; then assign bounded implementation only with explicit authorization.
+4. Current visual refinement: [refinement review](visual-refinement-review.md) records surface/control rules and public/owner wide/narrow contracts; no rendered screen review.
+5. Complete UX/design: document review recorded in [design review](design-review.md); rendered and implemented validation pending.
+6. Later: confirm real content/contact and evaluate an actual visual target when separately requested.
+7. After product-design review: write architecture; then assign bounded implementation only with explicit authorization.
 
 Stack selection is not required before visual design. These documents do not create a visual prototype or implement the product.
 
