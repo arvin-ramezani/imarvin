@@ -44,8 +44,13 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | --- | --- | --- |
 | T01 | Server-first Next.js 16+ App Router modular monolith; React 19+, PostgreSQL + Prisma, npm, Tailwind 4+, shadcn/Base UI, Zod + React Hook Form, Framer Motion, Vitest; avoid unnecessary client rendering/React Query | [Technical architecture](architecture/architecture.md) |
 | T02 | Spec-driven delivery: issue → linked spec when needed → implementation → PR → independent review/checks → merge | [Engineering workflow](engineering/spec-driven-development.md) |
+| T03 | Better Auth + Prisma/PostgreSQL, email/password only, one provisioned owner, no public signup/reset-email flow; SSH-only emergency recovery | [Runtime operations](architecture/runtime-operations.md) |
+| T04 | VPS filesystem media outside deploy/public tree; native Next.js FormData first, no Multer; app-authorized media delivery | [Runtime operations](architecture/runtime-operations.md) |
+| T05 | Ubuntu VPS, one systemd-managed Next.js process behind OpenLiteSpeed, local PostgreSQL; DirectAdmin is not an app dependency | [Runtime operations](architecture/runtime-operations.md) |
+| T06 | Encrypted restic backups via rclone to Google Drive; pg_dump + uploads, 6-hour target, tested restores | [Runtime operations](architecture/runtime-operations.md) |
+| T07 | Small observability layer: Pino JSON → stdout/journald, correlation IDs, health check, external uptime check | [Runtime operations](architecture/runtime-operations.md) |
 
-Public navigation/history and component behavior remain contracts to validate at runtime. T01 chooses defaults, not feature-specific schema/auth/storage/hosting mechanisms.
+Public navigation/history and component behavior remain contracts to validate at runtime. T01–T07 choose architecture defaults; feature specs own exact schema, commands, limits, and deployment details.
 
 ## Open inputs
 
@@ -54,9 +59,8 @@ Public navigation/history and component behavior remain contracts to validate at
 | O01 | Company identity, role/dates, responsibility/team boundaries | Factual publication |
 | O02 | Actual featured work, decisions/evidence, availability, curated grouping/order | Content-backed public design review |
 | O03 | Real contact destinations/availability wording | Contact/publication |
-| O05 | Auth/recovery, object/media storage, hosting/deployment, backup/restore, observability; feature-specific publication/cache mechanisms | Resolve when required by bootstrap/feature specs |
 
-T01 is the approved architecture baseline. Application implementation still requires the T02 issue/spec workflow and any unresolved O05 decision needed by that feature.
+O05 is resolved at architecture level by T01/T03–T07. Application implementation still requires the T02 issue/spec workflow and feature-specific technical details.
 
 ## Superseded direction
 
