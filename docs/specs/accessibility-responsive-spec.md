@@ -2,7 +2,7 @@
 
 Status: draft public-flow contract | Updated: 2026-10-03.
 Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R27; A04, A09, A11–A12.
-Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). No rendered accessibility or visual validation has occurred.
+Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). The rendered wide visual direction is owner-approved; rendered accessibility and responsive validation have not yet occurred.
 
 Grounding: W3C guidance for [tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/), [text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), and [reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), checked 2026-10-03. The 44px target is our proposed product target, not a claim about an AA minimum.
 
