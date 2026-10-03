@@ -1,6 +1,6 @@
 # Design Direction
 
-Status: Personal Studio (P01) selected; Signal Studio retained as a working visual proposal (P09/P13). Detailed styling is not approved. Updated: 2026-10-03.
+Status: Personal Studio and Signal Studio selected; current light/dark visual direction approved (P09/P11/P13/P14). Updated: 2026-10-03.
 
 ## Product and expression
 
@@ -20,7 +20,7 @@ Premium means crafted hierarchy and recognizable identity. Simple means few mean
 | Destinations, history, return, errors, public privacy | [Navigation/state](specs/navigation-state-spec.md) |
 | Structured private authoring and review/recovery | [Owner UX](specs/owner-ux-spec.md) |
 | Draft/public versions, dependencies, removal | [Content/publishing](specs/content-publishing-spec.md) |
-| Working visual proposal, surface/control policy, responsive composition | [Visual system](specs/visual-system-spec.md) |
+| Approved visual system, surface/control policy, theme behavior, responsive composition | [Visual system](specs/visual-system-spec.md) |
 | Public/owner component responsibilities and states | [Components](specs/components-interaction-spec.md) |
 | Reading/focus/reflow/motion and parity | [Accessibility](specs/accessibility-responsive-spec.md) |
 | Foundations review and evidence limits | [Design review](design-review.md) |
@@ -32,4 +32,4 @@ Do not duplicate detailed contracts here. Unselected visual options remain in [v
 
 Reject the fixed CV skeleton, chronological résumé rows, uniform card walls, generic metrics/sidebar dashboard, fabricated product evidence, hover-only controls, forced tours, and cosmetic creativity without useful inspection.
 
-No visual quality, usability, accessibility conformance, or production readiness is certified by written documents. Exact typeface/rendered target, truthful public content/contact, and architecture remain open. No code, images, merge, or deployment is authorized.
+Owner approved the rendered wide light/dark visual direction on 2026-10-03. This certifies the art direction, not responsive usability, accessibility conformance, truthful public content, or production readiness. Exact production font/library choice may be finalized during implementation only if it preserves the approved visual character. Architecture remains open; this document does not authorize code or deployment.
