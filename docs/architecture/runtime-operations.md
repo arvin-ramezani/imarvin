@@ -19,6 +19,11 @@ Emergency recovery is SSH-only: a server-side maintenance command recreates/rese
 Content ownership must not depend on the auth-user row, so emergency credential recovery cannot orphan content.
 The auth bootstrap/recovery implementation spec must use Better Auth server APIs/schema safely; never expose a recovery HTTP endpoint.
 
+Iran deployment note: Better Auth core is self-hosted open-source software; this email/password + local PostgreSQL design has no runtime dependency on a Better Auth SaaS or social provider.
+No Iran-specific restriction is documented for Better Auth core; optional hosted/infrastructure plugins that require external Better Auth services are outside this baseline.
+The production bootstrap must verify npm/GitHub/Ubuntu repository access from the target Iranian VPS and keep the lockfile/build process reproducible because third-party network availability can differ by region.
+Country/provider/legal restrictions are an operations constraint, not an authentication-library dependency; re-check external services before production rollout.
+
 ## 2. Filesystem media — T04
 
 Use VPS filesystem storage for V1; do not add S3/object storage while volume and traffic stay small.
