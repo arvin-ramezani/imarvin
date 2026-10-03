@@ -12,9 +12,9 @@ Landing view is the Work list: title, project status, publication state, Edit, a
 
 ## 2. Identity and access
 
-One provisioned owner; no public registration or invitation flow. Sign-in shows labeled credentials and a generic failure message without account disclosure. Authentication method is unresolved O05; do not assume passwords, social login, or magic links.
+One provisioned owner; no public registration or invitation flow. Sign-in shows labeled credentials and a generic failure message without account disclosure. T03 selects Better Auth email/password with public sign-up disabled; [runtime operations](../architecture/runtime-operations.md) owns recovery/session details.
 Sign-out returns to sign-in and prevents revisiting private content through cached views. If edits are unsaved, offer Save and sign out, Discard and sign out, or Keep editing. Failed save does not sign out or lose input.
-Expired session stops writes and shows Sign in again. Retain in-session editing input where feasible; after reauthentication reload the saved revision and require conflict handling before retry. Cross-refresh persistence of unsaved input is not promised. Exact recovery and retention mechanism is an architecture prerequisite.
+Expired session stops writes and shows Sign in again. Retain in-session editing input where feasible; after reauthentication reload the saved revision and require conflict handling before retry. Cross-refresh persistence of unsaved input is not promised. Emergency credential recovery is SSH-only per T03; editor recovery behavior remains P12.
 
 ## 3. Structured authoring
 
@@ -28,7 +28,7 @@ Expired session stops writes and shows Sign in again. Retain in-session editing 
 Field help gives one short purpose and an optional example labeled as an example. It never autofills invented outcomes or identity. Drafts may be incomplete; publication checks show missing inputs.
 Experience associations reuse stories. A main-product selection must belong to that experience; switching mode changes presentation without duplicating story content. Explicitly detach an association to make a story standalone.
 For a new main-product experience, guide context-only publication → associated story publication → explicit experience update selecting that story. Explain the temporary public no-project state before each confirmation.
-Evidence editing supports caption, what it demonstrates, permission confirmation, text alternative, and public link or permitted upload. Inaccessible/failed media is removable; the story remains usable without it. Upload formats/limits are unresolved O05, shown before upload when chosen.
+Evidence editing supports caption, what it demonstrates, permission confirmation, text alternative, and public link or permitted upload. Inaccessible/failed media is removable; the story remains usable without it. T04 selects filesystem storage/native FormData with a 10 MiB baseline; exact allowlist belongs to the upload feature spec.
 Order controls include Move up/Move down and an explicit featured-story selector; drag is optional and never the only method. Selecting/order editing changes a private settings draft until publication.
 
 ## 4. Editing state and actions
@@ -81,4 +81,4 @@ Lists work as readable stacked entries when tables do not fit. Reordering announ
 
 ## 8. Open boundaries
 
-P12 behavior is approved. O01–O03 block truthful publication; O05 blocks authentication/recovery, upload, persistence, and other implementation mechanisms. No autosave, bulk publishing, scheduling, reusable page blocks, revision-history UI, or multi-owner workflows in this draft.
+P12 behavior is approved. O01–O03 block truthful publication; T01–T07 resolve O05 architecture defaults. Exact implementation mechanisms are defined only in bounded feature/bootstrap specs. No autosave, bulk publishing, scheduling, reusable page blocks, revision-history UI, or multi-owner workflows in this draft.
