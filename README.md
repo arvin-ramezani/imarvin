@@ -2,7 +2,7 @@
 
 Arvin Ramezani's creative personal web app.
 
-Phase: architecture/spec-driven implementation planning. Product/visual/P10/P12 behavior and the technical baseline are owner-approved; runtime validation and remaining O05 operational choices remain. No application code or deployment is authorized.
+Phase: architecture/spec-driven implementation planning. Product/visual behavior and O05 architecture/runtime choices are owner-approved; runtime product validation and feature implementation remain. No application code or deployment is authorized.
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
@@ -28,6 +28,7 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Integrated acceptance](docs/specs/acceptance-spec.md) | A01–A12 coverage and later verification evidence |
 | [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) | Next-phase conditions, check matrix, written findings and Pending evidence |
 | [Technical architecture](docs/architecture/architecture.md) | Next.js/PostgreSQL/Prisma server-first modular-monolith baseline |
+| [Runtime operations](docs/architecture/runtime-operations.md) | Better Auth, filesystem media, VPS/OLS, Google Drive backup, Pino/journald |
 | [Spec-driven development](docs/engineering/spec-driven-development.md) | Issue → spec → implementation → PR → review → merge workflow |
 | [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |
 | [Branding principles](docs/branding-principles.md) | Identity, evidence, and truthful storytelling |
@@ -42,4 +43,4 @@ The owner rejects a portfolio/résumé product. The former fixed homepage sequen
 
 Selected concept A: Personal Studio (P01, owner-approved). Visitors select work and inspect its problem, decisions, and evidence. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
 
-P02–P14 decisions are recorded in the product docs. T01/T02 define the technical baseline and spec-driven delivery workflow. Factual content, runtime responsive/interaction/accessibility evidence, and remaining O05 auth/storage/hosting/operations choices remain. A documentation merge does not authorize application development. This repository is a fresh start; the older second-brain imarvin project is not inherited.
+P02–P14 decisions are recorded in the product docs. T01–T07 define the technical/runtime baseline and spec-driven delivery workflow. O05 is resolved at architecture level; exact deployment/bootstrap commands remain implementation-spec details. Factual content and runtime responsive/interaction/accessibility evidence remain. A documentation merge does not authorize application development. This repository is a fresh start; the older second-brain imarvin project is not inherited.
