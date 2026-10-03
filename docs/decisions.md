@@ -31,14 +31,16 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P06 | Projects-first browse; secondary company context | 2026-10-03: chose Projects first; filter details draft; R03–R07 |
 | P07 | Summary then selectable sections | 2026-10-03: chose Summary then sections; exact state/history details draft; R06, R24–R25 |
 | P08 | Structured authoring; design controls page layout | 2026-10-03: chose Structured content; R13–R15, A05 |
-| P09 | VS-A Signal Studio | 2026-10-03: chose Signal Studio; written visual direction only; R26, A12 |
+| P09 | VS-A Signal Studio — approved visual direction | 2026-10-03: owner approved the refined rendered direction after light/dark review; R26, A12 |
+| P13 | Hierarchy/icons/shape/spacing/state first; short supporting labels; selective decoration | 2026-10-03: owner chose Refine the proposal and supplied this visual-priority preference. Styling in visual-system-spec; essential action meanings remain clear. |
+| P14 | Light + Dark across public/owner views; System default with System/Light/Dark choice | 2026-10-03: owner approved light/dark support and current dark treatment. R27; implementation mechanism remains technical. |
+| P11 | Current Signal Studio visual system: refined hierarchy/surfaces/controls, approved light/dark palette target, responsive composition intent | 2026-10-03: owner approved the rendered public/owner visual direction and requested PR #2 record that approval. [Visual system](specs/visual-system-spec.md). |
 
 ## Proposed detailed choices
 
 | ID | Proposal | Canonical contract |
 | --- | --- | --- |
 | P10 | Atomic per-unit publication; context-first main-product bootstrap; safe unpublish projections; referenced-delete blocking | [Content/publishing](specs/content-publishing-spec.md) |
-| P11 | Signal Studio palette/type/spacing, light-only theme, content-driven responsive modes | [Visual system](specs/visual-system-spec.md) |
 | P12 | Explicit save, candidate review, conflict/session recovery, accessible owner confirmations | [Owner UX](specs/owner-ux-spec.md) |
 
 Public navigation/history, detailed component behavior, and acceptance scenarios also remain draft contracts. High-level acceptance never silently approves detailed proposals or the whole PRD.
@@ -50,13 +52,16 @@ Public navigation/history, detailed component behavior, and acceptance scenarios
 | O01 | Company identity, role/dates, responsibility/team boundaries | Factual publication |
 | O02 | Actual featured work, decisions/evidence, availability, curated grouping/order | Content-backed public design review |
 | O03 | Real contact destinations/availability wording | Contact/publication |
-| O04 | Exact licensed typeface and rendered target; review proposed visual values | Actual visual/UI approval |
 | O05 | Authentication/recovery, storage/assets, publication atomicity, safe delivery/cache/operations | Architecture before implementation |
 
 Next.js/TypeScript is a preference, not approved architecture. Finish product-design review before stack/implementation work.
 
 ## Superseded direction
 
+Light-only V1 theme guidance is superseded by P14. Dark mode adapts Signal Studio; it does not select Night Instrument.
+
 Former P01 Engineering Practice as a résumé/editorial public model, fixed introduction/experience/projects/about/contact sequence, quiet/neutral defaults, and career chronology are superseded. Problem/contribution/decision/outcome remains a shared content model. Work Atlas/Story Explorer and VS-B/VS-C are unselected history, not V1 modules.
+
+Visual refinement in PR #2 is owner-approved. O04 is resolved by the 2026-10-03 rendered light/dark review; the reviewed images are approval evidence but are not repository implementation assets. Exact production font/library selection is an implementation detail and must preserve the approved visual character.
 
 On change, record the owner's instruction/date and affected requirement/spec. Keep [design review](design-review.md) honest about written versus rendered/implemented evidence.

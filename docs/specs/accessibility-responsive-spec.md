@@ -1,8 +1,8 @@
 # Accessibility and Responsive Specification
 
 Status: draft public-flow contract | Updated: 2026-10-03.
-Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R26; A04, A09, A11–A12.
-Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). No rendered accessibility or visual validation has occurred.
+Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R27; A04, A09, A11–A12.
+Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). The rendered wide visual direction is owner-approved; rendered accessibility and responsive validation have not yet occurred.
 
 Grounding: W3C guidance for [tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/), [text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), and [reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), checked 2026-10-03. The 44px target is our proposed product target, not a claim about an AA minimum.
 
@@ -22,8 +22,9 @@ At 320 CSS px, navigation labels/section controls may wrap; no essential control
 ## 2. Semantic interaction and focus
 
 - One meaningful main heading per destination; section/evidence headings reflect hierarchy. Provide a skip-to-main path.
-- Navigation uses links; state changes use appropriately labeled controls. Avoid clickable containers with nested competing actions.
+- Navigation uses links; state changes use appropriately labeled controls. Icon/shape can lead visually with short supporting text (P13), but names, contrast, and discoverability remain clear. Familiar icon-only utilities require accessible names; unfamiliar/section/publication/destructive actions retain visible labels. Avoid clickable containers with nested competing actions.
 - Section selectors expose an accessible tab list with selected state and associated panel. Arrow keys move between available tabs; Home/End reach first/last; Enter/Space activates. Manual activation avoids unwanted requests while moving focus. Tab proceeds to panel content/actions.
+- Tab behavior is semantic: it does not require pill tabs, boxed segments, or a generic active fill. Selection may use weight/shape/icon and restrained emphasis; preserve the selected state and associated panel.
 - Keep selection/focus visibly distinct. Unpublished or absent sections are omitted from tab order and accessibility tree.
 - Filtering uses a clearly labeled control with All work/reset. Result changes announce count politely; focus stays at the filter.
 - New destinations focus their title; section changes retain the selector focus. Evidence opens inline, focuses its heading, and closes back to its trigger. No focus trap for inline inspection.
@@ -46,6 +47,12 @@ Future video/audio evidence requires appropriate captions/transcript before publ
 Reduced motion removes spatial travel, parallax, and decorative looping. Content changes and selection feedback remain immediate and understandable. No scroll hijacking, flashing, or animation wait before work/contact access.
 Future zoom/pan of media must have button/keyboard equivalents and a reset; it cannot replace the text explanation or create page-level overflow. This does not add a media-editor requirement.
 
+## Theme parity
+
+Apply the same reading, contrast, focus, touch, reflow, and motion targets in Light and Dark. System is a preference, not a third palette. Check status, pending, error, disabled, selected, dialog, and sign-in states; do not rely on glow/shadow on dark surfaces.
+Theme selection has a clear accessible name/current choice and visible System/Light/Dark option labels. Preserve focus, open-dialog context, and unsaved input; no theme-change reload or motion-dependent feedback. Evidence/logo colors remain authentic.
+Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR08 in both modes. First-appearance/no-flash and persistence implementation remain architecture-dependent.
+
 ## 5. Review scenarios
 
 | ID | Check | Pass condition |
@@ -60,4 +67,4 @@ Future zoom/pan of media must have button/keyboard equivalents and a reset; it c
 | AR08 | Later signature-composition review | Identity/composition remains distinctive while hierarchy, contrast, and focus stay usable |
 
 Later verification combines manual tasks, accessibility inspection, and representative rendered states. Automated checks alone cannot certify usability. These numerical targets are proposed design acceptance thresholds, not a compliance certification.
-Proposed palette/type/spacing/responsive modes are in [Signal Studio](visual-system-spec.md); component states are in [components](components-interaction-spec.md). Actual rendered values and library choices remain unapproved. Preserve these outcomes when selecting a visual target; do not use accessibility as a reason to restore the rejected CV layout.
+Approved visual palette/type/spacing intent and responsive modes are in [Signal Studio](visual-system-spec.md); component states are in [components](components-interaction-spec.md). The rendered wide light/dark direction is approved, but actual responsive values, focus behavior, icon comprehension, and library choices still require accessibility validation. Preserve the approved visual character without using accessibility as a reason to restore the rejected CV layout.
