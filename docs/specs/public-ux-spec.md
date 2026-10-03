@@ -89,5 +89,5 @@ Validate later with task observation and actual rendered interaction. These are 
 
 ## 8. Open scope and agent boundary
 
-Resolve O01–O03 for factual content/contact and O04 for rendered visual approval. P02–P04 now confirm explicit publishing and focused V1. See [owner UX](owner-ux-spec.md), [content/publishing](content-publishing-spec.md), and [Signal Studio](visual-system-spec.md); their detailed contracts remain drafts.
+Resolve O01–O03 for factual content/contact. O04 is resolved by owner approval of the rendered wide light/dark direction; remaining responsive/interaction checks are tracked in [validation](../responsive-interaction-validation.md). P02–P04 now confirm explicit publishing and focused V1. See [owner UX](owner-ux-spec.md), [content/publishing](content-publishing-spec.md), and [Signal Studio](visual-system-spec.md); their detailed contracts remain drafts.
 Agents must use this flow with the navigation and accessibility contracts, retain requirement IDs, and flag missing inputs. Do not infer components, framework APIs, schema, animation timing, palette, or implementation authorization from these documents.

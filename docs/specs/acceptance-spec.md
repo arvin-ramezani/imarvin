@@ -31,6 +31,7 @@ Scope: complete public/owner product-design contract. Does not certify implement
 Repeat public/owner/state reviews in both Light and Dark and with System resolved to each. TH01–TH06 cover preference, persistence/fallback, device changes, preserved editing/reading state, and first appearance; these are not executed checks.
 
 Use published-story, draft-edit, cancelled/offline, main-product, multi-project, missing evidence, stale dependency, and empty collection fixtures. Real publication needs O01–O03; synthetic test fixtures must be labeled and never mistaken for public claims.
+Use [Responsive & Interaction Validation](../responsive-interaction-validation.md) for RV01–RV14, viewport/input/theme conditions, written findings and the Pending execution ledger. Existing scenario IDs remain canonical; this matrix does not add scope or approve draft behavior.
 Pass/fail must identify observed behavior and evidence. Unknown/unrun is Pending, not Pass. If a requirement fails, record the smallest contract/design/implementation change and recheck its affected paths.
 
 Apply P13's [visual refinement review](../visual-refinement-review.md) to A09/A12. Icon-first presentation preserves understandable actions and accessible names; tab semantics stay stable while styling is refined.

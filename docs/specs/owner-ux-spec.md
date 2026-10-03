@@ -59,8 +59,10 @@ Unsaved-change discard and permanent deletion are different labels/actions. Do n
 ## 6. Responsive and accessible owner editing
 
 Use the [shared perception/reading targets](accessibility-responsive-spec.md). At 320px, editor fields/actions reflow; status remains visible and action bars cannot cover errors or the focused field. No desktop-only publishing capability.
+Resize, orientation and on-screen-keyboard changes preserve editor values, focus and caret where the field remains active. Scroll the focused field and its validation/help into usable view rather than shrinking text or clearing input. Review comparisons stack with explicit public/candidate labels; no narrow-only loss of publishing or recovery actions.
 Labels remain visible; required/optional state and errors use text. An error summary links to fields; failed submissions focus the summary, then preserve input. Announce save/publication state without moving focus unnecessarily.
 Dialogs have a title, described impact, predictable initial focus, Escape/Cancel, contained keyboard focus, and return to the invoking control. If the item disappears, focus a valid list heading instead.
+In short-height/zoomed viewports, dialog content scrolls within the available area; title/impact and confirmation/cancel actions remain reachable without page overflow or an obscured focused control. Resizing preserves the open dialog and its operation; theme changes do not dismiss or confirm it.
 Lists work as readable stacked entries when tables do not fit. Reordering announcements identify item and new position. Upload accepts a normal file picker, not drag alone. Reduced motion removes decorative travel.
 
 ## 7. Review scenarios

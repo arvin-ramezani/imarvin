@@ -6,6 +6,8 @@ Phase: product/UX design review. Personal Studio and Signal Studio are selected;
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
+Current validation: [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) defines the next checks; written review is complete and rendered/task execution is pending.
+
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
 ## Read in order
@@ -15,7 +17,7 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [PRD](PRD.md) | User outcomes, scope, requirements, acceptance |
 | [Design concepts](docs/design-concepts.md) | Selected concept and two unselected alternatives |
 | [Design direction](docs/design-direction.md) | Personal Studio direction and draft UX contracts |
-| [Public UX specification](docs/specs/public-ux-spec.md) | Homepage, projects-first browsing, summary/section detail; read this next |
+| [Public UX specification](docs/specs/public-ux-spec.md) | Homepage, projects-first browsing, summary/section detail |
 | [Navigation/state specification](docs/specs/navigation-state-spec.md) | Destinations, return context, failures, safe deep links |
 | [Accessibility/responsive specification](docs/specs/accessibility-responsive-spec.md) | Public-flow mobile, keyboard, reading, motion contracts |
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |
@@ -24,6 +26,7 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Visual system](docs/specs/visual-system-spec.md) | Approved surface/control direction, light/dark palette target, theme behavior and responsive modes |
 | [Components/interactions](docs/specs/components-interaction-spec.md) | Public/owner roles, behaviors and states |
 | [Integrated acceptance](docs/specs/acceptance-spec.md) | A01–A12 coverage and later verification evidence |
+| [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) | Next-phase conditions, check matrix, written findings and Pending evidence |
 | [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |
 | [Branding principles](docs/branding-principles.md) | Identity, evidence, and truthful storytelling |
 | [Content inventory](docs/content-inventory.md) | Known work and missing facts |
