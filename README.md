@@ -21,7 +21,7 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |
 | [Content/publishing](docs/specs/content-publishing-spec.md) | Private/public versions, dependencies, removal and conflicts |
 | [Visual exploration](docs/visual-exploration.md) | Three written directions; Signal Studio approved |
-| [Visual system](docs/specs/visual-system-spec.md) | Refined surface/control policy, visual hierarchy, draft light/dark palettes, theme behavior and responsive modes |
+| [Visual system](docs/specs/visual-system-spec.md) | Approved surface/control direction, light/dark palette target, theme behavior and responsive modes |
 | [Components/interactions](docs/specs/components-interaction-spec.md) | Public/owner roles, behaviors and states |
 | [Integrated acceptance](docs/specs/acceptance-spec.md) | A01–A12 coverage and later verification evidence |
 | [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |
