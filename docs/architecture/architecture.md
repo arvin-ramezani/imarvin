@@ -60,6 +60,8 @@ features/theme/         System/Light/Dark preference and UI
 components/ui/          shadcn-based primitives
 components/shared/      cross-feature composed UI
 lib/db/                 Prisma client and transaction helpers
+lib/config/             server-only validated environment/config
+lib/logging/            shared Pino logger, redaction, event helpers
 lib/validation/         shared Zod schemas when genuinely shared
 lib/auth/               Better Auth/session/authorization adapter
 prisma/                 schema and migrations
