@@ -1,7 +1,7 @@
 # PRD
 
 Product: imarvin | Owner: Arvin Ramezani | Version: 0.8 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01–P14 are owner-approved where listed in decisions; P10 publishing/removal/concurrency behavior and P12 owner save/recovery/conflict behavior are approved. Remaining open items are factual inputs, runtime validation, and architecture; the complete PRD is not blanket implementation approval.
+Status: revised draft. Confirmed constraints: C01–C10. P01–P14 and T01–T07 are owner-approved where listed in decisions. Remaining open items are factual inputs, runtime validation, and feature-level implementation details; the complete PRD is not blanket implementation approval.
 
 ## 1. Product intent
 
@@ -53,7 +53,7 @@ A company is the organization; experience is Arvin's role; a project is a body o
 | R18 | Retain input on validation/save failures; warn before discarding changes; confirm deletion and show affected references |
 | R19 | Unauthenticated visitors cannot read drafts/previews/unpublished assets or perform owner actions |
 
-P02, P10, and P12 are accepted. [Owner UX](docs/specs/owner-ux-spec.md) and [content/publishing](docs/specs/content-publishing-spec.md) define the approved behavioral contracts; architecture still chooses implementation mechanisms. Structured editing (P08) controls content, not arbitrary page layouts.
+P02, P10, and P12 are accepted. [Owner UX](docs/specs/owner-ux-spec.md) and [content/publishing](docs/specs/content-publishing-spec.md) define the approved behavioral contracts; T01–T07 define the architecture/runtime defaults while feature specs choose exact schema/commands. Structured editing (P08) controls content, not arbitrary page layouts.
 
 ## 5. Experience quality
 
@@ -72,7 +72,7 @@ Accepted P03–P04: one owner, English public content, email/professional contac
 
 Exclude public accounts, community, blog/newsletter, customer portal, booking/payment, AI generation, multilingual publishing, analytics dashboards, mandatory 3D/game navigation, and runnable simulations as baseline scope. Interactive evidence must not execute untrusted project code.
 
-Next.js/TypeScript is a frontend preference only. Backend/storage/authentication/hosting require a later technical decision. Screenshots, diagrams, transitions, and demos are future options, not assets produced or features approved now.
+Architecture is defined by [technical architecture](docs/architecture/architecture.md) and [runtime operations](docs/architecture/runtime-operations.md): Next.js full stack, PostgreSQL/Prisma, Better Auth, filesystem media, Ubuntu/OpenLiteSpeed deployment, off-host backup, and small structured logging. Exact implementation versions/commands are feature/bootstrap details.
 
 ## 7. Acceptance targets
 
@@ -97,4 +97,4 @@ The visual direction is owner-approved. Responsive, interaction, accessibility, 
 
 Signal Studio (P09) and the current light/dark visual system/rendered target (P11/P13/P14) are approved. The [visual system](docs/specs/visual-system-spec.md) is the visual authority; [components](docs/specs/components-interaction-spec.md) still contains behavior/state details that require later validation.
 
-Confirm O01–O03 and finish responsive/interaction/accessibility validation. O04 visual approval is resolved; the approved rendered references are review evidence, not repository implementation assets. Architecture and bounded implementation follow the remaining product-design validation; stack selection was not a prerequisite to visual approval.
+Confirm O01–O03 and finish runtime responsive/interaction/accessibility validation. O04 visual approval and O05 architecture baseline are resolved. Implementation proceeds only through the accepted issue/spec/PR workflow.

@@ -24,7 +24,7 @@ Scope: complete public/owner product-design contract. Does not certify implement
 ## Review procedure
 
 1. Contract review now: check accepted decisions, scopes, source authority, cross-flow consistency, required states, and truthful unknowns.
-2. Owner review: P10 publishing/removal/concurrency and P12 owner save/recovery/conflict behavior are approved. Remaining review concerns factual inputs, runtime evidence, and architecture mechanisms.
+2. Owner review: P10/P12 behavior and T01–T07 architecture/runtime defaults are approved. Remaining review concerns factual inputs, runtime evidence, and feature-specific implementation details.
 3. Rendered wide light/dark direction was owner-approved on 2026-10-03. Remaining design validation uses real featured content plus no-media/long-title/empty/error cases and compares narrow/responsive and owner/public states against that approved direction.
 4. Implemented-interaction review only after separate authorization: execute public and owner tasks, failure/concurrency/privacy checks, and record exact head/environment/evidence.
 
@@ -38,5 +38,5 @@ Apply P13's [visual refinement review](../visual-refinement-review.md) to A09/A1
 
 ## Remaining readiness boundaries
 
-Architecture (O05) must define owner authentication/recovery, atomic candidate publication, conflict/retry identity, safe content/assets, published-only delivery/cache invalidation, backups, and deployment before implementation.
+O05 architecture defaults are resolved by T01–T07. Implementation acceptance must still verify authorization/recovery, transaction/retry identity, safe asset delivery/cache behavior, backup restore, and deployment on the exact implementation head.
 O01–O03 remain factual-content/contact gates. O04 visual approval is resolved: Signal Studio and the current rendered light/dark composition are approved. Exact production font/library remains an implementation detail; responsive/usability/accessibility evidence is still required. No automatic code, asset creation, or deployment authorization follows this document.

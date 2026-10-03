@@ -38,9 +38,19 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P14 | Light + Dark across public/owner views; System default with System/Light/Dark choice | 2026-10-03: owner approved light/dark support and current dark treatment. R27; implementation mechanism remains technical. |
 | P11 | Current Signal Studio visual system: refined hierarchy/surfaces/controls, approved light/dark palette target, responsive composition intent | 2026-10-03: owner approved the rendered public/owner visual direction and requested PR #2 record that approval. [Visual system](specs/visual-system-spec.md). |
 
-## Remaining detailed review
+## Architecture baseline
 
-Public navigation/history and component behavior remain contracts to validate at runtime. Approval of P10/P12 does not choose storage, auth, retry, cache, or concurrency mechanisms; those belong to O05 architecture.
+| ID | Decision | Authority |
+| --- | --- | --- |
+| T01 | Server-first Next.js 16+ App Router modular monolith; React 19+, PostgreSQL + Prisma, npm, Tailwind 4+, shadcn/Base UI, Zod + React Hook Form, Framer Motion, Vitest; avoid unnecessary client rendering/React Query | [Technical architecture](architecture/architecture.md) |
+| T02 | Spec-driven delivery: issue → linked spec when needed → implementation → PR → independent review/checks → merge | [Engineering workflow](engineering/spec-driven-development.md) |
+| T03 | Better Auth + Prisma/PostgreSQL, email/password only, one provisioned owner, no public signup/reset-email flow; SSH-only emergency recovery | [Runtime operations](architecture/runtime-operations.md) |
+| T04 | VPS filesystem media outside deploy/public tree; native Next.js FormData first, no Multer; app-authorized media delivery | [Runtime operations](architecture/runtime-operations.md) |
+| T05 | Ubuntu VPS, one systemd-managed Next.js process behind OpenLiteSpeed, local PostgreSQL; DirectAdmin is not an app dependency | [Runtime operations](architecture/runtime-operations.md) |
+| T06 | Encrypted restic backups via rclone to Google Drive; pg_dump + uploads, 6-hour target, tested restores | [Runtime operations](architecture/runtime-operations.md) |
+| T07 | Small observability layer: Pino JSON → stdout/journald, correlation IDs, health check, external uptime check | [Runtime operations](architecture/runtime-operations.md) |
+
+Public navigation/history and component behavior remain contracts to validate at runtime. T01–T07 choose architecture defaults; feature specs own exact schema, commands, limits, and deployment details.
 
 ## Open inputs
 
@@ -49,9 +59,8 @@ Public navigation/history and component behavior remain contracts to validate at
 | O01 | Company identity, role/dates, responsibility/team boundaries | Factual publication |
 | O02 | Actual featured work, decisions/evidence, availability, curated grouping/order | Content-backed public design review |
 | O03 | Real contact destinations/availability wording | Contact/publication |
-| O05 | Authentication/recovery, storage/assets, publication atomicity, safe delivery/cache/operations | Architecture before implementation |
 
-Next.js/TypeScript is a preference, not approved architecture. Finish product-design review before stack/implementation work.
+O05 is resolved at architecture level by T01/T03–T07. Application implementation still requires the T02 issue/spec workflow and feature-specific technical details.
 
 ## Superseded direction
 

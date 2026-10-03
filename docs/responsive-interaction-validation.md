@@ -14,7 +14,7 @@ This work reviews contracts and prepares observable checks. No responsive screen
 | Written contract review | Complete; findings below | Link/ID/scope checks and source comparison |
 | Responsive rendered review | Pending | Narrow/medium and stress states compared with approved wide target |
 | Interaction/usability/accessibility | Pending | Actual task, keyboard, focus, reading and state observations |
-| Implementation/privacy/publication delivery | Pending; requires O05 and separate code authorization | Exact implementation head and architecture-dependent tests |
+| Implementation/privacy/publication delivery | Pending; O05 defaults are resolved but code authorization is separate | Exact implementation head and architecture-dependent tests |
 
 Static screens can show wrapping/hierarchy, but cannot prove history, focus, input retention, session recovery or publication. Future rendered/execution work requires its own authorized scope.
 
@@ -70,7 +70,7 @@ A01–A06/A08–A12 receive responsive/interaction coverage. A07 security/privac
 | F03 | Owner contract omits explicit caret/on-screen-keyboard and short-height dialog handling | Clarified owner contract: retain input/caret; usable scrolling and reachable dialog title/actions |
 | F04 | Plan's component/acceptance trace ends at R26 despite theme coverage | Corrected inventory to R27; no requirement or acceptance IDs changed |
 | F05 | Return, zero/one-section behavior, candidate preview and removal already defined | Retained canonical contracts; tests introduce no alternate widget behavior |
-| F06 | Factual content, technical mechanisms and runtime evidence remain incomplete | Preserve approved P10/P12 behavior, O01–O03/O05 and Pending execution; no mobile/runtime approval inferred |
+| F06 | Factual content, feature-level mechanisms and runtime evidence remain incomplete | Preserve approved P10/P12/T01–T07, O01–O03 and Pending execution; no mobile/runtime approval inferred |
 
 This is an author-led documentation review, not independent research, a screenshot audit or accessibility certification.
 
@@ -93,7 +93,7 @@ Runtime-only claims remain Pending: actual reflow/overflow, browser history rest
 
 1. Review responsive/focus refinements and detailed behavior proposals with the owner.
 2. When separately authorized, compare narrow/medium rendered public/owner states with the approved target; record viewport/theme/content. Static comparison does not close interaction cases.
-3. After architecture, approved specs and a bounded implementation request, execute this matrix on the exact implementation head, including failure and absence states.
+3. After the required feature/bootstrap specs and bounded implementation request, execute this matrix on the exact implementation head, including failure and absence states.
 4. For each defect, record intent, reproduction, expected/observed behavior, affected requirement and evidence. Change the smallest responsible contract/design/implementation and retest affected paths.
 
 Record one entry per RV/profile/input/theme combination: exact source/implementation SHA; browser/OS and assistive technology where relevant; CSS viewport/zoom/preference/resolved theme; fixture IDs; steps; observed result; evidence reference; Pass/Fail/Pending; defect/retest link. Blocked/unrun is Pending with its reason. Capturing later evidence does not authorize publishing private content.
