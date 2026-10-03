@@ -1,7 +1,7 @@
 # PRD
 
 Product: imarvin | Owner: Arvin Ramezani | Version: 0.8 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01–P09 and P13–P14 record owner-confirmed high-level choices; Signal Studio remains a working styling proposal. P10–P12 and detailed specifications remain proposals; the complete PRD is not approved.
+Status: revised draft. Confirmed constraints: C01–C10. P01–P09, P11, and P13–P14 are owner-approved choices; Signal Studio and its current light/dark visual target are approved. P10 and P12 plus remaining detailed behavioral specifications remain proposals; the complete PRD is not blanket-approved.
 
 ## 1. Product intent
 
@@ -91,10 +91,10 @@ Next.js/TypeScript is a frontend preference only. Backend/storage/authentication
 | A11 | Visitor selects work, reveals a decision/evidence, and returns with context; this changes content, not just decoration | R11, R24–R25 |
 | A12 | Design review identifies a concrete signature composition and purposeful interaction; standard CV layout is not accepted | R01, R26–R27 |
 
-Targets are unverified until later design/implementation review. Liking a concept does not prove usability.
+The visual direction is owner-approved. Responsive, interaction, accessibility, content-truthfulness, and implementation targets remain unverified until their later reviews.
 
 ## 8. Next gate
 
-Review the complete written design contract in [design review](docs/design-review.md). Signal Studio (P09) is retained as a working visual proposal; P13 prioritizes hierarchy/icons/shape/spacing/state with short supporting labels and selective decoration; the [visual system](docs/specs/visual-system-spec.md) and [components](docs/specs/components-interaction-spec.md) are draft design intent.
+Signal Studio (P09) and the current light/dark visual system/rendered target (P11/P13/P14) are approved. The [visual system](docs/specs/visual-system-spec.md) is the visual authority; [components](docs/specs/components-interaction-spec.md) still contains behavior/state details that require later validation.
 
-Confirm O01–O03 and review detailed UX/publishing/visual proposals. Actual visual/interaction validation remains pending; no images or code were requested. Complete the later architecture and bounded implementation request only after product-design review; stack selection is not a prerequisite to written visual exploration.
+Confirm O01–O03 and finish responsive/interaction/accessibility validation. O04 visual approval is resolved; the approved rendered references are review evidence, not repository implementation assets. Architecture and bounded implementation follow the remaining product-design validation; stack selection was not a prerequisite to visual approval.
