@@ -7,7 +7,7 @@ Authority: [decisions](decisions.md), [visual system](specs/visual-system-spec.m
 ## Owner brief
 
 Signal Studio is approved. Use hierarchy, icons, shape, spacing, and state changes first; keep text labels short and secondary. Selective decoration is allowed. Light and dark rendered directions are approved with System as the default preference.
-Personal Studio flows, company logos-only, offline/no-media support, and explicit private-save/publish remain intact. P14 adds Light/Dark with System default, across public/owner/preview; palettes/control details remain proposals.
+Personal Studio flows, company logos-only, offline/no-media support, and explicit private-save/publish remain intact. P14 adds Light/Dark with System default across public/owner/preview; the current palette and control treatment are approved design targets while implementation mechanics remain open.
 
 ## What changes
 
@@ -52,11 +52,11 @@ These are document-level comparisons, not measured screen results. Actual wide/n
 ## Validation record
 
 Previous visual-refinement revision checked 125 links, 47 tables, and 42 scenarios. The dark-mode revision added R27/P14, six theme scenarios, dark palette roles, and theme parity. On 2026-10-03 the owner then reviewed representative public and owner screens in both themes and approved the visual direction. That approval covers art direction, not responsive/interaction/accessibility execution. The rendered images are not stored in this repository as implementation assets.
-This is an author-led contract review. Refine/approve these written rules before separately requesting visual or implementation work.
+This records owner approval of the art direction. Responsive, interaction, accessibility, and implementation validation remain separate gates.
 
 ## Dark palette calculation
 
-Relative-luminance calculation for the proposed solid dark-mode pairs; no opacity/gradient/media effects:
+Relative-luminance calculation for the approved solid dark-mode target pairs; no opacity/gradient/media effects:
 
 | Pair | Ratio | Target |
 | --- | --- | --- |
