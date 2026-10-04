@@ -98,9 +98,8 @@ Prefer squash merge for one coherent issue unless preserving individual commits 
 
 ## 8. Testing strategy
 
-Vitest unit: deterministic business/validation logic.
-Vitest integration: server actions/functions, Prisma/database rules, transaction/conflict behavior, important route boundaries.
-E2E: only critical user journeys whose confidence cannot be obtained cheaply below the browser level.
+Vitest is the unit/integration test runner: deterministic domain/validation logic, server actions/functions, Prisma/PostgreSQL rules, transactions/conflicts, and important route boundaries.
+Playwright is the E2E runner: use it only for critical browser journeys whose confidence cannot be obtained cheaply below the browser level.
 Do not duplicate the same assertion at every test layer.
 Run local runtime/product-design acceptance when an implemented slice creates the relevant surface; defer production-only evidence to the final production phase.
 Runtime product-design checks from RV01–RV14 are executed when the implemented surface exists and recorded as evidence.
