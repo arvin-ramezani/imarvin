@@ -27,6 +27,8 @@ Use stable IDs and compact sections. For an interaction, write: user intent → 
 
 Maintain one authority per fact and link to it. Record status, dependencies, non-goals, and unanswered decisions. Do not use long persuasive prose, repeated feature lists, or adjectives as substitutes for behavior.
 
+AI-authored Markdown must be context-efficient: target <=120 lines and never exceed 150 lines. If a document would exceed 150 lines, split it by authority/responsibility/lifecycle and cross-link the smaller documents instead of duplicating context. Do not pad short documents to reach a minimum. Before handoff, count changed/new document lines and report the counts.
+
 Never invent employment dates, responsibility, results, metrics, authorship, launch status, visual approval, or user-research findings. Conceptual relationships do not imply a database schema.
 For implementation, configuration and logging contracts are mandatory: use the central server-only Zod config module and shared logger; do not add feature-local `process.env` access/parsing, direct `console.*`, or direct Pino configuration.
 
