@@ -2,11 +2,11 @@
 
 Arvin Ramezani's creative personal web app.
 
-Phase: architecture/spec-driven implementation planning with bounded implementation beginning through issue/spec workflow. Product/visual behavior and O05 architecture/runtime choices are owner-approved; issue #6 authorizes only the minimal Next.js scaffold. Product feature implementation and deployment remain unauthorized unless separately scoped.
+Phase: bounded implementation is underway. Minimal scaffold, shadcn/agent foundation, and Signal Studio theme/lint foundation are merged. Remaining work follows the vertical-slice delivery strategy in [Spec-driven development](docs/engineering/spec-driven-development.md) and is tracked in GitHub Issue #13.
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
-Current validation: [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) defines the next checks; written review is complete and rendered/task execution is pending.
+Current validation: [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) defines the remaining rendered/task checks; written review is complete and implementation evidence is pending.
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
@@ -29,12 +29,12 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) | Next-phase conditions, check matrix, written findings and Pending evidence |
 | [Technical architecture](docs/architecture/architecture.md) | Next.js/PostgreSQL/Prisma server-first modular-monolith baseline |
 | [Runtime operations](docs/architecture/runtime-operations.md) | Better Auth, filesystem media, VPS/OLS, Google Drive backup, Pino/journald |
-| [Spec-driven development](docs/engineering/spec-driven-development.md) | Issue → spec → implementation → PR → review → merge workflow |
+| [Spec-driven development](docs/engineering/spec-driven-development.md) | Foundations → vertical slices → review → local acceptance → production |
+| [Specification plan](docs/specification-plan.md) | Current implementation order and specification status |
 | [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |
 | [Branding principles](docs/branding-principles.md) | Identity, evidence, and truthful storytelling |
 | [Content inventory](docs/content-inventory.md) | Known work and missing facts |
 | [Decisions](docs/decisions.md) | Confirmed constraints, accepted choice, proposals |
-| [Specification plan](docs/specification-plan.md) | Next documentation phase before implementation |
 | [Agent rules](AGENTS.md) | Source-of-truth and AI context rules |
 
 ## Current review
@@ -43,4 +43,4 @@ The owner rejects a portfolio/résumé product. The former fixed homepage sequen
 
 Selected concept A: Personal Studio (P01, owner-approved). Visitors select work and inspect its problem, decisions, and evidence. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
 
-P02–P14 decisions are recorded in the product docs. T01–T07 define the technical/runtime baseline and spec-driven delivery workflow. O05 is resolved at architecture level; exact deployment/bootstrap commands remain implementation-spec details. Factual content and runtime responsive/interaction/accessibility evidence remain. A documentation merge does not authorize application development. This repository is a fresh start; the older second-brain imarvin project is not inherited.
+P02–P14 decisions are recorded in the product docs. T01–T07 define the technical/runtime baseline and spec-driven delivery workflow. O05 is resolved at architecture level. Implementation should establish only necessary cross-cutting foundations, then deliver product capabilities as bounded end-to-end slices. Development/runtime acceptance is local where possible; production deployment is the final phase.
