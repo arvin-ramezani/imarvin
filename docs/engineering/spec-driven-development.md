@@ -98,7 +98,8 @@ Prefer squash merge for one coherent issue unless preserving individual commits 
 
 ## 8. Testing strategy
 
-Vitest is the unit/integration test runner: deterministic domain/validation logic, server actions/functions, Prisma/PostgreSQL rules, transactions/conflicts, and important route boundaries.
+Vitest is the unit/integration runner for deterministic domain/validation logic, server actions/functions, Prisma/PostgreSQL rules, transactions/conflicts, and important route boundaries.
+React Testing Library runs with Vitest for React component behavior; test user-observable semantics such as roles, labels, text, focus, and visible state rather than component internals.
 Playwright is the E2E runner: use it only for critical browser journeys whose confidence cannot be obtained cheaply below the browser level.
 Do not duplicate the same assertion at every test layer.
 Run local runtime/product-design acceptance when an implemented slice creates the relevant surface; defer production-only evidence to the final production phase.
