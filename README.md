@@ -2,7 +2,7 @@
 
 Arvin Ramezani's creative personal web app.
 
-Phase: architecture/spec-driven implementation planning. Product/visual behavior and O05 architecture/runtime choices are owner-approved; runtime product validation and feature implementation remain. No application code or deployment is authorized.
+Phase: architecture/spec-driven implementation planning with bounded implementation beginning through issue/spec workflow. Product/visual behavior and O05 architecture/runtime choices are owner-approved; issue #6 authorizes only the minimal Next.js scaffold. Product feature implementation and deployment remain unauthorized unless separately scoped.
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
