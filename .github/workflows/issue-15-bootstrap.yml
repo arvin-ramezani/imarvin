@@ -22,8 +22,8 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - name: Use current npm
-        run: npm install --global npm@12.2.0
+      - name: Use npm 11
+        run: npm install --global npm@11.21.0
       - name: Generate clean lockfile
         run: |
           rm package-lock.json
