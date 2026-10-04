@@ -32,7 +32,7 @@ AI-authored Markdown must be context-efficient: target <=120 lines and never exc
 
 Never invent employment dates, responsibility, results, metrics, authorship, launch status, visual approval, or user-research findings. Conceptual relationships do not imply a database schema.
 For implementation, configuration and logging contracts are mandatory: use the central server-only Zod config module and shared logger; do not add feature-local `process.env` access/parsing, direct `console.*`, or direct Pino configuration.
-`@shadcn/lint` is registered in the project ESLint configuration. Always run `npm run lint` after UI/code changes. Until the Signal Studio theme-token issue explicitly enables design-system rules, do not invent or enable `@shadcn/lint` policy rules.
+For UI styling, read `docs/specs/visual-system-spec.md` first and use the approved semantic theme tokens instead of raw Tailwind palette colors. `@shadcn/lint` design-system rules are enforced; run `npm run lint` after UI changes and fix shadcn diagnostics. Do not add theme tokens, component variants, or lint exceptions without bounded issue/spec authority. Any approved lint exception must stay local and explain the design requirement.
 
 ## Review and handoff
 
