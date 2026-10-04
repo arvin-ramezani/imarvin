@@ -21,7 +21,9 @@ Stable IDs from existing specs stay stable; implementation specs may add local I
 Create a spec when a feature changes data shape, publishing/auth behavior, multiple routes/modules, accessibility interaction, or failure/recovery semantics.
 A tiny isolated change may keep its complete spec in the GitHub issue.
 Specs live under `docs/implementation/<issue>-<slug>.md` unless a scoped directory has a stronger local convention.
-Each implementation spec stays concise and should target <=120 lines; split only when responsibilities have different owners/lifecycles.
+All AI-authored Markdown targets <=120 lines and has a hard maximum of 150 lines; shorter is preferred when complete.
+If a document would exceed 150 lines, split by authority/responsibility/lifecycle and cross-link rather than duplicate context.
+Implementation specs follow the same rule; do not pad documents to reach a minimum.
 
 Recommended spec sections:
 - Status, issue, dependencies, authoritative product/architecture links.
@@ -49,11 +51,12 @@ Large features should be decomposed into independently reviewable issues; do not
 5. Keep Server Components/server data access by default; justify new client boundaries/dependencies.
 6. Add/update tests at the lowest useful level.
 7. Run affected lint/type/test/build checks defined by the project.
-8. For config changes, update the central Zod env schema, `.env.example`, and validation tests together.
-9. For important operations, use the shared logger; never bypass it with `console.*` or feature-local Pino setup.
-10. Self-review diff for scope, accessibility, privacy, logical CSS, config/logging rules, and spec traceability.
-11. Open a PR linked to the issue/spec with exact evidence.
-12. Stop for review; do not merge merely because automated checks pass.
+8. For documentation changes, verify each changed/new Markdown document is <=150 lines and report its line count.
+9. For config changes, update the central Zod env schema, `.env.example`, and validation tests together.
+10. For important operations, use the shared logger; never bypass it with `console.*` or feature-local Pino setup.
+11. Self-review diff for scope, accessibility, privacy, logical CSS, config/logging rules, document size, and spec traceability.
+12. Open a PR linked to the issue/spec with exact evidence.
+13. Stop for review; do not merge merely because automated checks pass.
 
 Agents must not invent missing content, architecture, credentials, metrics, dependencies, or product behavior.
 
