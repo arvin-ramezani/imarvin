@@ -1,0 +1,39 @@
+name: Final scaffold verification
+
+on:
+  push:
+    branches:
+      - feat/6-nextjs-bootstrap
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    env:
+      CI: "1"
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/6-nextjs-bootstrap
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.21.0
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - name: Production dependency audit
+        run: npm audit --omit=dev
+      - name: Full dependency audit
+        continue-on-error: true
+        run: npm audit
+      - name: Remove verification workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/final-scaffold-verify.yml
+          git commit -m "chore: remove scaffold verification workflow"
+          git push
