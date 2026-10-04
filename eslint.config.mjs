@@ -3,6 +3,8 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
+const applicationFiles = ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"];
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -24,6 +26,43 @@ const eslintConfig = defineConfig([
       "shadcn/no-restyle": "off",
       "shadcn/no-arbitrary-values": "off",
       "shadcn/require-static-classes": "off",
+    },
+  },
+  {
+    files: applicationFiles,
+    rules: {
+      "no-console": "error",
+      "no-restricted-properties": [
+        "error",
+        {
+          object: "process",
+          property: "env",
+          message: "Read application configuration through @/lib/config/server.",
+        },
+      ],
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["pino", "pino/*"],
+              message: "Use the shared logger from @/lib/logging/logger.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ["lib/config/**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
+    rules: {
+      "no-restricted-properties": "off",
+    },
+  },
+  {
+    files: ["lib/logging/**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
+    rules: {
+      "no-restricted-imports": "off",
     },
   },
   globalIgnores([
