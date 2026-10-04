@@ -9,11 +9,6 @@ const eslintConfig = defineConfig([
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     plugins: { shadcn },
-    settings: {
-      shadcn: {
-        componentImports: ["^@/components/ui(/|$)"],
-      },
-    },
     rules: {
       "shadcn/no-restyle": ["error", { allow: ["layout"] }],
       "shadcn/no-raw-colors": "error",
