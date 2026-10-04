@@ -14,10 +14,11 @@ Do not create images, application code, dependencies, prototype, or deployment w
 
 1. README.md, this file, docs/decisions.md, PRD.md.
 2. For code/technical work, read docs/architecture/architecture.md, docs/architecture/runtime-operations.md, and docs/engineering/spec-driven-development.md.
-3. Read only the product/UX/implementation specs needed for the assigned issue.
-4. Inspect branch/PR state; record the exact starting head.
-5. Preserve confirmed constraints; distinguish proposals and unresolved facts.
-6. Update the assigned PR and report exact head plus meaningful validation.
+3. For shadcn work, load the project-local `$shadcn` skill. For meaningful React/Next.js component edits, load `$vercel-react-best-practices`; when designing/refactoring reusable React component APIs or React 19 composition, load `$vercel-composition-patterns`; after app-code edits use `$next-dev-loop` for runtime verification when its prerequisites are available.
+4. Read only the product/UX/implementation specs needed for the assigned issue.
+5. Inspect branch/PR state; record the exact starting head.
+6. Preserve confirmed constraints; distinguish proposals and unresolved facts.
+7. Update the assigned PR and report exact head plus meaningful validation.
 
 Explicit owner instructions govern. Confirmed decisions govern proposals; PRD governs scope; approved specs define behavior within that scope. Surface genuine conflicts instead of silently replacing decisions.
 
@@ -27,13 +28,25 @@ Use stable IDs and compact sections. For an interaction, write: user intent → 
 
 Maintain one authority per fact and link to it. Record status, dependencies, non-goals, and unanswered decisions. Do not use long persuasive prose, repeated feature lists, or adjectives as substitutes for behavior.
 
-AI-authored Markdown must be context-efficient: target <=120 lines and never exceed 150 lines. If a document would exceed 150 lines, split it by authority/responsibility/lifecycle and cross-link the smaller documents instead of duplicating context. Do not pad short documents to reach a minimum. Before handoff, count changed/new document lines and report the counts.
+AI-authored Markdown must be context-efficient: target <=120 lines and never exceed 150 lines. If a document would exceed 150 lines, split it by authority/responsibility/lifecycle and cross-link the smaller documents instead of duplicating context. Do not pad short documents to reach a minimum. Before handoff, count changed/new document lines and report the counts. Upstream/vendor Markdown installed under `.agents/skills/` is exempt: preserve it verbatim and use `skills-lock.json` for provenance rather than truncating it.
 
 Never invent employment dates, responsibility, results, metrics, authorship, launch status, visual approval, or user-research findings. Conceptual relationships do not imply a database schema.
 For implementation, configuration and logging contracts are mandatory: use the central server-only Zod config module and shared logger; do not add feature-local `process.env` access/parsing, direct `console.*`, or direct Pino configuration.
+`@shadcn/lint` is registered in the project ESLint configuration. Always run `npm run lint` after UI/code changes. Until the Signal Studio theme-token issue explicitly enables design-system rules, do not invent or enable `@shadcn/lint` policy rules.
 
 ## Review and handoff
 
 Validate relative links, IDs, cross-document consistency, and changed-file scope. Describe actual checks; written review is not visual/usability/security verification.
 
 No code without a bounded GitHub issue and accepted/linked implementation spec as required by the spec-driven workflow. Do not merge or publish without explicit authorization/review.
+
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
