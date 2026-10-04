@@ -15,7 +15,7 @@ const eslintConfig = defineConfig([
       "shadcn/no-arbitrary-values": ["error", { allow: ["layout"] }],
       "shadcn/no-inline-styles": "error",
       "shadcn/require-static-classes": "error",
-      "shadcn/no-unknown-classes": "warn",
+      "shadcn/no-unknown-classes": "error",
     },
   },
   {
