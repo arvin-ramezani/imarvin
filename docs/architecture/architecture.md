@@ -30,8 +30,8 @@ Primary quality drivers:
 | UI validation | current shadcn validation/lint tooling | Pin exact commands in bootstrap spec; validate generated UI/style output |
 | Forms | React Hook Form + Zod | Shared schemas where client/server validation overlaps |
 | Animation | Framer Motion | Purposeful motion only; honor reduced motion |
-| Unit/integration | Vitest | Business rules, validation, data/service integration |
-| E2E | critical journeys only | Runner selected in bootstrap spec; Playwright is preferred default |
+| Unit/integration | Vitest + React Testing Library | Vitest for logic/integration; RTL for React component behavior through user-observable semantics |
+| E2E | Playwright | Critical browser journeys only; keep suites small and high-value |
 
 ## 3. Rendering and data rules
 
@@ -94,7 +94,8 @@ Never let generated shadcn defaults reintroduce generic pill tabs, card walls, g
 
 Vitest unit tests: pure domain rules, Zod schemas, helpers, publication decision logic.
 Vitest integration tests: Prisma/PostgreSQL behavior, transactions, server mutations, authorization boundaries where practical.
-E2E tests are intentionally few: sign-in/owner access, save-private versus publish, conflict/recovery, critical public exploration/theme behavior.
+React Testing Library with Vitest covers React component behavior through roles, labels, text, focus, and user-visible state; avoid implementation-detail assertions.
+Playwright E2E tests are intentionally few: sign-in/owner access, save-private versus publish, conflict/recovery, critical public exploration/theme behavior.
 Prefer testing observable behavior over component implementation details.
 Every bug fix adds the smallest regression test at the lowest useful level.
 
