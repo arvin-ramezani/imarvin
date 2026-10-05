@@ -114,6 +114,17 @@ export async function publishStory(input: {
   try {
     return await db.$transaction(
       async (tx) => {
+        const lockedRows = await tx.$queryRaw<Array<{ id: string }>>`
+          SELECT "id"
+          FROM "Story"
+          WHERE "id" = ${input.storyId}
+          FOR UPDATE
+        `;
+
+        if (lockedRows.length !== 1) {
+          throw new StoryNotFoundError();
+        }
+
         const story = await tx.story.findUnique({
           where: { id: input.storyId },
         });
