@@ -17,6 +17,7 @@ export type LogLevel = (typeof LOG_LEVELS)[number];
 
 const serverConfigSchema = z.object({
   APP_ORIGIN: z.string().url(),
+  AUTH_SECRET: z.string().min(32),
   DATABASE_URL: z
     .string()
     .url()
