@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Geist } from "next/font/google";
 
 import "./globals.css";
@@ -23,11 +22,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-theme-resolved="light"
       suppressHydrationWarning
     >
-      <Script
-        id="theme-bootstrap"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }}
-      />
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }}
+        />
+      </head>
       <body>
         <AppShell>{children}</AppShell>
       </body>
