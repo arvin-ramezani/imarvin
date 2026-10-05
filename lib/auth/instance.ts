@@ -1,7 +1,7 @@
 import "server-only";
 
 import { betterAuth } from "better-auth";
-import { createAuthMiddleware, isAPIError } from "better-auth/api";
+import { APIError, createAuthMiddleware, isAPIError } from "better-auth/api";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 
 import { getServerConfig, type LogLevel } from "../config/server";
@@ -47,6 +47,11 @@ export function createOwnerAuth({
       },
     },
     hooks: {
+      before: createAuthMiddleware(async (context) => {
+        if (context.path.startsWith("/reset-password/")) {
+          throw APIError.fromStatus("NOT_FOUND");
+        }
+      }),
       after: createAuthMiddleware(async (context) => {
         if (context.path === "/sign-in/email") {
           if (context.context.newSession) {
