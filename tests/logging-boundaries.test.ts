@@ -39,16 +39,38 @@ export const logger = pino();
     expect(ruleIds).toContain("no-restricted-imports");
   });
 
-  it("allows process.env only inside the config boundary", async () => {
+  it("allows process.env only in the exact config boundary module", async () => {
     const ruleIds = await lintRuleIds(
       "export const value = process.env.APP_ORIGIN;",
-      "lib/config/example.ts",
+      "lib/config/server.ts",
     );
 
     expect(ruleIds).not.toContain("no-restricted-properties");
   });
 
-  it("allows Pino only inside the logging boundary", async () => {
+  it("rejects process.env access in config sibling modules", async () => {
+    const ruleIds = await lintRuleIds(
+      "export const value = process.env.APP_ORIGIN;",
+      "lib/config/example.ts",
+    );
+
+    expect(ruleIds).toContain("no-restricted-properties");
+  });
+
+  it("allows Pino only in the exact shared logging module", async () => {
+    const ruleIds = await lintRuleIds(
+      `
+import pino from "pino";
+
+export const logger = pino();
+`,
+      "lib/logging/logger.ts",
+    );
+
+    expect(ruleIds).not.toContain("no-restricted-imports");
+  });
+
+  it("rejects Pino imports in logging sibling modules", async () => {
     const ruleIds = await lintRuleIds(
       `
 import pino from "pino";
@@ -58,6 +80,6 @@ export const logger = pino();
       "lib/logging/example.ts",
     );
 
-    expect(ruleIds).not.toContain("no-restricted-imports");
+    expect(ruleIds).toContain("no-restricted-imports");
   });
 });
