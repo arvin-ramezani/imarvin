@@ -19,7 +19,7 @@ Add the single-owner Better Auth + Prisma/PostgreSQL foundation and one reusable
 
 - Email/password only.
 - Public email sign-up is disabled and the sign-up endpoint is disabled defensively.
-- Public password-reset endpoints are disabled; V1 has no email recovery.
+- Public password-reset request, callback, and submission endpoints are disabled; V1 has no email recovery.
 - Minimum password length is 12 characters.
 - Sessions use Better Auth's database-backed session model and host-only secure production cookie behavior.
 - Rate limiting is always enabled and stored in PostgreSQL; no Redis/secondary storage.
@@ -28,7 +28,7 @@ Add the single-owner Better Auth + Prisma/PostgreSQL foundation and one reusable
 ## Owner invariant and provisioning
 
 - Exactly one owner is provisioned through a server-only function, never through HTTP, a Server Action, or browser code.
-- Provisioning refuses to create an owner when an auth user already exists.
+- Provisioning is serialized with a PostgreSQL transaction advisory lock and refuses to create an owner when an auth user already exists.
 - Provisioning uses Better Auth's email/password server flow so password hashing and auth hooks stay library-owned.
 - The provisioning-only auth instance may enable sign-up internally, but it is never exported through the Next.js handler.
 - Product content must not reference the auth-user row as its ownership model.
