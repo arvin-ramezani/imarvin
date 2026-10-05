@@ -17,6 +17,10 @@ export type LogLevel = (typeof LOG_LEVELS)[number];
 
 const serverConfigSchema = z.object({
   APP_ORIGIN: z.string().url(),
+  DATABASE_URL: z
+    .string()
+    .url()
+    .regex(/^postgres(?:ql)?:\/\//, "must be a PostgreSQL URL"),
   LOG_LEVEL: z.enum(LOG_LEVELS).default("info"),
 });
 
