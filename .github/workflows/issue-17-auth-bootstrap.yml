@@ -69,7 +69,18 @@ jobs:
       - name: Apply migrations
         run: npm run db:migrate:deploy
       - name: Check auth schema
-        run: npm run auth:check
+        run: |
+          guarded_files=(
+            lib/auth/instance.ts
+            lib/config/server.ts
+            lib/db/index.ts
+            lib/logging/logger.ts
+          )
+          trap 'git checkout -- "${guarded_files[@]}"' EXIT
+          for file in "${guarded_files[@]}"; do
+            sed -i '/^import "server-only";$/d' "$file"
+          done
+          npm run auth:check
       - name: Commit generated foundation
         run: |
           git config user.name "github-actions[bot]"
