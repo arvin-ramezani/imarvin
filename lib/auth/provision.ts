@@ -39,7 +39,8 @@ export async function provisionOwner(
 
   return db.$transaction(async (transaction) => {
     await transaction.$queryRaw`
-      SELECT pg_advisory_xact_lock(${OWNER_PROVISIONING_LOCK_ID})
+      SELECT 1 AS "locked"
+      FROM pg_advisory_xact_lock(${OWNER_PROVISIONING_LOCK_ID})
     `;
 
     const existingUsers = await transaction.user.count();
