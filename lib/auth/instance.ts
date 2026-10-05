@@ -1,7 +1,7 @@
 import "server-only";
 
 import { betterAuth } from "better-auth";
-import { createAuthMiddleware } from "better-auth/api";
+import { createAuthMiddleware, isAPIError } from "better-auth/api";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 
 import { getServerConfig, type LogLevel } from "../config/server";
@@ -48,24 +48,21 @@ export function createOwnerAuth({
     },
     hooks: {
       after: createAuthMiddleware(async (context) => {
-        if (
-          context.path === "/sign-in/email" &&
-          context.context.newSession
-        ) {
-          logEvent("info", "auth.sign_in.success");
+        if (context.path === "/sign-in/email") {
+          if (context.context.newSession) {
+            logEvent("info", "auth.sign_in.success");
+          } else {
+            logEvent("warn", "auth.sign_in.failure");
+          }
         }
 
-        if (context.path === "/change-password") {
+        if (
+          context.path === "/change-password" &&
+          !isAPIError(context.context.returned)
+        ) {
           logEvent("info", "auth.password.changed");
         }
       }),
-    },
-    onAPIError: {
-      onError(_error, context) {
-        if (context.path === "/sign-in/email") {
-          logEvent("warn", "auth.sign_in.failure");
-        }
-      },
     },
   });
 }
