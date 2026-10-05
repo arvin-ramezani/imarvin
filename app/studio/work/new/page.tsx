@@ -23,7 +23,7 @@ export default async function NewStoryPage() {
           >
             Back to Work
           </Link>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
             Work editor
           </p>
           <h1 className="text-5xl font-semibold tracking-tight text-ink">

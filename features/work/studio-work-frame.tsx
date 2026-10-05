@@ -17,7 +17,7 @@ export function StudioWorkFrame({
     <div className="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-10">
       <aside className="flex flex-col gap-6 border-b border-boundary pb-6 lg:sticky lg:top-8 lg:self-start lg:border-b-0 lg:border-e lg:pb-0 lg:pe-6">
         <div className="flex flex-col gap-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
             Owner workspace
           </p>
           <p className="text-2xl font-semibold tracking-tight text-ink">

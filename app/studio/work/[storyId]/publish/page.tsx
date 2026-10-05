@@ -139,7 +139,7 @@ export default async function PublishStoryPage({
           >
             Back to editing
           </Link>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
             Publication review
           </p>
           <h1 className="text-4xl font-semibold tracking-tight text-ink md:text-5xl">

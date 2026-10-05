@@ -16,7 +16,7 @@ export default async function WorkPage() {
     <section className="flex flex-col gap-10">
       <header className="grid gap-6 border-b border-boundary pb-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(16rem,0.65fr)] lg:items-end">
         <div className="flex flex-col gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
             Personal studio
           </p>
           <h1 className="text-5xl font-semibold tracking-tight text-ink md:text-6xl">

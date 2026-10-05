@@ -32,7 +32,7 @@ export default async function StudioWorkPage() {
       <section className="flex flex-col gap-8">
         <header className="flex flex-wrap items-end justify-between gap-5 border-b border-boundary pb-8">
           <div className="flex max-w-2xl flex-col gap-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
               Owner work
             </p>
             <h1 className="text-5xl font-semibold tracking-tight text-ink">

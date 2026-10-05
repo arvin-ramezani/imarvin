@@ -36,7 +36,7 @@ export function StorySummary({ story, preview = false }: StorySummaryProps) {
     <article className="grid gap-10 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-12">
       <aside className="flex min-w-0 flex-col gap-6 border-b border-boundary pb-8 lg:border-b-0 lg:border-e lg:pb-0 lg:pe-8">
         <div className="flex flex-col gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
             {preview ? "Saved candidate" : "Work story"}
           </p>
           <h1 className="text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
@@ -69,7 +69,7 @@ export function StorySummary({ story, preview = false }: StorySummaryProps) {
 
       <div className="flex min-w-0 flex-col gap-10">
         <section aria-labelledby="problem">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
             The problem
           </p>
           <h2

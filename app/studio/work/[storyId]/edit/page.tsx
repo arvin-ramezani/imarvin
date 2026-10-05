@@ -67,7 +67,7 @@ export default async function EditStoryPage({
           </Link>
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="flex min-w-0 flex-col gap-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-ink">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
                 Edit story
               </p>
               <h1 className="text-4xl font-semibold tracking-tight text-ink md:text-5xl">
