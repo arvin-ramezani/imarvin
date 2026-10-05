@@ -21,6 +21,16 @@ describe("PostgreSQL database boundary", () => {
     await expect(checkDatabaseHealth()).resolves.toBe("healthy");
   });
 
+  it("reports only unhealthy when the database probe fails", async () => {
+    const probe = vi
+      .spyOn(db, "$queryRaw")
+      .mockRejectedValueOnce(new Error("postgresql://secret@internal/database"));
+
+    await expect(checkDatabaseHealth()).resolves.toBe("unhealthy");
+
+    probe.mockRestore();
+  });
+
   it("has the committed baseline migration applied", async () => {
     const rows = await db.$queryRaw<
       Array<{ migration_name: string; finished_at: Date | null }>
