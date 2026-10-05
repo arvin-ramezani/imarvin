@@ -48,7 +48,18 @@ jobs:
       - name: Generate current Prisma client
         run: npm run db:generate
       - name: Generate Better Auth Prisma schema
-        run: npm run auth:generate
+        run: |
+          guarded_files=(
+            lib/auth/instance.ts
+            lib/config/server.ts
+            lib/db/index.ts
+            lib/logging/logger.ts
+          )
+          trap 'git checkout -- "${guarded_files[@]}"' EXIT
+          for file in "${guarded_files[@]}"; do
+            sed -i '/^import "server-only";$/d' "$file"
+          done
+          npm run auth:generate
       - name: Generate updated Prisma client
         run: npm run db:generate
       - name: Create auth migration
