@@ -55,7 +55,7 @@ function sessionCookie(response: Response): string {
   return value.split(";")[0] ?? "";
 }
 
-describe.sequential("owner authentication foundation", () => {
+describe("owner authentication foundation", () => {
   beforeAll(async () => {
     await db.session.deleteMany();
     await db.account.deleteMany();
