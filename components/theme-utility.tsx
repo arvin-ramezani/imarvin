@@ -1,7 +1,7 @@
 "use client";
 
 import { Monitor, Moon, Sun, type LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useSyncExternalStore } from "react";
 
 import {
   SYSTEM_THEME_QUERY,
@@ -12,6 +12,9 @@ import {
   type ResolvedTheme,
   type ThemePreference,
 } from "@/lib/theme";
+
+const THEME_CHANGE_EVENT = "imarvin:theme-change";
+const SERVER_SNAPSHOT = "system:light";
 
 const OPTIONS: Array<{
   value: ThemePreference;
@@ -44,6 +47,52 @@ function persistPreference(preference: ThemePreference): void {
   }
 }
 
+function readThemeSnapshot(): string {
+  const root = document.documentElement;
+  const preference = parseThemePreference(root.dataset.themePreference);
+  const resolved: ResolvedTheme =
+    root.dataset.themeResolved === "dark" ? "dark" : "light";
+
+  return `${preference}:${resolved}`;
+}
+
+function subscribeToTheme(onStoreChange: () => void): () => void {
+  const handleThemeChange = () => onStoreChange();
+  window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+
+  let media: MediaQueryList | null = null;
+
+  try {
+    media = window.matchMedia(SYSTEM_THEME_QUERY);
+  } catch {
+    media = null;
+  }
+
+  const handleSystemChange = (event: MediaQueryListEvent) => {
+    const preference = parseThemePreference(
+      document.documentElement.dataset.themePreference,
+    );
+
+    if (preference !== "system") {
+      return;
+    }
+
+    applyThemeToRoot(
+      document.documentElement,
+      "system",
+      resolveTheme("system", event.matches),
+    );
+    onStoreChange();
+  };
+
+  media?.addEventListener("change", handleSystemChange);
+
+  return () => {
+    window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+    media?.removeEventListener("change", handleSystemChange);
+  };
+}
+
 function labelFor(preference: ThemePreference): string {
   return preference[0].toUpperCase() + preference.slice(1);
 }
@@ -51,54 +100,21 @@ function labelFor(preference: ThemePreference): string {
 export function ThemeUtility() {
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
-  const [ready, setReady] = useState(false);
-  const [preference, setPreference] = useState<ThemePreference>("system");
-  const [resolved, setResolved] = useState<ResolvedTheme>("light");
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const initialPreference = parseThemePreference(root.dataset.themePreference);
-    const initialResolved = resolveTheme(initialPreference, readSystemDark());
-
-    applyThemeToRoot(root, initialPreference, initialResolved);
-    setPreference(initialPreference);
-    setResolved(initialResolved);
-    setReady(true);
-  }, []);
-
-  useEffect(() => {
-    if (!ready || preference !== "system") {
-      return;
-    }
-
-    let media: MediaQueryList;
-
-    try {
-      media = window.matchMedia(SYSTEM_THEME_QUERY);
-    } catch {
-      return;
-    }
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      const nextResolved = resolveTheme("system", event.matches);
-      applyThemeToRoot(document.documentElement, "system", nextResolved);
-      setResolved(nextResolved);
-    };
-
-    media.addEventListener("change", handleChange);
-
-    return () => {
-      media.removeEventListener("change", handleChange);
-    };
-  }, [preference, ready]);
+  const snapshot = useSyncExternalStore(
+    subscribeToTheme,
+    readThemeSnapshot,
+    () => SERVER_SNAPSHOT,
+  );
+  const [preferenceValue, resolvedValue] = snapshot.split(":");
+  const preference = parseThemePreference(preferenceValue);
+  const resolved: ResolvedTheme = resolvedValue === "dark" ? "dark" : "light";
 
   function choosePreference(nextPreference: ThemePreference): void {
     const nextResolved = resolveTheme(nextPreference, readSystemDark());
 
     persistPreference(nextPreference);
     applyThemeToRoot(document.documentElement, nextPreference, nextResolved);
-    setPreference(nextPreference);
-    setResolved(nextResolved);
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
 
     detailsRef.current?.removeAttribute("open");
     queueMicrotask(() => triggerRef.current?.focus());
