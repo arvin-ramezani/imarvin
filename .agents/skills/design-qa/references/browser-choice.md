@@ -1,15 +1,9 @@
-## Browser Choice
+# Browser Choice
 
-In ChatGPT Work Mode, always use the cloud browser available to that chat. If it is not initially visible, load the Browser skill and follow its setup instructions before concluding it is unavailable.
+Use browser and screenshot tooling available in the current execution environment. Standalone Design QA requires only the ability to open or capture the source visual target and the rendered implementation at matching viewport and state.
 
-In Codex Desktop, use `@Browser` and explicitly select the in-app surface with `agent.browsers.get("iab")`.
-
-In Codex Desktop, use Chrome only when the user asks for it, the task needs an existing Chrome tab/login/profile/extension, or the in-app Browser is unavailable or blocked.
-
-If ChatGPT Work Mode does not expose both the cloud browser and `@Sites` after preflight, tell the user once:
-
-```text
-Cloud browser and Sites are not available in this chat. I can still build a single-page HTML prototype, but I cannot visually verify it or publish a live checkpoint, so fidelity and interaction polish may be lower. Continue with that fallback?
-```
-
-Only proceed after the user agrees. Do not claim the fallback is verified, open, hosted, or ready to share. This fallback applies to image-to-code and new prototypes. It does not apply to URL-to-code when browser capture is required.
+- In ChatGPT Work Mode, use the available cloud browser when it can open or capture the required artifacts.
+- In Codex Desktop, use `@Browser` and prefer the in-app surface. Use Chrome only when the user asks for it or the task needs an existing Chrome tab, login, profile, or extension.
+- In other environments, use the available browser or screenshot tooling that can capture the required evidence.
+- Do not require Product Design, `@Sites`, deployment, publishing, sharing, or prototype-building to perform Design QA.
+- If either required artifact cannot be opened or captured with the available tooling, mark the QA result `blocked` and name the missing evidence.
