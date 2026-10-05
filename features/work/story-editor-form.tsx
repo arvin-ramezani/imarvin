@@ -8,7 +8,7 @@ import {
   saveStoryAction,
   type StoryEditorActionState,
 } from "./actions";
-import type { StoryFormValues } from "./types";
+import type { StoryField, StoryFormValues } from "./types";
 
 type StoryEditorFormProps = {
   initialValues: StoryFormValues;
@@ -23,6 +23,24 @@ const controlClass =
 
 const textareaClass =
   "min-h-32 w-full resize-y rounded-md border border-boundary bg-canvas px-3 py-2 text-base text-ink outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+const STORY_FIELD_ORDER: StoryField[] = [
+  "title",
+  "problem",
+  "contribution",
+  "progress",
+  "outcome",
+  "stack",
+];
+
+const STORY_FIELD_LABELS: Record<StoryField, string> = {
+  title: "Title",
+  problem: "Problem or hook",
+  contribution: "Your contribution",
+  progress: "Project progress",
+  outcome: "Outcome or lesson",
+  stack: "Relevant stack",
+};
 
 function FieldErrors({
   errors,
@@ -100,6 +118,11 @@ export function StoryEditorForm({
   }, [dirty]);
 
   const hasErrors = state.status !== "idle";
+  const summaryFieldErrors = STORY_FIELD_ORDER.flatMap((field) => {
+    const errors = state.fieldErrors[field];
+
+    return errors?.length ? [{ field, errors }] : [];
+  });
   const visibleStateLabel = dirty ? "Unsaved changes" : stateLabel;
   const visibleStateDescription = dirty
     ? "These edits exist only in this browser until you save them. They are not public."
@@ -132,6 +155,28 @@ export function StoryEditorForm({
               Private save not completed
             </h2>
             <p className="text-sm text-ink">{state.message}</p>
+            {summaryFieldErrors.length > 0 ? (
+              <ul className="flex flex-col gap-1 text-sm">
+                {summaryFieldErrors.map(({ field, errors }) => (
+                  <li key={field}>
+                    <a
+                      href={"#" + field}
+                      onClick={(event) => {
+                        const control = document.getElementById(field);
+
+                        if (control) {
+                          event.preventDefault();
+                          control.focus();
+                        }
+                      }}
+                      className="rounded-sm font-medium text-signal underline underline-offset-4 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                    >
+                      {STORY_FIELD_LABELS[field]}: {errors.join(" ")}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             {state.status === "conflict" && storyId ? (
               <Link
                 href={"/studio/work/" + storyId + "/edit"}

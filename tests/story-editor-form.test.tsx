@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -59,7 +59,7 @@ describe("StoryEditorForm", () => {
     expect(screen.getByRole("link", { name: "Review publication" })).toBeTruthy();
   });
 
-  it("retains submitted input and focuses the error summary after failure", async () => {
+  it("focuses the error summary, links affected fields, and retains input", async () => {
     const user = userEvent.setup();
 
     render(
@@ -86,5 +86,13 @@ describe("StoryEditorForm", () => {
     });
     expect(title.value).toBe("My local unsaved title");
     expect(screen.getByText("Title is too long.")).toBeTruthy();
+
+    const titleLink = within(alert).getByRole("link", {
+      name: "Title: Title is too long.",
+    });
+    expect(titleLink.getAttribute("href")).toBe("#title");
+
+    await user.click(titleLink);
+    expect(document.activeElement).toBe(title);
   });
 });
