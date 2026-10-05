@@ -5,6 +5,7 @@ Use this reference whenever integration or E2E tests touch a persistent database
 ## 1. Dedicated test environment
 
 - Use a database created only for automated tests.
+- If database-backed tests are required and no dedicated test database exists, create/provision one before running the tests; never substitute a development, staging, or production database.
 - Use explicit test configuration such as `.env.test`, CI test secrets, or the repository's equivalent.
 - Never run integration/E2E tests against development, staging, production, or a shared human-work database.
 - Before any destructive operation, positively verify the configured target is test-only. Use a repository-owned guard such as an exact expected database name/host, a dedicated test flag plus test-name convention, or an isolated disposable container.
