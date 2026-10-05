@@ -10,6 +10,7 @@ import {
 
 const requiredConfig = {
   APP_ORIGIN: "http://localhost:3000",
+  AUTH_SECRET: "test-auth-secret-at-least-32-characters",
   DATABASE_URL: "postgresql://imarvin:imarvin@localhost:5432/imarvin",
 } as const;
 
@@ -17,6 +18,7 @@ describe("server config", () => {
   it("fails when required configuration is missing", () => {
     expect(() => parseServerConfig({})).toThrow(ServerConfigError);
     expect(() => parseServerConfig({})).toThrow("APP_ORIGIN");
+    expect(() => parseServerConfig({})).toThrow("AUTH_SECRET");
     expect(() => parseServerConfig({})).toThrow("DATABASE_URL");
   });
 
@@ -27,6 +29,15 @@ describe("server config", () => {
         APP_ORIGIN: "not-a-url",
       }),
     ).toThrow("APP_ORIGIN");
+  });
+
+  it("rejects short auth secrets", () => {
+    expect(() =>
+      parseServerConfig({
+        ...requiredConfig,
+        AUTH_SECRET: "too-short",
+      }),
+    ).toThrow("AUTH_SECRET");
   });
 
   it("rejects non-PostgreSQL database URLs", () => {
