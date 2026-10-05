@@ -7,6 +7,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { getServerConfig, type LogLevel } from "../config/server";
 import { db } from "../db";
 import { logEvent } from "../logging/logger";
+import { ownerAuthCoreOptions } from "./options";
 
 type CreateOwnerAuthOptions = {
   allowProvisioningSignUp?: boolean;
@@ -31,29 +32,14 @@ export function createOwnerAuth({
   const { APP_ORIGIN, AUTH_SECRET } = getServerConfig();
 
   return betterAuth({
-    appName: "imarvin",
-    secret: AUTH_SECRET,
-    baseURL: APP_ORIGIN,
-    trustedOrigins: [APP_ORIGIN],
-    database: prismaAdapter(db, {
-      provider: "postgresql",
+    ...ownerAuthCoreOptions({
+      allowProvisioningSignUp,
+      baseURL: APP_ORIGIN,
+      database: prismaAdapter(db, {
+        provider: "postgresql",
+      }),
+      secret: AUTH_SECRET,
     }),
-    emailAndPassword: {
-      enabled: true,
-      disableSignUp: !allowProvisioningSignUp,
-      minPasswordLength: 12,
-      autoSignIn: false,
-    },
-    disabledPaths: allowProvisioningSignUp
-      ? ["/request-password-reset", "/reset-password"]
-      : ["/sign-up/email", "/request-password-reset", "/reset-password"],
-    rateLimit: {
-      enabled: true,
-      storage: "database",
-    },
-    advanced: {
-      useSecureCookies: new URL(APP_ORIGIN).protocol === "https:",
-    },
     logger: {
       level: "warn",
       log(level) {
