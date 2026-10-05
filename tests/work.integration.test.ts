@@ -1,8 +1,9 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
 import { db } from "../lib/db";
+import { resetTestDatabase } from "./support/test-database";
 import {
   StoryConflictError,
   StoryPublicationValidationError,
@@ -13,27 +14,13 @@ import {
   saveStory,
 } from "../features/work/repository";
 
-const createdStoryIds = new Set<string>();
-
-async function createTrackedStory(input: Parameters<typeof createStory>[0]) {
-  const story = await createStory(input);
-  createdStoryIds.add(story.id);
-
-  return story;
-}
-
-afterEach(async () => {
-  if (createdStoryIds.size > 0) {
-    await db.story.deleteMany({
-      where: { id: { in: [...createdStoryIds] } },
-    });
-    createdStoryIds.clear();
-  }
-});
-
 describe("work story publishing", () => {
+  beforeEach(async () => {
+    await resetTestDatabase();
+  });
+
   it("keeps an incomplete working copy private", async () => {
-    const story = await createTrackedStory({
+    const story = await createStory({
       title: "",
       problem: "",
       contribution: "",
@@ -57,7 +44,7 @@ describe("work story publishing", () => {
   });
 
   it("allows exactly one concurrent private save for a working revision", async () => {
-    const story = await createTrackedStory({
+    const story = await createStory({
       title: "Initial",
       problem: "",
       contribution: "",
@@ -107,7 +94,7 @@ describe("work story publishing", () => {
   });
 
   it("allows exactly one concurrent first publication", async () => {
-    const story = await createTrackedStory({
+    const story = await createStory({
       title: "Concurrent publication",
       problem: "Problem",
       contribution: "Contribution",
@@ -145,7 +132,7 @@ describe("work story publishing", () => {
   });
 
   it("publishes atomically, keeps later saves private, then updates explicitly", async () => {
-    const story = await createTrackedStory({
+    const story = await createStory({
       title: "Stable public title",
       problem: "A real problem",
       contribution: "A real contribution",
@@ -192,7 +179,7 @@ describe("work story publishing", () => {
   });
 
   it("blocks a stale public revision and preserves the confirmed snapshot", async () => {
-    const story = await createTrackedStory({
+    const story = await createStory({
       title: "Version one",
       problem: "Problem",
       contribution: "Contribution",
@@ -244,7 +231,7 @@ describe("work story publishing", () => {
   });
 
   it("lists only published snapshots, never draft-only content", async () => {
-    const privateStory = await createTrackedStory({
+    const privateStory = await createStory({
       title: "Private only",
       problem: "",
       contribution: "",
@@ -252,7 +239,7 @@ describe("work story publishing", () => {
       outcome: null,
       stack: [],
     });
-    const publicStory = await createTrackedStory({
+    const publicStory = await createStory({
       title: "Public story",
       problem: "Problem",
       contribution: "Contribution",

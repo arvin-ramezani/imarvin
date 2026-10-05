@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
@@ -12,6 +12,7 @@ import {
 } from "../lib/auth";
 import { auth } from "../lib/auth/instance";
 import { db } from "../lib/db";
+import { resetTestDatabase } from "./support/test-database";
 import {
   createOwnerStory,
   getOwnerStory,
@@ -60,13 +61,17 @@ function sessionCookie(response: Response): string {
   return value.split(";")[0] ?? "";
 }
 
+async function provisionDeterministicOwner() {
+  return provisionOwner({
+    email: OWNER_EMAIL,
+    name: "Owner",
+    password: OWNER_PASSWORD,
+  });
+}
+
 describe("owner authentication foundation", () => {
-  beforeAll(async () => {
-    await db.session.deleteMany();
-    await db.account.deleteMany();
-    await db.verification.deleteMany();
-    await db.rateLimit.deleteMany();
-    await db.user.deleteMany();
+  beforeEach(async () => {
+    await resetTestDatabase();
   });
 
   it("serializes provisioning so exactly one owner can be created", async () => {
@@ -109,6 +114,8 @@ describe("owner authentication foundation", () => {
   });
 
   it("keeps public registration and password reset unavailable", async () => {
+    await provisionDeterministicOwner();
+
     const signUp = await authRequest(
       "/sign-up/email",
       {
@@ -157,6 +164,8 @@ describe("owner authentication foundation", () => {
   });
 
   it("signs in only the provisioned owner and persists the session", async () => {
+    await provisionDeterministicOwner();
+
     const unknown = await authRequest(
       "/sign-in/email",
       {
@@ -189,6 +198,8 @@ describe("owner authentication foundation", () => {
   });
 
   it("enforces the owner boundary for story reads, writes, and preview data", async () => {
+    await provisionDeterministicOwner();
+
     const signIn = await authRequest(
       "/sign-in/email",
       {
@@ -223,21 +234,19 @@ describe("owner authentication foundation", () => {
       stack: [],
     });
 
-    try {
-      const ownerStories = await listOwnerStories(ownerHeaders);
-      const previewCandidate = await getOwnerStory(ownerHeaders, story.id);
+    const ownerStories = await listOwnerStories(ownerHeaders);
+    const previewCandidate = await getOwnerStory(ownerHeaders, story.id);
 
-      expect(ownerStories.some((item) => item.id === story.id)).toBe(true);
-      expect(previewCandidate?.title).toBe("Owner-only preview candidate");
-      await expect(
-        getOwnerStory(new Headers(), story.id),
-      ).rejects.toBeInstanceOf(OwnerAuthorizationError);
-    } finally {
-      await db.story.delete({ where: { id: story.id } });
-    }
+    expect(ownerStories.some((item) => item.id === story.id)).toBe(true);
+    expect(previewCandidate?.title).toBe("Owner-only preview candidate");
+    await expect(
+      getOwnerStory(new Headers(), story.id),
+    ).rejects.toBeInstanceOf(OwnerAuthorizationError);
   });
 
   it("changes the password and revokes other sessions", async () => {
+    await provisionDeterministicOwner();
+
     const firstSignIn = await authRequest(
       "/sign-in/email",
       {
@@ -301,6 +310,8 @@ describe("owner authentication foundation", () => {
   });
 
   it("stores client rate-limit state in PostgreSQL", async () => {
+    await provisionDeterministicOwner();
+
     await authRequest(
       "/sign-in/email",
       {

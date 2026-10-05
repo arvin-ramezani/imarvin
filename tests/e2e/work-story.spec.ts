@@ -2,22 +2,10 @@ import { expect, test, type Page } from "@playwright/test";
 
 import { provisionOwner } from "../../lib/auth/provision";
 import { db } from "../../lib/db";
+import { resetTestDatabase } from "../support/test-database";
 
 const OWNER_EMAIL = "work-e2e-owner@example.com";
 const OWNER_PASSWORD = "work-e2e-owner-password";
-
-async function resetStories() {
-  await db.publishedStory.deleteMany();
-  await db.story.deleteMany();
-}
-
-async function resetOwner() {
-  await db.session.deleteMany();
-  await db.account.deleteMany();
-  await db.verification.deleteMany();
-  await db.rateLimit.deleteMany();
-  await db.user.deleteMany();
-}
 
 async function signIn(page: Page) {
   await page.goto("/");
@@ -41,9 +29,8 @@ async function signIn(page: Page) {
   expect(status).toBe(200);
 }
 
-test.beforeAll(async () => {
-  await resetStories();
-  await resetOwner();
+test.beforeEach(async () => {
+  await resetTestDatabase();
   await provisionOwner({
     email: OWNER_EMAIL,
     name: "Work E2E Owner",
@@ -51,13 +38,8 @@ test.beforeAll(async () => {
   });
 });
 
-test.beforeEach(async () => {
-  await resetStories();
-});
-
 test.afterAll(async () => {
-  await resetStories();
-  await resetOwner();
+  await resetTestDatabase();
   await db.$disconnect();
 });
 
