@@ -180,18 +180,24 @@ describe("owner authentication foundation", () => {
     );
     const secondCookie = sessionCookie(secondSignIn);
 
-    await changeOwnerPassword({
+    const passwordChangeHeaders = await changeOwnerPassword({
       requestHeaders: new Headers({ cookie: firstCookie }),
       currentPassword: OWNER_PASSWORD,
       newPassword: NEW_OWNER_PASSWORD,
     });
+    const replacementCookie = sessionCookie(
+      new Response(null, { headers: passwordChangeHeaders }),
+    );
 
     await expect(
       getOwnerSession(new Headers({ cookie: firstCookie })),
-    ).resolves.not.toBeNull();
+    ).resolves.toBeNull();
     await expect(
       getOwnerSession(new Headers({ cookie: secondCookie })),
     ).resolves.toBeNull();
+    await expect(
+      getOwnerSession(new Headers({ cookie: replacementCookie })),
+    ).resolves.not.toBeNull();
 
     const oldPassword = await authRequest(
       "/sign-in/email",
