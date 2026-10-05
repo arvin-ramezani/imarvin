@@ -8,26 +8,39 @@ import {
   parseServerConfig,
 } from "../lib/config/server";
 
+const requiredConfig = {
+  APP_ORIGIN: "http://localhost:3000",
+  DATABASE_URL: "postgresql://imarvin:imarvin@localhost:5432/imarvin",
+} as const;
+
 describe("server config", () => {
   it("fails when required configuration is missing", () => {
     expect(() => parseServerConfig({})).toThrow(ServerConfigError);
     expect(() => parseServerConfig({})).toThrow("APP_ORIGIN");
+    expect(() => parseServerConfig({})).toThrow("DATABASE_URL");
   });
 
   it("fails when required configuration is invalid", () => {
-    expect(() => parseServerConfig({ APP_ORIGIN: "not-a-url" })).toThrow(
-      ServerConfigError,
-    );
-    expect(() => parseServerConfig({ APP_ORIGIN: "not-a-url" })).toThrow(
-      "APP_ORIGIN",
-    );
+    expect(() =>
+      parseServerConfig({
+        ...requiredConfig,
+        APP_ORIGIN: "not-a-url",
+      }),
+    ).toThrow("APP_ORIGIN");
+  });
+
+  it("rejects non-PostgreSQL database URLs", () => {
+    expect(() =>
+      parseServerConfig({
+        ...requiredConfig,
+        DATABASE_URL: "https://example.com/database",
+      }),
+    ).toThrow("DATABASE_URL");
   });
 
   it("uses the documented default log level", () => {
-    expect(
-      parseServerConfig({ APP_ORIGIN: "http://localhost:3000" }),
-    ).toEqual({
-      APP_ORIGIN: "http://localhost:3000",
+    expect(parseServerConfig(requiredConfig)).toEqual({
+      ...requiredConfig,
       LOG_LEVEL: "info",
     });
   });
@@ -35,7 +48,7 @@ describe("server config", () => {
   it("rejects unsupported log levels", () => {
     expect(() =>
       parseServerConfig({
-        APP_ORIGIN: "http://localhost:3000",
+        ...requiredConfig,
         LOG_LEVEL: "verbose",
       }),
     ).toThrow("LOG_LEVEL");
@@ -43,7 +56,7 @@ describe("server config", () => {
 
   it("keeps client-visible environment variables behind an explicit allowlist", () => {
     const config = parseServerConfig({
-      APP_ORIGIN: "http://localhost:3000",
+      ...requiredConfig,
       NEXT_PUBLIC_UNAPPROVED: "should-not-cross-the-boundary",
     });
 
