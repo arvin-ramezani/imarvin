@@ -9,14 +9,14 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "node --conditions=react-server ./node_modules/@playwright/test/cli.js test",
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:status": "prisma migrate status",
     "auth:generate": "auth generate --config ./auth.cli.ts --yes",
     "auth:check": "auth check --config ./auth.cli.ts",
-    "test:e2e:ci": "playwright test --config=playwright.ci.config.ts"
+    "test:e2e:ci": "node --conditions=react-server ./node_modules/@playwright/test/cli.js test --config=playwright.ci.config.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",
