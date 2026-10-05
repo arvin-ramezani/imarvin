@@ -43,15 +43,18 @@ export async function changeOwnerPassword({
   requestHeaders,
   currentPassword,
   newPassword,
-}: ChangeOwnerPasswordInput): Promise<void> {
+}: ChangeOwnerPasswordInput): Promise<Headers> {
   await requireOwnerSession(requestHeaders);
 
-  await auth.api.changePassword({
+  const result = await auth.api.changePassword({
     headers: requestHeaders,
+    returnHeaders: true,
     body: {
       currentPassword,
       newPassword,
       revokeOtherSessions: true,
     },
   });
+
+  return result.headers;
 }
