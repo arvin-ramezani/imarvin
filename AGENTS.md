@@ -14,7 +14,7 @@ Do not create images, application code, dependencies, prototype, or deployment w
 
 1. README.md, this file, docs/decisions.md, PRD.md.
 2. For code/technical work, read docs/architecture/architecture.md, docs/architecture/runtime-operations.md, and docs/engineering/spec-driven-development.md.
-3. For shadcn work, load the project-local `$shadcn` skill. For meaningful React/Next.js component edits, load `$vercel-react-best-practices`; when designing/refactoring reusable React component APIs or React 19 composition, load `$vercel-composition-patterns`; after app-code edits use `$next-dev-loop` for runtime verification when its prerequisites are available.
+3. For shadcn work, load the project-local `$shadcn` skill. For meaningful React/Next.js component edits, load `$vercel-react-best-practices`; when designing/refactoring reusable React component APIs or React 19 composition, load `$vercel-composition-patterns`; after app-code edits use `$next-dev-loop` for runtime verification when its prerequisites are available. For test strategy, test implementation/review, or database-backed test setup, load the project-local `$test-engineering` skill.
 4. Read only the product/UX/implementation specs needed for the assigned issue.
 5. Inspect branch/PR state; record the exact starting head.
 6. Preserve confirmed constraints; distinguish proposals and unresolved facts.
