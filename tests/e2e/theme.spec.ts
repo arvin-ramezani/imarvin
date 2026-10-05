@@ -193,25 +193,55 @@ test("theme utility remains usable at 320px with reduced motion", async ({
 });
 
 test("captures representative shell evidence", async ({ page }, testInfo) => {
+  const hydrationIssues: string[] = [];
+
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      /hydration|hydrated/i.test(message.text())
+    ) {
+      hydrationIssues.push(message.text());
+    }
+  });
+
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/");
+
+  const trigger = page.locator(triggerSelector);
+  await trigger.click();
+  await page.getByRole("radio", { name: "Light" }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-theme-preference",
+    "light",
+  );
+  await trigger.click();
+  await page.getByRole("radio", { name: "System" }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-theme-preference",
+    "system",
+  );
+
   await page.screenshot({
     path: testInfo.outputPath("shell-light-wide.png"),
     fullPage: true,
+    caret: "initial",
   });
 
-  const trigger = page.locator(triggerSelector);
   await trigger.click();
   await page.getByRole("radio", { name: "Dark" }).click();
   await trigger.click();
   await page.screenshot({
     path: testInfo.outputPath("shell-dark-wide.png"),
     fullPage: true,
+    caret: "initial",
   });
 
   await page.setViewportSize({ width: 320, height: 720 });
   await page.screenshot({
     path: testInfo.outputPath("shell-dark-320.png"),
     fullPage: true,
+    caret: "initial",
   });
+
+  expect(hydrationIssues).toEqual([]);
 });
