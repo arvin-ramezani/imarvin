@@ -80,6 +80,20 @@ test("System restores live device following without resetting page state", async
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/");
 
+  const trigger = page.locator(triggerSelector);
+  await trigger.click();
+  await page.getByRole("radio", { name: "Dark" }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-theme-resolved",
+    "dark",
+  );
+  await trigger.click();
+  await page.getByRole("radio", { name: "System" }).click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-theme-resolved",
+    "light",
+  );
+
   await page.evaluate(() => {
     const main = document.querySelector("main");
 
@@ -105,7 +119,6 @@ test("System restores live device following without resetting page state", async
     scrollY: window.scrollY,
   }));
 
-  const trigger = page.locator(triggerSelector);
   await trigger.click();
   await page.getByRole("radio", { name: "Dark" }).click();
   await trigger.click();
