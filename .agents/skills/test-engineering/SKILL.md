@@ -17,7 +17,7 @@ Before planning, implementing, or running those tests, read and follow the manda
 
 At minimum:
 
-- use a dedicated test database and explicit test configuration; never point automated tests at development, staging, or production data;
+- use a dedicated test database and explicit test configuration; if none exists, create/provision one before running database-backed tests; never point automated tests at development, staging, or production data;
 - load the test environment explicitly (for example `.env.test` or the repository equivalent) instead of silently falling back to the normal app environment;
 - fail closed before destructive cleanup/reset unless the target is positively identified as a test-only database;
 - apply the real schema/migrations to the test database;
