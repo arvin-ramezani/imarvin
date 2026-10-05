@@ -64,14 +64,32 @@ describe("owner authentication foundation", () => {
     await db.user.deleteMany();
   });
 
-  it("provisions exactly one owner through the server-only path", async () => {
-    const owner = await provisionOwner({
+  it("serializes provisioning so exactly one owner can be created", async () => {
+    const input = {
       email: OWNER_EMAIL,
       name: "Owner",
       password: OWNER_PASSWORD,
-    });
+    };
+
+    const attempts = await Promise.allSettled([
+      provisionOwner(input),
+      provisionOwner(input),
+    ]);
+    const fulfilled = attempts.find((attempt) => attempt.status === "fulfilled");
+    const rejected = attempts.find((attempt) => attempt.status === "rejected");
+
+    if (!fulfilled || fulfilled.status !== "fulfilled") {
+      throw new Error("Expected one successful owner provisioning attempt");
+    }
+
+    if (!rejected || rejected.status !== "rejected") {
+      throw new Error("Expected one rejected owner provisioning attempt");
+    }
+
+    const owner = fulfilled.value;
 
     expect(owner.email).toBe(OWNER_EMAIL);
+    expect(rejected.reason).toBeInstanceOf(OwnerAlreadyProvisionedError);
     await expect(db.user.count()).resolves.toBe(1);
 
     const credential = await db.account.findFirst({
@@ -83,14 +101,6 @@ describe("owner authentication foundation", () => {
 
     expect(credential?.password).toBeTruthy();
     expect(credential?.password).not.toBe(OWNER_PASSWORD);
-
-    await expect(
-      provisionOwner({
-        email: "second@example.com",
-        name: "Second",
-        password: "second-owner-password",
-      }),
-    ).rejects.toBeInstanceOf(OwnerAlreadyProvisionedError);
   });
 
   it("keeps public registration and password reset unavailable", async () => {
@@ -117,6 +127,20 @@ describe("owner authentication foundation", () => {
     );
 
     expect(passwordReset.status).toBe(404);
+
+    const passwordResetCallback = await auth.handler(
+      new Request(
+        `${APP_ORIGIN}/api/auth/reset-password/not-a-token?callbackURL=${encodeURIComponent(APP_ORIGIN)}`,
+        {
+          method: "GET",
+          headers: {
+            origin: APP_ORIGIN,
+          },
+        },
+      ),
+    );
+
+    expect(passwordResetCallback.status).toBe(404);
     await expect(db.verification.count()).resolves.toBe(0);
   });
 
