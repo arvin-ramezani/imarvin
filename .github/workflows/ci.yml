@@ -14,8 +14,23 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: imarvin_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d imarvin_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     env:
       APP_ORIGIN: http://localhost:3000
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/imarvin_test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,6 +39,14 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Generate Prisma client
+        run: npm run db:generate
+      - name: Validate Prisma schema
+        run: npm run db:validate
+      - name: Apply migrations
+        run: npm run db:migrate:deploy
+      - name: Check migration status
+        run: npm run db:migrate:status
       - name: Lint
         run: npm run lint
       - name: Test
