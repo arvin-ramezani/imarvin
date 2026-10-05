@@ -6,7 +6,7 @@
       "sourceType": "github",
       "skillPath": "plugins/product-design/skills/design-qa/SKILL.md",
       "ref": "fe5608d2512a7d6a7b9821ce8a88c48464ecd6e4",
-      "computedHash": "d5855a8e83a6eaad833263765417cbf2c0b522face515ec6e0710d6f69309a12"
+      "computedHash": "4d1d836e891c9b94deee744404b3dfcc826452c2231dc7d12992d67fe3a707d2"
     },
     "next-dev-loop": {
       "source": "vercel/next.js",
