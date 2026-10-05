@@ -18,7 +18,8 @@ Implement the first Work slice end to end: save a text-only story summary privat
 
 ## Validation and revisions
 
-- Shared Zod draft validation normalizes text/stack and permits missing publication-required facts while rejecting malformed/oversized values.
+- Shared Zod draft validation trims text and permits missing publication-required facts. Limits: title 120 chars, problem/hook 1,200, contribution 1,600, outcome/lesson 1,200; stack is at most 12 non-empty entries of at most 50 chars each.
+- The editor accepts stack as comma-separated text; the server trims, removes empty entries, preserves first occurrence order, and stores the normalized string array. Empty optional outcome becomes null.
 - Publication additionally requires non-empty title, problem/hook, contribution, and progress.
 - Existing-story Save carries `expectedWorkingRevision`; a guarded update increments the revision only when it still matches.
 - A stale Save returns conflict state and retains submitted values; no automatic retry or last-write-wins.
