@@ -1,8 +1,14 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ThemeUtility } from "../components/theme-utility";
 import {
@@ -42,7 +48,10 @@ function installMatchMedia(initialDark: boolean) {
   return {
     setDark(nextDark: boolean) {
       matches = nextDark;
-      const event = { matches: nextDark, media: SYSTEM_THEME_QUERY } as MediaQueryListEvent;
+      const event = {
+        matches: nextDark,
+        media: SYSTEM_THEME_QUERY,
+      } as MediaQueryListEvent;
       listeners.forEach((listener) => listener(event));
     },
   };
@@ -65,9 +74,14 @@ beforeEach(() => {
   applyThemeToRoot(document.documentElement, "system", "light");
 });
 
+afterEach(() => {
+  cleanup();
+});
+
 describe("ThemeUtility", () => {
   it("communicates preference and resolved mode", async () => {
     installMatchMedia(true);
+    applyThemeToRoot(document.documentElement, "system", "dark");
     render(<ThemeUtility />);
 
     await waitFor(() => {
