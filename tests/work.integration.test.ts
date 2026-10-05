@@ -56,7 +56,7 @@ describe("work story publishing", () => {
     await expect(getPublishedStory(story.id)).resolves.toBeNull();
   });
 
-  it("blocks a stale private save without overwriting the newer working copy", async () => {
+  it("allows exactly one concurrent private save for a working revision", async () => {
     const story = await createTrackedStory({
       title: "Initial",
       problem: "",
@@ -66,32 +66,82 @@ describe("work story publishing", () => {
       stack: [],
     });
 
-    await saveStory(story.id, 1, {
-      title: "Newest saved title",
-      problem: "",
-      contribution: "",
-      progress: null,
-      outcome: null,
-      stack: [],
-    });
-
-    await expect(
+    const attempts = await Promise.allSettled([
       saveStory(story.id, 1, {
-        title: "Stale title",
+        title: "Concurrent title A",
         problem: "",
         contribution: "",
         progress: null,
         outcome: null,
         stack: [],
       }),
-    ).rejects.toBeInstanceOf(StoryConflictError);
+      saveStory(story.id, 1, {
+        title: "Concurrent title B",
+        problem: "",
+        contribution: "",
+        progress: null,
+        outcome: null,
+        stack: [],
+      }),
+    ]);
+
+    const fulfilled = attempts.filter(
+      (attempt) => attempt.status === "fulfilled",
+    );
+    const rejected = attempts.filter(
+      (attempt) => attempt.status === "rejected",
+    );
+
+    expect(fulfilled).toHaveLength(1);
+    expect(rejected).toHaveLength(1);
+    expect(
+      rejected[0]?.status === "rejected" ? rejected[0].reason : null,
+    ).toBeInstanceOf(StoryConflictError);
 
     const current = await db.story.findUniqueOrThrow({
       where: { id: story.id },
     });
 
-    expect(current.title).toBe("Newest saved title");
+    expect(["Concurrent title A", "Concurrent title B"]).toContain(current.title);
     expect(current.workingRevision).toBe(2);
+  });
+
+  it("allows exactly one concurrent first publication", async () => {
+    const story = await createTrackedStory({
+      title: "Concurrent publication",
+      problem: "Problem",
+      contribution: "Contribution",
+      progress: "ONGOING",
+      outcome: null,
+      stack: [],
+    });
+
+    const input = {
+      storyId: story.id,
+      expectedWorkingRevision: 1,
+      expectedPublishedRevision: null,
+    };
+
+    const attempts = await Promise.allSettled([
+      publishStory(input),
+      publishStory(input),
+    ]);
+    const fulfilled = attempts.filter(
+      (attempt) => attempt.status === "fulfilled",
+    );
+    const rejected = attempts.filter(
+      (attempt) => attempt.status === "rejected",
+    );
+
+    expect(fulfilled).toHaveLength(1);
+    expect(rejected).toHaveLength(1);
+    expect(
+      rejected[0]?.status === "rejected" ? rejected[0].reason : null,
+    ).toBeInstanceOf(StoryConflictError);
+
+    const publicStory = await getPublishedStory(story.id);
+    expect(publicStory?.revision).toBe(1);
+    expect(publicStory?.sourceWorkingRevision).toBe(1);
   });
 
   it("publishes atomically, keeps later saves private, then updates explicitly", async () => {
