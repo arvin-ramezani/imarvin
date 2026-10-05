@@ -250,24 +250,42 @@ export function StoryEditorForm({
         >
           {pending ? "Saving…" : "Save privately"}
         </button>
-        <button
-          type="submit"
-          name="intent"
-          value="preview"
-          disabled={pending}
-          className="min-h-11 rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60"
-        >
-          {dirty || !storyId ? "Save & preview" : "Preview saved candidate"}
-        </button>
-        <button
-          type="submit"
-          name="intent"
-          value="review"
-          disabled={pending}
-          className="min-h-11 rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60"
-        >
-          {dirty || !storyId ? "Save & review" : "Review publication"}
-        </button>
+        {storyId && !dirty ? (
+          <Link
+            href={`/studio/work/${storyId}/preview`}
+            className="flex min-h-11 items-center rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            Preview saved candidate
+          </Link>
+        ) : (
+          <button
+            type="submit"
+            name="intent"
+            value="preview"
+            disabled={pending}
+            className="min-h-11 rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60"
+          >
+            Save & preview
+          </button>
+        )}
+        {storyId && !dirty ? (
+          <Link
+            href={`/studio/work/${storyId}/publish`}
+            className="flex min-h-11 items-center rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            Review publication
+          </Link>
+        ) : (
+          <button
+            type="submit"
+            name="intent"
+            value="review"
+            disabled={pending}
+            className="min-h-11 rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60"
+          >
+            Save & review
+          </button>
+        )}
       </div>
     </form>
   );
