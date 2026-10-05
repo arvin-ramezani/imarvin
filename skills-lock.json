@@ -25,7 +25,7 @@
       "sourceType": "github",
       "skillPath": "skills/test-engineering/SKILL.md",
       "computedHash": "3324e464b53366e6a2cecbb3a07a2493497821656976c3619dc2b07f04274b91",
-      "ref": "4b18f208f03e632b934d7ba04731c491a9b4a4a6"
+      "ref": "803a35fbb3b7ac8054ec08e73632f58fc6a313dc"
     },
     "vercel-composition-patterns": {
       "source": "vercel-labs/agent-skills",
