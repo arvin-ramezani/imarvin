@@ -2,7 +2,8 @@ interface:
   display_name: Test Engineering & Test Strategy
   short_description: Design lean, risk-based automated test suites
   default_prompt: Use $test-engineering to design the smallest maintainable test suite
-    that meaningfully protects this change.
+    that meaningfully protects this change. For database-backed integration or E2E
+    tests, require a dedicated test database and deterministic reset/seed isolation.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
