@@ -54,13 +54,13 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ["lib/config/**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
+    files: ["lib/config/server.ts"],
     rules: {
       "no-restricted-properties": "off",
     },
   },
   {
-    files: ["lib/logging/**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
+    files: ["lib/logging/logger.ts"],
     rules: {
       "no-restricted-imports": "off",
     },
