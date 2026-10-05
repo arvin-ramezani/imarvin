@@ -13,8 +13,8 @@
     "db:validate": "prisma validate",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:status": "prisma migrate status",
-    "auth:generate": "auth generate --config ./lib/auth/instance.ts --yes",
-    "auth:check": "auth check --config ./lib/auth/instance.ts"
+    "auth:generate": "auth generate --config ./auth.cli.ts --yes",
+    "auth:check": "auth check --config ./auth.cli.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",
