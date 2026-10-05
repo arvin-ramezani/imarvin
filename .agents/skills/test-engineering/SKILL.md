@@ -17,14 +17,14 @@ Before planning, implementing, or running those tests, read and follow the manda
 
 At minimum:
 
-- use a dedicated test database and explicit test configuration; if none exists, create/provision one before running database-backed tests; never point automated tests at development, staging, or production data;
+- use a dedicated test database/data-store environment and explicit test configuration; if none exists, create/provision an isolated test instance, database, namespace, or equivalent before running database-backed tests; never point automated tests at development, staging, or production data;
 - load the test environment explicitly (for example `.env.test` or the repository equivalent) instead of silently falling back to the normal app environment;
 - fail closed before destructive cleanup/reset unless the target is positively identified as a test-only database;
-- apply the real schema/migrations to the test database;
+- initialize the test store from production-equivalent database definitions when applicable (for example migrations, schema, indexes, collections, constraints, or bootstrap scripts); do not assume a specific database model;
 - make every mutating integration/E2E test start from a known state;
 - reset **before** a test by default when shared mutable database state could leak from previous tests;
 - seed only the deterministic data needed by that test/scenario;
-- isolate database state per parallel worker/test namespace, or run those database tests serially;
+- isolate database state per parallel worker using a database-appropriate boundary (for example database, schema, namespace, collection/key prefix, tenant, or disposable instance), or run those database tests serially;
 - never depend only on after-test cleanup, because failed cleanup can contaminate later tests.
 
 These rules override convenience. If the repository cannot satisfy them safely, stop and report the test-environment blocker rather than using a non-test database.
