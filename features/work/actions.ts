@@ -84,6 +84,8 @@ export async function saveStoryAction(
   const intent = String(formData.get("intent") ?? "save");
   const incomingHeaders = requestHeaders(await headers());
 
+  let target: string | null = null;
+
   try {
     let story;
 
@@ -115,8 +117,7 @@ export async function saveStoryAction(
     revalidatePath(`/studio/work/${story.id}/edit`);
     revalidatePath(`/studio/work/${story.id}/preview`);
     revalidatePath(`/studio/work/${story.id}/publish`);
-
-    redirect(targetForIntent(intent, story.id));
+    target = targetForIntent(intent, story.id);
   } catch (error) {
     if (error instanceof StoryConflictError) {
       return {
@@ -164,6 +165,18 @@ export async function saveStoryAction(
       values: parsed.values,
     };
   }
+
+  if (target) {
+    redirect(target);
+  }
+
+  return {
+    attempt: previous.attempt + 1,
+    status: "error",
+    message: "The private save could not be confirmed.",
+    fieldErrors: {},
+    values: parsed.values,
+  };
 }
 
 export async function publishStoryAction(formData: FormData): Promise<void> {
@@ -182,6 +195,7 @@ export async function publishStoryAction(formData: FormData): Promise<void> {
   }
 
   const incomingHeaders = requestHeaders(await headers());
+  let target: string;
 
   try {
     const result = await publishOwnerStory(incomingHeaders, {
@@ -197,32 +211,25 @@ export async function publishStoryAction(formData: FormData): Promise<void> {
     revalidatePath(`/studio/work/${storyId.data}/preview`);
     revalidatePath(`/studio/work/${storyId.data}/publish`);
 
-    redirect(
-      `/studio/work/${storyId.data}/edit?publication=${result.mode}`,
-    );
+    target = `/studio/work/${storyId.data}/edit?publication=${result.mode}`;
   } catch (error) {
     if (error instanceof StoryConflictError) {
-      redirect(`/studio/work/${storyId.data}/publish?error=conflict`);
+      target = `/studio/work/${storyId.data}/publish?error=conflict`;
+    } else if (error instanceof StoryPublicationValidationError) {
+      target = `/studio/work/${storyId.data}/publish?error=validation`;
+    } else if (error instanceof OwnerAuthorizationError) {
+      target = `/studio/work/${storyId.data}/publish?error=session`;
+    } else if (error instanceof StoryNotFoundError) {
+      target = "/studio/work?publication=unavailable";
+    } else {
+      logEvent("error", "story_publication_failed", {
+        storyId: storyId.data,
+        workingRevision: workingRevision.data,
+        publishedRevision: publishedRevision.data,
+      });
+      target = `/studio/work/${storyId.data}/publish?error=failed`;
     }
-
-    if (error instanceof StoryPublicationValidationError) {
-      redirect(`/studio/work/${storyId.data}/publish?error=validation`);
-    }
-
-    if (error instanceof OwnerAuthorizationError) {
-      redirect(`/studio/work/${storyId.data}/publish?error=session`);
-    }
-
-    if (error instanceof StoryNotFoundError) {
-      redirect("/studio/work?publication=unavailable");
-    }
-
-    logEvent("error", "story_publication_failed", {
-      storyId: storyId.data,
-      workingRevision: workingRevision.data,
-      publishedRevision: publishedRevision.data,
-    });
-
-    redirect(`/studio/work/${storyId.data}/publish?error=failed`);
   }
+
+  redirect(target);
 }
