@@ -1,0 +1,14 @@
+interface:
+  display_name: Test Engineering & Test Strategy
+  short_description: Design lean, risk-based automated test suites
+  default_prompt: Use $test-engineering to design the smallest maintainable test suite
+    that meaningfully protects this change.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
