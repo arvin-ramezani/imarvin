@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import "./globals.css";
+import { AppShell } from "@/components/app-shell";
+import { cn } from "@/lib/utils";
+import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "imarvin",
@@ -12,8 +15,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body>{children}</body>
+    <html
+      lang="en"
+      className={cn("font-sans", geist.variable)}
+      data-theme-preference="system"
+      data-theme-resolved="light"
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }}
+        />
+      </head>
+      <body>
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }
