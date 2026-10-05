@@ -24,12 +24,11 @@ export function ownerAuthCoreOptions<TDatabase>({
       autoSignIn: false,
     },
     disabledPaths: allowProvisioningSignUp
-      ? ["/request-password-reset", "/reset-password", "/reset-password/:token"]
+      ? ["/request-password-reset", "/reset-password"]
       : [
           "/sign-up/email",
           "/request-password-reset",
           "/reset-password",
-          "/reset-password/:token",
         ],
     rateLimit: {
       enabled: true,
