@@ -37,6 +37,21 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Decisions](docs/decisions.md) | Confirmed constraints, accepted choice, proposals |
 | [Agent rules](AGENTS.md) | Source-of-truth and AI context rules |
 
+## Local PostgreSQL
+
+Use a local PostgreSQL database only; production provisioning is intentionally outside this issue.
+Create an ignored `.env` from `.env.example`, create the database named by `DATABASE_URL`, then run:
+
+```bash
+npm ci
+npm run db:generate
+npm run db:migrate:deploy
+npm run db:migrate:status
+npm test
+```
+
+CI uses an ephemeral PostgreSQL service and applies the same committed migration state.
+
 ## Current review
 
 The owner rejects a portfolio/résumé product. The former fixed homepage sequence and résumé/editorial treatment are superseded.
