@@ -63,7 +63,7 @@ test.afterAll(async () => {
 
 test("owner saves privately, previews, publishes, then explicitly updates public content", async ({
   page,
-}) => {
+}, testInfo) => {
   await signIn(page);
   await page.goto("/studio/work");
 
@@ -84,12 +84,22 @@ test("owner saves privately, previews, publishes, then explicitly updates public
   await themeTrigger.click();
   await page.getByRole("radio", { name: "Dark" }).click();
   await expect(titleInput).toHaveValue("Published story");
+  await page.screenshot({
+    path: testInfo.outputPath("work-owner-edit-dark-wide.png"),
+    fullPage: true,
+    caret: "initial",
+  });
 
   await page.getByRole("button", { name: "Save & preview" }).click();
   await expect(page.getByText("Private preview", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Published story", level: 1 }),
   ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("work-private-preview-dark-wide.png"),
+    fullPage: true,
+    caret: "initial",
+  });
 
   const previewUrl = new URL(page.url());
   const storyId = previewUrl.pathname.split("/").at(-2);
@@ -102,6 +112,11 @@ test("owner saves privately, previews, publishes, then explicitly updates public
   await expect(
     page.getByRole("heading", { name: "Publish", level: 1 }),
   ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("work-publication-review-dark-wide.png"),
+    fullPage: true,
+    caret: "initial",
+  });
   await page.getByRole("button", { name: "Publish" }).click();
 
   await expect(
@@ -115,6 +130,11 @@ test("owner saves privately, previews, publishes, then explicitly updates public
   await expect(
     page.getByRole("heading", { name: "Published story", level: 1 }),
   ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("work-public-detail-dark-wide.png"),
+    fullPage: true,
+    caret: "initial",
+  });
 
   await page.goto(`/studio/work/${storyId}/edit`);
   await page.getByLabel("Title").fill("Private changed title");
@@ -153,7 +173,7 @@ test("owner saves privately, previews, publishes, then explicitly updates public
 
 test("owner and public Work surfaces reflow at 320px and keep the editor keyboard reachable", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await signIn(page);
   await page.goto("/studio/work/new");
@@ -182,6 +202,11 @@ test("owner and public Work surfaces reflow at 320px and keep the editor keyboar
   }));
 
   expect(ownerMetrics.scrollWidth).toBeLessThanOrEqual(ownerMetrics.clientWidth);
+  await page.screenshot({
+    path: testInfo.outputPath("work-owner-new-320.png"),
+    fullPage: true,
+    caret: "initial",
+  });
 
   await page.goto("/work");
   await expect(
@@ -194,4 +219,9 @@ test("owner and public Work surfaces reflow at 320px and keep the editor keyboar
   }));
 
   expect(publicMetrics.scrollWidth).toBeLessThanOrEqual(publicMetrics.clientWidth);
+  await page.screenshot({
+    path: testInfo.outputPath("work-public-empty-320.png"),
+    fullPage: true,
+    caret: "initial",
+  });
 });
