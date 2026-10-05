@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main />;
+  return <h1 className="sr-only">imarvin</h1>;
 }
