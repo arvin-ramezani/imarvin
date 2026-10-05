@@ -24,8 +24,8 @@
       "source": "arvin-ramezani/ai-skills",
       "sourceType": "github",
       "skillPath": "skills/test-engineering/SKILL.md",
-      "computedHash": "4adb966ab9b9aedcb58a4aca7ff30ee6c23ede43075127ace002bdd1e22d4d59",
-      "ref": "b8b2a8e2545f938d276d04b10a61d95590cf31f2"
+      "computedHash": "f0764a2bd03d8a97062ef50d7ed13565c60b43fa72b96159f665eb2146a81610",
+      "ref": "7525decc7dde42ee51c4d7bf72805aa80fdbd163"
     },
     "vercel-composition-patterns": {
       "source": "vercel-labs/agent-skills",
