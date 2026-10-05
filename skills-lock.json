@@ -13,6 +13,12 @@
       "skillPath": "skills/shadcn/SKILL.md",
       "computedHash": "f615de216e085a84e31593ad0fa9062232adc40cd87b7c7ab2b8e49abf6500be"
     },
+    "test-engineering": {
+      "source": "arvin-ramezani/ai-skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-engineering/SKILL.md",
+      "computedHash": "516284e26d20681fc61fdafe93658d2f67ead50960bf87ef946d4bada98b24de"
+    },
     "vercel-composition-patterns": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
