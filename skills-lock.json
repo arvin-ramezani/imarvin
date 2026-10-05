@@ -1,6 +1,13 @@
 {
   "version": 1,
   "skills": {
+    "design-qa": {
+      "source": "openai/role-specific-plugins",
+      "sourceType": "github",
+      "skillPath": "plugins/product-design/skills/design-qa/SKILL.md",
+      "ref": "fe5608d2512a7d6a7b9821ce8a88c48464ecd6e4",
+      "computedHash": "79cce979db9c2244b894901d3c52a33ef8fb1eebcbdf57453208062321d86a3d"
+    },
     "next-dev-loop": {
       "source": "vercel/next.js",
       "sourceType": "github",
