@@ -30,13 +30,13 @@ Implement P14/R27 theme behavior and the smallest reusable public/owner shell wi
 
 - Add a server `AppShell` with a skip-to-main link, compact identity/navigation, theme utility, and reusable main-content slot.
 - Public home uses the shell without placeholder product content.
-- Provide `PublicAppShell` and `OwnerAppShell` wrappers over the same shell API for later vertical slices.
+- Keep one neutral `AppShell` reusable by both public pages and future authenticated owner layouts; do not create a misleading owner wrapper before an owner route exists.
 - This issue does not create an owner route or modify `requireOwnerSession`; therefore Security Review remains not required.
 - All styling uses existing Signal Studio semantic tokens and logical spacing/direction utilities.
 
 ## Testing
 
-- Vitest pure tests cover stored preference parsing/resolution and bootstrap source contract.
+- Vitest pure tests cover stored preference parsing and resolved-mode behavior; Playwright verifies the pre-paint bootstrap in a real browser.
 - React Testing Library + user-event cover current choice/name, selection, focus return, storage behavior, and live System device changes.
 - Playwright covers browser-only behavior: first-paint resolved theme, reload persistence, System media changes, no navigation/history/state loss, reduced motion, and 320px overflow/focus.
 - Browser tests use the real app shell only; temporary test state may be injected by the test rather than shipped as product UI.
