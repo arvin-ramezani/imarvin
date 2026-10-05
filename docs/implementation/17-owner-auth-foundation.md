@@ -43,6 +43,7 @@ Add the single-owner Better Auth + Prisma/PostgreSQL foundation and one reusable
 
 - Normal password change requires the existing authenticated session and current password.
 - The wrapper always requests `revokeOtherSessions: true`.
+- Better Auth rotates the current session when revoking other sessions; the wrapper returns response headers so the caller can propagate the replacement session cookie.
 - SSH/operator emergency reset wiring remains deferred to production/deployment work.
 
 ## Logging and failure behavior
