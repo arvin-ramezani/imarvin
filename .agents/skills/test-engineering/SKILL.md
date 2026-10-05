@@ -23,6 +23,25 @@ Keep asking: **What regression would this test catch?** If there is no meaningfu
 - Reuse project tooling and conventions. Add dependencies only when justified.
 - Treat tests as production code: readable, focused, deterministic, and easy to change.
 
+## Database-backed tests — mandatory isolation
+
+If any integration or E2E test reads from or writes to a database, this section is mandatory. Do not proceed until the test database, reset strategy, seed strategy, and parallelism model are explicit.
+
+- Always use a dedicated **test database/environment**. Never point automated tests at production, staging, the normal development database, or a developer's everyday local database.
+- Use explicit test-only configuration such as `.env.test` or the repository's equivalent, and wire the test runner/application to load it deliberately. Do not assume the normal `.env` is safe for tests.
+- Before any destructive reset, truncate, drop, or seed operation, verify programmatically that the target is the designated test database. If that cannot be proven, stop instead of guessing.
+- Prefer the same database engine and materially relevant version/features used in production when database semantics are part of the risk.
+- Bring the test schema to the expected state using committed migrations before the suite or test iteration. Do not rely on ad-hoc manual schema changes.
+- Every run or rerun that assumes baseline data must start from a known clean state. A previous failed run must never be trusted to have cleaned up successfully.
+- Prefer a disposable database per suite/CI job when practical. Otherwise reset the dedicated test database and seed only the deterministic minimum data required.
+- For integration tests, prefer per-test transaction rollback only when all tested database work can share that transaction and the behavior under test does not depend on commit visibility, multiple connections, concurrency, background jobs, or external processes.
+- When transaction rollback is unsafe or impossible, clear the affected database state between tests/suites using the repository's reset helper or database-appropriate delete/truncate strategy, then reseed the required baseline.
+- For E2E/browser tests, do not rely on a test-runner transaction to isolate application writes across separate processes/connections. Reset/reseed before each isolated scenario or worker, or give each parallel worker its own database/schema.
+- Never run parallel mutating tests against the same mutable database state without isolation. Use a database/schema per worker, unique test-owned records, or serialize those tests.
+- Seeds/factories must be deterministic, minimal, idempotent where practical, and owned by the test suite. Tests must not depend on execution order or leftover data.
+- Cleanup after a suite is hygiene; establishing a clean baseline before the next test/iteration is correctness. Close database connections and destroy disposable resources when finished.
+- Never copy production secrets or unsanitized production data into the test database.
+
 ## Select the workflow
 
 For a trivial task—fixing one test, adding one meaningful assertion, covering a small pure function, or updating a test after a harmless refactor—use:
@@ -197,6 +216,9 @@ Do not:
 - create unrealistic mocks that cannot fail like the real dependency;
 - test framework or library behavior;
 - introduce a new framework because it is popular;
+- run database-backed automated tests without a dedicated test database/test configuration;
+- run destructive database cleanup when the target has not been proven to be a test database;
+- depend on leftover database state, previous test order, or cleanup from a prior failed run;
 - pursue 100% coverage blindly.
 
 ## Final report
@@ -208,8 +230,9 @@ After implementation, report concisely:
 3. files created or modified;
 4. tools and commands actually used;
 5. execution and coverage results, if measured;
-6. removed, moved, merged, or consolidated tests;
-7. remaining meaningful gaps or blockers;
-8. next steps only when necessary.
+6. database target/isolation/reset/seed strategy when database-backed tests were used;
+7. removed, moved, merged, or consolidated tests;
+8. remaining meaningful gaps or blockers;
+9. next steps only when necessary.
 
 Do not use raw test counts as the primary success metric.
