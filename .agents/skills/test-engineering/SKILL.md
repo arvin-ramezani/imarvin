@@ -9,6 +9,26 @@ Build the smallest reasonable, maintainable suite that gives meaningful confiden
 
 Keep asking: **What regression would this test catch?** If there is no meaningful answer, omit or remove the test.
 
+## Mandatory database-test safety
+
+If integration or E2E scope touches a persistent database, this section is **non-optional**.
+
+Before planning, implementing, or running those tests, read and follow the mandatory [database testing safety and isolation rules](references/database-testing.md).
+
+At minimum:
+
+- use a dedicated test database and explicit test configuration; never point automated tests at development, staging, or production data;
+- load the test environment explicitly (for example `.env.test` or the repository equivalent) instead of silently falling back to the normal app environment;
+- fail closed before destructive cleanup/reset unless the target is positively identified as a test-only database;
+- apply the real schema/migrations to the test database;
+- make every mutating integration/E2E test start from a known state;
+- reset **before** a test by default when shared mutable database state could leak from previous tests;
+- seed only the deterministic data needed by that test/scenario;
+- isolate database state per parallel worker/test namespace, or run those database tests serially;
+- never depend only on after-test cleanup, because failed cleanup can contaminate later tests.
+
+These rules override convenience. If the repository cannot satisfy them safely, stop and report the test-environment blocker rather than using a non-test database.
+
 ## Operating principles
 
 - Test observable behavior, contracts, and outcomes rather than private implementation details.
