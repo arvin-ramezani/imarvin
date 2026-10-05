@@ -12,6 +12,8 @@ const provisionOwnerInputSchema = z.object({
   password: z.string().min(12),
 });
 
+const OWNER_PROVISIONING_LOCK_ID = 7_291_709;
+
 export type ProvisionOwnerInput = z.input<typeof provisionOwnerInputSchema>;
 
 export class OwnerAlreadyProvisionedError extends Error {
@@ -31,33 +33,39 @@ export async function provisionOwner(
   input: ProvisionOwnerInput,
 ): Promise<ProvisionedOwner> {
   const parsed = provisionOwnerInputSchema.parse(input);
-  const existingUsers = await db.user.count();
-
-  if (existingUsers !== 0) {
-    throw new OwnerAlreadyProvisionedError();
-  }
-
   const provisioningAuth = createOwnerAuth({
     allowProvisioningSignUp: true,
   });
 
-  const result = await provisioningAuth.api.signUpEmail({
-    body: {
-      email: parsed.email,
-      name: parsed.name,
-      password: parsed.password,
-    },
+  return db.$transaction(async (transaction) => {
+    await transaction.$queryRaw`
+      SELECT pg_advisory_xact_lock(${OWNER_PROVISIONING_LOCK_ID})
+    `;
+
+    const existingUsers = await transaction.user.count();
+
+    if (existingUsers !== 0) {
+      throw new OwnerAlreadyProvisionedError();
+    }
+
+    const result = await provisioningAuth.api.signUpEmail({
+      body: {
+        email: parsed.email,
+        name: parsed.name,
+        password: parsed.password,
+      },
+    });
+
+    const owner = {
+      id: result.user.id,
+      email: result.user.email,
+      name: result.user.name,
+    };
+
+    logEvent("info", "auth.owner.provisioned", {
+      ownerId: owner.id,
+    });
+
+    return owner;
   });
-
-  const owner = {
-    id: result.user.id,
-    email: result.user.email,
-    name: result.user.name,
-  };
-
-  logEvent("info", "auth.owner.provisioned", {
-    ownerId: owner.id,
-  });
-
-  return owner;
 }
