@@ -110,7 +110,7 @@ test("owner saves privately, previews, publishes, then explicitly updates public
   await page.getByRole("link", { name: "Back to editing" }).click();
   await page.getByRole("link", { name: "Review publication" }).click();
   await expect(page).toHaveURL(
-    new RegExp(`/studio/work/${storyId}/publish$`),
+    new RegExp("/studio/work/" + storyId + "/publish$"),
   );
   await expect(
     page.getByRole("heading", { name: "Publish", exact: true, level: 1 }),
@@ -120,7 +120,7 @@ test("owner saves privately, previews, publishes, then explicitly updates public
     fullPage: true,
     caret: "initial",
   });
-  await page.getByRole("button", { name: "Publish" }).click();
+  await page.getByRole("button", { name: "Publish", exact: true }).click();
 
   await expect(
     page.getByText(
@@ -128,7 +128,21 @@ test("owner saves privately, previews, publishes, then explicitly updates public
     ),
   ).toBeVisible();
 
-  const publicPath = `/work/${storyId}`;
+  const publicPath = "/work/" + storyId;
+
+  await page.goto("/work");
+  await expect(
+    page.getByRole("heading", { name: "Browse Work", level: 1 }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Published story", level: 2 }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("work-public-collection-dark-wide.png"),
+    fullPage: true,
+    caret: "initial",
+  });
+
   await page.goto(publicPath);
   await expect(
     page.getByRole("heading", { name: "Published story", level: 1 }),
@@ -139,12 +153,22 @@ test("owner saves privately, previews, publishes, then explicitly updates public
     caret: "initial",
   });
 
-  await page.goto(`/studio/work/${storyId}/edit`);
+  await page.goto("/studio/work/" + storyId + "/edit");
   await page.getByLabel("Title").fill("Private changed title");
   await page.getByRole("button", { name: "Save privately" }).click();
   await expect(
     page.getByText("Saved privately. Public content was not changed."),
   ).toBeVisible();
+
+  await page.goto("/studio/work");
+  await expect(
+    page.getByText("Published · private changes", { exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: testInfo.outputPath("work-owner-index-dark-wide.png"),
+    fullPage: true,
+    caret: "initial",
+  });
 
   await page.goto(publicPath);
   await expect(
@@ -154,12 +178,26 @@ test("owner saves privately, previews, publishes, then explicitly updates public
     page.getByRole("heading", { name: "Private changed title", level: 1 }),
   ).toHaveCount(0);
 
-  await page.goto(`/studio/work/${storyId}/edit`);
+  await page.goto("/studio/work/" + storyId + "/edit");
   await page.getByRole("link", { name: "Review publication" }).click();
+  await expect(page).toHaveURL(
+    new RegExp("/studio/work/" + storyId + "/publish$"),
+  );
   await expect(
-    page.getByRole("heading", { name: "Update published content", level: 1 }),
+    page.getByRole("heading", {
+      name: "Update published content",
+      exact: true,
+      level: 1,
+    }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Update published content" }).click();
+  await page.screenshot({
+    path: testInfo.outputPath("work-update-publication-review-dark-wide.png"),
+    fullPage: true,
+    caret: "initial",
+  });
+  await page
+    .getByRole("button", { name: "Update published content", exact: true })
+    .click();
 
   await expect(
     page.getByText(
@@ -183,7 +221,7 @@ test("owner and public Work surfaces reflow at 320px and keep the editor keyboar
 
   let reachedTitle = false;
 
-  for (let step = 0; step < 10; step += 1) {
+  for (let step = 0; step < 12; step += 1) {
     await page.keyboard.press("Tab");
 
     reachedTitle = await page.evaluate(

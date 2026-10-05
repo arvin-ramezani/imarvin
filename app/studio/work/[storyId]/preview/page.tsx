@@ -1,3 +1,4 @@
+import { LockKeyhole } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -21,17 +22,23 @@ export default async function StoryPreviewPage({ params }: PreviewPageProps) {
   const missingCount = Object.values(publicationErrors).flat().length;
 
   return (
-    <section className="flex flex-col gap-8">
-      <header className="flex flex-wrap items-center justify-between gap-4 border-b border-boundary pb-5">
-        <div className="flex flex-col gap-1">
-          <p className="text-sm font-semibold text-ink">Private preview</p>
-          <p className="text-sm text-muted-ink">
-            Exact saved candidate · revision {story.workingRevision}
-          </p>
+    <section className="flex flex-col gap-10">
+      <header className="flex flex-col gap-4 rounded-lg border border-signal bg-signal-wash p-5 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-start gap-4">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-md bg-surface text-signal">
+            <LockKeyhole aria-hidden="true" className="size-5" />
+          </span>
+          <div className="flex flex-col gap-1">
+            <p className="text-sm font-semibold text-ink">Private preview</p>
+            <p className="text-sm leading-6 text-muted-ink">
+              Exact saved candidate · revision {story.workingRevision}. Only
+              the owner can see this preview.
+            </p>
+          </div>
         </div>
         <Link
-          href={`/studio/work/${story.id}/edit`}
-          className="flex min-h-11 items-center rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          href={"/studio/work/" + story.id + "/edit"}
+          className="flex min-h-11 w-fit items-center rounded-md border border-boundary bg-surface px-4 py-2 font-medium text-ink outline-none hover:bg-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           Back to editing
         </Link>
@@ -42,7 +49,9 @@ export default async function StoryPreviewPage({ params }: PreviewPageProps) {
           <h2 className="font-semibold text-ink">Owner-only preview note</h2>
           <p className="text-sm text-muted-ink">
             This saved candidate can be previewed privately, but it still has
-            {missingCount === 1 ? " 1 publication requirement" : ` ${missingCount} publication requirements`}.
+            {missingCount === 1
+              ? " 1 publication requirement"
+              : " " + missingCount + " publication requirements"}.
           </p>
         </aside>
       ) : null}
