@@ -12,6 +12,11 @@ import {
 } from "../lib/auth";
 import { auth } from "../lib/auth/instance";
 import { db } from "../lib/db";
+import {
+  createOwnerStory,
+  getOwnerStory,
+  listOwnerStories,
+} from "../features/work/owner";
 
 const APP_ORIGIN = "http://localhost:3000";
 const OWNER_EMAIL = "owner@example.com";
@@ -181,6 +186,55 @@ describe("owner authentication foundation", () => {
     expect(ownerSession.user.email).toBe(OWNER_EMAIL);
     expect(await getOwnerSession(headers)).not.toBeNull();
     expect(await db.session.count()).toBeGreaterThan(0);
+  });
+
+  it("enforces the owner boundary for story reads, writes, and preview data", async () => {
+    const signIn = await authRequest(
+      "/sign-in/email",
+      {
+        email: OWNER_EMAIL,
+        password: OWNER_PASSWORD,
+      },
+      { ip: "198.51.100.20" },
+    );
+    const cookie = sessionCookie(signIn);
+    const ownerHeaders = new Headers({ cookie });
+
+    await expect(listOwnerStories(new Headers())).rejects.toBeInstanceOf(
+      OwnerAuthorizationError,
+    );
+    await expect(
+      createOwnerStory(new Headers(), {
+        title: "Private",
+        problem: "",
+        contribution: "",
+        progress: null,
+        outcome: null,
+        stack: [],
+      }),
+    ).rejects.toBeInstanceOf(OwnerAuthorizationError);
+
+    const story = await createOwnerStory(ownerHeaders, {
+      title: "Owner-only preview candidate",
+      problem: "",
+      contribution: "",
+      progress: null,
+      outcome: null,
+      stack: [],
+    });
+
+    try {
+      const ownerStories = await listOwnerStories(ownerHeaders);
+      const previewCandidate = await getOwnerStory(ownerHeaders, story.id);
+
+      expect(ownerStories.some((item) => item.id === story.id)).toBe(true);
+      expect(previewCandidate?.title).toBe("Owner-only preview candidate");
+      await expect(
+        getOwnerStory(new Headers(), story.id),
+      ).rejects.toBeInstanceOf(OwnerAuthorizationError);
+    } finally {
+      await db.story.delete({ where: { id: story.id } });
+    }
   });
 
   it("changes the password and revokes other sessions", async () => {
