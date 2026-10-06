@@ -1,6 +1,6 @@
 # Navigation and State Specification
 
-Status: proposed behavior for review | Updated: 2026-10-03.
+Status: proposed behavior for review, including P15 media transitions | Updated: 2026-10-07.
 Depends on [public UX](public-ux-spec.md), [PRD](../../PRD.md), [decisions](../decisions.md). Trace: R07, R11, R19–R25; A03–A04, A07–A09, A11.
 URL shapes below are conceptual contracts; routing implementation and storage are deferred to architecture. Public delivery uses published content only; this document does not approve P02's authoring lifecycle.
 
@@ -41,6 +41,7 @@ No login is needed to browse. No cross-device or permanent personalization is re
 | Open a story from collection/experience | Preserve origin and return position; add story destination | Focus story heading; explicit Return targets stored origin |
 | Switch detail section | Update selected panel/location; replace current history entry | Focus stays on section control; summary remains available |
 | Open/close inline evidence | Update selection/location; replace current history entry | Open focuses inspection heading; Close restores its trigger |
+| Play/Pause/seek recording in lead or evidence | Player state only; no new history/location; explicit Play starts when ready | Focus stays on control; Close/leave/hide/item change stops playback/audio; ME05 |
 | Choose authored related story | Add new story destination; previous story is its origin | Back returns to previous story section/position |
 | Browser Back/Forward | Restore the destination and its saved selection | Restore invoking item/reading position when available |
 | Explicit Return with no valid origin | Navigate to All work | Focus collection heading; no assumed filter |
@@ -73,8 +74,8 @@ If the old item disappeared, restore the valid filter and nearest meaningful pos
 | Content becomes nonpublic | Remove content from the active surface when detected | Neutral unavailable state; safe navigation |
 
 Retry does not add history, reset the filter, duplicate an action, or overwrite the currently selected destination. Late results from an earlier selection must not replace a newer selection.
-Evidence selection is valid only inside Evidence: switching away closes inspection. Opening an evidence deep link selects Evidence automatically when available; Close leaves Evidence selected. With no sections, keep summary alone and remove obsolete selection parameters.
-An unavailable live demo is not a story error. Historical evidence remains labeled as such; cancelled/offline status stays visible independently of request states.
+Evidence selection is valid only inside Evidence: switching away closes inspection and its playback. Summary lead media stays visible across section changes; a contextual figure can select the same evidence item in Evidence. Opening a deep link selects content without playing video; Close leaves Evidence selected. With no sections, keep summary/optional lead alone and remove obsolete section/evidence parameters. [ME05](media-evidence-spec.md#4-inspection-and-playback) owns player/position/return behavior.
+An unavailable live demo is not a story error. Historical/local/prototype evidence retains its confirmed stage; progress, release history and availability stay distinct from loading/failure states. Failed cover/poster/image keeps the story-opening action and truthful text; failed playback retains explanation and recovery.
 
 ## 6. Public privacy contract
 

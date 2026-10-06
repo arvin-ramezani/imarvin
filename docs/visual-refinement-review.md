@@ -1,6 +1,7 @@
 # Visual Refinement Review
 
 Status: owner-approved visual refinement and rendered wide light/dark direction; responsive/interaction/accessibility validation pending. Updated: 2026-10-03.
+P15 extension (2026-10-07): [media/evidence](specs/media-evidence-spec.md) proposes project images/video across entry/browse/detail/owner views. This historical approval record does not certify those new compositions, playback or assets; MV01–MV08 remain unrun. Company identity stays logos-only while its contextual stories may show project captures.
 Base: merged PR #1, main at 342f9b657e1cb71dae665a20e2dab3d5f067d170. New work is a separate documentation PR.
 Authority: [decisions](decisions.md), [visual system](specs/visual-system-spec.md), [components](specs/components-interaction-spec.md). No code, images, or generated assets.
 

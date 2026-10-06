@@ -1,6 +1,6 @@
 # Content Inventory
 
-Status: planning snapshot from the owner's statements, 2026-10-03. This is not publish-ready copy.
+Status: planning snapshot from the owner's statements, extended for P15 on 2026-10-07. This is not publish-ready copy or confirmation that assets exist.
 
 ## Unixsee
 
@@ -30,13 +30,28 @@ The owner earlier mentioned three projects, two offline; later described the thr
 
 Choose featured work by curiosity, contribution, relevance, and evidence. A live deployment is not a requirement. Work/decision/company views reuse one story. Entry selection supports a creative exploration surface, not a résumé homepage.
 
+## Candidate visual evidence to collect
+
+These are capture suggestions conditional on available, permitted artifacts. They are not assertions about implemented features, production releases, ownership, or media already supplied. [Media/evidence](specs/media-evidence-spec.md) governs placement and truthful stage labels.
+
+| Story | Candidate still / detail | Candidate recording | Confirmation needed |
+| --- | --- | --- | --- |
+| Unixsee landing page | Representative implemented page and a readable responsive/detail capture | One actual interaction/animation, if implemented and useful | Arvin's contribution; capture source/stage; permission; release/availability |
+| Cancelled Unixsee app | Customer-dashboard/admin-panel UI Arvin reports implementing; selected states rather than every screen | One implemented navigation, feedback or animation sequence in a runnable local build; design prototype if code is unavailable, labelled accordingly | Completed/unfinished scope, never-shipped versus prior release, real behavior versus prototype, permitted/redacted data |
+| Waiting room | Relevant admission screen or permitted management workflow, if available | A confirmed working admission/configuration sequence when it supports the story | Current build/readiness and individual role; safe customer/host/key disclosure boundaries; no production inference |
+| Previous company's shop | Confirmed product/browse/basket or other implemented screen worth discussing | One real implemented shopper workflow/transition, if available | Application source, responsibility/team boundaries, permission, release/availability and capture stage |
+
+Select one representative still/poster for discovery and a few complementary items for depth; do not prescribe a minimum image count or repeat the same screenshot to fill every section. Original historical capture, current local recording and recreated demo must be distinguished. Cancelled/unshipped work can be featured with these assets after factual/permission review.
+
 ## Capture worksheet
 
 For each story, collect:
 - Problem and users affected.
 - Personal role, tasks, and team boundaries.
 - One or two consequential decisions and their constraints.
-- What was completed; outcome/status; lessons if useful.
-- Evidence allowed for public use; stack and usable public links.
+- What was completed/unfinished; progress, release history, current availability and confirmed lessons.
+- Evidence permitted for public use; source/capture stage/date when known, what it demonstrates and cannot prove; stack and usable public links.
+- Selected discovery/lead image or video poster; relevant detail figures/recordings; authored sequence and meaningful captions/alternatives.
+- For recordings: actual starting state/action/result, duration, silent/with-audio, captions/description/transcript needs; source redaction and permission review before publishing.
 
 Do not upload source code, credentials, private operational identifiers, internal tickets, or confidential employer material merely to make a story more impressive. The owner determines appropriate publishable evidence.

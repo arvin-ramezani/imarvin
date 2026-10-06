@@ -1,7 +1,8 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.8 | Updated: 2026-10-03  
-Status: revised draft. Confirmed constraints: C01–C10. P01–P14 and T01–T07 are owner-approved where listed in decisions. Remaining open items are factual inputs, runtime validation, and feature-level implementation details; the complete PRD is not blanket implementation approval.
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.9 | Updated: 2026-10-07
+
+Status: revised draft. Confirmed constraints: C01–C10. P01–P15 and T01–T07 are owner-approved where listed in decisions. P15 confirms the media documentation brief; detailed new media UX remains proposed. Remaining open items are factual inputs, runtime validation, and feature-level implementation details; the complete PRD is not blanket implementation approval.
 
 ## 1. Product intent
 
@@ -29,12 +30,12 @@ Success hypotheses: visitors understand a contribution/decision, recognize Arvin
 | R01 | Entry is an authored exploration surface with one clear primary action; no mandated résumé section sequence |
 | R02 | Identity and purpose are clear; work, personal context, and contact remain discoverable |
 | R03 | Company entries show logo/name, role, dates, and a concrete contribution; name fallback for absent logo; placement is contextual rather than homepage-first |
-| R04 | Company entries use logos only, no company photos/screenshot covers; open shareable experience details |
+| R04 | Company identity/header uses logos/name only, no company photos/screenshot covers; project choices/main stories may show their own media within that context; open shareable experience details |
 | R05 | Experience shares a context header; show several project choices or the company's main product directly |
 | R06 | Each story supports problem, personal tasks/responsibility, decisions, outcomes/status, and relevant stack |
 | R07 | Exploring by work, decision, or company resolves to one underlying story; main-product content remains directly linkable |
-| R08 | Ongoing/completed/cancelled status is separate from public availability; offline work remains complete |
-| R09 | Optional project evidence supports inspection; static/text explanation is sufficient when media or demos are absent; only usable public external links appear |
+| R08 | Ongoing/completed/cancelled progress, release history (shipped/never shipped), current availability and capture stage remain distinct; cancelled/offline/never-shipped work is eligible for full published stories and featuring |
+| R09 | Purposeful permitted project images/recordings support discovery and inspection, including real animations/workflows; captions identify context and proof limits. Media is optional; text layouts remain complete and only usable public external links appear |
 | R10 | Personal context communicates real interests/learning; contact is available independently of completing exploration |
 | R11 | Navigation, back/reset, absent content, and unavailable destinations have understandable behavior |
 
@@ -45,7 +46,7 @@ A company is the organization; experience is Arvin's role; a project is a body o
 | ID | Requirement |
 | --- | --- |
 | R12 | Owner sign-in/out; no public registration; server-side authorization |
-| R13 | Manage identity/personal context, experience, stories and their decisions/evidence, contact, featured work, grouping and order |
+| R13 | Manage identity/personal context, experience, stories and their decisions/evidence, lead/cover/poster and alternatives, contact, featured work, grouping and order |
 | R14 | Associate work with companies; support multiple projects and the main product without duplicated stories |
 | R15 | Preview the public layout privately; show unsaved/saved and private/published states |
 | R16 | Explicit publishing: Save private draft; Publish new content; Update published content explicitly |
@@ -59,8 +60,8 @@ P02, P10, and P12 are accepted. [Owner UX](docs/specs/owner-ux-spec.md) and [con
 
 R20: Mobile/desktop/320px retain the core loop without horizontal overflow.  
 R21: Keyboard, labels, visible focus, contrast, readable text, and reduced-motion support.  
-R22: Stable deep links and appropriate page/share descriptions; only published data is publicly delivered/indexed.  
-R23: Media alternatives and complete layouts with no logo, screenshots, video, or live demo.  
+R22: Stable deep links and appropriate page/share descriptions/images; only published data/assets are publicly delivered/indexed.\
+R23: Images have meaningful alternatives; recordings have appropriate captions/descriptions and user-controlled playback. Layouts remain complete with no logo, screenshots, video, or live demo; see [media](docs/specs/media-evidence-spec.md) and [accessibility](docs/specs/accessibility-responsive-spec.md).\
 R24: Progressive depth: quick understanding first, decisions/evidence on request; preserve context when returning.  
 R25: Exploration changes meaningful visible content/state; selection/back/reset are clear; no essential hover-only or animation-only controls.  
 R26: Later design must establish a recognizable composition/identity beyond uniform cards, résumé rows, or cosmetic color changes; creativity remains usable and focused.  
@@ -81,7 +82,7 @@ Architecture is defined by [technical architecture](docs/architecture/architectu
 | A01 | Entry explains the space and offers a clear exploration action plus discoverable contact | R01–R02, R10–R11 |
 | A02 | Unixsee supports several projects; the previous company's core shop is shown directly | R03–R05, R14 |
 | A03 | Work/decision/company paths and deep links resolve consistently without duplicating content | R06–R07 |
-| A04 | Offline/cancelled work remains truthful and complete without optional media | R08–R09, R23 |
+| A04 | Offline/cancelled/never-shipped work remains truthful and complete with permitted captures/recordings or without optional media; capture stage never implies a launch | R08–R09, R23 |
 | A05 | Owner curates/edits/associates/previews/publishes without editing source files | R12–R16 |
 | A06 | Save does not publish; explicit successful update does; failure preserves public content and input | R16–R18 |
 | A07 | Owner actions/drafts/previews/unpublished assets are private | R12, R19, R22 |
@@ -95,6 +96,6 @@ The visual direction is owner-approved. Responsive, interaction, accessibility, 
 
 ## 8. Next gate
 
-Signal Studio (P09) and the current light/dark visual system/rendered target (P11/P13/P14) are approved. The [visual system](docs/specs/visual-system-spec.md) is the visual authority; [components](docs/specs/components-interaction-spec.md) still contains behavior/state details that require later validation.
+Signal Studio (P09) and the existing light/dark visual system/rendered target (P11/P13/P14) are approved. P15 extends documentation for project images/video; new media compositions/player behavior have not been rendered or approved. The [visual system](docs/specs/visual-system-spec.md) is the visual authority; [media](docs/specs/media-evidence-spec.md) and [components](docs/specs/components-interaction-spec.md) define proposals requiring later validation.
 
 Confirm O01–O03 and finish runtime responsive/interaction/accessibility validation. O04 visual approval and O05 architecture baseline are resolved. Implementation proceeds only through the accepted issue/spec/PR workflow.

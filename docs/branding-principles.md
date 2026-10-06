@@ -39,3 +39,4 @@ Do not manufacture a contrarian belief, personal mission, customer quote, perfor
 ## Evidence limits
 
 A code repository can establish that features or tests exist. It cannot alone prove who implemented them, customer impact, production readiness, or the owner's exact employment responsibilities. Confirm those before publishing.
+Project screenshots establish visible states; recordings demonstrate captured behavior/animations. Neither establishes launch, authorship or commercial impact. Cancelled/never-shipped work is useful evidence when contribution, completed/unfinished scope and captured stage are explicit; do not turn cancellation into an invented success/failure story. [Media/evidence](specs/media-evidence-spec.md) defines the P15 placement and caption proposal; company identity stays logos-only.

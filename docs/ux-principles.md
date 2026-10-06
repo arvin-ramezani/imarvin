@@ -20,7 +20,7 @@ Owner feedback: prior direction felt boring and résumé-like. Inspected documen
 | UX06 | Maintain orientation | Selected item, active state, title, back/reset and deep link are predictable |
 | UX07 | Keep freedom and recovery | Browsing/contact do not require tour completion; empty/error states provide next actions |
 | UX08 | Preserve parity | Keyboard/touch/mobile/reduced-motion paths can perform the same core tasks |
-| UX09 | Use evidence honestly | No demo/media is required; captions explain real evidence and unavailable assets do not break a story |
+| UX09 | Use evidence honestly | Purposeful stills aid discovery; recordings explain actual behavior; captions distinguish capture stage from release history; no-media/failed-media work remains complete (ME01–ME04) |
 | UX10 | Validate the actual experience later | Written contracts are followed by visual and interaction checks; aesthetics/usability are not certified by prose |
 
 ## Compact interaction template
@@ -39,6 +39,7 @@ Example (proposed, no new facts): select a Unixsee project → its story becomes
 - Visitor opens work, identifies one real contribution, inspects a decision/evidence, and returns.
 - Visitor reaches relevant contact without completing exploration.
 - Visitor repeats the core loop without optional imagery, with keyboard/reduced motion, and at 320px.
+- Visitor identifies what a cancelled/never-shipped project's image/recording demonstrates, plays it explicitly or uses its equivalent explanation, and returns without losing context; [MV01–MV08](specs/media-evidence-spec.md#7-verification-boundary) define media checks.
 - Owner edits and previews a work story; private/public state remains clear.
 
 These tasks define what to evaluate, not claimed user-research results. Define concrete success/failure criteria in the acceptance specification.

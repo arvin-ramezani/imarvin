@@ -1,6 +1,6 @@
 # Visual System: Signal Studio
 
-Status: owner-approved visual system target (P09/P11/P13/P14); implementation libraries/tokens and responsive validation pending. Updated: 2026-10-03.
+Status: existing visual system target approved (P09/P11/P13/P14); P15 media composition extension proposed, rendered validation pending. Updated: 2026-10-07.
 Authority: [decisions](../decisions.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R27; A01, A09, A12.
 Owner approved representative rendered wide light/dark public and owner screens on 2026-10-03. The reviewed images are approval evidence but are not stored here as implementation assets. [Refinement review](../visual-refinement-review.md) records the approval and remaining validation.
 
@@ -13,6 +13,7 @@ VS02: active work/section uses stable position, weight, icon/shape, and optional
 VS03: selected work owns a large inspection stage; context/return sits beside it when space permits. Content changes while title and return stay anchored.
 VS04: work objects share an open surface with authored variations in emphasis. Do not enclose the app in a card or make every item an identical tile.
 VS05: offset composition, work-led scale, and purposeful inspection form the signature. Background effects or generic active-control styling cannot substitute for it.
+VS06: real project captures/posters become authored objects within that same work stage: one focal visual at entry, smaller discovery stills, and full detail inspection. [Media/evidence](media-evidence-spec.md) owns placement/proportion/crop/player rules; this proposal preserves the palette/signature and does not extend earlier rendered approval to new layouts.
 
 Grouping and recognizable control shapes precede explanatory text. Work titles, story content, and consequential private/public states remain understandable. Secondary labels are visible/readable, not hidden or low contrast.
 
@@ -50,6 +51,7 @@ Dark mode is the same Signal Studio composition, not the unselected Night Instru
 These values are the approved design target; implementation may adjust a value only for measured accessibility/technical reasons while preserving the approved appearance, with material changes returned for review. Theme support/default is accepted P14. Do not put white text on dark-theme Signal/Destructive: these are foreground roles, not button fills. Destructive actions use a clear label/icon and verified outline/text treatment; any future filled variant needs its own checked pair.
 No color-only state, accent body paragraphs, or faint labels. Recheck opacity/hover/disabled/overlay combinations in both modes; solid-pair calculations alone do not validate a rendered screen.
 Evidence is not inverted or recolored; keep original screenshot/logo appearance. Use a neutral framed surface if contrast requires it; company-name fallback remains available.
+Keep captions/status/actions outside busy screenshots/posters; original project UI colors are content, not new application theme tokens. Assess frame/control contrast in both themes without claiming the captured product itself meets imarvin's accessibility targets.
 Historical light calculations are in [design review](../design-review.md); current dark checks and limits are in [refinement review](../visual-refinement-review.md).
 
 ## 4. Type, icons, shape, spacing
