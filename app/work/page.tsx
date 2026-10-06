@@ -55,7 +55,7 @@ export default async function WorkPage() {
                     {storyProgressLabel(story.progress)}
                   </span>
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 wrap-anywhere">
                   <h2 className="text-3xl font-semibold leading-tight tracking-tight text-ink group-hover:text-signal md:text-4xl">
                     {story.title}
                   </h2>
