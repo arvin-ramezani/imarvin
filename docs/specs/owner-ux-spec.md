@@ -63,7 +63,7 @@ Resize, orientation and on-screen-keyboard changes preserve editor values, focus
 Labels remain visible; required/optional state and errors use text. An error summary links to fields; failed submissions focus the summary, then preserve input. Announce save/publication state without moving focus unnecessarily.
 Dialogs have a title, described impact, predictable initial focus, Escape/Cancel, contained keyboard focus, and return to the invoking control. If the item disappears, focus a valid list heading instead.
 In short-height/zoomed viewports, dialog content scrolls within the available area; title/impact and confirmation/cancel actions remain reachable without page overflow or an obscured focused control. Resizing preserves the open dialog and its operation; theme changes do not dismiss or confirm it.
-Lists work as readable stacked entries when tables do not fit. Reordering announcements identify item and new position. Upload accepts a normal file picker, not drag alone. Reduced motion removes decorative travel.
+Lists work as readable stacked entries when tables do not fit. Reordering announcements identify item and new position. Upload accepts a normal file picker, not drag alone. Owner UI state changes are immediate: no animated transitions or decorative motion. User-controlled project recording playback in preview is content, not owner UI animation.
 
 ## 7. Review scenarios
 

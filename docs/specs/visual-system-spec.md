@@ -85,11 +85,11 @@ At 320px/zoom, focus, errors, and essential actions remain visible. No sticky ra
 
 ## 6. Public/owner states and motion
 
-Public composition is expressive; owner editing stays structured. Share visual language without turning the editor into a decorative workspace.
+Public composition is expressive and may use purposeful motion; owner/admin editing is structured and motion-free. Share visual language without turning the editor into a decorative workspace.
 Saved privately, Published, Private changes, Error, and Cancelled are distinct meanings. Use shape/icon/state plus concise text; never imply Save publishes through a visual transition.
 Publish/Update and Unpublish/Delete are not interchangeable icon actions. Reviews and confirmations identify operation and effect.
 Hover offers restrained affordance feedback; focus has an independent visible indicator; active selection persists. Loading is scoped; error pairs a recognizable cue with explanation/recovery.
-Optional 120–180ms transitions connect cause/result; no decorative loops, scroll hijacking, or animation waits. Reduced motion keeps immediate feedback.
+On public visitor surfaces only, optional 120–180ms transitions may connect cause/result; no decorative loops, scroll hijacking, or animation waits. Owner/admin/sign-in/studio/private-preview/publish-review UI changes are immediate. Reduced motion keeps immediate feedback.
 [Components](components-interaction-spec.md) define states; [refinement review](../visual-refinement-review.md) records the approved visual direction and remaining checks. Aesthetic direction is approved; icon comprehension, responsive layout behavior, focus/accessibility, and usability remain unverified.
 
 ## 7. Theme behavior — P14 / R27
