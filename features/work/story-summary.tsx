@@ -33,7 +33,7 @@ export function StorySummary({ story, preview = false }: StorySummaryProps) {
     (preview ? "Contribution not added yet." : "");
 
   return (
-    <article className="grid gap-10 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-12">
+    <article className="wrap-anywhere grid gap-10 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-12">
       <aside className="flex min-w-0 flex-col gap-6 border-b border-boundary pb-8 lg:border-b-0 lg:border-e lg:pb-0 lg:pe-8">
         <div className="flex flex-col gap-3">
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-ink">
