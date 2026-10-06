@@ -8,15 +8,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "vitest run --config=vitest.config.ts",
+    "test:integration": "node --import ./scripts/load-test-env.mjs ./node_modules/vitest/vitest.mjs run --config=vitest.integration.config.ts",
+    "test:e2e": "node --import ./scripts/load-test-env.mjs --conditions=react-server ./node_modules/@playwright/test/cli.js test",
+    "test:db:prepare": "node ./scripts/prepare-test-db.mjs",
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:status": "prisma migrate status",
     "auth:generate": "auth generate --config ./auth.cli.ts --yes",
     "auth:check": "auth check --config ./auth.cli.ts",
-    "test:e2e:ci": "playwright test --config=playwright.ci.config.ts"
+    "test:e2e:ci": "node --import ./scripts/load-test-env.mjs --conditions=react-server ./node_modules/@playwright/test/cli.js test --config=playwright.ci.config.ts"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",

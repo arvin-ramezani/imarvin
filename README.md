@@ -39,18 +39,22 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 
 ## Local PostgreSQL
 
-Use a local PostgreSQL database only; production provisioning is intentionally outside this issue.
-Create an ignored `.env` from `.env.example`, create the database named by `DATABASE_URL`, then run:
+Use local PostgreSQL only; production provisioning is intentionally outside this issue.
+
+For development, create the ignored `.env` from `.env.example` and create the database named by its `DATABASE_URL`.
+
+Database-backed automated tests use a separate, explicit test environment. Create the dedicated `imarvin_test` database, copy `.env.test.example` to ignored `.env.test`, then prepare it through the same committed Prisma migrations used by the app:
 
 ```bash
 npm ci
-npm run db:generate
-npm run db:migrate:deploy
-npm run db:migrate:status
+npm run test:db:prepare
 npm test
+npm run test:e2e
 ```
 
-CI uses an ephemeral PostgreSQL service and applies the same committed migration state.
+Local integration/E2E commands fail closed when `.env.test` is missing or `DATABASE_URL` does not target exactly `imarvin_test`. Unit/component tests remain available through `npm run test:unit` without database setup.
+
+CI preserves the same safety model with an ephemeral PostgreSQL `imarvin_test` service, explicit test-only environment variables, and the committed migration state.
 
 ## Current review
 

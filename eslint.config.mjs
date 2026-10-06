@@ -54,7 +54,12 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ["lib/config/server.ts"],
+    files: [
+      "lib/config/server.ts",
+      "scripts/load-test-env.mjs",
+      "scripts/prepare-test-db.mjs",
+      "tests/support/test-database.ts",
+    ],
     rules: {
       "no-restricted-properties": "off",
     },
