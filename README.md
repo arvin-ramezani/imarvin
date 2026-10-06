@@ -6,6 +6,8 @@ Phase: bounded implementation is underway. Minimal scaffold, shadcn/agent founda
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
+Project images/video and cancelled/never-shipped work now have [media guidance](docs/specs/media-evidence-spec.md) (P15). This is a documentation extension; the implemented #23 story slice remains text-only, and new media layouts/behavior await review and bounded implementation.
+
 Current validation: [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) defines the remaining rendered/task checks; written review is complete and implementation evidence is pending.
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
@@ -18,6 +20,7 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Design concepts](docs/design-concepts.md) | Selected concept and two unselected alternatives |
 | [Design direction](docs/design-direction.md) | Personal Studio direction and draft UX contracts |
 | [Public UX specification](docs/specs/public-ux-spec.md) | Homepage, projects-first browsing, summary/section detail |
+| [Project images/video/evidence](docs/specs/media-evidence-spec.md) | Purposeful placement, truthful recording stages, inspection, authoring and MV01–MV08 checks |
 | [Navigation/state specification](docs/specs/navigation-state-spec.md) | Destinations, return context, failures, safe deep links |
 | [Accessibility/responsive specification](docs/specs/accessibility-responsive-spec.md) | Public-flow mobile, keyboard, reading, motion contracts |
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |

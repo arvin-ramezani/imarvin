@@ -1,6 +1,6 @@
 # Owner UX Specification
 
-Status: owner-approved behavior contract for P12; remaining technical mechanisms deferred | Updated: 2026-10-03.
+Status: owner-approved behavior contract for P12; P15 media additions proposed; technical mechanisms deferred | Updated: 2026-10-07.
 Accepted: P02 explicit publishing; P03–P04 focused V1; P08 structured editing; P12 explicit save/candidate review/conflict/session recovery/accessible confirmations.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [content/publishing](content-publishing-spec.md). Trace: R12–R21; A05–A09.
 
@@ -20,20 +20,20 @@ Expired session stops writes and shows Sign in again. Retain in-session editing 
 
 | Area | Editable content | Publishing checks |
 | --- | --- | --- |
-| Story summary | Title, problem hook, responsibility/tasks, project status, known outcome/lesson, relevant stack | Required summary is understandable and accurate; metrics/media are optional |
-| Story depth | Problem, decisions, evidence, authored related work | Omit empty optional sections; decisions identify constraint/choice/consequence |
+| Story summary | Title, problem hook, responsibility/tasks, progress/release/availability, known outcome/lesson, relevant stack | Accurate summary; never infer shipped from completed; metrics/media optional |
+| Story depth/media | Problem, decisions, evidence, lead/cover/poster, alternatives, authored related work | Omit empty optional sections; confirmed capture stage/permission; selected media ready and alternatives complete |
 | Experience | Company name/logo, role/dates, contribution, multiple-project/main-product mode | Confirmed company/role/date facts; valid main-story association where selected |
 | Studio settings | Name/description, personal context, contact destinations, featured story, order | Real contact destination; eligible published work references |
 
 Field help gives one short purpose and an optional example labeled as an example. It never autofills invented outcomes or identity. Drafts may be incomplete; publication checks show missing inputs.
 Experience associations reuse stories. A main-product selection must belong to that experience; switching mode changes presentation without duplicating story content. Explicitly detach an association to make a story standalone.
 For a new main-product experience, guide context-only publication → associated story publication → explicit experience update selecting that story. Explain the temporary public no-project state before each confirmation.
-Evidence editing supports caption, what it demonstrates, permission confirmation, text alternative, and public link or permitted upload. Inaccessible/failed media is removable; the story remains usable without it. T04 selects filesystem storage/native FormData with a 10 MiB baseline; exact allowlist belongs to the upload feature spec.
+Evidence editing follows [ME07](media-evidence-spec.md#6-authoring-and-publication): image/recording/diagram/text-link, purpose/caption, capture stage, permission, alternatives, file/link, lead/cover/poster selection and accessible order. Upload/readiness is distinct from Save. Failed/pending selected assets require retry or explicit candidate removal before publication; other input stays. T04's filesystem/native FormData and 10 MiB baseline remain unchanged; exact video support/limits require a bounded upload spec.
 Order controls include Move up/Move down and an explicit featured-story selector; drag is optional and never the only method. Selecting/order editing changes a private settings draft until publication.
 
 ## 4. Editing state and actions
 
-Show separate labels for project progress, public state, and editing state. For example: Cancelled / Published / Unsaved changes. Saving a cancelled project never changes its progress status.
+Show separate project facts (progress, release history, availability), public state and editing state. For example: Cancelled · Never shipped / Published / Unsaved changes, only when confirmed. Saved privately/Published describes the story, not a project launch. Saving a cancelled project never changes its progress status.
 
 | Action | Visible result | Failure / next action |
 | --- | --- | --- |
@@ -45,8 +45,8 @@ Show separate labels for project progress, public state, and editing state. For 
 | Delete draft/item | Confirm irreversible deletion and affected references | Block when still published or referenced; explain how to resolve |
 | Discard unsaved edits | Confirm; reload latest saved working copy | Never deletes the working copy or changes public content |
 
-Preview carries a persistent Private preview label and Back to editing. It displays candidate content with currently published dependencies; draft-only/missing dependencies are owner-only warnings, not silently included. Preview success does not claim publication readiness.
-Review distinguishes existing public content from the candidate using labeled fields, changed sections, and association/order impacts. V1 needs no rich-text diff engine or version-history browser.
+Preview carries a persistent Private preview label and Back to editing. It displays the exact saved candidate's text, images, poster, recording and alternatives with currently published dependencies; draft-only/missing dependencies are owner-only warnings, not silently included. Preview success does not claim publication readiness.
+Review distinguishes public content from the candidate using labelled fields/media and changed sections, including added/replaced/removed evidence, caption/stage/alternative changes, lead/cover/order and affected public placements (ME07). V1 needs no rich-text diff engine or version-history browser.
 After confirmed success, show Published/Updated with the public link and timestamp. A confirmed rejection preserves the candidate/prior public version. If a request times out or delivery is uncertain, show Checking publication / Outcome unknown, inspect actual versions, and only then allow a safe retry; never claim rollback or success without evidence.
 
 ## 5. Navigation, conflicts, and destructive actions
@@ -78,6 +78,7 @@ Lists work as readable stacked entries when tables do not fit. Reordering announ
 | OU07 | Delete published/referenced experience | Blocked with affected references and resolution paths |
 | OU08 | Keyboard/320px: edit, reorder, preview, confirm | Complete flow, visible labels/errors/focus, no covered controls |
 | OU09 | Session expires mid-edit | Writes stop; sign-in/conflict recovery; no private public-preview link |
+| OU10 | Add/replace/reorder image/video → Save → Preview → explicit update | Exact media candidate reviewed; pending/failed media resolved explicitly; prior public assets intact until success; MV05–MV06 |
 
 ## 8. Open boundaries
 

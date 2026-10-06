@@ -1,6 +1,6 @@
 # Accessibility and Responsive Specification
 
-Status: draft public-flow contract | Updated: 2026-10-03.
+Status: draft public-flow contract with P15 media accessibility extension | Updated: 2026-10-07.
 Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R27; A04, A09, A11–A12.
 Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). The rendered wide visual direction is owner-approved; rendered accessibility and responsive validation have not yet occurred.
 
@@ -43,16 +43,19 @@ Project status uses text labels. Company name remains available with or without 
 
 ## 4. Evidence and motion
 
-Screenshots/diagrams have descriptive alternatives and contextual captions. Complex evidence also has a readable explanation of the relevant point. No-media stories receive equally complete hierarchy and actions.
-Future video/audio evidence requires appropriate captions/transcript before publication; controls do not autoplay. V1 does not require producing such assets.
+Images convey their relevant meaning through alternatives and nearby captions; complex diagrams/screenshots also have a readable explanation of the important relationships/state. Redundant linked thumbnails/posters can use an empty alternative when the adjacent accessible link already identifies the work; unique visual information still needs text. No-media stories receive equally complete hierarchy/actions.
+Silent UI recordings require an equivalent description of starting state, action, visual transition and result; label them Silent demo. Video with meaningful speech/sound requires accurate synchronized captions, including relevant non-speech sound, and a descriptive transcript as the product target. Important visuals absent from the audio require audio description for the AA target; a transcript alone does not meet that synchronized-video requirement. Integrated narration can already convey all meaningful visuals. Accessibility applies to linked evidence too; do not publish an inaccessible recording merely because it is external.
+Players expose accessible, visible keyboard/touch controls, caption access, duration and silent/with-audio context. Play is explicit, never hover/focus/deep-link triggered; Pause/seek/replay and volume/mute where relevant work without gestures alone. Reduced motion does not block an explicitly requested demonstration; its equivalent explanation remains available without playback. No decorative looping/GIF playback or flashing content; player operation must not trap focus.
+Optional image zoom uses labelled buttons/keyboard and Reset with a contained viewport; small UI details remain inspectable without page-level overflow. [ME05–ME06](media-evidence-spec.md#4-inspection-and-playback) owns the media interaction/composition proposal. No asset creation is required by this documentation.
+Grounding checked 2026-10-07: W3C [informative images](https://www.w3.org/WAI/tutorials/images/informative/), [complex images](https://www.w3.org/WAI/tutorials/images/complex/), [media planning](https://www.w3.org/WAI/media/av/planning/), [video-only alternatives](https://www.w3.org/WAI/WCAG22/Understanding/audio-only-and-video-only-prerecorded.html), [audio description](https://www.w3.org/WAI/WCAG22/Understanding/audio-description-prerecorded.html), and [accessible players](https://www.w3.org/WAI/media/av/player/). These inform requirements, not a conformance claim.
 Reduced motion removes spatial travel, parallax, and decorative looping. Content changes and selection feedback remain immediate and understandable. No scroll hijacking, flashing, or animation wait before work/contact access.
-Future zoom/pan of media must have button/keyboard equivalents and a reset; it cannot replace the text explanation or create page-level overflow. This does not add a media-editor requirement.
+Image inspection does not add a crop/annotation/video editing suite requirement; source preparation remains outside V1 authoring scope.
 
 ## Theme parity
 
 Apply the same reading, contrast, focus, touch, reflow, and motion targets in Light and Dark. System is a preference, not a third palette. Check status, pending, error, disabled, selected, dialog, and sign-in states; do not rely on glow/shadow on dark surfaces.
 Theme selection has a clear accessible name/current choice and visible System/Light/Dark option labels. Preserve focus, open-dialog context, and unsaved input; no theme-change reload or motion-dependent feedback. Evidence/logo colors remain authentic.
-Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR08 in both modes. First-appearance/no-flash and persistence implementation remain architecture-dependent.
+Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR09 in both modes. First-appearance/no-flash and persistence implementation remain architecture-dependent.
 
 ## 5. Review scenarios
 
@@ -66,7 +69,8 @@ Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR0
 | AR06 | No optional media; long confirmed title | Complete composition and actions, no blank media slot or truncation hiding meaning |
 | AR07 | Resize with evidence open and company filter stored | Same selected content and valid return context |
 | AR08 | Later signature-composition review | Identity/composition remains distinctive while hierarchy, contrast, and focus stay usable |
+| AR09 | Screenshot, silent/narrated recording; keyboard/320px/reduced motion; no playback | Meaningful alternatives/captions/description convey the demonstrated state/motion; operable player, readable captions/focus and scoped failure recovery; MV03–MV04/MV07 |
 
-The [responsive/interaction validation matrix](../responsive-interaction-validation.md) owns review profiles and evidence status; AR01–AR08 remain the canonical accessibility scenarios.
+The [responsive/interaction validation matrix](../responsive-interaction-validation.md) owns review profiles and evidence status; AR01–AR09 remain the canonical accessibility scenarios.
 Later verification combines manual tasks, accessibility inspection, and representative rendered states. Automated checks alone cannot certify usability. These numerical targets are proposed design acceptance thresholds, not a compliance certification.
 Approved visual palette/type/spacing intent and responsive modes are in [Signal Studio](visual-system-spec.md); component states are in [components](components-interaction-spec.md). The rendered wide light/dark direction is approved, but actual responsive values, focus behavior, icon comprehension, and library choices still require accessibility validation. Preserve the approved visual character without using accessibility as a reason to restore the rejected CV layout.

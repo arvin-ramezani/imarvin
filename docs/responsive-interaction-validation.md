@@ -1,7 +1,7 @@
 # Responsive & Interaction Validation
 
-Status: written contract review complete; rendered/task/runtime checks Pending. Updated: 2026-10-03.
-Baseline: main `92867925b7021572a443fa861160110334e53ea5` (merged PR #2). Scope: documents only.
+Status: earlier written review complete; P15 media coverage added, rendered/task/runtime checks Pending. Updated: 2026-10-07.
+Earlier baseline: main `92867925b7021572a443fa861160110334e53ea5` (merged PR #2). P15 baseline: main `40ea65b8d891a78beb184a8481baa3ff981bc64b` (merged text-only #23). Scope: documents only.
 Authority: [decisions](decisions.md), [visual system](specs/visual-system-spec.md), [acceptance](specs/acceptance-spec.md). Behavior remains in linked specifications; this document owns validation coverage and evidence status.
 
 ## 1. Review boundary
@@ -35,6 +35,7 @@ Run core public and owner loops at all four main profiles in both Light and Dark
 Resize with a section/evidence selected and company filter/origin stored; separately resize an unsaved editor/open dialog. Include an on-screen keyboard: keyboard/browser chrome can reduce available height.
 
 Required fixtures: published story with all sections; summary-only and one-section stories; cancelled/offline and no-media stories; long title/URL; logo-only and missing-logo experiences; multi-project and main-product cases; zero work and zero filter results; unsaved edit to a published story; missing/stale dependency; save/upload failure, conflict and expired session.
+P15 media fixtures: cancelled/never-shipped local recording with completed/unfinished scope; published cover versus draft replacement; tall/wide screenshot and small UI detail; silent and narrated video with alternatives; no/failed poster, unsupported playback, slow delivery and removed public derivative. Use the same task profiles for [MV01–MV08](specs/media-evidence-spec.md#7-verification-boundary); real media facts/permission remain unconfirmed.
 Use confirmed content where available. Synthetic fixtures must be labeled test data, never public employment/results claims. O01–O03 remain factual gates; no invented featured story or contact address.
 
 ## 3. Check matrix
@@ -57,6 +58,8 @@ RV identifiers are validation cases, not new product requirements. Expected beha
 | RV12 · AR02–AR05, TH05 | Keyboard/read/zoom/reduced-motion loops | Logical order/names/status; visible focus distinct from selection; readable text in both themes | No essential hover, drag, gesture or animation wait; no focus hidden by sticky elements |
 | RV13 · NS04/NS05, PU03/PU07, CP05 | Empty/error/loading/unavailable/removal → next action | Scoped explanation/recovery; valid context retained; no dead or fabricated controls | Retry keeps current selection/history; neutral nonpublic fallback; no cached removed content |
 | RV14 · AR08, VS02–VS05, A12 | Compare adapted public/owner states with target | Work-led identity/inspection survives stacking; owner stays structured; selected/focus/error distinct | Remove optional decoration before content; no generic CV, equal-card wall or new dark-mode art direction |
+
+P15 coverage overlay: RV01/RV05/RV14 include feature/browse/contextual project imagery (MV01/MV04); RV03/RV04/RV06 include inline images/video, explicit playback, stop/deep-link/return (MV02–MV03); RV07–RV10 include media authoring, exact private preview and publish review (MV05); RV11–RV13 include player/theme/reflow/alternatives/failure/slow delivery (MV04/MV07–MV08). MV06 privacy/derivative/cache checks require architecture-backed implementation evidence, not a visible Private label. Existing RV01–RV14 historical findings are unchanged; all new media checks are unrun.
 
 Canonical scenarios: [public](specs/public-ux-spec.md), [navigation](specs/navigation-state-spec.md), [owner](specs/owner-ux-spec.md), [publishing](specs/content-publishing-spec.md), [accessibility](specs/accessibility-responsive-spec.md), [theme](specs/visual-system-spec.md#7-theme-behavior--p14--r27).
 A01–A06/A08–A12 receive responsive/interaction coverage. A07 security/privacy and atomic-delivery parts of A06/A08 require architecture/implementation checks; a visible private label is insufficient.
@@ -104,6 +107,7 @@ Record one entry per RV/profile/input/theme combination: exact source/implementa
 | RV07–RV10 owner/recovery | Pending | Edit/review/confirmation runs plus architecture-backed failure/session/concurrency results |
 | RV11–RV12 theme/accessibility | Pending | Observed retention, first appearance, reading/focus/reflow/motion results |
 | RV13–RV14 absence/signature | Pending | Representative rendered states and recovery tasks preserve approved character |
+| P15 / MV01–MV08 media extension | Pending; no media implementation or rendered approval | Real media layouts/player/owner tasks, truthful capture review, alternatives and architecture-backed derivative privacy on exact SHA |
 | Documentation checks | Complete in PR handoff | Links, stable IDs, references, table structure, consistency, Markdown-only scope |
 
 This documentation phase is ready for owner review. Responsive/interaction validation closes when required runs have evidence and task-blocking failures are resolved. Accessibility defects need affected checks repeated; numeric targets remain in the shared accessibility spec. Security, real-content publication and technical readiness stay separate. No merge, code or deployment authorization is implied.

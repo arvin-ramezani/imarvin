@@ -1,6 +1,6 @@
 # Content and Publishing Specification
 
-Status: owner-approved lifecycle behavior contract (P02/P10) | Updated: 2026-10-03.
+Status: owner-approved lifecycle behavior contract (P02/P10); P15 media-specific extensions proposed | Updated: 2026-10-07.
 Saving is private; publishing/updating is explicit. Removal/reference/concurrency behavior below is approved; T01–T07 provide the architecture/runtime defaults and feature specs define exact mechanisms.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [owner UX](owner-ux-spec.md). Trace: R06–R09, R12–R19, R22; A03–A08, A10.
 
@@ -8,7 +8,7 @@ Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [owner 
 
 | Unit | Owns | Relationships |
 | --- | --- | --- |
-| Story | Summary, tasks, project progress, decisions/evidence, outcome/lesson, stack, availability/links | Optional experience; optional authored related stories |
+| Story | Summary, tasks, progress/release history, decisions/evidence, lead/cover/poster selections, outcome/lesson, stack, availability/links | Optional experience; optional authored related stories; one evidence identity reused by placements |
 | Experience | Company identity/logo, role/dates/contribution, multiple/main-product mode | Stories reference it; main-product selection identifies one associated story |
 | Studio settings | Identity, personal context, contact, featured selection, curated order | References published stories by stable identity |
 
@@ -23,9 +23,11 @@ Each unit has a saved private working copy and, optionally, a published snapshot
 | Public version | Absent, published | What visitors can receive |
 | Relationship to public | Matches public, private changes | Whether saved work differs from publication |
 | Project progress | Ongoing, completed, cancelled | Factual work status; independent of publication |
+| Release history | Shipped, never shipped; unconfirmed fact omitted publicly | Whether a production release happened; not inferred from progress/availability |
 | Availability | Usable public destination or no live destination | Separate from progress and optional evidence |
+| Capture stage | Confirmed design, prototype, local build, production capture or recreated local demo | What an evidence item actually depicts; not a project launch claim |
 
-First publication may use an incomplete historical/cancelled story only if its required truthful summary is complete. Live URLs, media, metrics, and decision sections are not mandatory.
+First publication may describe incomplete historical/cancelled/never-shipped work when the required truthful story summary is complete. Such stories can be featured and carry permitted screenshots/recordings without a live release. Live URLs, media, metrics, and decision sections are not mandatory; unknown release/availability facts are not guessed.
 
 ## 3. Lifecycle contracts
 
@@ -50,7 +52,7 @@ Confirmed publication must be visible on a fresh public request; stale delivery/
 - Experience: confirmed company/role/date/contribution context; a main-product selection, when supplied, belongs to that experience and is published. A context-only experience is valid; missing logo is allowed.
 - Settings: real identity/personal context, at least one approved contact destination, feature/order reference eligible published stories; no placeholder address.
 - References: candidate association/related/main-product/feature targets are currently published, valid, and accessible. Offer Publish target first, detach/change reference, or Keep draft; never automatically publish dependencies.
-- Evidence: permitted disclosure confirmed, public-facing captions/alternatives supplied where required, asset processing successful, external destinations validated. Text-only evidence is valid.
+- Evidence: permitted disclosure/captured stage confirmed; selected source/poster/renditions/tracks ready; captions/alternatives satisfy [media accessibility](accessibility-responsive-spec.md#4-evidence-and-motion); external destinations usable. Failed/pending selected media requires retry or explicit removal, never silent omission. Text-only evidence is valid.
 - Format: safe content/link handling, valid fields, no invalid relationship cycles affecting navigation. Specific validation/security mechanisms belong to architecture.
 
 Draft validation may permit missing required publication facts but must reject malformed data. Publication errors name the field/reference and next action. Recheck against current revisions immediately before committing.
@@ -71,6 +73,7 @@ Public views resolve only currently published relationship targets; retained sta
 Unpublishing an experience does not scrub employer names manually written in other published story text. Show that limitation in the impact review; edit those stories explicitly if removal is intended.
 Delete never erases related stories. Incoming saved or published references must first be detached/updated. Show each reference with an editing destination; only currently unpublished, unreferenced units can be deleted.
 Assets stay available while any public snapshot references them. Draft-only assets remain private; remove unused assets after confirming no draft/public reference. T04/T06 define filesystem storage and off-host backup; application-level historical restore is still not a promised product feature.
+Media source, poster, renditions, caption tracks and described versions inherit that lifecycle. Replacement is immutable; cover/lead/figure references must resolve within the reviewed story snapshot. Derived public placements/share images use only published references; a story update refreshes those projections without publishing private settings/experience edits. Asset delivery/caches must enforce removal; [ME08](media-evidence-spec.md#6-authoring-and-publication) adds no independent media publishing system.
 Existing public deep links to removed units receive the neutral unavailable response in [navigation/state](navigation-state-spec.md); nonexistence, removal, and private state are not distinguished publicly.
 
 ## 6. Concurrency and privacy
@@ -94,5 +97,6 @@ T01–T07 define auth, storage, deployment, backup, and logging defaults. Publis
 | CP09 | Anonymous access to draft/preview/asset | No draft content or owner operation; public metadata also clean |
 | CP10 | Unpublish → edit → republish | Same identity; explicit new public candidate; no unsolicited dependent publication |
 | CP11 | Publish a new main-product experience and story | Context-first sequence works without circular prerequisites or automatic publication |
+| CP12 | Replace cover/video/poster/track in a draft → publish/update/remove | Every derivative stays private until explicit success; projections use the same published snapshot; reference-safe removal; MV06 |
 
 P10 is owner-approved. Implementation checks must verify failures/concurrency/privacy, not just happy-path screen labels.

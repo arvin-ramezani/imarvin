@@ -1,6 +1,6 @@
 # Decisions
 
-Updated: 2026-10-03. Confirmed = owner constraint. Accepted = owner-approved choice. Proposed = detailed behavior/value for review. Open = missing input. Superseded = do not implement.
+Updated: 2026-10-07. Confirmed = owner constraint. Accepted = owner-approved choice. Proposed = detailed behavior/value for review. Open = missing input. Superseded = do not implement.
 
 Authority: arvin-ramezani/imarvin only. No inheritance from the older project. Documentation and concept selection do not authorize code, images, merge, or deployment.
 
@@ -11,10 +11,10 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | C01 | Fresh personal web app, separate from the older project |
 | C02 | Employment/freelance outcomes do not prescribe a CV layout |
 | C03 | Private dashboard for content editing |
-| C04 | Company entries use logos only; no company photos/screenshot covers |
+| C04 | Company identity/header uses logos/name only; no company photos/screenshot covers. Project media can appear in project choices/main stories within company context (P15 clarification) |
 | C05 | Experience supports several projects or the company's main application directly |
 | C06 | Premium/simple means focused/intentional, not mandatory visual quietness |
-| C07 | Current work is documents/knowledge only; no images, prototype, code, deployment |
+| C07 | Current design task is documents/knowledge only; explaining future image/video use does not authorize creating assets, prototype, application code or deployment |
 | C08 | Source repository arvin-ramezani/imarvin; requirements file PRD.md |
 | C09 | Creative personal web app; rejected portfolio/résumé and boring editorial direction |
 | C10 | Concise English, structured AI context; factual unknowns remain explicit |
@@ -37,6 +37,7 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P13 | Hierarchy/icons/shape/spacing/state first; short supporting labels; selective decoration | 2026-10-03: owner chose Refine the proposal and supplied this visual-priority preference. Styling in visual-system-spec; essential action meanings remain clear. |
 | P14 | Light + Dark across public/owner views; System default with System/Light/Dark choice | 2026-10-03: owner approved light/dark support and current dark treatment. R27; implementation mechanism remains technical. |
 | P11 | Current Signal Studio visual system: refined hierarchy/surfaces/controls, approved light/dark palette target, responsive composition intent | 2026-10-03: owner approved the rendered public/owner visual direction and requested PR #2 record that approval. [Visual system](specs/visual-system-spec.md). |
+| P15 | Extend product/UI/UX documents with purposeful project images/video, including cancelled or never-shipped work and recorded animations | 2026-10-07: owner requests documentation updates only, explicitly excludes image/app creation. [Media/evidence](specs/media-evidence-spec.md); detailed placement/player/authoring proposals await review, not covered by earlier rendered approval. |
 
 ## Architecture baseline
 
@@ -57,7 +58,7 @@ Public navigation/history and component behavior remain contracts to validate at
 | ID | Needed | Gate |
 | --- | --- | --- |
 | O01 | Company identity, role/dates, responsibility/team boundaries | Factual publication |
-| O02 | Actual featured work, decisions/evidence, availability, curated grouping/order | Content-backed public design review |
+| O02 | Actual featured work, decisions/evidence/files and permission, captured stage, release history/availability, curated grouping/order | Content-backed public design review |
 | O03 | Real contact destinations/availability wording | Contact/publication |
 
 O05 is resolved at architecture level by T01/T03–T07. Application implementation still requires the T02 issue/spec workflow and feature-specific technical details.
@@ -65,6 +66,7 @@ O05 is resolved at architecture level by T01/T03–T07. Application implementati
 ## Superseded direction
 
 Light-only V1 theme guidance is superseded by P14. Dark mode adapts Signal Studio; it does not select Night Instrument.
+Inspection-only project media placement is superseded by P15's proposed entry/browse/lead/contextual placements. Logos-only company identity and complete no-media stories remain required. Earlier rendered evidence does not validate the new media compositions.
 
 Former P01 Engineering Practice as a résumé/editorial public model, fixed introduction/experience/projects/about/contact sequence, quiet/neutral defaults, and career chronology are superseded. Problem/contribution/decision/outcome remains a shared content model. Work Atlas/Story Explorer and VS-B/VS-C are unselected history, not V1 modules.
 
