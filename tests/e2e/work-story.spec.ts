@@ -248,3 +248,74 @@ test("owner and public Work surfaces reflow at 320px and keep the editor keyboar
     caret: "initial",
   });
 });
+
+
+test("maximum-valid unbroken authored text reflows across Work surfaces at 320px", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  await signIn(page);
+
+  const title = "T".repeat(120);
+  const problem = "P".repeat(1_200);
+  const contribution = "C".repeat(1_600);
+  const outcome = "O".repeat(1_200);
+  const stack = Array.from(
+    { length: 12 },
+    (_, index) => String(index).padStart(2, "0") + "S".repeat(48),
+  ).join(", ");
+
+  const expectNoHorizontalPageOverflow = async () => {
+    const metrics = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }));
+
+    expect(metrics.scrollWidth).toBeLessThanOrEqual(metrics.clientWidth);
+  };
+
+  await page.goto("/studio/work/new");
+  await page.getByLabel("Title").fill(title);
+  await page.getByLabel("Problem or hook").fill(problem);
+  await page.getByLabel("Your contribution").fill(contribution);
+  await page.getByLabel("Project progress").selectOption("COMPLETED");
+  await page.getByLabel("Outcome or lesson").fill(outcome);
+  await page.getByLabel("Relevant stack").fill(stack);
+  await page.getByRole("button", { name: "Save & preview" }).click();
+
+  await expect(
+    page.getByRole("heading", { name: title, level: 1 }),
+  ).toBeVisible();
+  await expectNoHorizontalPageOverflow();
+
+  const previewUrl = new URL(page.url());
+  const storyId = previewUrl.pathname.split("/").at(-2);
+  expect(storyId).toBeTruthy();
+
+  await page.goto("/studio/work/" + storyId + "/edit");
+  await expect(
+    page.getByRole("heading", { name: title, level: 1 }),
+  ).toBeVisible();
+  await expectNoHorizontalPageOverflow();
+
+  await page.goto("/studio/work");
+  await expect(page.getByText(title, { exact: true })).toBeVisible();
+  await expectNoHorizontalPageOverflow();
+
+  await page.goto("/studio/work/" + storyId + "/publish");
+  await expect(page.getByText(title, { exact: true })).toBeVisible();
+  await expectNoHorizontalPageOverflow();
+  await page.getByRole("button", { name: "Publish", exact: true }).click();
+
+  await page.goto("/work");
+  await expect(
+    page.getByRole("heading", { name: title, level: 2 }),
+  ).toBeVisible();
+  await expectNoHorizontalPageOverflow();
+
+  await page.goto("/work/" + storyId);
+  await expect(
+    page.getByRole("heading", { name: title, level: 1 }),
+  ).toBeVisible();
+  await expectNoHorizontalPageOverflow();
+});
