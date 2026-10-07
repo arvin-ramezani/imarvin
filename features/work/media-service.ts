@@ -35,6 +35,7 @@ import {
   preliminaryMediaCheck,
   validateMediaBytes,
 } from "./media-validation";
+import { VideoDecoderUnavailableError } from "./video-decoder";
 import {
   MediaRangeNotSatisfiableError,
   parseSingleByteRange,
