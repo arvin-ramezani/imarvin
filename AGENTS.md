@@ -8,6 +8,7 @@ P01 Personal Studio is owner-approved. Use it as the product model; do not reope
 
 The owner wants a creative personal web app and rejects a portfolio/résumé product. Do not restore a fixed introduction/experience/projects/about/contact homepage, chronological CV, or uniform résumé entries. Retain truthful work as content, not as a prescribed page template.
 P15 requests documentation for purposeful project images/video, including cancelled/never-shipped work. Read docs/specs/media-evidence-spec.md with the relevant public/owner/publishing/accessibility contracts for media work. Company identity stays logos-only; project captures may appear on entry/browse and within company context. Detailed media UX remains proposed; previous rendered approval and #23's text-only evidence do not approve these new layouts or authorize assets/code.
+P16 forbids interface animation/transitions on every owner/admin surface and breakpoint; public UI may use purposeful motion where it improves orientation, hierarchy, continuity, inspection or feedback. Reduced-motion behavior and exact public/owner boundaries are canonical in docs/specs/visual-system-spec.md.
 
 Do not create images, application code, dependencies, prototype, or deployment without a separate owner request. Do not inherit the older imarvin implementation, UI, P01–P06, or review gates.
 
@@ -15,7 +16,7 @@ Do not create images, application code, dependencies, prototype, or deployment w
 
 1. README.md, this file, docs/decisions.md, PRD.md.
 2. For code/technical work, read docs/architecture/architecture.md, docs/architecture/runtime-operations.md, and docs/engineering/spec-driven-development.md.
-3. For shadcn work, load the project-local `$shadcn` skill. For meaningful React/Next.js component edits, load `$vercel-react-best-practices`; when designing/refactoring reusable React component APIs or React 19 composition, load `$vercel-composition-patterns`; after app-code edits use `$next-dev-loop` for runtime verification when its prerequisites are available. For test strategy, test implementation/review, or database-backed test setup, load the project-local `$test-engineering` skill.
+3. For shadcn work, load the project-local `$shadcn` skill. For meaningful React/Next.js component edits, load `$vercel-react-best-practices`; when designing/refactoring reusable React component APIs or React 19 composition, load `$vercel-composition-patterns`; after app-code edits use `$next-dev-loop` for runtime verification when its prerequisites are available. For test strategy, test implementation/review, or database-backed test setup, load the project-local `$test-engineering` skill. If `mobile-native` guidance is used for owner/admin UI, use only viewport height, on-screen keyboard, safe areas, touch/pointer behavior and hover-capability detection; ignore animated press/hover feedback and any other owner/admin motion recommendation.
 4. Read only the product/UX/implementation specs needed for the assigned issue.
 5. Inspect branch/PR state; record the exact starting head.
 6. Preserve confirmed constraints; distinguish proposals and unresolved facts.
