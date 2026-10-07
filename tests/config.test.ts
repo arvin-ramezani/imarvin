@@ -74,7 +74,7 @@ describe("server config", () => {
     const temp = mkdtempSync(path.join(tmpdir(), "imarvin-test-storage-"));
     try {
       const alias = path.join(temp, "alias");
-      symlinkSync(path.join(process.cwd(), "public"), alias, "dir");
+      symlinkSync(process.cwd(), alias, "dir");
       expect(() => parseServerConfig({
         ...requiredConfig,
         MEDIA_STORAGE_ROOT: path.join(alias, "private"),
