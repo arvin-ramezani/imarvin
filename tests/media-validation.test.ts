@@ -89,7 +89,7 @@ describe("Work media validation", () => {
   it("rejects extension/type mismatch and malformed image bytes", async () => {
     await expect(
       validateMediaFile(mediaFile(PNG, "capture.jpg", "image/png")),
-    ).rejects.toMatchObject<Partial<MediaValidationError>>({
+    ).rejects.toMatchObject({
       code: "TYPE_MISMATCH",
     });
 
@@ -116,14 +116,14 @@ describe("Work media validation", () => {
       validateMediaFile(
         new File([mp4], "recording.mp4", { type: "video/mp4" }),
       ),
-    ).rejects.toMatchObject<Partial<MediaValidationError>>({
+    ).rejects.toMatchObject({
       code: "UNSUPPORTED_TYPE",
     });
     await expect(
       validateMediaFile(
         new File([webm], "recording.webm", { type: "video/webm" }),
       ),
-    ).rejects.toMatchObject<Partial<MediaValidationError>>({
+    ).rejects.toMatchObject({
       code: "UNSUPPORTED_TYPE",
     });
   });
