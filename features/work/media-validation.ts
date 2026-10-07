@@ -1,5 +1,6 @@
 import { inflateSync } from "node:zlib";
 import path from "node:path";
+import sharp from "sharp";
 
 export const MEDIA_FILE_LIMIT = 10 * 1024 * 1024;
 export const MEDIA_REQUEST_LIMIT = 11 * 1024 * 1024;
@@ -357,6 +358,38 @@ function parseJpeg(buffer: Buffer): { width: number; height: number } {
 
   assertImageLimits(width, height);
   return { width, height };
+}
+
+// Structural markers alone do not prove that compressed image pixels decode.
+// Stats traverses the entire decoded image; metadata() only reads headers.
+async function assertDecodedImage(
+  bytes: Buffer,
+  format: "jpeg" | "webp",
+  width: number,
+  height: number,
+): Promise<void> {
+  try {
+    const image = sharp(bytes, {
+      failOn: "warning",
+      limitInputPixels: MAX_IMAGE_PIXELS,
+      sequentialRead: true,
+    });
+    const metadata = await image.metadata();
+
+    if (
+      metadata.format !== format ||
+      metadata.width !== width ||
+      metadata.height !== height ||
+      (metadata.pages ?? 1) !== 1
+    ) {
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
+
+    // Force a full pixel decode, including the entropy/frame payload.
+    await image.stats();
+  } catch {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
 }
 
 function readUInt24LE(buffer: Buffer, offset: number): number {
@@ -1197,11 +1230,11 @@ function parseVtt(buffer: Buffer, recordingDurationMs: number | null): void {
   }
 }
 
-export function validateMediaBytes(
+export async function validateMediaBytes(
   file: File,
   bytes: Buffer,
   recordingDurationMs: number | null = null,
-): { metadata: ValidatedMedia; originalFileName: string } {
+): Promise<{ metadata: ValidatedMedia; originalFileName: string }> {
   const preliminary = preliminaryMediaCheck(file);
 
   if (bytes.length !== file.size || bytes.length > MEDIA_FILE_LIMIT) {
@@ -1216,8 +1249,10 @@ export function validateMediaBytes(
     ({ width, height } = parsePng(bytes));
   } else if (preliminary.contentType === "image/jpeg") {
     ({ width, height } = parseJpeg(bytes));
+    await assertDecodedImage(bytes, "jpeg", width, height);
   } else if (preliminary.contentType === "image/webp") {
     ({ width, height } = parseWebp(bytes));
+    await assertDecodedImage(bytes, "webp", width, height);
   } else if (preliminary.contentType === "video/mp4") {
     const video = parseMp4(bytes);
     width = video.width;
@@ -1252,7 +1287,7 @@ export async function validateMediaFile(
   recordingDurationMs: number | null = null,
 ): Promise<{ metadata: ValidatedMedia; bytes: Buffer; originalFileName: string }> {
   const bytes = Buffer.from(await file.arrayBuffer());
-  const validated = validateMediaBytes(file, bytes, recordingDurationMs);
+  const validated = await validateMediaBytes(file, bytes, recordingDurationMs);
 
   return { ...validated, bytes };
 }
