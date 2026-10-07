@@ -49,6 +49,13 @@ export class MediaUploadConflictError extends Error {
   }
 }
 
+export class MediaStorageWriteError extends Error {
+  constructor() {
+    super("Media storage write failed");
+    this.name = "MediaStorageWriteError";
+  }
+}
+
 export async function requireOwnerMediaStory(
   requestHeaders: Headers,
   storyId: string,
@@ -121,7 +128,7 @@ async function processUploadGeneration(
       uploadGeneration: generation.generation,
       failureCode: "WRITE_FAILED",
     });
-    throw new MediaUploadConflictError();
+    throw new MediaStorageWriteError();
   }
 
   let validated: ReturnType<typeof validateMediaBytes>;
@@ -153,7 +160,7 @@ async function processUploadGeneration(
       uploadGeneration: generation.generation,
       failureCode: "WRITE_FAILED",
     });
-    throw new MediaUploadConflictError();
+    throw new MediaStorageWriteError();
   }
 
   const completed = await completeMediaUpload(
@@ -436,5 +443,6 @@ export {
   MediaAssetNotFoundError,
   MediaAssetReferencedError,
   MediaStoryNotFoundError,
+  MediaStorageWriteError,
   MediaValidationError,
 };
