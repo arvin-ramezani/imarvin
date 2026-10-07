@@ -166,6 +166,8 @@ function parsePng(buffer: Buffer): { width: number; height: number } {
   let colorType = -1;
   let sawHeader = false;
   let sawEnd = false;
+  let sawImageData = false;
+  let paletteEntries = 0;
   const idat: Buffer[] = [];
 
   while (offset + 12 <= buffer.length) {
@@ -206,7 +208,23 @@ function parsePng(buffer: Buffer): { width: number; height: number } {
       }
     } else if (type === "acTL" || type === "fcTL" || type === "fdAT") {
       throw new MediaValidationError("UNSUPPORTED_TYPE");
+    } else if (type === "PLTE") {
+      if (
+        !sawHeader ||
+        sawImageData ||
+        paletteEntries !== 0 ||
+        length === 0 ||
+        length % 3 !== 0 ||
+        length > 768
+      ) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
+      paletteEntries = length / 3;
     } else if (type === "IDAT") {
+      if (!sawHeader) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
+      sawImageData = true;
       idat.push(buffer.subarray(dataStart, dataEnd));
     } else if (type === "IEND") {
       if (length !== 0) {
@@ -242,7 +260,12 @@ function parsePng(buffer: Buffer): { width: number; height: number } {
   };
   const channels = channelsByColorType[colorType];
 
-  if (!channels || !allowedDepths[colorType]?.includes(bitDepth)) {
+  if (
+    !channels ||
+    !allowedDepths[colorType]?.includes(bitDepth) ||
+    (colorType === 3 && (paletteEntries === 0 || paletteEntries > 2 ** bitDepth)) ||
+    ((colorType === 0 || colorType === 4) && paletteEntries !== 0)
+  ) {
     throw new MediaValidationError("MALFORMED_CONTENT");
   }
 
@@ -377,7 +400,7 @@ function parseJpeg(buffer: Buffer): { width: number; height: number } {
 // Stats traverses the entire decoded image; metadata() only reads headers.
 async function assertDecodedImage(
   bytes: Buffer,
-  format: "jpeg" | "webp",
+  format: "jpeg" | "png" | "webp",
   width: number,
   height: number,
 ): Promise<void> {
@@ -1260,6 +1283,7 @@ export async function validateMediaBytes(
 
   if (preliminary.contentType === "image/png") {
     ({ width, height } = parsePng(bytes));
+    await assertDecodedImage(bytes, "png", width, height);
   } else if (preliminary.contentType === "image/jpeg") {
     ({ width, height } = parseJpeg(bytes));
     await assertDecodedImage(bytes, "jpeg", width, height);
