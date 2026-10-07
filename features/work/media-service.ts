@@ -131,10 +131,10 @@ async function processUploadGeneration(
     throw new MediaStorageWriteError();
   }
 
-  let validated: ReturnType<typeof validateMediaBytes>;
+  let validated: Awaited<ReturnType<typeof validateMediaBytes>>;
 
   try {
-    validated = validateMediaBytes(file, bytes, recordingDurationMs);
+    validated = await validateMediaBytes(file, bytes, recordingDurationMs);
   } catch (error) {
     if (error instanceof MediaValidationError) {
       await failMediaUpload(generation, "VALIDATION_REJECTED");
