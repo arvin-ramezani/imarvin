@@ -159,6 +159,15 @@ describe("Work media persistence and delivery foundation", () => {
     });
   });
 
+  it("rejects storage-key traversal before resolving the configured root", () => {
+    expect(() => mediaStoragePath("assets", "../escape")).toThrow(
+      "Invalid media storage key",
+    );
+    expect(() => mediaStoragePath(".staging", "/absolute")).toThrow(
+      "Invalid media storage key",
+    );
+  });
+
   it("requires owner auth, stores validated bytes privately, and denies public delivery without a published reference", async () => {
     const cookie = await ownerCookie();
     const story = await createPublishableStory();
@@ -398,6 +407,45 @@ describe("Work media persistence and delivery foundation", () => {
         access(mediaStoragePath("assets", raced.storageKey)),
       ).resolves.toBeUndefined();
     }
+
+    const duplicate = await createPendingMediaAsset({
+      storyId: story.id,
+      originalFileName: "duplicate.png",
+      mediaType: "IMAGE",
+      contentType: "image/png",
+      byteSize: PNG_BYTES.length,
+    });
+    await writeStagedMedia(duplicate.storageKey, PNG_BYTES);
+    await promoteStagedMedia(duplicate.storageKey);
+
+    const duplicateResults = await Promise.all([
+      completeMediaUpload(duplicate, {
+        mediaType: "IMAGE",
+        contentType: "image/png",
+        byteSize: PNG_BYTES.length,
+        width: 2,
+        height: 2,
+        durationMs: null,
+      }),
+      completeMediaUpload(duplicate, {
+        mediaType: "IMAGE",
+        contentType: "image/png",
+        byteSize: PNG_BYTES.length,
+        width: 2,
+        height: 2,
+        durationMs: null,
+      }),
+    ]);
+
+    expect(duplicateResults.filter(Boolean)).toHaveLength(1);
+    await reconcileMediaStorage();
+    const duplicateRow = await db.mediaAsset.findUniqueOrThrow({
+      where: { id: duplicate.assetId },
+    });
+    expect(duplicateRow.readiness).toBe("READY");
+    await expect(
+      access(mediaStoragePath("assets", duplicate.storageKey)),
+    ).resolves.toBeUndefined();
 
     const failedGeneration = await createPendingMediaAsset({
       storyId: story.id,
