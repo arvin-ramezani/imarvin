@@ -42,7 +42,7 @@ This slice does not add Story ↔ Experience associations, multiple/main-product
 - Add Experience-focused server modules under `features/work/experience/`; keep Prisma server-only and reuse the existing DB/auth/logger boundaries.
 - Every owner page/read/action reuses `requireOwnerSession(headers)`; authorization is rechecked on every mutation and private preview read.
 - Owner routes: `/studio/experiences`, `/studio/experiences/new`, `/studio/experiences/[experienceId]/edit`, `/preview`, and `/publish`.
-- Server Actions validate UUID/revision hidden inputs, retain safe submitted values on failure, log bounded identifiers/status only, and never log contribution text.
+- Server Actions validate UUID/revision hidden inputs and retain safe submitted values on failure. Use the shared logger for save/publish/update success plus conflict/failure category with bounded identifiers/status only; never log company/role/contribution bodies.
 - Preview renders only the exact saved working copy with `Private preview` and `Back to editing`; unsaved values must be saved before preview.
 - Publication review labels candidate versus current public state and chooses explicit `Publish` or `Update published content`.
 - Revalidate owner Experience routes and `/experience/[experienceId]` only after the corresponding successful writes.
@@ -57,7 +57,7 @@ This slice does not add Story ↔ Experience associations, multiple/main-product
 
 ## UI and accessibility
 
-- Owner list shows company-name fallback, public/private relationship state, Edit, and New experience; no vanity metrics or timeline layout.
+- Owner list/editor/preview/review reuse the shared app shell and approved Signal Studio semantic tokens. The list shows company-name fallback, public/private relationship state, Edit, and New experience; no vanity metrics or timeline layout.
 - Owner editor uses visible labels, required-for-publish guidance, error summary → field links/focus, retained input, and explicit Saved privately/conflict/session-expiry messages.
 - Owner/admin Experience UI has zero interface animation/transition at every breakpoint, including hover/press/focus/loading/validation/publish feedback; `$mobile-native` motion guidance is excluded there.
 - No public motion or Framer Motion dependency is needed for this context-only detail slice; ordinary navigation/focus is sufficient.
