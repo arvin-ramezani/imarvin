@@ -129,7 +129,7 @@ describe("Work media validation", () => {
 
   it("fully decodes indexed PNG pixels and rejects missing required palette despite valid CRC", async () => {
     const valid = await validateMediaFile(
-      new File([indexedPngFixture(true)], "indexed.png", { type: "image/png" }),
+      new File([Uint8Array.from(indexedPngFixture(true))], "indexed.png", { type: "image/png" }),
     );
     expect(valid.metadata).toMatchObject({
       mediaType: "IMAGE",
@@ -139,7 +139,7 @@ describe("Work media validation", () => {
 
     await expect(
       validateMediaFile(
-        new File([indexedPngFixture(false)], "bad-indexed.png", {
+        new File([Uint8Array.from(indexedPngFixture(false))], "bad-indexed.png", {
           type: "image/png",
         }),
       ),
