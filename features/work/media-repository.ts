@@ -113,29 +113,29 @@ export async function completeMediaUpload(
     durationMs: number | null;
   },
 ): Promise<boolean> {
-  const rows = await db.$queryRaw<Array<{ id: string }>>\`
+  const rows = await db.$queryRaw<Array<{ id: string }>>`
     UPDATE "MediaAsset"
     SET
-      "mediaType" = CAST(\${metadata.mediaType} AS "MediaAssetType"),
-      "contentType" = \${metadata.contentType},
-      "byteSize" = \${metadata.byteSize},
-      "width" = \${metadata.width},
-      "height" = \${metadata.height},
-      "durationMs" = \${metadata.durationMs},
+      "mediaType" = CAST(${metadata.mediaType} AS "MediaAssetType"),
+      "contentType" = ${metadata.contentType},
+      "byteSize" = ${metadata.byteSize},
+      "width" = ${metadata.width},
+      "height" = ${metadata.height},
+      "durationMs" = ${metadata.durationMs},
       "readiness" = 'READY'::"MediaAssetReadiness",
       "leaseExpiresAt" = NULL,
       "failureCode" = NULL,
       "updatedAt" = CURRENT_TIMESTAMP
     WHERE
-      "id" = \${generation.assetId}
-      AND "storyId" = \${generation.storyId}
-      AND "uploadGeneration" = \${generation.generation}
-      AND "storageKey" = \${generation.storageKey}
-      AND "leaseExpiresAt" = \${generation.leaseExpiresAt}
+      "id" = ${generation.assetId}
+      AND "storyId" = ${generation.storyId}
+      AND "uploadGeneration" = ${generation.generation}
+      AND "storageKey" = ${generation.storageKey}
+      AND "leaseExpiresAt" = ${generation.leaseExpiresAt}
       AND "readiness" = 'PENDING'::"MediaAssetReadiness"
       AND CURRENT_TIMESTAMP < "leaseExpiresAt"
     RETURNING "id"
-  \`;
+  `;
 
   return rows.length === 1;
 }
@@ -144,23 +144,23 @@ export async function failMediaUpload(
   generation: UploadGeneration,
   failureCode: "VALIDATION_REJECTED" | "WRITE_FAILED",
 ): Promise<boolean> {
-  const rows = await db.$queryRaw<Array<{ id: string }>>\`
+  const rows = await db.$queryRaw<Array<{ id: string }>>`
     UPDATE "MediaAsset"
     SET
       "readiness" = 'FAILED'::"MediaAssetReadiness",
-      "failureCode" = CAST(\${failureCode} AS "MediaAssetFailureCode"),
+      "failureCode" = CAST(${failureCode} AS "MediaAssetFailureCode"),
       "leaseExpiresAt" = NULL,
       "updatedAt" = CURRENT_TIMESTAMP
     WHERE
-      "id" = \${generation.assetId}
-      AND "storyId" = \${generation.storyId}
-      AND "uploadGeneration" = \${generation.generation}
-      AND "storageKey" = \${generation.storageKey}
-      AND "leaseExpiresAt" = \${generation.leaseExpiresAt}
+      "id" = ${generation.assetId}
+      AND "storyId" = ${generation.storyId}
+      AND "uploadGeneration" = ${generation.generation}
+      AND "storageKey" = ${generation.storageKey}
+      AND "leaseExpiresAt" = ${generation.leaseExpiresAt}
       AND "readiness" = 'PENDING'::"MediaAssetReadiness"
       AND CURRENT_TIMESTAMP < "leaseExpiresAt"
     RETURNING "id"
-  \`;
+  `;
 
   return rows.length === 1;
 }
@@ -175,7 +175,7 @@ export async function reconcileExpiredMediaUploads(): Promise<
       uploadGeneration: number;
       storageKey: string;
     }>
-  >\`
+  >`
     UPDATE "MediaAsset"
     SET
       "readiness" = 'FAILED'::"MediaAssetReadiness",
@@ -187,7 +187,7 @@ export async function reconcileExpiredMediaUploads(): Promise<
       AND "leaseExpiresAt" IS NOT NULL
       AND CURRENT_TIMESTAMP >= "leaseExpiresAt"
     RETURNING "id", "storyId", "uploadGeneration", "storageKey"
-  \`;
+  `;
 
   return rows.map((row) => ({
     assetId: row.id,
@@ -217,15 +217,15 @@ export async function retryFailedMediaAsset(input: {
       storageKey: string;
       leaseExpiresAt: Date;
     }>
-  >\`
+  >`
     UPDATE "MediaAsset"
     SET
       "uploadGeneration" = "uploadGeneration" + 1,
-      "storageKey" = \${newKey},
-      "originalFileName" = \${input.originalFileName},
-      "mediaType" = CAST(\${input.mediaType} AS "MediaAssetType"),
-      "contentType" = \${input.contentType},
-      "byteSize" = \${input.byteSize},
+      "storageKey" = ${newKey},
+      "originalFileName" = ${input.originalFileName},
+      "mediaType" = CAST(${input.mediaType} AS "MediaAssetType"),
+      "contentType" = ${input.contentType},
+      "byteSize" = ${input.byteSize},
       "width" = NULL,
       "height" = NULL,
       "durationMs" = NULL,
@@ -234,13 +234,13 @@ export async function retryFailedMediaAsset(input: {
       "leaseExpiresAt" = CURRENT_TIMESTAMP + INTERVAL '24 hours',
       "updatedAt" = CURRENT_TIMESTAMP
     WHERE
-      "id" = \${input.assetId}
-      AND "storyId" = \${input.storyId}
+      "id" = ${input.assetId}
+      AND "storyId" = ${input.storyId}
       AND "readiness" = 'FAILED'::"MediaAssetReadiness"
-      AND "uploadGeneration" = \${input.expectedGeneration}
-      AND "storageKey" = \${input.expectedStorageKey}
+      AND "uploadGeneration" = ${input.expectedGeneration}
+      AND "storageKey" = ${input.expectedStorageKey}
     RETURNING "id", "storyId", "uploadGeneration", "storageKey", "leaseExpiresAt"
-  \`;
+  `;
 
   const row = rows[0];
 
@@ -354,12 +354,12 @@ export async function removeUnreferencedMediaAsset(
     async (tx) => {
       const locked = await tx.$queryRaw<
         Array<{ id: string; storageKey: string }>
-      >\`
+      >`
         SELECT "id", "storageKey"
         FROM "MediaAsset"
-        WHERE "id" = \${assetId} AND "storyId" = \${storyId}
+        WHERE "id" = ${assetId} AND "storyId" = ${storyId}
         FOR UPDATE
-      \`;
+      `;
 
       const asset = locked[0];
 
@@ -367,22 +367,22 @@ export async function removeUnreferencedMediaAsset(
         throw new MediaAssetNotFoundError();
       }
 
-      const refs = await tx.$queryRaw<Array<{ referenced: boolean }>>\`
+      const refs = await tx.$queryRaw<Array<{ referenced: boolean }>>`
         SELECT (
           EXISTS (
             SELECT 1 FROM "Evidence"
-            WHERE "sourceAssetId" = \${assetId}
-               OR "posterAssetId" = \${assetId}
-               OR "captionTrackAssetId" = \${assetId}
+            WHERE "sourceAssetId" = ${assetId}
+               OR "posterAssetId" = ${assetId}
+               OR "captionTrackAssetId" = ${assetId}
           )
           OR EXISTS (
             SELECT 1 FROM "PublishedEvidence"
-            WHERE "sourceAssetId" = \${assetId}
-               OR "posterAssetId" = \${assetId}
-               OR "captionTrackAssetId" = \${assetId}
+            WHERE "sourceAssetId" = ${assetId}
+               OR "posterAssetId" = ${assetId}
+               OR "captionTrackAssetId" = ${assetId}
           )
         ) AS "referenced"
-      \`;
+      `;
 
       if (refs[0]?.referenced) {
         throw new MediaAssetReferencedError();
