@@ -561,6 +561,149 @@ function parseSttsFps(
   return samples / (ticks / timescale);
 }
 
+
+function validateMp4Samples(
+  buffer: Buffer,
+  stbl: Mp4Box,
+  dataBoxes: Mp4Box[],
+  isVideo: boolean,
+  nalLengthSize = 4,
+): void {
+  const children = mp4Boxes(buffer, stbl.payloadStart, stbl.end);
+  const stsz = children.find((box) => box.type === "stsz");
+  const stsc = children.find((box) => box.type === "stsc");
+  const stco = children.find((box) => box.type === "stco" || box.type === "co64");
+
+  if (!stsz || !stsc || !stco || stsz.payloadStart + 12 > stsz.end) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+
+  const fixedSize = buffer.readUInt32BE(stsz.payloadStart + 4);
+  const sampleCount = buffer.readUInt32BE(stsz.payloadStart + 8);
+  if (sampleCount === 0 || sampleCount > buffer.length) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+
+  const sizes: number[] = [];
+  if (fixedSize) {
+    sizes.push(...Array.from({ length: sampleCount }, () => fixedSize));
+  } else {
+    if (stsz.payloadStart + 12 + sampleCount * 4 !== stsz.end) {
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
+    for (let i = 0; i < sampleCount; i += 1) {
+      sizes.push(buffer.readUInt32BE(stsz.payloadStart + 12 + i * 4));
+    }
+  }
+
+  if (sizes.some((size) => size <= 0)) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+
+  const chunkCount = buffer.readUInt32BE(stco.payloadStart + 4);
+  const offsetWidth = stco.type === "stco" ? 4 : 8;
+  if (
+    chunkCount === 0 ||
+    chunkCount > sampleCount ||
+    stco.payloadStart + 8 + chunkCount * offsetWidth !== stco.end
+  ) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+
+  const chunkOffsets: number[] = [];
+  for (let i = 0; i < chunkCount; i += 1) {
+    const offset = stco.payloadStart + 8 + i * offsetWidth;
+    const value = offsetWidth === 4
+      ? buffer.readUInt32BE(offset)
+      : Number(buffer.readBigUInt64BE(offset));
+    if (!Number.isSafeInteger(value)) {
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
+    chunkOffsets.push(value);
+  }
+
+  const mappingCount = buffer.readUInt32BE(stsc.payloadStart + 4);
+  if (
+    mappingCount === 0 ||
+    mappingCount > chunkCount ||
+    stsc.payloadStart + 8 + mappingCount * 12 !== stsc.end
+  ) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+
+  const mapping: Array<{ firstChunk: number; samplesPerChunk: number }> = [];
+  for (let i = 0; i < mappingCount; i += 1) {
+    const offset = stsc.payloadStart + 8 + i * 12;
+    const firstChunk = buffer.readUInt32BE(offset);
+    const samplesPerChunk = buffer.readUInt32BE(offset + 4);
+    const descriptionIndex = buffer.readUInt32BE(offset + 8);
+    if (
+      (i === 0 && firstChunk !== 1) ||
+      firstChunk > chunkCount ||
+      firstChunk <= (mapping.at(-1)?.firstChunk ?? 0) ||
+      !samplesPerChunk ||
+      descriptionIndex !== 1
+    ) {
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
+    mapping.push({ firstChunk, samplesPerChunk });
+  }
+
+  let sampleIndex = 0;
+  let currentMap = 0;
+  let sawVideoNal = false;
+
+  for (let chunk = 1; chunk <= chunkCount; chunk += 1) {
+    if (mapping[currentMap + 1]?.firstChunk === chunk) currentMap += 1;
+    let offset = chunkOffsets[chunk - 1] ?? -1;
+    const count = mapping[currentMap]?.samplesPerChunk ?? 0;
+
+    for (let i = 0; i < count; i += 1) {
+      const size = sizes[sampleIndex++];
+      if (!size || !dataBoxes.some((box) =>
+        offset >= box.payloadStart && offset + size <= box.end
+      )) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
+
+      if (isVideo) {
+        let cursor = offset;
+        let foundNal = false;
+        while (cursor < offset + size) {
+          if (cursor + nalLengthSize > offset + size) {
+            throw new MediaValidationError("MALFORMED_CONTENT");
+          }
+          let nalSize = 0;
+          for (let byte = 0; byte < nalLengthSize; byte += 1) {
+            nalSize = nalSize * 256 + (buffer[cursor + byte] ?? 0);
+          }
+          cursor += nalLengthSize;
+          if (nalSize === 0 || cursor + nalSize > offset + size) {
+            throw new MediaValidationError("MALFORMED_CONTENT");
+          }
+          const header = buffer[cursor] ?? 0;
+          const nalType = header & 0x1f;
+          if ((header & 0x80) !== 0 || nalType === 0 || nalType > 12) {
+            throw new MediaValidationError("MALFORMED_CONTENT");
+          }
+          if (nalType === 1 || nalType === 5) sawVideoNal = true;
+          foundNal = true;
+          cursor += nalSize;
+        }
+        if (!foundNal) throw new MediaValidationError("MALFORMED_CONTENT");
+      } else if (buffer.subarray(offset, offset + size).every((b) => b === 0)) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
+
+      offset += size;
+    }
+  }
+
+  if (sampleIndex !== sampleCount || (isVideo && !sawVideoNal)) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+}
+
 function parseAacLc(buffer: Buffer, start: number, end: number): boolean {
   for (let offset = start; offset + 3 < end; offset += 1) {
     if (buffer[offset] !== 0x05) continue;
@@ -600,6 +743,7 @@ function parseMp4(buffer: Buffer): {
     throw new MediaValidationError("MALFORMED_CONTENT");
   }
 
+  const dataBoxes = top.filter((box) => box.type === "mdat" && box.end > box.payloadStart);
   const tracks = mp4Boxes(buffer, moov.payloadStart, moov.end).filter(
     (box) => box.type === "trak",
   );
@@ -650,9 +794,15 @@ function parseMp4(buffer: Buffer): {
         entry.payloadStart + 78,
         entry.end,
       );
-      if (!codecChildren.some((box) => box.type === "avcC")) {
+      const avcC = codecChildren.find((box) => box.type === "avcC");
+      if (!avcC || avcC.payloadStart + 5 > avcC.end) {
         throw new MediaValidationError("MALFORMED_CONTENT");
       }
+      const nalLengthSize = ((buffer[avcC.payloadStart + 4] ?? 0) & 0x03) + 1;
+      if (nalLengthSize === 3) {
+        throw new MediaValidationError("UNSUPPORTED_TYPE");
+      }
+      validateMp4Samples(buffer, stbl, dataBoxes, true, nalLengthSize);
       video = {
         width,
         height,
@@ -679,6 +829,7 @@ function parseMp4(buffer: Buffer): {
       ) {
         throw new MediaValidationError("UNSUPPORTED_TYPE");
       }
+      validateMp4Samples(buffer, stbl, dataBoxes, false);
     } else {
       throw new MediaValidationError("UNSUPPORTED_TYPE");
     }
