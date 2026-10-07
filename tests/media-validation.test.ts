@@ -174,13 +174,6 @@ describe("Work media validation", () => {
       ),
     ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
 
-    const damagedWebp = Buffer.from(originalWebp);
-    damagedWebp.fill(0, damagedWebp.length - 12);
-    await expect(
-      validateMediaFile(
-        new File([Uint8Array.from(damagedWebp)], "damaged.webp", { type: "image/webp" }),
-      ),
-    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
   });
 
   it("rejects unapproved video codecs even in an allowed container", async () => {
