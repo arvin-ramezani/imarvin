@@ -37,6 +37,7 @@ import {
 } from "../features/work/repository";
 import { resetTestDatabase } from "./support/test-database";
 import { resetTestMediaStorage } from "./support/test-media";
+import { indexedPngFixture } from "./support/media-fixtures";
 
 const APP_ORIGIN = "http://localhost:3000";
 const OWNER_EMAIL = "media-owner@example.com";
@@ -401,6 +402,131 @@ describe("Work media persistence and delivery foundation", () => {
       );
       expect(publicResponse.status).toBe(404);
     }
+  });
+
+  it("never promotes CRC-correct malformed indexed PNG and cleans FAILED bytes", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+    const invalid = await uploadRoute(
+      uploadRequest(
+        story.id,
+        cookie,
+        new File([indexedPngFixture(false)], "missing-palette.png", {
+          type: "image/png",
+        }),
+      ),
+      { params: Promise.resolve({ storyId: story.id }) },
+    );
+    expect(invalid.status).toBe(400);
+
+    const failed = await db.mediaAsset.findFirstOrThrow({
+      where: { storyId: story.id },
+    });
+    expect(failed).toMatchObject({
+      readiness: "FAILED",
+      failureCode: "VALIDATION_REJECTED",
+      leaseExpiresAt: null,
+    });
+    await expect(access(mediaStoragePath(".staging", failed.storageKey))).rejects.toThrow();
+    await expect(access(mediaStoragePath("assets", failed.storageKey))).rejects.toThrow();
+
+    const unavailable = await publicMediaRoute(
+      new Request(APP_ORIGIN + "/api/work/media/" + failed.id),
+      { params: Promise.resolve({ assetId: failed.id }) },
+    );
+    expect(unavailable.status).toBe(404);
+
+    const valid = await uploadRoute(
+      uploadRequest(
+        story.id,
+        cookie,
+        new File([indexedPngFixture(true)], "valid-indexed.png", {
+          type: "image/png",
+        }),
+      ),
+      { params: Promise.resolve({ storyId: story.id }) },
+    );
+    expect(valid.status).toBe(201);
+    const payload = (await valid.json()) as { id: string };
+    const ready = await db.mediaAsset.findUniqueOrThrow({ where: { id: payload.id } });
+    expect(ready).toMatchObject({ readiness: "READY", width: 1, height: 1 });
+  });
+
+  it("rejects non-cue WebVTT uploads before READY, while retaining valid cues", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+
+    const recording = await db.mediaAsset.create({
+      data: {
+        storyId: story.id,
+        storageKey: randomUUID(),
+        originalFileName: "recording.mp4",
+        mediaType: "VIDEO",
+        contentType: "video/mp4",
+        byteSize: 10,
+        width: 16,
+        height: 16,
+        durationMs: 200,
+        readiness: "READY",
+      },
+    });
+    const evidence = await db.evidence.create({
+      data: {
+        storyId: story.id,
+        kind: "RECORDING",
+        position: 0,
+        sourceAssetId: recording.id,
+      },
+    });
+
+    async function uploadCaption(text: string): Promise<Response> {
+      const form = new FormData();
+      form.set("file", new File([text], "captions.vtt", { type: "text/vtt" }));
+      form.set("recordingEvidenceId", evidence.id);
+      return uploadRoute(
+        new Request(APP_ORIGIN + "/api/studio/work/" + story.id + "/media", {
+          method: "POST",
+          headers: { cookie, origin: APP_ORIGIN },
+          body: form,
+        }),
+        { params: Promise.resolve({ storyId: story.id }) },
+      );
+    }
+
+    for (const text of [
+      "WEBVTT\n\nNOTE arbitrary text\n",
+      "WEBVTT\n\nthis is not a cue\n",
+      "WEBVTT\n\n00:00.000 --> 00:00.150\nValid\n\nSTYLE\n::cue { color: red; }\n",
+    ]) {
+      const response = await uploadCaption(text);
+      expect(response.status).toBe(400);
+    }
+
+    const rejected = await db.mediaAsset.findMany({
+      where: { storyId: story.id, mediaType: "VTT" },
+    });
+    expect(rejected).toHaveLength(3);
+    for (const asset of rejected) {
+      expect(asset).toMatchObject({
+        readiness: "FAILED",
+        failureCode: "VALIDATION_REJECTED",
+        leaseExpiresAt: null,
+      });
+      await expect(access(mediaStoragePath("assets", asset.storageKey))).rejects.toThrow();
+      const publicRead = await publicMediaRoute(
+        new Request(APP_ORIGIN + "/api/work/media/" + asset.id),
+        { params: Promise.resolve({ assetId: asset.id }) },
+      );
+      expect(publicRead.status).toBe(404);
+    }
+
+    const success = await uploadCaption(
+      "WEBVTT\n\n00:00.000 --> 00:00.150 align:start\nVisible result\n",
+    );
+    expect(success.status).toBe(201);
+    const payload = (await success.json()) as { id: string };
+    expect(await db.mediaAsset.findUniqueOrThrow({ where: { id: payload.id } }))
+      .toMatchObject({ mediaType: "VTT", readiness: "READY" });
   });
 
   it("fails invalid content immediately and retries with a fresh generation/key", async () => {
