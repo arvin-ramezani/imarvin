@@ -86,10 +86,14 @@ At 320px/zoom, focus, errors, and essential actions remain visible. No sticky ra
 ## 6. Public/owner states and motion
 
 Public composition is expressive; owner editing stays structured. Share visual language without turning the editor into a decorative workspace.
-Saved privately, Published, Private changes, Error, and Cancelled are distinct meanings. Use shape/icon/state plus concise text; never imply Save publishes through a visual transition.
+Saved privately, Published, Private changes, Error, and Cancelled are distinct meanings. Use shape/icon/state plus concise text; never imply Save publishes through motion.
 Publish/Update and Unpublish/Delete are not interchangeable icon actions. Reviews and confirmations identify operation and effect.
-Hover offers restrained affordance feedback; focus has an independent visible indicator; active selection persists. Loading is scoped; error pairs a recognizable cue with explanation/recovery.
-Optional 120–180ms transitions connect cause/result; no decorative loops, scroll hijacking, or animation waits. Reduced motion keeps immediate feedback.
+
+**Owner/admin UI:** no interface animation or transition at any viewport size. Hover, press, focus, navigation, dialogs, responsive changes, saving/publishing feedback, loading and state changes update immediately with no interpolated motion, animated spinner/shimmer, press scale, hover travel, enter/exit effect or stagger. Explicit user-invoked playback of authored project media is content playback, not interface animation, and never autoplays.
+
+**Public UI:** use purposeful motion when it materially improves orientation, hierarchy, continuity, selection, inspection or feedback. Consider it on every public route and viewport size; useful motion must not be desktop-only or hover-dependent. Do not animate merely to decorate a page or because a motion library is available. Short transitions may connect cause/result, but no decorative loops, scroll hijacking, parallax requirement or animation wait before content/actions.
+
+Reduced-motion preference removes non-essential spatial/animated feedback while preserving the same information, state and task completion immediately. Focus remains independently visible; touch/keyboard equivalents do not depend on hover motion.
 [Components](components-interaction-spec.md) define states; [refinement review](../visual-refinement-review.md) records the approved visual direction and remaining checks. Aesthetic direction is approved; icon comprehension, responsive layout behavior, focus/accessibility, and usability remain unverified.
 
 ## 7. Theme behavior — P14 / R27
