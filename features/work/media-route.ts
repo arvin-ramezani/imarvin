@@ -8,6 +8,7 @@ import {
   MediaAssetNotFoundError,
   MediaAssetReferencedError,
   MediaStoryNotFoundError,
+  MediaStorageWriteError,
   MediaUploadConflictError,
   MediaValidationError,
 } from "./media-service";
@@ -51,6 +52,13 @@ export function mediaRouteErrorResponse(error: unknown): Response {
   ) {
     return new Response("Conflict", {
       status: 409,
+      headers: { "Cache-Control": "no-store" },
+    });
+  }
+
+  if (error instanceof MediaStorageWriteError) {
+    return new Response("Media storage failed", {
+      status: 500,
       headers: { "Cache-Control": "no-store" },
     });
   }
