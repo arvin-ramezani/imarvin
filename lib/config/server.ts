@@ -86,6 +86,9 @@ const serverConfigSchema = z.object({
   MEDIA_STORAGE_ROOT: z.string().trim().min(1).refine(isPrivateMediaStorageRoot, {
     message: "must be an absolute private path outside the deployment or served tree",
   }),
+  MEDIA_FFMPEG_PATH: z.string().trim().min(1).refine(path.isAbsolute, {
+    message: "must be an absolute path to the local FFmpeg executable",
+  }).default("/usr/bin/ffmpeg"),
   LOG_LEVEL: z.enum(LOG_LEVELS).default("info"),
 });
 
