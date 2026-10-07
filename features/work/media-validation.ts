@@ -851,13 +851,21 @@ function parseWebm(buffer: Buffer): {
       const widthElement = findEbml(videoFields, 0xb0);
       const heightElement = findEbml(videoFields, 0xba);
       const fpsElement = findEbml(videoFields, 0x2383e3);
-      if (!widthElement || !heightElement || !fpsElement) {
+      const defaultDurationElement = findEbml(fields, 0x23e383);
+      if (!widthElement || !heightElement) {
         throw new MediaValidationError("MALFORMED_CONTENT");
       }
+
+      const fps = fpsElement
+        ? ebmlFloat(buffer, fpsElement)
+        : defaultDurationElement
+          ? 1_000_000_000 / ebmlUInt(buffer, defaultDurationElement)
+          : Number.NaN;
+
       video = {
         width: ebmlUInt(buffer, widthElement),
         height: ebmlUInt(buffer, heightElement),
-        fps: ebmlFloat(buffer, fpsElement),
+        fps,
       };
     } else if (type === 2) {
       audioTracks += 1;
