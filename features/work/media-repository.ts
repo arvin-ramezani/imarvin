@@ -398,6 +398,27 @@ export async function removeUnreferencedMediaAsset(
   );
 }
 
+export async function listFailedMediaGenerations(): Promise<
+  FailedUploadGeneration[]
+> {
+  const rows = await db.mediaAsset.findMany({
+    where: { readiness: "FAILED" },
+    select: {
+      id: true,
+      storyId: true,
+      uploadGeneration: true,
+      storageKey: true,
+    },
+  });
+
+  return rows.map((row) => ({
+    assetId: row.id,
+    storyId: row.storyId,
+    generation: row.uploadGeneration,
+    storageKey: row.storageKey,
+  }));
+}
+
 export async function listCurrentMediaStorageKeys(): Promise<Set<string>> {
   const assets = await db.mediaAsset.findMany({
     select: { storageKey: true },
