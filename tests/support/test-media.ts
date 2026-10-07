@@ -2,13 +2,10 @@ import { mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 
 import { getServerConfig } from "../../lib/config/server";
+import { assertTestDatabaseTarget } from "./test-database";
 
 export function assertTestMediaRoot(): string {
-  if (process.env.NODE_ENV !== "test") {
-    throw new Error(
-      "Refusing destructive media cleanup outside NODE_ENV=test.",
-    );
-  }
+  assertTestDatabaseTarget();
 
   const root = path.resolve(getServerConfig().MEDIA_STORAGE_ROOT);
   const parsedRoot = path.parse(root).root;
