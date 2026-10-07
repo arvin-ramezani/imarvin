@@ -14,7 +14,10 @@ import {
 import { constants } from "node:fs";
 import path from "node:path";
 
-import { getServerConfig } from "@/lib/config/server";
+import {
+  getServerConfig,
+  isPrivateMediaStorageRoot,
+} from "@/lib/config/server";
 
 const STORAGE_KEY_PATTERN = /^[a-zA-Z0-9_-]{16,128}$/;
 
@@ -25,7 +28,14 @@ export type MediaStorageFile = {
 };
 
 export function mediaStorageRoot(): string {
-  return path.resolve(getServerConfig().MEDIA_STORAGE_ROOT);
+  const configuredRoot = getServerConfig().MEDIA_STORAGE_ROOT;
+
+  // Revalidate on use as an ancestor symlink can change after config parsing.
+  if (!isPrivateMediaStorageRoot(configuredRoot)) {
+    throw new Error("Unsafe MEDIA_STORAGE_ROOT");
+  }
+
+  return path.resolve(configuredRoot);
 }
 
 export function mediaStoragePath(
