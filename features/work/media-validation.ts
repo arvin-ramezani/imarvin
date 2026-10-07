@@ -936,6 +936,72 @@ function findEbml(
   return elements.find((element) => element.id === id);
 }
 
+function validateWebmBlocks(
+  buffer: Buffer,
+  clusters: EbmlElement[],
+  videoTrackNumber: number,
+  codec: string,
+): void {
+  let videoFrames = 0;
+
+  for (const cluster of clusters) {
+    const children = ebmlElements(buffer, cluster.payloadStart, cluster.end);
+
+    for (const element of children) {
+      const blocks = element.id === 0xa3
+        ? [element]
+        : element.id === 0xa0
+          ? ebmlElements(buffer, element.payloadStart, element.end)
+              .filter((child) => child.id === 0xa1)
+          : [];
+
+      for (const block of blocks) {
+        const track = readEbmlVint(buffer, block.payloadStart, true);
+        const headerEnd = block.payloadStart + track.length + 3;
+        if (headerEnd >= block.end) {
+          throw new MediaValidationError("MALFORMED_CONTENT");
+        }
+
+        const flags = buffer[headerEnd - 1] ?? 0;
+        if ((flags & 0x06) !== 0) {
+          throw new MediaValidationError("UNSUPPORTED_TYPE");
+        }
+        if (track.value !== videoTrackNumber) continue;
+
+        const frame = buffer.subarray(headerEnd, block.end);
+        if (frame.length < 2 || frame.every((byte) => byte === 0)) {
+          throw new MediaValidationError("MALFORMED_CONTENT");
+        }
+
+        if (codec === "V_VP9" && ((frame[0] ?? 0) & 0xc0) !== 0x80) {
+          throw new MediaValidationError("MALFORMED_CONTENT");
+        }
+
+        if (codec === "V_VP8") {
+          if (frame.length < 3) {
+            throw new MediaValidationError("MALFORMED_CONTENT");
+          }
+          const keyframe = ((frame[0] ?? 0) & 1) === 0;
+          if (
+            keyframe &&
+            (frame.length < 10 ||
+              frame[3] !== 0x9d ||
+              frame[4] !== 0x01 ||
+              frame[5] !== 0x2a)
+          ) {
+            throw new MediaValidationError("MALFORMED_CONTENT");
+          }
+        }
+        videoFrames += 1;
+      }
+    }
+  }
+
+  if (videoFrames === 0) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+}
+
 function parseWebm(buffer: Buffer): {
   width: number;
   height: number;
@@ -951,8 +1017,8 @@ function parseWebm(buffer: Buffer): {
   const segmentChildren = ebmlElements(buffer, segment.payloadStart, segment.end);
   const info = findEbml(segmentChildren, 0x1549a966);
   const tracks = findEbml(segmentChildren, 0x1654ae6b);
-  const cluster = findEbml(segmentChildren, 0x1f43b675);
-  if (!info || !tracks || !cluster) {
+  const clusters = segmentChildren.filter((item) => item.id === 0x1f43b675);
+  if (!info || !tracks || clusters.length === 0) {
     throw new MediaValidationError("MALFORMED_CONTENT");
   }
 
@@ -976,6 +1042,8 @@ function parseWebm(buffer: Buffer): {
     | { width: number; height: number; fps: number }
     | undefined;
   let audioTracks = 0;
+  let videoTrackNumber: number | null = null;
+  let videoCodec: string | null = null;
 
   for (const entry of trackEntries) {
     const fields = ebmlElements(buffer, entry.payloadStart, entry.end);
@@ -1013,6 +1081,12 @@ function parseWebm(buffer: Buffer): {
           ? 1_000_000_000 / ebmlUInt(buffer, defaultDurationElement)
           : Number.NaN;
 
+      const trackNumber = findEbml(fields, 0xd7);
+      if (!trackNumber) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
+      videoTrackNumber = ebmlUInt(buffer, trackNumber);
+      videoCodec = codec;
       video = {
         width: ebmlUInt(buffer, widthElement),
         height: ebmlUInt(buffer, heightElement),
@@ -1048,7 +1122,10 @@ function parseWebm(buffer: Buffer): {
     }
   }
 
-  if (!video) throw new MediaValidationError("MALFORMED_CONTENT");
+  if (!video || videoTrackNumber === null || videoCodec === null) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
+  }
+  validateWebmBlocks(buffer, clusters, videoTrackNumber, videoCodec);
   assertVideoLimits(video.width, video.height, video.fps, durationMs);
   return { ...video, durationMs };
 }
