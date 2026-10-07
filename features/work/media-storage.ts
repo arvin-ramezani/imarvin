@@ -73,7 +73,7 @@ async function ensureStorageDirectories(): Promise<void> {
 
   for (const area of ["assets", ".staging"] as const) {
     const directory = path.join(root, area);
-    await mkdir(directory, { mode: 0o700 });
+    await mkdir(directory, { recursive: true, mode: 0o700 });
     await assertPrivateDirectory(directory);
   }
 }
