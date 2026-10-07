@@ -1212,6 +1212,34 @@ function parseVttTimestamp(value: string): number | null {
   return ((hours * 60 + minutes) * 60 + seconds) * 1000 + milliseconds;
 }
 
+function validCueSetting(key: string, value: string): boolean {
+  if (key === "align") {
+    return /^(start|center|end|left|right)$/.test(value);
+  }
+
+  if (key === "vertical") {
+    return /^(rl|lr)$/.test(value);
+  }
+
+  if (key === "size" || key === "position" || key === "line") {
+    const match = key === "line"
+      ? /^(-?\d+(?:\.\d+)?%?)(?:,(start|center|end))?$/.exec(value)
+      : key === "position"
+        ? /^(\d+(?:\.\d+)?)%(?:,(line-left|line-right|center|start|end|auto))?$/.exec(value)
+        : /^(\d+(?:\.\d+)?)%$/.exec(value);
+
+    if (!match) return false;
+    if (key === "line" && !match[1]?.endsWith("%")) {
+      return /^-?\d+$/.test(match[1] ?? "");
+    }
+
+    const percentage = Number((match[1] ?? "").replace(/%$/, ""));
+    return Number.isFinite(percentage) && percentage >= 0 && percentage <= 100;
+  }
+
+  return false;
+}
+
 function parseVtt(buffer: Buffer, recordingDurationMs: number | null): void {
   if (buffer.length > VTT_FILE_LIMIT) {
     throw new MediaValidationError("MEDIA_LIMIT_EXCEEDED");
@@ -1228,41 +1256,111 @@ function parseVtt(buffer: Buffer, recordingDurationMs: number | null): void {
     throw new MediaValidationError("MALFORMED_CONTENT");
   }
 
-  if (text.includes("\u0000")) {
+  if (/[\u0000-\u0008\u000b-\u001f\u007f]/.test(text)) {
     throw new MediaValidationError("MALFORMED_CONTENT");
   }
 
-  const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/);
-  if (!/^WEBVTT(?:[ \t].*)?$/.test(lines[0] ?? "")) {
+  const lines = text.replace(/^\uFEFF/, "").split(/\r\n|\n/);
+  if (
+    !/^WEBVTT(?:[ \t].*)?$/.test(lines[0] ?? "") ||
+    lines[1] !== "" ||
+    lines.some((line) => line.includes("\r"))
+  ) {
     throw new MediaValidationError("MALFORMED_CONTENT");
   }
 
+  let cursor = 2;
   let cues = 0;
-  for (const line of lines.slice(1)) {
-    const trimmed = line.trim();
+  const identifiers = new Set<string>();
 
-    if (/^(STYLE|REGION)(?:\s|$)/.test(trimmed)) {
+  // Parse every nonempty block: ignoring an unrecognized line would allow
+  // NOTE/STYLE/REGION or malformed content to pass as a valid caption file.
+  while (cursor < lines.length) {
+    while (cursor < lines.length && lines[cursor] === "") cursor += 1;
+    if (cursor >= lines.length) break;
+
+    const block: string[] = [];
+    while (cursor < lines.length && lines[cursor] !== "") {
+      block.push(lines[cursor] ?? "");
+      cursor += 1;
+    }
+
+    const first = block[0] ?? "";
+    if (/^(?:NOTE|STYLE|REGION)(?:[ \t]|$)/.test(first)) {
       throw new MediaValidationError("UNSUPPORTED_TYPE");
     }
 
-    if (!trimmed.includes("-->")) continue;
-    const timing = /^([^\s]+)\s+-->\s+([^\s]+)(?:\s+.*)?$/.exec(trimmed);
-    if (!timing) throw new MediaValidationError("MALFORMED_CONTENT");
+    let timingIndex = 0;
+    if (!first.includes("-->")) {
+      if (
+        block.length < 3 ||
+        !first.trim() ||
+        identifiers.has(first)
+      ) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
+
+      identifiers.add(first);
+      timingIndex = 1;
+    }
+
+    const timing = /^(\S+)[ \t]+-->[ \t]+(\S+)(?:[ \t]+(.+))?$/.exec(
+      block[timingIndex] ?? "",
+    );
+
+    if (!timing || block.length <= timingIndex + 1) {
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
+
     const start = parseVttTimestamp(timing[1] ?? "");
     const end = parseVttTimestamp(timing[2] ?? "");
+
     if (
       start === null ||
       end === null ||
-      start < 0 ||
       end <= start ||
       end > recordingDurationMs
     ) {
       throw new MediaValidationError("MALFORMED_CONTENT");
     }
+
+    const settings = new Set<string>();
+    const rawSettings = timing[3]?.trim();
+    if (rawSettings) {
+      for (const setting of rawSettings.split(/[ \t]+/)) {
+        const separator = setting.indexOf(":");
+        const key = setting.slice(0, separator);
+        const value = setting.slice(separator + 1);
+
+        if (
+          separator <= 0 ||
+          !value ||
+          settings.has(key) ||
+          !validCueSetting(key, value)
+        ) {
+          throw new MediaValidationError("MALFORMED_CONTENT");
+        }
+
+        settings.add(key);
+      }
+    }
+
+    const payload = block.slice(timingIndex + 1);
+    if (
+      !payload.some((line) => line.trim().length > 0) ||
+      payload.some((line) => line.includes("-->"))
+    ) {
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
+
     cues += 1;
     if (cues > 2_000) {
       throw new MediaValidationError("MEDIA_LIMIT_EXCEEDED");
     }
+  }
+
+  if (cues === 0) {
+    throw new MediaValidationError("MALFORMED_CONTENT");
   }
 }
 
