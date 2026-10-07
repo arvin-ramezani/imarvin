@@ -4,10 +4,16 @@ import { spawn } from "node:child_process";
 
 import { getServerConfig } from "@/lib/config/server";
 
-import { MediaValidationError } from "./media-validation";
 
 const DECODE_TIMEOUT_MS = 15_000;
 const MAX_DECODER_DIAGNOSTIC_BYTES = 64 * 1024;
+
+export class VideoDecodeFailureError extends Error {
+  constructor() {
+    super("Compressed media payload failed full decode");
+    this.name = "VideoDecodeFailureError";
+  }
+}
 
 export class VideoDecoderUnavailableError extends Error {
   constructor() {
@@ -97,7 +103,7 @@ export async function assertDecodedVideo(
       finish(
         !timedOut && diagnostics <= MAX_DECODER_DIAGNOSTIC_BYTES && code === 0
           ? undefined
-          : new MediaValidationError("MALFORMED_CONTENT"),
+          : new VideoDecodeFailureError(),
       );
     });
 
