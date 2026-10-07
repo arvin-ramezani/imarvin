@@ -23,7 +23,7 @@ export async function resetTestMediaStorage(): Promise<string> {
   const root = assertTestMediaRoot();
 
   await rm(root, { recursive: true, force: true });
-  await mkdir(root, { recursive: true });
+  await mkdir(root, { recursive: true, mode: 0o700 });
 
   return root;
 }
