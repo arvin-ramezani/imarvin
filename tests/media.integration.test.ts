@@ -1,4 +1,4 @@
-import { access } from "node:fs/promises";
+import { access, chmod, lstat, mkdir, symlink } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -166,6 +166,41 @@ describe("Work media persistence and delivery foundation", () => {
     expect(() => mediaStoragePath(".staging", "/absolute")).toThrow(
       "Invalid media storage key",
     );
+  });
+
+  it("uses private directories/files and rejects unsafe existing storage state", async () => {
+    const originalUmask = process.umask(0o022);
+
+    try {
+      const cookie = await ownerCookie();
+      const story = await createPublishableStory();
+      const response = await uploadRoute(
+        uploadRequest(story.id, cookie, pngFile()),
+        { params: Promise.resolve({ storyId: story.id }) },
+      );
+
+      expect(response.status).toBe(201);
+      const { id } = (await response.json()) as { id: string };
+      const asset = await db.mediaAsset.findUniqueOrThrow({ where: { id } });
+      const filePath = mediaStoragePath("assets", asset.storageKey);
+      const stagingPath = mediaStoragePath(".staging", asset.storageKey);
+
+      expect((await lstat(filePath)).mode & 0o777).toBe(0o600);
+      expect((await lstat(filePath.replace(/\/assets\/[^/]+$/, ""))).mode & 0o777).toBe(0o700);
+      expect((await lstat(filePath.replace(/\/[^/]+$/, ""))).mode & 0o777).toBe(0o700);
+      expect((await lstat(stagingPath.replace(/\/[^/]+$/, ""))).mode & 0o777).toBe(0o700);
+
+      await chmod(filePath, 0o644);
+      const blocked = await privateMediaRoute(
+        new Request(APP_ORIGIN + "/api/studio/work/" + story.id + "/media/" + id, {
+          headers: { cookie },
+        }),
+        { params: Promise.resolve({ storyId: story.id, assetId: id }) },
+      );
+      expect(blocked.status).not.toBe(200);
+    } finally {
+      process.umask(originalUmask);
+    }
   });
 
   it("requires owner auth, stores validated bytes privately, and denies public delivery without a published reference", async () => {
