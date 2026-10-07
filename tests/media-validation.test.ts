@@ -1,8 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+const decoderTestConfig = vi.hoisted(() => ({ path: "/usr/bin/ffmpeg" }));
 vi.mock("../lib/config/server", () => ({
-  getServerConfig: () => ({ MEDIA_FFMPEG_PATH: "/usr/bin/ffmpeg" }),
+  getServerConfig: () => ({ MEDIA_FFMPEG_PATH: decoderTestConfig.path }),
 }));
 
 import {
@@ -18,6 +19,7 @@ import {
 } from "../features/work/media-http";
 import { indexedPngFixture, MP4, WEBM } from "./support/media-fixtures";
 import { corruptH264Frame, corruptVp9Frame } from "./support/corrupt-video";
+import { VideoDecoderUnavailableError } from "../features/work/video-decoder";
 
 const PNG =
   "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAxMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==";
@@ -243,6 +245,17 @@ describe("Work media validation", () => {
       await expect(validateMediaFile(
         new File([Uint8Array.from(bytes)], name, { type: contentType }),
       )).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+    }
+  });
+
+  it("fails closed if the configured FFmpeg executable is missing", async () => {
+    decoderTestConfig.path = "/path-that-does-not-exist/ffmpeg";
+    try {
+      await expect(validateMediaFile(
+        mediaFile(MP4, "recording.mp4", "video/mp4"),
+      )).rejects.toBeInstanceOf(VideoDecoderUnavailableError);
+    } finally {
+      decoderTestConfig.path = "/usr/bin/ffmpeg";
     }
   });
 
