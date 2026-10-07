@@ -8,7 +8,7 @@ Authority: [decisions](../decisions.md) P16 and [Signal Studio](../specs/visual-
 | Work | Required skill | Rule |
 | --- | --- | --- |
 | Data/authored-content UI with variable text/media/states | `$break-ui` | Stress the implemented surface before Design QA; use worst-case data as temporary/test-only evidence, never shipped demo chrome |
-| Mobile/touch-facing UI or mobile defect | `$mobile-native` | Check capability queries, viewport/keyboard/safe-area/tap behavior; real-device evidence when the issue requires it |
+| Mobile/touch-facing UI or mobile defect | `$mobile-native` | Check capability queries, viewport height, on-screen keyboard, safe areas, touch/pointer behavior and hover capability. On owner/admin surfaces ignore animated press/hover feedback and every other motion recommendation; real-device evidence when required. |
 | Add/change public UI motion | `$animate` | Run the motion gate before implementation; if it says no motion, keep the state change immediate |
 | Review a PR that materially changes public motion | `$review-animations` | Run after source changes and before Design QA; evidence belongs to the exact SHA |
 
@@ -16,11 +16,11 @@ Meaningful React/Next.js UI work still uses the repo-local shadcn, Vercel React/
 
 ## 2. Motion boundary
 
-P16 is strict: UI motion is for public visitor-facing surfaces only. Do not animate sign-in, `/studio/**`, private preview, publication review, owner dialogs, status changes, save/publish feedback, validation, reordering, or other owner/admin UI chrome.
-User-controlled project image/video/recording inspection is content; playback itself is not an owner UI animation. The controls around it remain motion-free on owner surfaces.
-Public motion must have a product purpose such as feedback, spatial continuity, state indication, preventing a jarring change, or explaining behavior. It is never added merely to make the site feel busy.
+P16 is strict: owner/admin UI has **no interface animation or transition at any viewport size**. Sign-in, `/studio/**`, private preview, publication review, owner dialogs, hover/press/focus feedback, responsive rearrangement, loading, validation, reordering, status changes and save/publish feedback update immediately. Do not use animated spinners/shimmers, press scale, hover travel, enter/exit motion, stagger or layout animation on owner/admin surfaces.
+User-controlled project image/video/recording inspection is content; playback itself is not owner UI animation. The controls around it remain motion-free on owner surfaces and playback never autostarts.
+Public motion must have a product purpose such as orientation, hierarchy, feedback, spatial continuity, state indication, inspection continuity, preventing a jarring change, or explaining behavior. Evaluate worthwhile motion on every public route and narrow/medium/wide presentation; do not make useful motion desktop-only or require hover to understand/operate the UI. Motion is not mandatory where it adds no UX value.
 Use CSS transitions/`@starting-style` first. Framer Motion is the selected JS motion library for public springs, layout/exit animation, or gesture-driven values when CSS is insufficient. Upstream references to Motion/motion.dev are technique guidance, not dependency authority.
-Do not add `framer-motion` speculatively. Add it in the first bounded public-motion issue that actually needs it, with bundle/client-boundary justification. Every public motion path includes reduced-motion handling and cannot be required to understand or complete a task.
+Do not add `framer-motion` speculatively. Add it in the first bounded public-motion issue that actually needs it, with bundle/client-boundary justification. Every public motion path includes reduced-motion handling, cannot be required to understand or complete a task, and must have an immediate equivalent when reduced motion is requested.
 
 ## 3. Deferred skills — install just in time
 
