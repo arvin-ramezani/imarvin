@@ -37,7 +37,8 @@ import {
 } from "../features/work/repository";
 import { resetTestDatabase } from "./support/test-database";
 import { resetTestMediaStorage } from "./support/test-media";
-import { indexedPngFixture } from "./support/media-fixtures";
+import { indexedPngFixture, MP4, WEBM } from "./support/media-fixtures";
+import { corruptH264Frame, corruptVp9Frame } from "./support/corrupt-video";
 
 const APP_ORIGIN = "http://localhost:3000";
 const OWNER_EMAIL = "media-owner@example.com";
@@ -527,6 +528,67 @@ describe("Work media persistence and delivery foundation", () => {
     const payload = (await success.json()) as { id: string };
     expect(await db.mediaAsset.findUniqueOrThrow({ where: { id: payload.id } }))
       .toMatchObject({ mediaType: "VTT", readiness: "READY" });
+  });
+
+  it("fails malformed H264/VP9 uploads without exposing private or public bytes", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+
+    for (const [bytes, name, contentType] of [
+      [corruptH264Frame(), "bad.mp4", "video/mp4"],
+      [corruptVp9Frame(), "bad.webm", "video/webm"],
+    ] as const) {
+      const upload = await uploadRoute(
+        uploadRequest(story.id, cookie, new File(
+          [Uint8Array.from(bytes)], name, { type: contentType },
+        )),
+        { params: Promise.resolve({ storyId: story.id }) },
+      );
+      expect(upload.status).toBe(400);
+    }
+
+    const failed = await db.mediaAsset.findMany({
+      where: { storyId: story.id },
+    });
+    expect(failed).toHaveLength(2);
+    for (const asset of failed) {
+      expect(asset).toMatchObject({
+        readiness: "FAILED",
+        failureCode: "VALIDATION_REJECTED",
+        leaseExpiresAt: null,
+      });
+      await expect(access(mediaStoragePath("assets", asset.storageKey))).rejects.toThrow();
+      await expect(access(mediaStoragePath(".staging", asset.storageKey))).rejects.toThrow();
+      const deniedPublic = await publicMediaRoute(
+        new Request(APP_ORIGIN + "/api/work/media/" + asset.id),
+        { params: Promise.resolve({ assetId: asset.id }) },
+      );
+      expect(deniedPublic.status).toBe(404);
+      const deniedPrivate = await privateMediaRoute(
+        new Request(APP_ORIGIN + "/api/studio/work/" + story.id + "/media/" + asset.id, {
+          headers: { cookie },
+        }),
+        { params: Promise.resolve({ storyId: story.id, assetId: asset.id }) },
+      );
+      expect(deniedPrivate.status).toBe(404);
+    }
+
+    for (const [base64, name, contentType] of [
+      [MP4, "good.mp4", "video/mp4"],
+      [WEBM, "good.webm", "video/webm"],
+    ] as const) {
+      const response = await uploadRoute(
+        uploadRequest(story.id, cookie, new File(
+          [Uint8Array.from(Buffer.from(base64, "base64"))], name,
+          { type: contentType },
+        )),
+        { params: Promise.resolve({ storyId: story.id }) },
+      );
+      expect(response.status).toBe(201);
+    }
+    expect(await db.mediaAsset.count({
+      where: { storyId: story.id, readiness: "READY" },
+    })).toBe(2);
   });
 
   it("fails invalid content immediately and retries with a fresh generation/key", async () => {
