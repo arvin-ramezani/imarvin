@@ -65,6 +65,15 @@ export async function assertDecodedVideo(
       return;
     }
 
+    const input = child.stdin;
+    const output = child.stdout;
+    const diagnosticsStream = child.stderr;
+    if (!input || !output || !diagnosticsStream) {
+      child.kill("SIGKILL");
+      reject(new VideoDecoderUnavailableError());
+      return;
+    }
+
     let settled = false;
     let timedOut = false;
     let diagnostics = 0;
@@ -92,11 +101,11 @@ export async function assertDecodedVideo(
       }
     };
 
-    child.stdout.on("data", account);
-    child.stderr.on("data", account);
+    output.on("data", account);
+    diagnosticsStream.on("data", account);
     // EPIPE is expected if FFmpeg rejects an invalid frame before consuming
     // all stdin bytes. The exit code decides whether decode succeeded.
-    child.stdin.on("error", () => {});
+    input.on("error", () => {});
 
     child.on("error", () => finish(new VideoDecoderUnavailableError()));
     child.on("close", (code) => {
@@ -107,6 +116,6 @@ export async function assertDecodedVideo(
       );
     });
 
-    child.stdin.end(bytes);
+    input.end(bytes);
   });
 }
