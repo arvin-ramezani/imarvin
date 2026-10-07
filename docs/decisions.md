@@ -38,6 +38,7 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P14 | Light + Dark across public/owner views; System default with System/Light/Dark choice | 2026-10-03: owner approved light/dark support and current dark treatment. R27; implementation mechanism remains technical. |
 | P11 | Current Signal Studio visual system: refined hierarchy/surfaces/controls, approved light/dark palette target, responsive composition intent | 2026-10-03: owner approved the rendered public/owner visual direction and requested PR #2 record that approval. [Visual system](specs/visual-system-spec.md). |
 | P15 | Extend product/UI/UX documents with purposeful project images/video, including cancelled or never-shipped work and recorded animations | 2026-10-07: owner requests documentation updates only, explicitly excludes image/app creation. [Media/evidence](specs/media-evidence-spec.md); detailed placement/player/authoring proposals await review, not covered by earlier rendered approval. |
+| P16 | Owner/admin UI uses no interface animation or transitions at any screen size; public UI uses purposeful motion where it improves UX, across screen sizes, with reduced-motion parity | 2026-10-07: owner explicitly separated private-workspace motion from public motion. [Visual system](specs/visual-system-spec.md) owns the detailed boundary. Framer Motion in T01 is not permission to animate owner/admin UI. |
 
 ## Architecture baseline
 
