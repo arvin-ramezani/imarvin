@@ -56,9 +56,9 @@ export async function assertDecodedVideo(
     try {
       child = spawn(binary, args, {
         shell: false,
-        stdio: ["pipe", "pipe", "pipe"],
+        stdio: "pipe",
         windowsHide: true,
-        env: { PATH: "/usr/bin:/bin", LC_ALL: "C" },
+        env: { NODE_ENV: "production", PATH: "/usr/bin:/bin", LC_ALL: "C" },
       });
     } catch {
       reject(new VideoDecoderUnavailableError());
