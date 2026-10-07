@@ -22,6 +22,13 @@
       "ref": "fe5608d2512a7d6a7b9821ce8a88c48464ecd6e4",
       "computedHash": "7981a8c9d47d0f31a6fd05f61d61465082e92f1103911596b0e097a94b13e548"
     },
+    "graphify": {
+      "source": "Graphify-Labs/graphify",
+      "sourceType": "github",
+      "skillPath": "graphify/skill-agents.md",
+      "ref": "5c7b84792f453582676548185aaec3824d51dfe2",
+      "computedHash": "d126c90f3cd6214110fdf172d96087edff30228a3b01bcbe53bbaa30f368d6f9"
+    },
     "mobile-native": {
       "source": "emilkowalski/skills",
       "sourceType": "github",
