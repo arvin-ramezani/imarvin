@@ -109,15 +109,23 @@ export async function listMediaStorageFiles(): Promise<MediaStorageFile[]> {
   const result: MediaStorageFile[] = [];
 
   for (const area of ["assets", ".staging"] as const) {
-    const directory = path.join(mediaStorageRoot(), area);
-    const entries = await readdir(directory, { withFileTypes: true });
+    const directory = path.join(
+      /* turbopackIgnore: true */ mediaStorageRoot(),
+      area,
+    );
+    const entries = await readdir(
+      /* turbopackIgnore: true */ directory,
+      { withFileTypes: true },
+    );
 
     for (const entry of entries) {
       if (!entry.isFile() || !STORAGE_KEY_PATTERN.test(entry.name)) {
         continue;
       }
 
-      const details = await stat(path.join(directory, entry.name));
+      const details = await stat(
+        /* turbopackIgnore: true */ path.join(directory, entry.name),
+      );
 
       result.push({
         key: entry.name,
