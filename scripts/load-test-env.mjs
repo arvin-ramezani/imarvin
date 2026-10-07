@@ -23,7 +23,7 @@ function getDatabaseName(databaseUrl) {
 }
 
 if (process.env.CI === "true") {
-  for (const key of ["APP_ORIGIN", "AUTH_SECRET", "DATABASE_URL"]) {
+  for (const key of ["APP_ORIGIN", "AUTH_SECRET", "DATABASE_URL", "MEDIA_STORAGE_ROOT"]) {
     if (!process.env[key]) {
       throw new Error(`CI test environment is missing explicit ${key}.`);
     }
