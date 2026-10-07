@@ -22,6 +22,7 @@ const serverConfigSchema = z.object({
     .string()
     .url()
     .regex(/^postgres(?:ql)?:\/\//, "must be a PostgreSQL URL"),
+  MEDIA_STORAGE_ROOT: z.string().trim().min(1),
   LOG_LEVEL: z.enum(LOG_LEVELS).default("info"),
 });
 
