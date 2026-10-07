@@ -155,6 +155,34 @@ describe("Work media validation", () => {
     });
   });
 
+  it("rejects video containers with missing or corrupt media samples", async () => {
+    const mp4 = Buffer.from(MP4, "base64");
+    const mdatType = mp4.indexOf(Buffer.from("mdat", "ascii"));
+    expect(mdatType).toBeGreaterThan(0);
+    mp4.fill(0, mdatType + 4, mdatType + 8);
+
+    await expect(
+      validateMediaFile(
+        new File([Uint8Array.from(mp4)], "recording.mp4", {
+          type: "video/mp4",
+        }),
+      ),
+    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+
+    const webm = Buffer.from(WEBM, "base64");
+    const cluster = webm.indexOf(Buffer.from([0x1f, 0x43, 0xb6, 0x75]));
+    expect(cluster).toBeGreaterThan(0);
+    webm.fill(0, cluster + 4);
+
+    await expect(
+      validateMediaFile(
+        new File([Uint8Array.from(webm)], "recording.webm", {
+          type: "video/webm",
+        }),
+      ),
+    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+  });
+
   it("validates cue-only UTF-8 WebVTT against the recording duration", async () => {
     const valid = new File(
       [
