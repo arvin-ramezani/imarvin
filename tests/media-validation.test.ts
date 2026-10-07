@@ -126,6 +126,46 @@ describe("Work media validation", () => {
     ).rejects.toBeInstanceOf(MediaValidationError);
   });
 
+  it("rejects header-only and corrupted JPEG/WebP frames that have valid-looking headers", async () => {
+    const originalJpeg = Buffer.from(JPEG, "base64");
+    const sos = originalJpeg.indexOf(Buffer.from([0xff, 0xda]));
+    expect(sos).toBeGreaterThan(0);
+    const scanStart = sos + 2 + originalJpeg.readUInt16BE(sos + 2);
+    const headerOnlyJpeg = Buffer.concat([
+      originalJpeg.subarray(0, scanStart),
+      Buffer.from([0x12, 0x34, 0x56, 0xff, 0xd9]),
+    ]);
+    await expect(
+      validateMediaFile(
+        new File([Uint8Array.from(headerOnlyJpeg)], "fake.jpg", { type: "image/jpeg" }),
+      ),
+    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+
+    const originalWebp = Buffer.from(WEBP, "base64");
+    const vp8 = originalWebp.indexOf(Buffer.from("VP8 "));
+    expect(vp8).toBeGreaterThan(0);
+    const headerOnlyWebp = Buffer.alloc(30);
+    headerOnlyWebp.write("RIFF", 0);
+    headerOnlyWebp.writeUInt32LE(22, 4);
+    headerOnlyWebp.write("WEBP", 8);
+    headerOnlyWebp.write("VP8 ", 12);
+    headerOnlyWebp.writeUInt32LE(10, 16);
+    originalWebp.copy(headerOnlyWebp, 20, vp8 + 8, vp8 + 18);
+    await expect(
+      validateMediaFile(
+        new File([Uint8Array.from(headerOnlyWebp)], "fake.webp", { type: "image/webp" }),
+      ),
+    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+
+    const damagedWebp = Buffer.from(originalWebp);
+    damagedWebp.fill(0, damagedWebp.length - 12);
+    await expect(
+      validateMediaFile(
+        new File([Uint8Array.from(damagedWebp)], "damaged.webp", { type: "image/webp" }),
+      ),
+    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+  });
+
   it("rejects unapproved video codecs even in an allowed container", async () => {
     const mp4 = replaceNth(Buffer.from(MP4, "base64"), "avc1", "hev1", 2);
     const webm = replaceNth(
