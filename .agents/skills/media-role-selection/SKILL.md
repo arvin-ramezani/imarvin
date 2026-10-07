@@ -21,13 +21,13 @@ Locate the imarvin repository root. Read current [agent rules](../../../AGENTS.m
 | [Navigation/state](../../../docs/specs/navigation-state-spec.md) | Inspection, deep links, focus/return and unavailable states |
 | [UI skill policy](../../../docs/engineering/ui-skill-policy.md) | P16 motion boundary and companion skill routing |
 
-Apply explicit owner instructions and confirmed decisions before proposals, with each document authoritative in its own scope. Canonical repo specs always override this skill's routing index and examples. Cite paths and stable IDs/sections supporting the decision. Surface genuine conflicts; do not silently rewrite authority.
+Apply explicit owner instructions and confirmed decisions before proposals, with each document authoritative in its own scope. Canonical repo specs always override this skill's routing index and examples. If current specs and an explicit authored choice do not uniquely determine the surface's media role/source, return `OWNER DECISION REQUIRED`; the skill must not supply the missing product rule or projection. Cite paths and stable IDs/sections supporting the decision. Surface genuine conflicts; do not silently rewrite authority.
 Preserve proposed/pending status: P15 media layouts require later validation and bounded implementation authority. A selection decision does not approve assets, layouts, schema, dependencies or application code. Treat the roles below as design responsibilities, not new database fields/enums.
 
 ## Decision procedure
 
 1. Identify the surface, visitor task and context: public snapshot, private saved candidate, or editor session. Determine whether a visual helps recognition, understanding or inspection (ME01–ME03); do not require media for completeness.
-2. Resolve its role from the current placement map and companion contract. Check an existing explicit assignment first. Distinguish discovery cover from lead; they may differ. Do not substitute either for the other without an authored selection or applicable rule.
+2. Resolve role/source from the current placement map and companions plus any explicit authored choice for this surface that fits those contracts. A generic Story cover/lead selection is not a surface assignment unless canonical specs explicitly map it there. Distinguish discovery cover from lead; they may differ. If the role/source remains unresolved, return `OWNER DECISION REQUIRED` instead of creating a mapping from an example, review-check shorthand or projection-impact list.
 3. Trace the assignment to its existing Story identity, snapshot/candidate revision, Evidence identity, and source/poster/rendition as available. Public surfaces use only currently published authorized references; preview uses the exact saved candidate with published dependencies. Reuse references, never independent editable copies. Record actual identifiers or verified record locations; never fabricate IDs or schema support.
 4. Check source readiness, permission, capture stage and required alternatives. Distinguish confirmed absence, a failed selected item, and content/identity that has not been supplied or cannot be inspected. Inaccessible or unknown content is not proof of no authored media.
 5. Choose image, static video poster, explicit inline inspection/player, text/link Evidence, logo/name, or complete text-only presentation under the role rules below. An existing poster must depict the actual recording or identified same-build/state screenshot (ME07); never promise a missing video or generate a poster.
@@ -39,8 +39,10 @@ Use this index to locate the canonical rule, not to override later repository ch
 
 | Surface | Media role and source | Presentation / playback |
 | --- | --- | --- |
-| Home featured work | Featured Story's published discovery cover | Existing image/static recording poster; Open work navigates; no player/autoplay |
-| Work browse, related work, Experience project choice | Same referenced Story's published discovery cover | Static image/poster; ordinary Story action; no player/autoplay, separate invented thumbnail or hover playback |
+| Home featured work | Authored representative still/poster for the published featured Story; resolve its actual Evidence reference | Existing image/static recording poster; Open work navigates; no player/autoplay |
+| Work browse | Optional representative still; consult media/evidence §2, public UX §3 and components §1; current specs do not uniquely map it to the Story cover | Use only a resolved authored/canonical source; otherwise `OWNER DECISION REQUIRED`; ordinary Story action, no autoplay/hover playback |
+| Experience project choice | Project media permitted separately from company identity; consult media/evidence §2, public UX §5 and components §1; current specs do not uniquely map it to the Story cover | Resolve actual authored role/source/presentation or return `OWNER DECISION REQUIRED`; no autoplay; do not infer cover/poster/player support |
+| Related work | Referenced Story's published cover where authored related media is present (media/evidence §2) | Optional compact still; ordinary Story link, no player/autoplay or invented relation |
 | Story detail, embedded Experience main story | Story's published lead Evidence selection | Lead image or poster with explicit inline Play where supported; do not assume cover equals lead |
 | Problem/Decision figure | Authored contextual reference to that Story's Evidence identity | Relevant figure beside explanation; inspect the same item in Evidence, without asset duplication |
 | Evidence | Actual published ordered Evidence item | Image/diagram inspection, recording player, or text/link according to kind; ME05 |
@@ -70,12 +72,13 @@ Keep these states separate under ME03/ME05/ME07–ME08, publishing §§3–6 and
 
 ## Owner ambiguity
 
-Do not rank equally valid assets by aesthetics, newest file, first Evidence item or assumed featured project. Do not disguise an unresolved assignment as a no-media decision.
+Do not rank equally valid assets by aesthetics, newest file, first Evidence item or assumed featured project. Do not infer a browse/Experience projection merely because one discovery cover exists. No authored media, when confirmed, resolves to the complete text-only state without owner escalation; do not disguise an unresolved role/source as that state.
 Return the resolvable fields and the exact marker `OWNER DECISION REQUIRED` in the ambiguity field and each unresolved field. List actual candidate identities/purposes/stages or the conflicting spec paths/IDs, then ask the smallest precise question that resolves the choice. Wait before implementing or approving dependent work; continue independent work only. If content has not been supplied, identify the missing fact without inventing candidates or asserting no media.
 
 ## Compact output
 
 Return one block per surface; include the rule citation within the relevant field and state whether checks are verified, missing or unverified. Do not claim runtime/accessibility validation from a written decision.
+For repeatable read-only behavior checks, use [synthetic fixture inputs](references/fixtures.json); they are task inputs only, never product rules, real project media or implementation assets. Derive decisions from the current canonical specs, not fixture expectations.
 
 ```text
 Surface: <surface and public/candidate/editor context>

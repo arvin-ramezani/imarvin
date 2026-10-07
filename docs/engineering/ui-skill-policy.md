@@ -7,7 +7,7 @@ Authority: [decisions](../decisions.md) P16 and [Signal Studio](../specs/visual-
 
 | Work | Required skill | Rule |
 | --- | --- | --- |
-| Public UI or related owner editor/preview/review implementation/design/review with ambiguous project-media role, identity, presentation, playback or fallback | [$media-role-selection](../../.agents/skills/media-role-selection/SKILL.md) | Resolve before dependent work; reuse canonical Story/Evidence references, create no media; return `OWNER DECISION REQUIRED` with the smallest precise question for conflicts/unresolved valid assets; skip UI with no media concern |
+| Public UI or related owner editor/preview/review implementation/design/review with ambiguous project-media role, identity, presentation, playback or fallback | [$media-role-selection](../../.agents/skills/media-role-selection/SKILL.md) | Resolve before dependent work; reuse existing Story/Evidence references only under a resolved canonical/authored surface choice; return `OWNER DECISION REQUIRED` when current specs conflict or specs/content leave role/source unresolved; create no media; skip UI with no media concern |
 | Data/authored-content UI with variable text/media/states | `$break-ui` | Stress the implemented surface before Design QA; use worst-case data as temporary/test-only evidence, never shipped demo chrome |
 | Mobile/touch-facing UI or mobile defect | `$mobile-native` | Check capability queries, viewport height, on-screen keyboard, safe areas, touch/pointer behavior and hover capability. On owner/admin surfaces ignore animated press/hover feedback and every other motion recommendation; real-device evidence when required. |
 | Add/change public UI motion | `$animate` | Run the motion gate before implementation; if it says no motion, keep the state change immediate |
@@ -39,7 +39,7 @@ Do not install Expo/Swift-only skills for this web project.
 
 ## 4. Verification order
 
-Before dependent public UI or related owner editor/preview/review implementation or review, resolve ambiguous media choices with `$media-role-selection`. Retain its compact decision and authority citations in task/PR evidence; unresolved owner choices block only dependent work. Skip unrelated UI with no media concern; explicit choices still require normal review against canonical specs. This repo-authored decision skill does not approve P15 layouts or replace media implementation/accessibility checks.
+Before dependent public UI or related owner editor/preview/review implementation or review, resolve ambiguous media choices with `$media-role-selection`. Retain its compact decision and authority citations in task/PR evidence; unresolved choices block only dependent work. Do not infer a browse/Experience source from a generic Story cover; ask the smallest precise owner question when current specs/content do not determine it. Skip UI with no media concern; explicit choices still require canonical review. This skill does not approve P15 layouts or replace media implementation/accessibility checks.
 For public UI without motion: implementation → deterministic checks → `$break-ui` when variable content applies → `$mobile-native` when touch/mobile applies → Design QA.
 For public UI with motion: load `$animate` before writing motion, then implementation → deterministic checks → `$break-ui`/`$mobile-native` as applicable → `$review-animations` → Design QA.
 For owner/admin UI: implementation → deterministic checks → `$break-ui`/`$mobile-native` as applicable → Design QA. Animation skills must not be used to introduce owner UI motion.
