@@ -12,21 +12,22 @@ Names describe design responsibilities, not React components, library choices, d
 | Studio navigation | Identity, Work, personal context, Contact | Current destination; private owner entry need not be promoted | Links wrap or use labeled menu; Contact directly discoverable |
 | Featured work object | Title, hook, truthful status, optional published still/poster, Open work | Available, fallback, no work, no media | Work-first hierarchy; one story-opening action; no player/autoplay |
 | Work collection | Curated objects, optional company selection | All, filtered, loading, empty, request error | Readable sequence; aligned visual/focus order; clear reset |
-| Work object | Title, hook, truthful status, optional project still/company context | Default, hover, focus, active, no media | Persistent selection cue; one story-opening action, no nested links/hover playback |
+| Work object | Title, hook, truthful status, optional published discovery-cover projection/company context | Default, hover, focus, active, no media, failed discovery delivery | Reuse Story image/static poster only; one story-opening action; no Browse-only thumbnail, player, autoplay or hover playback; text/action remain usable on failure |
 | Context rail/header | Selected title, company/role context, return | Collection/company/previous-story origin or All work fallback | Rail folds above content; return label retains real destination |
 | Story summary | Problem, contribution/tasks, progress/outcome, stack | Complete without media; absent optional fields omitted | Readable text; one hierarchy, no badge inventory |
 | Lead media / recording | Image or truthful poster, stage/caption, Play, alternatives | Loading, ready, playing/paused/ended, failed, absent | Inline keyboard/touch controls; no autoplay; summary/return visible |
 | Section controls/panel | Problem, Decisions, Evidence | Two-plus: tabs; one: heading/content; zero: summary only | Tab semantics with icon-and-short-label styling; wrap labels; selected state announced |
 | Decision object | Constraint, alternatives, choice, consequence/lesson | Authored content, absent section | Strong choice hierarchy; text supports meaning without diagram |
+| Contextual figure | Relevant Story Evidence reference beside Problem/Decision explanation | Image/poster/diagram reference, absent, failed delivery, selected for inspection | Same underlying Evidence identity; never an independently editable duplicate; selection/inspection targets canonical Evidence item; essential explanation remains text |
 | Evidence item/inspection | Ordered items, caption, proof limits, alternative, Open/Close | Image/video/diagram/text/link, loading, failed, unavailable | One detailed inline item; Close returns to trigger; Retry keeps story |
-| Experience context | Company name/logo, role/dates/contribution | Logo/name fallback; multi-project or direct main story | Logo-only company treatment; no extra main-product click |
+| Experience context | Company name/logo, role/dates/contribution; Story-owned project media where applicable | Logo/name fallback; multi-project choice with published discovery projection or direct main story | Logo/name-only company header; choices reuse Story projection without Experience-owned copy/playback; direct main story uses normal lead/evidence; no extra main-product click |
 | Contact destination | Approved destination label and address/link | Available only with confirmed destination | Independent navigation; no form/placeholder links |
 | Feedback area | Loading/error/empty/unavailable explanation | State-specific next action | Text and accessible announcement, never color alone |
 
 Visual priority: hierarchy, icon/shape, spacing, and state change. Labels support these cues without becoming long instructions. Retain visible names for sections and consequential actions; no tooltip-only meaning.
 Section selectors integrate into the reading surface: proposed icon plus short label, selected weight/shape/local mark. No obligatory pill strip, boxed segmented control, glow, or large tinted active tile. Tab semantics do not prescribe tab styling.
 Hover offers a small emphasis only. Keyboard focus remains clearly visible; active selection is a separate marker. No required information appears exclusively on hover.
-Every public component uses published data. Missing media does not change the core hierarchy or disable exploration. Errors do not replace the whole application when only an evidence area fails.
+Every public component uses published data. Missing media does not change the core hierarchy or disable exploration. Failed discovery delivery preserves the Story/Experience choice text and opening action; failed lead/evidence delivery preserves caption/explanation with scoped recovery. Errors do not replace the whole application when only a media area fails. [Media/evidence](media-evidence-spec.md#5-composition-and-delivery-experience) owns the canonical absence/failure distinctions.
 
 ## 2. Owner component roles
 
@@ -61,8 +62,8 @@ Do not invent empty cards, fake screenshots, dates, author quotes, telemetry, or
 | Surface | Required representative states |
 | --- | --- |
 | Theme | System resolves light/dark; explicit modes; device change; remembered/fallback preference; first appearance; editor/dialog/media parity |
-| Home/collection | Feature available/removed; zero/one/many work; company selected/cleared/empty; long title; project cover/poster/no media |
-| Story/experience | Multi/main product; zero/one/three sections; cancelled/never shipped/offline; no logo/media; image/video failure; unavailable link; playing/paused/ended |
+| Home/collection | Feature available/removed; zero/one/many work; company selected/cleared/empty; long title; project cover/poster/no media/failed discovery delivery |
+| Story/experience | Multi/main product; reused choice projection; zero/one/three sections; cancelled/never shipped/offline; no logo/media; failed lead/evidence; missing recording source; unavailable link; playing/paused/ended |
 | Editor | New incomplete draft; unsaved public edit; media kind/cover/poster/order; validation/upload/processing failure; concurrent conflict; expired session |
 | Preview/review | Exact saved candidate; missing dependency/media alternatives; public/candidate media changes; pending/failed/successful update |
 | Removal | Feature/main-product/related impacts; blocked delete; safe cancel; unpublish success/failure |
