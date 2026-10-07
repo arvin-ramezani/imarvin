@@ -130,14 +130,31 @@ describe("Work media validation", () => {
     const originalJpeg = Buffer.from(JPEG, "base64");
     const sos = originalJpeg.indexOf(Buffer.from([0xff, 0xda]));
     expect(sos).toBeGreaterThan(0);
-    const scanStart = sos + 2 + originalJpeg.readUInt16BE(sos + 2);
-    const headerOnlyJpeg = Buffer.concat([
-      originalJpeg.subarray(0, scanStart),
-      Buffer.from([0x12, 0x34, 0x56, 0xff, 0xd9]),
+
+    // A nominal SOS marker with a two-byte length has no valid scan header.
+    const headerOnlyJpeg = Buffer.from([
+      0xff, 0xd8,
+      0xff, 0xc0, 0x00, 0x0b, 0x08, 0, 1, 0, 1,
+      1, 1, 0x11, 0,
+      0xff, 0xda, 0x00, 0x02, 0x11, 0xff, 0xd9,
     ]);
     await expect(
       validateMediaFile(
         new File([Uint8Array.from(headerOnlyJpeg)], "fake.jpg", { type: "image/jpeg" }),
+      ),
+    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+
+    // The structural parser sees a complete segment; the pixel decoder must
+    // reject this impossible Huffman code-length table.
+    const dht = originalJpeg.indexOf(Buffer.from([0xff, 0xc4]));
+    expect(dht).toBeGreaterThan(0);
+    const corruptHuffman = Buffer.from(originalJpeg);
+    corruptHuffman[dht + 5] = 0xff;
+    await expect(
+      validateMediaFile(
+        new File([Uint8Array.from(corruptHuffman)], "bad-entropy.jpg", {
+          type: "image/jpeg",
+        }),
       ),
     ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
 
