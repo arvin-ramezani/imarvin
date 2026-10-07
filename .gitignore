@@ -44,3 +44,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# graphify local-only cache/cost output
+/graphify-out/cache/
+/graphify-out/cost.json

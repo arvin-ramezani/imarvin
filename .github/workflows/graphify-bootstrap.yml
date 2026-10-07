@@ -1,0 +1,117 @@
+name: graphify-bootstrap
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - ".github/workflows/graphify-bootstrap.yml"
+      - ".graphifyignore"
+      - ".gitignore"
+      - "AGENTS.md"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Install Graphify CLI
+        run: uv tool install "graphifyy==0.9.77"
+
+      - name: Generate project skill and local AST graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset GEMINI_API_KEY ANTHROPIC_API_KEY OPENAI_API_KEY KIMI_API_KEY DEEPSEEK_API_KEY || true
+
+          graphify --version
+          graphify install --project --platform codex
+
+          graphify extract . --code-only --out .
+          graphify cluster-only . --no-label
+          graphify export html --graph graphify-out/graph.json
+
+          mapfile -t graph_nodes < <(python - <<'PY'
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          data = json.loads(Path("graphify-out/graph.json").read_text())
+          nodes = {str(node["id"]): node for node in data.get("nodes", [])}
+          labels = [str(node.get("label", "")).strip() for node in nodes.values()]
+          counts = Counter(label for label in labels if label)
+          links = data.get("links") or data.get("edges") or []
+
+          for edge in links:
+              source = nodes.get(str(edge.get("source")))
+              target = nodes.get(str(edge.get("target")))
+              if not source or not target:
+                  continue
+              a = str(source.get("label", "")).strip()
+              b = str(target.get("label", "")).strip()
+              if a and b and a != b and counts[a] == 1 and counts[b] == 1:
+                  print(a)
+                  print(b)
+                  raise SystemExit(0)
+
+          unique = [label for label, count in counts.items() if count == 1]
+          if len(unique) < 2:
+              raise SystemExit("Need at least two unique graph labels for CLI verification")
+          print(unique[0])
+          print(unique[1])
+          PY
+          )
+
+          test "${#graph_nodes[@]}" -ge 2
+          graphify query "${graph_nodes[0]}" --budget 600 >/tmp/graphify-query.txt
+          graphify explain "${graph_nodes[0]}" >/tmp/graphify-explain.txt
+          graphify path "${graph_nodes[0]}" "${graph_nodes[1]}" >/tmp/graphify-path.txt
+
+          # Verify the documented refresh path succeeds without any semantic backend.
+          graphify update .
+
+          test -s graphify-out/graph.json
+          test -s graphify-out/GRAPH_REPORT.md
+          test -s graphify-out/graph.html
+          test -s graphify-out/manifest.json
+          test -s .agents/skills/graphify/SKILL.md
+
+          echo "Graphify query verification:"
+          head -n 20 /tmp/graphify-query.txt
+          echo "Graphify explain verification:"
+          head -n 20 /tmp/graphify-explain.txt
+          echo "Graphify path verification:"
+          cat /tmp/graphify-path.txt
+
+      - name: Keep only shareable Graphify output
+        shell: bash
+        run: |
+          set -euo pipefail
+          find graphify-out -mindepth 1 -maxdepth 1             ! -name graph.json             ! -name graph.html             ! -name GRAPH_REPORT.md             ! -name manifest.json             -exec rm -rf {} +
+
+      - name: Commit generated project assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/graphify-bootstrap.yml
+          git add .agents/skills/graphify graphify-out .graphifyignore .gitignore AGENTS.md
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit -m "chore: generate project Graphify graph"
+          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
