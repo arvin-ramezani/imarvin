@@ -443,6 +443,5 @@ export {
   MediaAssetNotFoundError,
   MediaAssetReferencedError,
   MediaStoryNotFoundError,
-  MediaStorageWriteError,
   MediaValidationError,
 };
