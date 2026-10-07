@@ -689,7 +689,7 @@ function parseMp4(buffer: Buffer): {
   return video;
 }
 
-type Vint = { value: number; length: number };
+type Vint = { value: number; length: number; unknown: boolean };
 
 function readEbmlVint(
   buffer: Buffer,
@@ -716,12 +716,14 @@ function readEbmlVint(
     value = value * 256 + (buffer[offset + index] ?? 0);
   }
 
+  let unknown = false;
+
   if (stripMarker) {
     const max = 2 ** (7 * length) - 1;
-    if (value === max) throw new MediaValidationError("MALFORMED_CONTENT");
+    unknown = value === max;
   }
 
-  return { value, length };
+  return { value, length, unknown };
 }
 
 type EbmlElement = {
@@ -742,7 +744,7 @@ function ebmlElements(
     const id = readEbmlVint(buffer, offset, false);
     const size = readEbmlVint(buffer, offset + id.length, true);
     const payloadStart = offset + id.length + size.length;
-    const elementEnd = payloadStart + size.value;
+    const elementEnd = size.unknown ? end : payloadStart + size.value;
 
     if (elementEnd > end) {
       throw new MediaValidationError("MALFORMED_CONTENT");
