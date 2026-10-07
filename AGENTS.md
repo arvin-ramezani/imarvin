@@ -15,7 +15,7 @@ Do not create images, application code, dependencies, prototype, or deployment w
 
 1. README.md, this file, docs/decisions.md, PRD.md.
 2. For code/technical work, read docs/architecture/architecture.md, docs/architecture/runtime-operations.md, and docs/engineering/spec-driven-development.md.
-3. For shadcn work, load the project-local `$shadcn` skill. For meaningful React/Next.js component edits, load `$vercel-react-best-practices`; when designing/refactoring reusable React component APIs or React 19 composition, load `$vercel-composition-patterns`; after app-code edits use `$next-dev-loop` for runtime verification when its prerequisites are available. For test strategy, test implementation/review, or database-backed test setup, load the project-local `$test-engineering` skill.
+3. For UI work, read [UI skill policy](docs/engineering/ui-skill-policy.md) and load every skill its trigger requires. For shadcn work, load `$shadcn`; for meaningful React/Next.js component edits load `$vercel-react-best-practices`; for reusable React 19 component APIs load `$vercel-composition-patterns`; after app-code edits use `$next-dev-loop` when available. For test strategy, implementation/review, or database-backed test setup, load `$test-engineering`. On owner/admin work, `$mobile-native` is limited to viewport height, mobile keyboard, safe areas, touch/pointer behavior and hover-capability detection; ignore animated press/hover feedback and any other motion guidance.
 4. Read only the product/UX/implementation specs needed for the assigned issue.
 5. Inspect branch/PR state; record the exact starting head.
 6. Preserve confirmed constraints; distinguish proposals and unresolved facts.
@@ -34,6 +34,7 @@ AI-authored Markdown must be context-efficient: target <=120 lines and never exc
 Never invent employment dates, responsibility, results, metrics, authorship, launch status, visual approval, or user-research findings. Conceptual relationships do not imply a database schema.
 For implementation, configuration and logging contracts are mandatory: use the central server-only Zod config module and shared logger; do not add feature-local `process.env` access/parsing, direct `console.*`, or direct Pino configuration.
 For UI styling, read `docs/specs/visual-system-spec.md` first and use the approved semantic theme tokens instead of raw Tailwind palette colors. `@shadcn/lint` design-system rules are enforced; run `npm run lint` after UI changes and fix shadcn diagnostics. Do not add theme tokens, component variants, or lint exceptions without bounded issue/spec authority. Any approved lint exception must stay local and explain the design requirement.
+Owner/admin UI is motion-free at every viewport size: no interface animation or transition for hover, press, focus, navigation, dialogs, responsive rearrangement, loading, validation, status, save/publish feedback or other workspace state. Public visitor-facing UI may use purposeful motion only under P16 and the UI skill policy, evaluated across all public routes and screen sizes. User-controlled project video/recording playback is content, not owner UI animation.
 
 ## Review and handoff
 

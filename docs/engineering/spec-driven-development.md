@@ -113,7 +113,9 @@ Tailwind CSS 4+ and approved design tokens/style contracts are authoritative ove
 Use shadcn/ui Base UI primitives where they reduce interaction/accessibility risk; customize them to Signal Studio.
 Run the current shadcn validation/lint/AI-style checks selected by the bootstrap spec in CI or PR verification.
 Use logical directional utilities; new physical left/right layout utilities require a documented exception.
-Framer Motion must preserve reduced-motion behavior and must not be required to understand or complete a task.
+Read [UI skill policy](ui-skill-policy.md) for mandatory skill triggers and the P16 motion boundary.
+Owner/admin/sign-in/studio/private-preview/publish-review UI state changes are immediate; do not add UI animations there.
+Public motion is CSS-first. Use Framer Motion only for approved public springs/layout/exit/gesture behavior, preserve reduced-motion behavior, and never require motion to understand or complete a task. Add the dependency only when the first bounded public-motion implementation needs it.
 
 ## 10. Definition of done
 
