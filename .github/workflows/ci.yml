@@ -46,6 +46,10 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Install local FFmpeg decoder
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
       - name: Verify local FFmpeg decoder
         run: |
           test -x "$MEDIA_FFMPEG_PATH"
