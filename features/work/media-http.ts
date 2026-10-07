@@ -37,7 +37,7 @@ export function requireSameOriginMediaMutation(request: Request): void {
   }
 }
 
-async function readBoundedRequestBytes(request: Request): Promise<Uint8Array> {
+async function readBoundedRequestBytes(request: Request): Promise<ArrayBuffer> {
   const rawLength = request.headers.get("content-length");
 
   if (rawLength !== null) {
@@ -76,7 +76,7 @@ async function readBoundedRequestBytes(request: Request): Promise<Uint8Array> {
     chunks.push(value);
   }
 
-  const bytes = new Uint8Array(total);
+  const bytes = new Uint8Array(new ArrayBuffer(total));
   let offset = 0;
 
   for (const chunk of chunks) {
@@ -84,7 +84,7 @@ async function readBoundedRequestBytes(request: Request): Promise<Uint8Array> {
     offset += chunk.byteLength;
   }
 
-  return bytes;
+  return bytes.buffer;
 }
 
 export async function readBoundedMediaFormData(
