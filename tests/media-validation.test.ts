@@ -11,6 +11,7 @@ import {
   MediaRangeNotSatisfiableError,
   parseSingleByteRange,
 } from "../features/work/media-http";
+import { indexedPngFixture } from "./support/media-fixtures";
 
 const PNG =
   "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAxMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==";
@@ -126,6 +127,25 @@ describe("Work media validation", () => {
     ).rejects.toBeInstanceOf(MediaValidationError);
   });
 
+  it("fully decodes indexed PNG pixels and rejects missing required palette despite valid CRC", async () => {
+    const valid = await validateMediaFile(
+      new File([indexedPngFixture(true)], "indexed.png", { type: "image/png" }),
+    );
+    expect(valid.metadata).toMatchObject({
+      mediaType: "IMAGE",
+      width: 1,
+      height: 1,
+    });
+
+    await expect(
+      validateMediaFile(
+        new File([indexedPngFixture(false)], "bad-indexed.png", {
+          type: "image/png",
+        }),
+      ),
+    ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+  });
+
   it("rejects header-only and corrupted JPEG/WebP frames that have valid-looking headers", async () => {
     const originalJpeg = Buffer.from(JPEG, "base64");
     const sos = originalJpeg.indexOf(Buffer.from([0xff, 0xda]));
@@ -231,6 +251,48 @@ describe("Work media validation", () => {
         }),
       ),
     ).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+  });
+
+  it("parses complete WebVTT cue blocks and rejects non-cue content", async () => {
+    const valid = [
+      "WEBVTT",
+      "",
+      "first-cue",
+      "00:00.000 --> 00:00.100 align:start position:10% size:75%",
+      "Opening frame",
+      "",
+      "00:00.100 --> 00:00.180",
+      "Second frame",
+      "",
+    ].join("\n");
+    await expect(
+      validateMediaFile(
+        new File([valid], "captions.vtt", { type: "text/vtt" }),
+        200,
+      ),
+    ).resolves.toMatchObject({
+      metadata: { mediaType: "VTT" },
+    });
+
+    const invalid = [
+      "WEBVTT\n\nNOTE arbitrary text\n",
+      "WEBVTT\n\nthis is not a cue\n",
+      "WEBVTT\n\n00:00.000 --> 00:00.100\nValid\n\nNOTE trailing metadata\n",
+      "WEBVTT\n\n00:00.000 --> 00:00.100\nValid\n\ntrailing garbage\n",
+      "WEBVTT\n\n00:00.000 --> 00:00.100 region:missing\nValid\n",
+      "WEBVTT\n\n00:00.000 --> 00:00.100 align:start align:end\nValid\n",
+      "WEBVTT\n\n00:00.000 --> 00:00.100\n\n",
+      "WEBVTT\n\nSTYLE\n::cue { color: red; }\n",
+    ];
+
+    for (const text of invalid) {
+      await expect(
+        validateMediaFile(
+          new File([text], "bad.vtt", { type: "text/vtt" }),
+          200,
+        ),
+      ).rejects.toBeInstanceOf(MediaValidationError);
+    }
   });
 
   it("validates cue-only UTF-8 WebVTT against the recording duration", async () => {
