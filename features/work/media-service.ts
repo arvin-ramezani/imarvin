@@ -145,6 +145,16 @@ async function processUploadGeneration(
         failureCode: "VALIDATION_REJECTED",
         validationCode: error.code,
       });
+    } else {
+      // Decoder absence/crash is infrastructure failure, not bad owner data.
+      // Never strand its generation PENDING or publish unverified bytes.
+      await failMediaUpload(generation, "WRITE_FAILED");
+      await cleanupCapturedGeneration(generation);
+      logEvent("error", "media_decoder_unavailable", {
+        assetId: generation.assetId,
+        uploadGeneration: generation.generation,
+      });
+      if (error instanceof VideoDecoderUnavailableError) throw error;
     }
 
     throw error;
