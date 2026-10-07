@@ -1,17 +1,23 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
+vi.mock("../lib/config/server", () => ({
+  getServerConfig: () => ({ MEDIA_FFMPEG_PATH: "/usr/bin/ffmpeg" }),
+}));
 
 import {
   MEDIA_FILE_LIMIT,
   MediaValidationError,
   validateMediaFile,
+  parseMp4,
+  parseWebm,
 } from "../features/work/media-validation";
 import {
   MediaRangeNotSatisfiableError,
   parseSingleByteRange,
 } from "../features/work/media-http";
 import { indexedPngFixture, MP4, WEBM } from "./support/media-fixtures";
+import { corruptH264Frame, corruptVp9Frame } from "./support/corrupt-video";
 
 const PNG =
   "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAxMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==";
@@ -221,6 +227,23 @@ describe("Work media validation", () => {
     ).rejects.toMatchObject({
       code: "UNSUPPORTED_TYPE",
     });
+  });
+
+  it("rejects damaged compressed video payloads despite intact structure", async () => {
+    const mp4Bytes = corruptH264Frame();
+    const webmBytes = corruptVp9Frame();
+
+    expect(() => parseMp4(mp4Bytes)).not.toThrow();
+    expect(() => parseWebm(webmBytes)).not.toThrow();
+
+    for (const [bytes, name, contentType] of [
+      [mp4Bytes, "video.mp4", "video/mp4"],
+      [webmBytes, "video.webm", "video/webm"],
+    ] as const) {
+      await expect(validateMediaFile(
+        new File([Uint8Array.from(bytes)], name, { type: contentType }),
+      )).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
+    }
   });
 
   it("rejects video containers with missing or corrupt media samples", async () => {
