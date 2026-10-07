@@ -35,6 +35,7 @@ Draft-only assets and published assets must remain distinguishable by authoritat
 For normal V1 uploads, use Next.js native `FormData` in Server Actions/Route Handlers plus Node `fs/promises`.
 Do not add Multer: it is Express-oriented and is unnecessary for App Router's Web Request/FormData model.
 Initial per-file limit is 10 MiB; validate size, declared type, detected content where practical, and allowed extension/type combinations.
+For compressed MP4/WebM uploads, verify every selected video/audio frame through the local FFmpeg executable before Ready (default absolute `MEDIA_FFMPEG_PATH=/usr/bin/ffmpeg`; install the OS `ffmpeg` package on development/staging/production hosts). The decoder runs without a shell, cannot fetch network/file URLs from uploaded input, has an execution timeout and bounded diagnostics, and fails closed if missing. This is validation only, never transcoding or media generation.
 Never write uploads into `public/` or expose the storage directory directly through OpenLiteSpeed.
 Serve media through app-controlled routes: published references are public; draft/preview media requires owner authorization.
 Prevent path traversal, executable uploads, overwrite-by-name, and direct draft URLs.
