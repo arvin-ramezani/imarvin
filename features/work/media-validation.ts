@@ -2,6 +2,8 @@ import { inflateSync } from "node:zlib";
 import path from "node:path";
 import sharp from "sharp";
 
+import { assertDecodedVideo, VideoDecodeFailureError } from "./video-decoder";
+
 export const MEDIA_FILE_LIMIT = 10 * 1024 * 1024;
 export const MEDIA_REQUEST_LIMIT = 11 * 1024 * 1024;
 export const MEDIA_FORM_METADATA_LIMIT = 64 * 1024;
@@ -1393,11 +1395,23 @@ export async function validateMediaBytes(
     width = video.width;
     height = video.height;
     durationMs = video.durationMs;
+    try {
+      await assertDecodedVideo(bytes, "mp4");
+    } catch (error) {
+      if (!(error instanceof VideoDecodeFailureError)) throw error;
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
   } else if (preliminary.contentType === "video/webm") {
     const video = parseWebm(bytes);
     width = video.width;
     height = video.height;
     durationMs = video.durationMs;
+    try {
+      await assertDecodedVideo(bytes, "webm");
+    } catch (error) {
+      if (!(error instanceof VideoDecodeFailureError)) throw error;
+      throw new MediaValidationError("MALFORMED_CONTENT");
+    }
   } else if (preliminary.contentType === "text/vtt") {
     parseVtt(bytes, recordingDurationMs);
   } else {
