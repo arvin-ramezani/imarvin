@@ -347,6 +347,62 @@ describe("Work media persistence and delivery foundation", () => {
     await expect(db.mediaAsset.count()).resolves.toBe(0);
   });
 
+  it("keeps header-only JPEG/WebP uploads FAILED and never publicly deliverable", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+    const jpeg = Buffer.from([
+      0xff, 0xd8, // SOI
+      0xff, 0xc0, 0x00, 0x0b, 0x08, 0x00, 0x01, 0x00, 0x01,
+      0x01, 0x01, 0x11, 0x00, // 1x1 SOF
+      0xff, 0xda, 0x00, 0x02, 0x11, 0xff, 0xd9, // bogus scan + EOI
+    ]);
+    const webp = Buffer.alloc(30);
+    webp.write("RIFF", 0);
+    webp.writeUInt32LE(22, 4);
+    webp.write("WEBP", 8);
+    webp.write("VP8 ", 12);
+    webp.writeUInt32LE(10, 16);
+    Buffer.from([0x10, 0, 0, 0x9d, 0x01, 0x2a, 1, 0, 1, 0])
+      .copy(webp, 20);
+
+    for (const [name, type, bytes] of [
+      ["fake.jpg", "image/jpeg", jpeg],
+      ["fake.webp", "image/webp", webp],
+    ] as const) {
+      const response = await uploadRoute(
+        uploadRequest(
+          story.id,
+          cookie,
+          new File([Uint8Array.from(bytes)], name, { type }),
+        ),
+        { params: Promise.resolve({ storyId: story.id }) },
+      );
+      expect(response.status).toBe(400);
+    }
+
+    expect(await db.mediaAsset.count({
+      where: { storyId: story.id, readiness: "READY" },
+    })).toBe(0);
+    const failures = await db.mediaAsset.findMany({
+      where: { storyId: story.id },
+    });
+    expect(failures).toHaveLength(2);
+    for (const failure of failures) {
+      expect(failure).toMatchObject({
+        readiness: "FAILED",
+        failureCode: "VALIDATION_REJECTED",
+      });
+      await expect(
+        access(mediaStoragePath("assets", failure.storageKey)),
+      ).rejects.toThrow();
+      const publicResponse = await publicMediaRoute(
+        new Request(APP_ORIGIN + "/api/work/media/" + failure.id),
+        { params: Promise.resolve({ assetId: failure.id }) },
+      );
+      expect(publicResponse.status).toBe(404);
+    }
+  });
+
   it("fails invalid content immediately and retries with a fresh generation/key", async () => {
     const cookie = await ownerCookie();
     const story = await createPublishableStory();
