@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "note": "Synthetic task inputs only; not real media, schema, fixture expectations or product rules. Read current canonical specs. Referenced records supply input facts; case input augments those facts. Runtime controls, delivery, focus, reflow and accessibility behavior remain unverified unless explicitly supplied. F19 uses isolated source revisions only; never alter canonical repository docs for a fixture.",
   "records": {
     "orbit": {
@@ -16,14 +16,14 @@
       "media": {
         "ev-screen": "Ready public-authorized Local build screenshot; meaningful caption/alternative; confirmed permission.",
         "ev-diagram": "Ready public-authorized authored architecture diagram; confirmed permission, purpose/caption, meaningful explanation.",
-        "ev-demo": "Ready public-authorized Silent demo, Local build, 18 seconds; poster from actual recording; confirmed permission; equivalent description: closed drawer → Menu click → implemented transition → expanded drawer.",
+        "ev-demo": "Ready public-authorized Silent demo, Local build, 18 seconds; poster from actual recording; confirmed permission; equivalent description: closed drawer \u2192 Menu click \u2192 implemented transition \u2192 expanded drawer.",
         "ev-alt": "Ready public-authorized Local build screenshot img-alt-4, representative of project; confirmed permission, caption/alternative; neither discovery cover nor lead."
       },
       "figures": "Problem p-figure and Decision dec-nav both explicitly reference ev-diagram.",
       "facts": "Cancelled; Never shipped; no live destination; confirmed personal contribution and unfinished backend.",
       "experience": "Published exp-orbit includes published s-orbit as project choice.",
       "company": "Confirmed name Co Orbit; no authored logo.",
-      "assignments": "Home feature explicitly references ev-screen. No Work browse or Experience project-choice media assignment is supplied."
+      "assignments": "Home feature explicitly references ev-screen. No separate Work browse or Experience-owned media is authored."
     },
     "candidate": {
       "story": "s-orbit",
@@ -38,13 +38,34 @@
         "ev-new"
       ],
       "media": "ev-new is a ready private Local build screenshot with confirmed permission and meaningful caption/alternative; existing lead/figure references retained.",
-      "dependencies": "exp-orbit remains published; no public update occurred; no new browse/Experience surface assignment supplied."
+      "dependencies": "exp-orbit remains published; no public update occurred. The candidate changes the Story cover, not an Experience-owned asset."
     },
     "delivery": {
       "story": "s-delivery",
       "published_snapshot": "pub-6",
       "lead": "ev-run/vid-run-6/poster-run-6",
       "media": "Recording exists, ready and public-authorized, confirmed permission and Recreated local demo stage. Same-recording poster available; Silent demo description/alternatives complete. Network delivery currently fails. No alternate recording exists."
+    },
+    "poster": {
+      "story": "s-poster",
+      "published_snapshot": "pub-2",
+      "discovery_cover": "ev-flow/vid-flow-2/poster-flow-2",
+      "lead": "ev-start/img-start-2",
+      "media": {
+        "ev-flow": "Ready public-authorized Local build recording vid-flow-2, 12 seconds, Silent demo; associated poster-flow-2 from actual recording; permission and caption/alternative confirmed; equivalent description: list \u2192 item click \u2192 panel slides open \u2192 detail visible.",
+        "ev-start": "Ready public-authorized Local build screenshot img-start-2, meaningful caption/alternative, confirmed permission."
+      },
+      "experience": "Published exp-poster multi-project choice includes published s-poster.",
+      "company": "Confirmed Co Poster name; no logo.",
+      "facts": "Cancelled; Never shipped; no live destination; confirmed personal contribution.",
+      "assignments": "No independently authored browse thumbnail or Experience media."
+    },
+    "plain": {
+      "story": "s-plain",
+      "published_snapshot": "pub-3",
+      "media": "Confirmed no authored visual media, discovery cover or lead; complete summary and text Evidence ev-text.",
+      "experience": "Published exp-plain multi-project choice includes s-plain.",
+      "company": "Confirmed Co Plain name; no logo."
     }
   },
   "cases": [
@@ -107,7 +128,7 @@
     },
     {
       "id": "F09",
-      "request": "Decide owner publication review of the known public/candidate cover, lead and ordered Evidence changes; do not infer unspecified surface projections.",
+      "request": "Decide owner publication review of public/candidate cover, lead and ordered Evidence changes, including canonical affected public projections.",
       "records": [
         "orbit",
         "candidate"
@@ -186,15 +207,15 @@
       "records": [
         "orbit"
       ],
-      "input": "Actual authored choice for this Work browse surface explicitly references existing public ev-alt/img-alt-4 as its representative project still; this is a task-local choice, not a general product mapping."
+      "input": "Published Story discovery-cover selection is explicitly updated to existing public ev-alt/img-alt-4 instead of ev-screen; all Story references in this case resolve to that same reviewed published snapshot. No independent browse assignment or asset is created."
     },
     {
       "id": "F22",
-      "request": "Decide Experience exp-orbit project-choice media.",
+      "request": "Decide owner preview/review of the supplied authored Experience exp-orbit project-choice media candidate.",
       "records": [
         "orbit"
       ],
-      "input": "Actual authored choice for this project-choice surface explicitly references existing public ev-alt/img-alt-4 as a static representative project still with ordinary Story action; no general product mapping or player requested."
+      "input": "The exact saved Experience candidate draft-exp-5 explicitly assigns ev-alt/img-alt-4 as independently editable Experience-owned project-choice media. The published Story discovery cover remains ev-screen/img-screen-4; no Story-cover update is authored. These are synthetic task facts, not evidence of existing schema support. Do not silently edit the candidate during this decision."
     },
     {
       "id": "F23",
@@ -203,6 +224,79 @@
         "orbit"
       ],
       "input": "An authored related-story relationship exists; media enabled; no conflicting canonical rule or per-surface alternative."
+    },
+    {
+      "id": "F24",
+      "request": "Decide Work browse media.",
+      "records": [
+        "poster"
+      ]
+    },
+    {
+      "id": "F25",
+      "request": "Decide Work browse media.",
+      "records": [
+        "plain"
+      ]
+    },
+    {
+      "id": "F26",
+      "request": "Decide Work browse during discovery image network-delivery failure.",
+      "records": [
+        "orbit"
+      ],
+      "input": "img-screen-4 delivery fails; the selected published discovery identity and full Story text/status/context remain known. ev-alt and lead are otherwise available; no authored selection change."
+    },
+    {
+      "id": "F27",
+      "request": "Decide Experience exp-poster multi-project-choice media.",
+      "records": [
+        "poster"
+      ]
+    },
+    {
+      "id": "F28",
+      "request": "Decide Experience exp-orbit main-product media.",
+      "records": [
+        "orbit"
+      ],
+      "input": "Published exp-orbit is in main-product mode explicitly selecting associated published s-orbit, not a project-choice list."
+    },
+    {
+      "id": "F29",
+      "request": "Decide Story-detail lead presentation and playback for s-lost/pub-2.",
+      "input": "Published authored lead ev-lost/record-lost-2/poster-lost-2. Actual recording/source is unavailable, not a network-delivery error. Existing authorized poster-lost-2 is confirmed from the same Local build/state; meaningful caption/alternative, permission and complete Story explanation are present. No other playable source exists."
+    },
+    {
+      "id": "F30",
+      "request": "Decide project-media role for a proposed new global command-palette backdrop.",
+      "records": [
+        "orbit"
+      ],
+      "input": "No canonical project-media placement/source rule or authored assignment exists for this new surface. Its text command/navigation task is known; the requested decorative project-media use is unspecified."
+    },
+    {
+      "id": "F31",
+      "request": "Decide Experience exp-plain multi-project-choice media.",
+      "records": [
+        "plain"
+      ]
+    },
+    {
+      "id": "F32",
+      "request": "Decide Experience exp-poster project choice during discovery poster-delivery failure.",
+      "records": [
+        "poster"
+      ],
+      "input": "poster-flow-2 network delivery fails; Story text/status/context and opening action remain available. Recording/lead delivery works; authored discovery choice is unchanged."
+    },
+    {
+      "id": "F33",
+      "request": "Decide Work browse media.",
+      "records": [
+        "orbit"
+      ],
+      "input": "This published Story snapshot explicitly has no discovery cover after reviewed removal; its lead ev-demo and contextual ev-diagram remain authored. Discovery-media absence is confirmed, not a missing input or delivery failure."
     }
   ]
 }
