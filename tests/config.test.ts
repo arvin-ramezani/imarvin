@@ -87,8 +87,18 @@ describe("server config", () => {
   it("uses the documented default log level", () => {
     expect(parseServerConfig(requiredConfig)).toEqual({
       ...requiredConfig,
+      MEDIA_FFMPEG_PATH: "/usr/bin/ffmpeg",
       LOG_LEVEL: "info",
     });
+  });
+
+  it("rejects relative or empty local media decoder executable paths", () => {
+    for (const invalid of ["ffmpeg", "./ffmpeg", ""]) {
+      expect(() => parseServerConfig({
+        ...requiredConfig,
+        MEDIA_FFMPEG_PATH: invalid,
+      })).toThrow("MEDIA_FFMPEG_PATH");
+    }
   });
 
   it("rejects unsupported log levels", () => {
