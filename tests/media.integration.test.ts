@@ -1,5 +1,6 @@
 import { access, chmod, lstat, mkdir, symlink } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
+import { dirname, join } from "node:path";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -201,6 +202,23 @@ describe("Work media persistence and delivery foundation", () => {
     } finally {
       process.umask(originalUmask);
     }
+  });
+
+  it("refuses symbolic storage directories before accepting file bytes", async () => {
+    const root = dirname(dirname(mediaStoragePath("assets", randomUUID())));
+    const redirected = join(root, "redirected");
+    await mkdir(redirected, { mode: 0o700 });
+    await symlink(redirected, join(root, "assets"));
+
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+    const response = await uploadRoute(
+      uploadRequest(story.id, cookie, pngFile()),
+      { params: Promise.resolve({ storyId: story.id }) },
+    );
+
+    expect(response.status).toBe(500);
+    expect(await db.mediaAsset.count({ where: { readiness: "READY" } })).toBe(0);
   });
 
   it("requires owner auth, stores validated bytes privately, and denies public delivery without a published reference", async () => {
