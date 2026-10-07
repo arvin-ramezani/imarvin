@@ -73,18 +73,16 @@ export async function promoteStagedMedia(key: string): Promise<void> {
 
   try {
     await access(finalPath);
-    throw new Error("Media final path already exists");
   } catch (error) {
-    if (
-      error instanceof Error &&
-      "code" in error &&
-      error.code !== "ENOENT"
-    ) {
-      throw error;
+    if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+      await rename(stagingPath, finalPath);
+      return;
     }
+
+    throw error;
   }
 
-  await rename(stagingPath, finalPath);
+  throw new Error("Media final path already exists");
 }
 
 export async function removeMediaGenerationBytes(key: string): Promise<void> {
