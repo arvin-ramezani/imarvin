@@ -114,14 +114,18 @@ describe("Work media validation", () => {
 
     await expect(
       validateMediaFile(
-        new File([mp4], "recording.mp4", { type: "video/mp4" }),
+        new File([Uint8Array.from(mp4)], "recording.mp4", {
+          type: "video/mp4",
+        }),
       ),
     ).rejects.toMatchObject({
       code: "UNSUPPORTED_TYPE",
     });
     await expect(
       validateMediaFile(
-        new File([webm], "recording.webm", { type: "video/webm" }),
+        new File([Uint8Array.from(webm)], "recording.webm", {
+          type: "video/webm",
+        }),
       ),
     ).rejects.toMatchObject({
       code: "UNSUPPORTED_TYPE",
