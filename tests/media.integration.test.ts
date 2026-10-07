@@ -411,7 +411,7 @@ describe("Work media persistence and delivery foundation", () => {
       uploadRequest(
         story.id,
         cookie,
-        new File([indexedPngFixture(false)], "missing-palette.png", {
+        new File([Uint8Array.from(indexedPngFixture(false))], "missing-palette.png", {
           type: "image/png",
         }),
       ),
@@ -440,7 +440,7 @@ describe("Work media persistence and delivery foundation", () => {
       uploadRequest(
         story.id,
         cookie,
-        new File([indexedPngFixture(true)], "valid-indexed.png", {
+        new File([Uint8Array.from(indexedPngFixture(true))], "valid-indexed.png", {
           type: "image/png",
         }),
       ),
