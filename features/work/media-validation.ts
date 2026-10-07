@@ -959,12 +959,12 @@ function parseVtt(buffer: Buffer, recordingDurationMs: number | null): void {
   }
 }
 
-export async function validateMediaFile(
+export function validateMediaBytes(
   file: File,
+  bytes: Buffer,
   recordingDurationMs: number | null = null,
-): Promise<{ metadata: ValidatedMedia; bytes: Buffer; originalFileName: string }> {
+): { metadata: ValidatedMedia; originalFileName: string } {
   const preliminary = preliminaryMediaCheck(file);
-  const bytes = Buffer.from(await file.arrayBuffer());
 
   if (bytes.length !== file.size || bytes.length > MEDIA_FILE_LIMIT) {
     throw new MediaValidationError("FILE_TOO_LARGE");
@@ -1005,7 +1005,16 @@ export async function validateMediaFile(
       height,
       durationMs,
     },
-    bytes,
     originalFileName: preliminary.originalFileName,
   };
+}
+
+export async function validateMediaFile(
+  file: File,
+  recordingDurationMs: number | null = null,
+): Promise<{ metadata: ValidatedMedia; bytes: Buffer; originalFileName: string }> {
+  const bytes = Buffer.from(await file.arrayBuffer());
+  const validated = validateMediaBytes(file, bytes, recordingDurationMs);
+
+  return { ...validated, bytes };
 }
