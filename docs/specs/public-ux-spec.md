@@ -34,7 +34,7 @@ Proposed fallback: if the feature becomes unavailable, use the first eligible pu
 | Inspect a contribution | Open story title/action | Summary with selected title and contextual company | Return restores browse position/filter |
 | Understand the employer | Open company context | Shareable experience detail | Return restores originating story/collection |
 
-Each work object exposes title, problem/contribution hook, truthful project status, company context when known, and an optional representative project still. Stack is optional supporting detail. Media supports recognition without displacing contribution/status; opening leads to the story, not hover playback. Distinguish items by content emphasis and composition; do not force equal cards or thumbnail placeholders.
+Each work object exposes title, problem/contribution hook, truthful project status, company context when known, and optionally that Story's published discovery-cover projection: an image or static video poster. Browse does not own a separate thumbnail asset; it has no inline player, autoplay, or hover playback. Failed delivery keeps the item text/context and story-opening action usable without silent substitution; no authored media uses the complete text composition with no blank slot. Stack is optional supporting detail. Distinguish items by content emphasis and composition; do not force equal cards or thumbnail placeholders. [ME03/ME06](media-evidence-spec.md) own the canonical projection and fallback states.
 Company filtering is a proposed secondary control, shown only when at least two published company groups make it useful. Include standalone work in All work; do not create an unnamed company for it. No search, sorting controls, or topic taxonomy are needed for the current small collection.
 Company context shows name/logo, confirmed role/dates, and contribution; missing logo uses the company name. Unknown factual fields are omitted in public copy and remain authoring blockers where essential.
 
@@ -61,11 +61,11 @@ At the end of detail, offer a contextual Return action and Contact. Label Return
 
 Shared header: company name/logo, confirmed role/dates, contribution context, and return path.
 
-- Multi-project experience: show its published project choices; opening one uses the same story as projects-first browsing. Unixsee's three projects remain separate stories.
-- Main-product experience: render that story's summary and sections directly beneath the header, without a redundant project-choice click. The previous company's shop uses this case; employer identity remains unconfirmed.
+- Multi-project experience: show its published project choices; each choice may reuse that Story's published discovery-cover projection (image or static video poster) and opening it uses the same Story as projects-first browsing. The projection is not independently editable Experience media and never plays/autoplays in the choice. Unixsee's three projects remain separate stories.
+- Main-product experience: render that Story's summary and sections directly beneath the header, without a redundant project-choice click. Its lead and Evidence follow the normal Story contracts; no Experience-specific project-media copy is introduced. The previous company's shop uses this case; employer identity remains unconfirmed.
 - No published project: retain approved experience context and a concise explanation with Browse work/Contact; never expose a draft title.
 
-Company pages may contextualize shared story content, including its project captures, but cannot create a second editable version or use captures as company-header covers. A work deep link opens independently of its company page.
+Company pages may contextualize shared Story content, including its project captures, but cannot create a second editable version or use captures as company-header covers. Failed project-choice discovery media preserves the choice text/context and opening action; no authored media uses the complete text choice with no filler. Company identity/header remains logo/name only. A work deep link opens independently of its company page. [Media/evidence](media-evidence-spec.md#2-placement-map) owns the shared media roles and failure semantics.
 
 ## 6. Personal context and contact
 
@@ -80,7 +80,7 @@ Actual destinations and wording remain O03. Do not ship placeholder addresses or
 | PU01 | Published feature with Problem and Evidence; open it from Home | Clear summary, contribution, one selected section, and return path | A01, A10 |
 | PU02 | Company filter active; open story, change section, return | Same filter, item, and collection position | A03, A11 |
 | PU03 | Story has no media or demo | Full summary/text evidence; no blank media box or dead link | A04 |
-| PU04 | Open Unixsee and main-shop experience | Project choices for Unixsee; shop directly under shared company header | A02 |
+| PU04 | Open Unixsee and main-shop experience | Unixsee choices reuse each Story's published discovery projection when authored; shop renders directly with normal Story lead/evidence; company header remains logo/name only | A02 |
 | PU05 | No Decisions content; select Evidence | No empty Decisions control; evidence remains reachable | A04, A11 |
 | PU06 | Any public state; choose Contact | Approved destinations reachable without story completion | A01 |
 | PU07 | Feature removed; reload Home | Curated fallback or honest no-work state; no broken primary action | A04, A08 |
