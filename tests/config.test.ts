@@ -1,3 +1,7 @@
+import { mkdtempSync, rmSync, symlinkSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
@@ -12,7 +16,7 @@ const requiredConfig = {
   APP_ORIGIN: "http://localhost:3000",
   AUTH_SECRET: "test-auth-secret-at-least-32-characters",
   DATABASE_URL: "postgresql://imarvin:imarvin@localhost:5432/imarvin",
-  MEDIA_STORAGE_ROOT: ".tmp/test-media",
+  MEDIA_STORAGE_ROOT: path.join(tmpdir(), "imarvin-test-media"),
 } as const;
 
 describe("server config", () => {
@@ -49,6 +53,35 @@ describe("server config", () => {
         DATABASE_URL: "https://example.com/database",
       }),
     ).toThrow("DATABASE_URL");
+  });
+
+  it("fails closed for relative, deployment, and public media roots", () => {
+    for (const root of [
+      ".tmp/test-media",
+      process.cwd(),
+      path.join(process.cwd(), "public", "drafts"),
+      path.join(process.cwd(), ".next", "uploads"),
+      path.join(tmpdir(), "public_html", "uploads"),
+    ]) {
+      expect(() => parseServerConfig({
+        ...requiredConfig,
+        MEDIA_STORAGE_ROOT: root,
+      })).toThrow("MEDIA_STORAGE_ROOT");
+    }
+  });
+
+  it("rejects an external symlink ancestor pointing into public/", () => {
+    const temp = mkdtempSync(path.join(tmpdir(), "imarvin-test-storage-"));
+    try {
+      const alias = path.join(temp, "alias");
+      symlinkSync(path.join(process.cwd(), "public"), alias, "dir");
+      expect(() => parseServerConfig({
+        ...requiredConfig,
+        MEDIA_STORAGE_ROOT: path.join(alias, "private"),
+      })).toThrow("MEDIA_STORAGE_ROOT");
+    } finally {
+      rmSync(temp, { recursive: true, force: true });
+    }
   });
 
   it("uses the documented default log level", () => {
