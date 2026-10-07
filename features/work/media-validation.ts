@@ -321,12 +321,25 @@ function parseJpeg(buffer: Buffer): { width: number; height: number } {
     }
 
     if (JPEG_SOF_MARKERS.has(marker)) {
-      if (length < 8) throw new MediaValidationError("MALFORMED_CONTENT");
+      const components = buffer[offset + 7] ?? 0;
+      if (components < 1 || components > 4 || length !== 8 + components * 3) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
       height = buffer.readUInt16BE(offset + 3);
       width = buffer.readUInt16BE(offset + 5);
     }
 
     if (marker === 0xda) {
+      const scanComponents = buffer[offset + 2] ?? 0;
+      if (
+        scanComponents < 1 ||
+        scanComponents > 4 ||
+        length !== 6 + scanComponents * 2 ||
+        width === 0 ||
+        height === 0
+      ) {
+        throw new MediaValidationError("MALFORMED_CONTENT");
+      }
       sawScan = true;
       offset += length;
 
