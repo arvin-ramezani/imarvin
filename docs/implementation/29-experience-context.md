@@ -59,8 +59,10 @@ This slice does not add Story ↔ Experience associations, multiple/main-product
 
 - Owner list/editor/preview/review reuse the shared app shell and approved Signal Studio semantic tokens. The list shows company-name fallback, public/private relationship state, Edit, and New experience; no vanity metrics or timeline layout.
 - Owner editor uses visible labels, required-for-publish guidance, error summary → field links/focus, retained input, and explicit Saved privately/conflict/session-expiry messages.
-- Owner/admin Experience UI has zero interface animation/transition at every breakpoint, including hover/press/focus/loading/validation/publish feedback; `$mobile-native` motion guidance is excluded there.
-- No public motion or Framer Motion dependency is needed for this context-only detail slice; ordinary navigation/focus is sufficient.
+- Owner/admin `/studio/**`, private preview, and publication-review Experience UI has zero interface animation/transition at every breakpoint, including hover/press/focus/loading/validation/publish feedback; `$mobile-native` motion guidance is excluded there.
+- `/experience/[experienceId]` is public visitor-facing UI and may use purposeful interface motion when it materially improves hierarchy, orientation, continuity, inspection, selection, or feedback. Evaluate useful motion across narrow, medium, and wide layouts; meaningful motion must not be desktop-only or hover-dependent.
+- Public motion preserves equivalent behavior under `prefers-reduced-motion` and is never required to understand content or complete navigation.
+- Use CSS transitions / `@starting-style` first when sufficient. Framer Motion is the selected library only when a later approved implementation actually needs springs, layout/exit motion, or gesture-driven values that CSS cannot express cleanly; this documentation-only PR adds no Framer Motion dependency.
 - Light/Dark/System preserves form values/focus. At 320px, long maximum-valid company/role/contribution text wraps with no page-level horizontal overflow.
 - Keyboard/touch paths expose the same save/preview/publish/recovery actions; no hover-only control.
 
