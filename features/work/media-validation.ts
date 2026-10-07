@@ -799,7 +799,7 @@ function parseAacLc(buffer: Buffer, start: number, end: number): boolean {
   return false;
 }
 
-function parseMp4(buffer: Buffer): {
+export function parseMp4(buffer: Buffer): {
   width: number;
   height: number;
   durationMs: number;
@@ -1073,7 +1073,7 @@ function validateWebmBlocks(
   }
 }
 
-function parseWebm(buffer: Buffer): {
+export function parseWebm(buffer: Buffer): {
   width: number;
   height: number;
   durationMs: number;
