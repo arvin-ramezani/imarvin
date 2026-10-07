@@ -2,14 +2,16 @@ import "server-only";
 
 import {
   access,
+  lstat,
+  open,
   mkdir,
   readdir,
-  readFile,
   rename,
   rm,
   stat,
   writeFile,
 } from "node:fs/promises";
+import { constants } from "node:fs";
 import path from "node:path";
 
 import { getServerConfig } from "@/lib/config/server";
@@ -50,13 +52,30 @@ export function mediaStoragePath(
   return candidate;
 }
 
+async function assertPrivateDirectory(directory: string): Promise<void> {
+  const info = await lstat(directory);
+
+  if (
+    !info.isDirectory() ||
+    info.isSymbolicLink() ||
+    (info.mode & 0o077) !== 0 ||
+    (typeof process.getuid === "function" && info.uid !== process.getuid())
+  ) {
+    throw new Error("Media directory must be private and owned by the app user");
+  }
+}
+
 async function ensureStorageDirectories(): Promise<void> {
   const root = mediaStorageRoot();
 
-  await Promise.all([
-    mkdir(path.join(root, "assets"), { recursive: true }),
-    mkdir(path.join(root, ".staging"), { recursive: true }),
-  ]);
+  await mkdir(root, { recursive: true, mode: 0o700 });
+  await assertPrivateDirectory(root);
+
+  for (const area of ["assets", ".staging"] as const) {
+    const directory = path.join(root, area);
+    await mkdir(directory, { mode: 0o700 });
+    await assertPrivateDirectory(directory);
+  }
 }
 
 export async function writeStagedMedia(
@@ -64,10 +83,14 @@ export async function writeStagedMedia(
   bytes: Uint8Array,
 ): Promise<void> {
   await ensureStorageDirectories();
-  await writeFile(mediaStoragePath(".staging", key), bytes, { flag: "wx" });
+  await writeFile(mediaStoragePath(".staging", key), bytes, {
+    flag: "wx",
+    mode: 0o600,
+  });
 }
 
 export async function promoteStagedMedia(key: string): Promise<void> {
+  await ensureStorageDirectories();
   const stagingPath = mediaStoragePath(".staging", key);
   const finalPath = mediaStoragePath("assets", key);
 
@@ -93,8 +116,29 @@ export async function removeMediaGenerationBytes(key: string): Promise<void> {
 }
 
 export async function readMediaBytes(key: string): Promise<Buffer | null> {
+  await ensureStorageDirectories();
+
   try {
-    return await readFile(mediaStoragePath("assets", key));
+    const file = await open(
+      mediaStoragePath("assets", key),
+      constants.O_RDONLY | constants.O_NOFOLLOW,
+    );
+
+    try {
+      const info = await file.stat();
+
+      if (
+        !info.isFile() ||
+        (info.mode & 0o077) !== 0 ||
+        (typeof process.getuid === "function" && info.uid !== process.getuid())
+      ) {
+        throw new Error("Unsafe media file permissions");
+      }
+
+      return await file.readFile();
+    } finally {
+      await file.close();
+    }
   } catch (error) {
     if (error instanceof Error && "code" in error && error.code === "ENOENT") {
       return null;
