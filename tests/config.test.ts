@@ -12,6 +12,7 @@ const requiredConfig = {
   APP_ORIGIN: "http://localhost:3000",
   AUTH_SECRET: "test-auth-secret-at-least-32-characters",
   DATABASE_URL: "postgresql://imarvin:imarvin@localhost:5432/imarvin",
+  MEDIA_STORAGE_ROOT: ".tmp/test-media",
 } as const;
 
 describe("server config", () => {
@@ -20,6 +21,7 @@ describe("server config", () => {
     expect(() => parseServerConfig({})).toThrow("APP_ORIGIN");
     expect(() => parseServerConfig({})).toThrow("AUTH_SECRET");
     expect(() => parseServerConfig({})).toThrow("DATABASE_URL");
+    expect(() => parseServerConfig({})).toThrow("MEDIA_STORAGE_ROOT");
   });
 
   it("fails when required configuration is invalid", () => {
