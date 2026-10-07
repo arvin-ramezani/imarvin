@@ -432,9 +432,7 @@ describe("Work media persistence and delivery foundation", () => {
         byteSize: PNG_BYTES.length,
       }),
     ]);
-    const winners = retries.filter(
-      (attempt): attempt is NonNullable<typeof attempt> => attempt !== null,
-    );
+    const winners = retries.filter((attempt) => attempt !== null);
     expect(winners).toHaveLength(1);
 
     const retryGeneration = winners[0];
