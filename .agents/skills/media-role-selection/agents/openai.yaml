@@ -1,0 +1,6 @@
+interface:
+  display_name: "Media Role Selection"
+  short_description: "Resolve imarvin media roles from canonical specs"
+  default_prompt: "Use $media-role-selection to decide the existing media identity, presentation, playback, and fallback for this imarvin UI surface."
+policy:
+  allow_implicit_invocation: true
