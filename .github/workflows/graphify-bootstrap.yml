@@ -30,20 +30,31 @@ jobs:
           python-version: "3.12"
 
       - name: Install Graphify CLI
-        run: uv tool install "graphifyy==0.9.77"
+        run: uv tool install "graphifyy[sql]==0.9.77"
 
-      - name: Generate project skill and local AST graph
+      - name: Generate project skills and local AST graph
         shell: bash
         run: |
           set -euo pipefail
-          unset GEMINI_API_KEY ANTHROPIC_API_KEY OPENAI_API_KEY KIMI_API_KEY DEEPSEEK_API_KEY || true
+          unset GEMINI_API_KEY GOOGLE_API_KEY ANTHROPIC_API_KEY OPENAI_API_KEY KIMI_API_KEY DEEPSEEK_API_KEY || true
 
           graphify --version
+
+          # Current Graphify keeps the Codex-native skill/hook under .codex.
           graphify install --project --platform codex
+          # Also install the generic Agent-Skills target required by this repo.
+          graphify install --project --platform agents
 
           graphify extract . --code-only --out .
           graphify cluster-only . --no-label
           graphify export html --graph graphify-out/graph.json
+
+          # Verify the documented refresh workflow. The first update writes the
+          # portable manifest; the second must leave graph topology unchanged.
+          graphify update .
+          sha256sum graphify-out/graph.json | tee /tmp/graphify-graph.sha
+          graphify update .
+          sha256sum --check /tmp/graphify-graph.sha
 
           mapfile -t graph_nodes < <(python - <<'PY'
           import json
@@ -81,14 +92,34 @@ jobs:
           graphify explain "${graph_nodes[0]}" >/tmp/graphify-explain.txt
           graphify path "${graph_nodes[0]}" "${graph_nodes[1]}" >/tmp/graphify-path.txt
 
-          # Verify the documented refresh path succeeds without any semantic backend.
-          graphify update .
-
           test -s graphify-out/graph.json
           test -s graphify-out/GRAPH_REPORT.md
           test -s graphify-out/graph.html
           test -s graphify-out/manifest.json
+          test -s .codex/skills/graphify/SKILL.md
+          test -s .codex/hooks.json
           test -s .agents/skills/graphify/SKILL.md
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("graphify-out/graph.json").read_text())
+          nodes = data.get("nodes", [])
+          links = data.get("links") or data.get("edges") or []
+          sources = {str(n.get("source_file", "")) for n in nodes}
+          forbidden = [
+              s for s in sources
+              if "node_modules/" in s
+              or ".agents/skills/" in s
+              or ".codex/" in s
+              or "graphify-out/" in s
+              or "/.next/" in s
+              or s.startswith(".next/")
+          ]
+          if forbidden:
+              raise SystemExit(f"Forbidden generated/vendor sources in graph: {forbidden[:10]}")
+          print(f"Graph verification: {len(nodes)} nodes, {len(links)} edges, {len(sources)} source files")
+          PY
 
           echo "Graphify query verification:"
           head -n 20 /tmp/graphify-query.txt
@@ -108,10 +139,13 @@ jobs:
         run: |
           set -euo pipefail
           git rm .github/workflows/graphify-bootstrap.yml
-          git add .agents/skills/graphify graphify-out .graphifyignore .gitignore AGENTS.md
+          git add .codex .agents/skills/graphify graphify-out .graphifyignore .gitignore AGENTS.md
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          echo "Final generated paths:"
+          git status --short
 
           git commit -m "chore: generate project Graphify graph"
           git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
