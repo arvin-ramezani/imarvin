@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 
 import {
+  MEDIA_FILE_LIMIT,
   MediaValidationError,
   validateMediaFile,
 } from "../features/work/media-validation";
@@ -83,6 +84,28 @@ describe("Work media validation", () => {
       width: 16,
       height: 16,
       durationMs: 200,
+    });
+  });
+
+  it("rejects over-limit files and disallowed SVG before content can become Ready", async () => {
+    const tooLarge = new File(
+      [new Uint8Array(MEDIA_FILE_LIMIT + 1)],
+      "huge.png",
+      { type: "image/png" },
+    );
+
+    await expect(validateMediaFile(tooLarge)).rejects.toMatchObject({
+      code: "FILE_TOO_LARGE",
+    });
+
+    const svg = new File(
+      ['<svg xmlns="http://www.w3.org/2000/svg"></svg>'],
+      "capture.svg",
+      { type: "image/svg+xml" },
+    );
+
+    await expect(validateMediaFile(svg)).rejects.toMatchObject({
+      code: "UNSUPPORTED_TYPE",
     });
   });
 
