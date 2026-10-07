@@ -55,7 +55,12 @@ export async function resetTestDatabase(): Promise<void> {
   const { db } = await import("../../lib/db");
 
   await db.$transaction([
+    db.publishedStoryProblemFigure.deleteMany(),
+    db.publishedEvidence.deleteMany(),
+    db.storyProblemFigure.deleteMany(),
+    db.evidence.deleteMany(),
     db.publishedStory.deleteMany(),
+    db.mediaAsset.deleteMany(),
     db.story.deleteMany(),
     db.session.deleteMany(),
     db.account.deleteMany(),
