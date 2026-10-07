@@ -1,0 +1,8 @@
+# Keep Graphify focused on project code rather than vendored/generated tooling.
+.agents/skills/
+.codex/
+graphify-out/
+
+# Lockfiles/provenance inventories do not add useful code relationships.
+package-lock.json
+skills-lock.json

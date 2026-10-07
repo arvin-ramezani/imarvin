@@ -35,6 +35,7 @@ Never invent employment dates, responsibility, results, metrics, authorship, lau
 For implementation, configuration and logging contracts are mandatory: use the central server-only Zod config module and shared logger; do not add feature-local `process.env` access/parsing, direct `console.*`, or direct Pino configuration.
 For UI styling, read `docs/specs/visual-system-spec.md` first and use the approved semantic theme tokens instead of raw Tailwind palette colors. `@shadcn/lint` design-system rules are enforced; run `npm run lint` after UI changes and fix shadcn diagnostics. Do not add theme tokens, component variants, or lint exceptions without bounded issue/spec authority. Any approved lint exception must stay local and explain the design requirement.
 Owner/admin UI is motion-free at every viewport size: no interface animation or transition for hover, press, focus, navigation, dialogs, responsive rearrangement, loading, validation, status, save/publish feedback or other workspace state. Public visitor-facing UI may use purposeful motion only under P16 and the UI skill policy, evaluated across all public routes and screen sizes. User-controlled project video/recording playback is content, not owner UI animation.
+Graphify is navigation/context tooling, never repository authority. When `graphify-out/graph.json` exists, use `graphify query` / `graphify path` / `graphify explain` before broad repository grep/search for code relationships; use its report/wiki only for broad navigation when useful. After pull/merge, run `graphify update .` before trusting graph results, and after code changes run it again. Stale/incorrect graph output means refresh and fall back to current source/specs/GitHub state; never treat graph output as higher authority.
 
 ## Review and handoff
 
@@ -52,3 +53,16 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
