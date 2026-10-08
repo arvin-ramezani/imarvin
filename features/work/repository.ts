@@ -272,109 +272,128 @@ export async function publishStory(input: {
   expectedPublishedRevision: number | null;
 }) {
   try {
-    return await db.$transaction(
-      async (tx) => {
-        const lockedRows = await tx.$queryRaw<Array<{ id: string }>>`
-          SELECT "id"
-          FROM "Story"
-          WHERE "id" = ${input.storyId}
-          FOR UPDATE
-        `;
+    return await db.$transaction(async (tx) => {
+      const locked = await tx.$queryRaw<Array<{ id: string }>>`
+        SELECT "id" FROM "Story" WHERE "id" = ${input.storyId} FOR UPDATE
+      `;
+      if (locked.length !== 1) throw new StoryNotFoundError();
 
-        if (lockedRows.length !== 1) {
-          throw new StoryNotFoundError();
-        }
-
-        const story = await tx.story.findUnique({
-          where: { id: input.storyId },
-        });
-
-        if (!story) {
-          throw new StoryNotFoundError();
-        }
-
-        if (story.workingRevision !== input.expectedWorkingRevision) {
-          throw new StoryConflictError();
-        }
-
-        const currentPublic = await tx.publishedStory.findUnique({
-          where: { storyId: input.storyId },
-        });
-
-        if (input.expectedPublishedRevision === null) {
-          if (currentPublic) {
-            throw new StoryConflictError();
-          }
-        } else if (
-          !currentPublic ||
-          currentPublic.revision !== input.expectedPublishedRevision
-        ) {
-          throw new StoryConflictError();
-        }
-
-        const candidate = storyPublicationSchema.safeParse(toDraft(story));
-
-        if (!candidate.success) {
-          throw new StoryPublicationValidationError(
-            zodFieldErrors(candidate.error),
-          );
-        }
-
-        if (!currentPublic) {
-          const snapshot = await tx.publishedStory.create({
-            data: {
-              storyId: story.id,
-              ...candidate.data,
-              sourceWorkingRevision: story.workingRevision,
-            },
-          });
-
-          return { mode: "published" as const, snapshot };
-        }
-
-        const updated = await tx.publishedStory.updateMany({
-          where: {
-            storyId: story.id,
-            revision: input.expectedPublishedRevision ?? -1,
+      const story = await tx.story.findUniqueOrThrow({
+        where: { id: input.storyId },
+        include: {
+          evidence: {
+            orderBy: { position: "asc" },
+            include: { sourceAsset: true, posterAsset: true, captionTrackAsset: true },
           },
+        },
+      });
+      if (story.workingRevision !== input.expectedWorkingRevision) {
+        throw new StoryConflictError();
+      }
+      const current = await tx.publishedStory.findUnique({
+        where: { storyId: input.storyId },
+      });
+      if (input.expectedPublishedRevision === null ? Boolean(current) :
+        !current || current.revision !== input.expectedPublishedRevision) {
+        throw new StoryConflictError();
+      }
+
+      const candidate = storyPublicationSchema.safeParse(toDraft(story));
+      if (!candidate.success) {
+        throw new StoryPublicationValidationError(zodFieldErrors(candidate.error));
+      }
+      const figures = await tx.storyProblemFigure.findMany({
+        where: { storyId: story.id },
+        orderBy: { position: "asc" },
+      });
+      const mediaErrors = await publicationEvidenceErrors(
+        story.evidence,
+        story.discoveryCoverEvidenceId,
+        story.leadEvidenceId,
+        figures.map((f) => f.evidenceId),
+      );
+      if (mediaErrors.length) {
+        throw new StoryPublicationValidationError({ evidence: mediaErrors });
+      }
+
+      // The Story lock + Serializable isolation binds all validated refs to
+      // one source revision. Outgoing role references are cleared before
+      // deleting old published Evidence to satisfy composite foreign keys.
+      const scalars = {
+        title: candidate.data.title,
+        problem: candidate.data.problem,
+        contribution: candidate.data.contribution,
+        progress: candidate.data.progress,
+        outcome: candidate.data.outcome,
+        stack: candidate.data.stack,
+        releaseHistory: candidate.data.releaseHistory ?? null,
+        availability: candidate.data.availability ?? null,
+        liveDestinationUrl: candidate.data.liveDestinationUrl ?? null,
+        sourceWorkingRevision: story.workingRevision,
+      };
+      if (!current) {
+        await tx.publishedStory.create({
+          data: { storyId: story.id, ...scalars },
+        });
+      } else {
+        await tx.publishedStory.update({
+          where: { storyId: story.id },
           data: {
-            ...candidate.data,
-            sourceWorkingRevision: story.workingRevision,
+            ...scalars,
+            discoveryCoverEvidenceId: null,
+            leadEvidenceId: null,
             revision: { increment: 1 },
           },
         });
+        await tx.publishedStoryProblemFigure.deleteMany({ where: { storyId: story.id } });
+        await tx.publishedEvidence.deleteMany({ where: { storyId: story.id } });
+      }
 
-        if (updated.count !== 1) {
-          throw new StoryConflictError();
-        }
-
-        const snapshot = await tx.publishedStory.findUnique({
-          where: { storyId: story.id },
+      if (story.evidence.length) {
+        await tx.publishedEvidence.createMany({
+          data: story.evidence.map((e) => ({
+            id: e.id,
+            storyId: story.id,
+            kind: e.kind,
+            position: e.position,
+            title: e.title,
+            caption: e.caption,
+            captureStage: e.captureStage,
+            permissionConfirmed: e.permissionConfirmed,
+            alternativeText: e.alternativeText,
+            equivalentDescription: e.equivalentDescription,
+            transcript: e.transcript,
+            textLinkText: e.textLinkText,
+            textLinkUrl: e.textLinkUrl,
+            sourceAssetId: e.sourceAssetId,
+            posterAssetId: e.posterAssetId,
+            captionTrackAssetId: e.captionTrackAssetId,
+            recordingAccessibilityMode: e.recordingAccessibilityMode,
+          })),
         });
-
-        if (!snapshot) {
-          throw new StoryConflictError();
-        }
-
-        return { mode: "updated" as const, snapshot };
-      },
-      {
-        isolationLevel: "Serializable",
-      },
-    );
+      }
+      if (figures.length) {
+        await tx.publishedStoryProblemFigure.createMany({
+          data: figures.map((f) => ({
+            storyId: story.id, evidenceId: f.evidenceId, position: f.position,
+          })),
+        });
+      }
+      const snapshot = await tx.publishedStory.update({
+        where: { storyId: story.id },
+        data: {
+          discoveryCoverEvidenceId: story.discoveryCoverEvidenceId,
+          leadEvidenceId: story.leadEvidenceId,
+        },
+      });
+      return { mode: current ? ("updated" as const) : ("published" as const), snapshot };
+    }, { isolationLevel: "Serializable" });
   } catch (error) {
-    if (
-      error instanceof StoryConflictError ||
-      error instanceof StoryNotFoundError ||
-      error instanceof StoryPublicationValidationError
-    ) {
-      throw error;
-    }
-
+    if (error instanceof StoryConflictError || error instanceof StoryNotFoundError ||
+      error instanceof StoryPublicationValidationError) throw error;
     if (errorCode(error) === "P2034" || errorCode(error) === "P2002") {
       throw new StoryConflictError();
     }
-
     throw error;
   }
 }
@@ -389,7 +408,19 @@ export async function listStoryWorkingCopies() {
 export async function getStoryWorkingCopy(storyId: string) {
   return db.story.findUnique({
     where: { id: storyId },
-    include: { published: true },
+    include: {
+      published: {
+        include: {
+          evidence: { orderBy: { position: "asc" }, include: {
+            sourceAsset: true, posterAsset: true, captionTrackAsset: true,
+          } },
+        },
+      },
+      evidence: { orderBy: { position: "asc" }, include: {
+        sourceAsset: true, posterAsset: true, captionTrackAsset: true,
+        problemFigures: true,
+      } },
+    },
   });
 }
 
