@@ -424,6 +424,27 @@ export async function getStoryWorkingCopy(storyId: string) {
   });
 }
 
+/** Caller must authorize owner before exposing candidate validation details. */
+export async function getStoryPublicationMediaErrors(storyId: string) {
+  const story = await db.story.findUnique({
+    where: { id: storyId },
+    include: {
+      evidence: {
+        orderBy: { position: "asc" },
+        include: { sourceAsset: true, posterAsset: true, captionTrackAsset: true },
+      },
+    },
+  });
+  if (!story) throw new StoryNotFoundError();
+  const figures = await db.storyProblemFigure.findMany({
+    where: { storyId },
+    orderBy: { position: "asc" },
+  });
+  return publicationEvidenceErrors(story.evidence,
+    story.discoveryCoverEvidenceId, story.leadEvidenceId,
+    figures.map((figure) => figure.evidenceId));
+}
+
 export async function listPublishedStories() {
   return db.publishedStory.findMany({
     orderBy: [{ publishedAt: "desc" }, { storyId: "asc" }],
