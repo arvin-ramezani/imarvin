@@ -32,14 +32,28 @@ jobs:
       APP_ORIGIN: http://localhost:3000
       AUTH_SECRET: test-auth-secret-at-least-32-characters
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/imarvin_test
+      MEDIA_STORAGE_ROOT: /tmp/imarvin-test-media
+      MEDIA_FFMPEG_PATH: /usr/bin/ffmpeg
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check patch whitespace
+        run: git diff --check origin/main...HEAD
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Install local FFmpeg decoder
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Verify local FFmpeg decoder
+        run: |
+          test -x "$MEDIA_FFMPEG_PATH"
+          "$MEDIA_FFMPEG_PATH" -version | head -n 1
       - name: Generate Prisma client
         run: npm run db:generate
       - name: Validate Prisma schema

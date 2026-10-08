@@ -13,33 +13,203 @@ enum StoryProgress {
   CANCELLED
 }
 
+enum StoryReleaseHistory {
+  SHIPPED
+  NEVER_SHIPPED
+}
+
+enum StoryAvailability {
+  LIVE_DESTINATION
+  NO_LIVE_DESTINATION
+}
+
+enum EvidenceKind {
+  IMAGE
+  RECORDING
+  DIAGRAM
+  TEXT_LINK
+}
+
+enum EvidenceCaptureStage {
+  DESIGN
+  PROTOTYPE
+  LOCAL_BUILD
+  PRODUCTION_CAPTURE
+  RECREATED_LOCAL_DEMO
+}
+
+enum MediaAssetType {
+  IMAGE
+  VIDEO
+  VTT
+}
+
+enum MediaAssetReadiness {
+  PENDING
+  READY
+  FAILED
+}
+
+enum MediaAssetFailureCode {
+  VALIDATION_REJECTED
+  WRITE_FAILED
+  UPLOAD_INTERRUPTED
+}
+
 model Story {
-  id              String          @id @default(uuid())
-  title           String          @default("")
-  problem         String          @default("")
-  contribution    String          @default("")
-  progress        StoryProgress?
-  outcome         String?
-  stack           String[]        @default([])
-  workingRevision Int             @default(1)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  published       PublishedStory?
+  id                       String               @id @default(uuid())
+  title                    String               @default("")
+  problem                  String               @default("")
+  contribution             String               @default("")
+  progress                 StoryProgress?
+  outcome                  String?
+  stack                    String[]             @default([])
+  releaseHistory           StoryReleaseHistory?
+  availability             StoryAvailability?
+  liveDestinationUrl       String?
+  discoveryCoverEvidenceId String?
+  leadEvidenceId           String?
+  workingRevision          Int                  @default(1)
+  createdAt                DateTime             @default(now())
+  updatedAt                DateTime             @updatedAt
+  published                PublishedStory?
+  evidence                 Evidence[]           @relation("StoryEvidence")
+  mediaAssets              MediaAsset[]
+  discoveryCoverEvidence   Evidence?            @relation("StoryDiscoveryCover", fields: [id, discoveryCoverEvidenceId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  leadEvidence             Evidence?            @relation("StoryLead", fields: [id, leadEvidenceId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model PublishedStory {
-  storyId               String        @id
-  story                 Story         @relation(fields: [storyId], references: [id], onDelete: Cascade)
-  title                 String
-  problem               String
-  contribution          String
-  progress              StoryProgress
-  outcome               String?
-  stack                 String[]      @default([])
-  revision              Int           @default(1)
-  sourceWorkingRevision Int
-  publishedAt           DateTime      @default(now())
-  updatedAt             DateTime      @updatedAt
+  storyId                       String               @id
+  story                         Story                @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  title                         String
+  problem                       String
+  contribution                  String
+  progress                      StoryProgress
+  outcome                       String?
+  stack                         String[]             @default([])
+  releaseHistory                StoryReleaseHistory?
+  availability                  StoryAvailability?
+  liveDestinationUrl            String?
+  discoveryCoverEvidenceId      String?
+  leadEvidenceId                String?
+  revision                      Int                  @default(1)
+  sourceWorkingRevision         Int
+  publishedAt                   DateTime             @default(now())
+  updatedAt                     DateTime             @updatedAt
+  evidence                      PublishedEvidence[]  @relation("PublishedStoryEvidence")
+  discoveryCoverEvidence        PublishedEvidence?   @relation("PublishedStoryDiscoveryCover", fields: [storyId, discoveryCoverEvidenceId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  leadEvidence                  PublishedEvidence?   @relation("PublishedStoryLead", fields: [storyId, leadEvidenceId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model MediaAsset {
+  id                String                 @id @default(uuid())
+  storyId           String
+  story             Story                  @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  storageKey        String                 @unique
+  originalFileName  String
+  mediaType         MediaAssetType
+  contentType       String
+  byteSize          Int
+  width             Int?
+  height            Int?
+  durationMs        Int?
+  readiness         MediaAssetReadiness
+  uploadGeneration  Int                    @default(1)
+  leaseExpiresAt    DateTime?
+  failureCode       MediaAssetFailureCode?
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  sourceFor         Evidence[]             @relation("EvidenceSource")
+  posterFor         Evidence[]             @relation("EvidencePoster")
+  captionTrackFor   Evidence[]             @relation("EvidenceCaptionTrack")
+  publishedSourceFor       PublishedEvidence[] @relation("PublishedEvidenceSource")
+  publishedPosterFor       PublishedEvidence[] @relation("PublishedEvidencePoster")
+  publishedCaptionTrackFor PublishedEvidence[] @relation("PublishedEvidenceCaptionTrack")
+
+  @@unique([storyId, id])
+  @@index([readiness, leaseExpiresAt])
+}
+
+model Evidence {
+  id                    String                @id @default(uuid())
+  storyId               String
+  story                 Story                 @relation("StoryEvidence", fields: [storyId], references: [id], onDelete: Cascade)
+  kind                  EvidenceKind
+  position              Int
+  title                 String?
+  caption               String?
+  captureStage          EvidenceCaptureStage?
+  permissionConfirmed   Boolean?
+  alternativeText       String?
+  equivalentDescription String?
+  transcript            String?
+  textLinkText          String?
+  textLinkUrl           String?
+  sourceAssetId         String?
+  posterAssetId         String?
+  captionTrackAssetId   String?
+  sourceAsset           MediaAsset?           @relation("EvidenceSource", fields: [storyId, sourceAssetId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  posterAsset           MediaAsset?           @relation("EvidencePoster", fields: [storyId, posterAssetId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  captionTrackAsset     MediaAsset?           @relation("EvidenceCaptionTrack", fields: [storyId, captionTrackAssetId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  problemFigures        StoryProblemFigure[]
+  discoveryCoverFor     Story[]               @relation("StoryDiscoveryCover")
+  leadFor               Story[]               @relation("StoryLead")
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+
+  @@unique([storyId, id])
+  @@unique([storyId, position])
+}
+
+model StoryProblemFigure {
+  storyId    String
+  evidenceId String
+  position   Int
+  evidence   Evidence @relation(fields: [storyId, evidenceId], references: [storyId, id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([storyId, evidenceId])
+  @@unique([storyId, position])
+}
+
+model PublishedEvidence {
+  id                    String                 @id
+  storyId               String
+  story                 PublishedStory         @relation("PublishedStoryEvidence", fields: [storyId], references: [storyId], onDelete: Cascade)
+  kind                  EvidenceKind
+  position              Int
+  title                 String?
+  caption               String?
+  captureStage          EvidenceCaptureStage?
+  permissionConfirmed   Boolean?
+  alternativeText       String?
+  equivalentDescription String?
+  transcript            String?
+  textLinkText          String?
+  textLinkUrl           String?
+  sourceAssetId         String?
+  posterAssetId         String?
+  captionTrackAssetId   String?
+  sourceAsset           MediaAsset?            @relation("PublishedEvidenceSource", fields: [storyId, sourceAssetId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  posterAsset           MediaAsset?            @relation("PublishedEvidencePoster", fields: [storyId, posterAssetId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  captionTrackAsset     MediaAsset?            @relation("PublishedEvidenceCaptionTrack", fields: [storyId, captionTrackAssetId], references: [storyId, id], onDelete: NoAction, onUpdate: NoAction)
+  problemFigures        PublishedStoryProblemFigure[]
+  discoveryCoverFor     PublishedStory[]        @relation("PublishedStoryDiscoveryCover")
+  leadFor               PublishedStory[]        @relation("PublishedStoryLead")
+  createdAt             DateTime                @default(now())
+
+  @@unique([storyId, id])
+  @@unique([storyId, position])
+}
+
+model PublishedStoryProblemFigure {
+  storyId    String
+  evidenceId String
+  position   Int
+  evidence   PublishedEvidence @relation(fields: [storyId, evidenceId], references: [storyId, id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([storyId, evidenceId])
+  @@unique([storyId, position])
 }
 
 model User {

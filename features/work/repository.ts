@@ -1,5 +1,7 @@
 import "server-only";
 
+import { randomUUID } from "node:crypto";
+
 import { db } from "@/lib/db";
 
 import type { StoryDraftInput, StoryField } from "./types";
@@ -68,7 +70,10 @@ export async function createStory(input: StoryDraftInput) {
   const normalized = storyDraftSchema.parse(input);
 
   return db.story.create({
-    data: normalized,
+    data: {
+      id: randomUUID(),
+      ...normalized,
+    },
     include: { published: true },
   });
 }

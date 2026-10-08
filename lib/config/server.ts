@@ -1,5 +1,8 @@
 import "server-only";
 
+import { realpathSync } from "node:fs";
+import path from "node:path";
+
 import { z } from "zod";
 
 export const CLIENT_ENV_ALLOWLIST = [] as const;
@@ -15,6 +18,64 @@ export const LOG_LEVELS = [
 
 export type LogLevel = (typeof LOG_LEVELS)[number];
 
+const PUBLIC_STORAGE_DIRECTORY_NAMES = new Set([
+  "public", "public_html", "www", "wwwroot", "htdocs", "html", ".next",
+]);
+
+function pathContains(parent: string, child: string): boolean {
+  const relative = path.relative(parent, child);
+  return relative === "" || (!relative.startsWith(".." + path.sep) &&
+    relative !== ".." && !path.isAbsolute(relative));
+}
+
+// Check the nearest existing ancestor: the intended leaf need not exist yet,
+// but an existing symlink must not redirect an otherwise safe-looking path.
+function canonicalStoragePath(root: string): string | null {
+  if (!path.isAbsolute(root)) return null;
+
+  const absolute = path.resolve(root);
+  let ancestor = absolute;
+
+  for (;;) {
+    try {
+      return path.resolve(realpathSync(ancestor), path.relative(ancestor, absolute));
+    } catch (error) {
+      if (!(error instanceof Error && "code" in error && error.code === "ENOENT")) {
+        return null;
+      }
+
+      const parent = path.dirname(ancestor);
+      if (parent === ancestor) return null;
+      ancestor = parent;
+    }
+  }
+}
+
+export function isPrivateMediaStorageRoot(configuredRoot: string): boolean {
+  const canonical = canonicalStoragePath(configuredRoot);
+  if (!canonical || canonical === path.parse(canonical).root) return false;
+
+  let deploymentRoot: string;
+  try {
+    deploymentRoot = realpathSync(process.cwd());
+  } catch {
+    return false;
+  }
+
+  // Reject both deployment descendants and ancestor directories containing it.
+  if (
+    pathContains(deploymentRoot, canonical) ||
+    pathContains(canonical, deploymentRoot)
+  ) {
+    return false;
+  }
+
+  // Also reject conventional web-server document roots outside this checkout.
+  return !canonical
+    .split(path.sep)
+    .some((segment) => PUBLIC_STORAGE_DIRECTORY_NAMES.has(segment.toLowerCase()));
+}
+
 const serverConfigSchema = z.object({
   APP_ORIGIN: z.string().url(),
   AUTH_SECRET: z.string().min(32),
@@ -22,6 +83,12 @@ const serverConfigSchema = z.object({
     .string()
     .url()
     .regex(/^postgres(?:ql)?:\/\//, "must be a PostgreSQL URL"),
+  MEDIA_STORAGE_ROOT: z.string().trim().min(1).refine(isPrivateMediaStorageRoot, {
+    message: "must be an absolute private path outside the deployment or served tree",
+  }),
+  MEDIA_FFMPEG_PATH: z.string().trim().min(1).refine(path.isAbsolute, {
+    message: "must be an absolute path to the local FFmpeg executable",
+  }).default("/usr/bin/ffmpeg"),
   LOG_LEVEL: z.enum(LOG_LEVELS).default("info"),
 });
 
