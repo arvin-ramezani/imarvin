@@ -1,6 +1,8 @@
 import "server-only";
 
 import { headers } from "next/headers";
+import { db } from "@/lib/db";
+import { getStoryPublicationMediaErrors } from "./repository";
 import { notFound } from "next/navigation";
 
 import {
@@ -65,4 +67,27 @@ export async function loadOwnerStoryPage(storyId: string) {
 
     throw error;
   }
+}
+
+/** Owner-only media picker: ID and readiness metadata, never public. */
+export async function loadOwnerMediaAssets(storyId: string) {
+  await authorizeOwnerPage();
+  const story = await db.story.findUnique({
+    where: { id: storyId },
+    select: { id: true },
+  });
+  if (!story) notFound();
+  return db.mediaAsset.findMany({
+    where: { storyId },
+    select: {
+      id: true, mediaType: true, readiness: true, originalFileName: true,
+    },
+    orderBy: { createdAt: "asc" },
+  });
+}
+
+/** Evidence errors must not be queried for anonymous/public requests. */
+export async function loadOwnerMediaErrors(storyId: string) {
+  await authorizeOwnerPage();
+  return getStoryPublicationMediaErrors(storyId);
 }
