@@ -8,7 +8,8 @@ import {
   saveStoryAction,
   type StoryEditorActionState,
 } from "./actions";
-import type { StoryField, StoryFormValues } from "./types";
+import type { StoryField, StoryFormValues, EvidenceDraftInput } from "./types";
+import { EvidenceEditor } from "./evidence-editor";
 
 type StoryEditorFormProps = {
   initialValues: StoryFormValues;
@@ -16,6 +17,14 @@ type StoryEditorFormProps = {
   workingRevision?: number;
   stateLabel?: string;
   stateDescription?: string;
+  initialEvidence?: EvidenceDraftInput[];
+  initialCover?: string | null;
+  initialLead?: string | null;
+  initialFigures?: string[];
+  initialAssets?: Array<{
+    id: string; mediaType: "IMAGE" | "VIDEO" | "VTT";
+    readiness: "READY" | "PENDING" | "FAILED"; originalFileName: string;
+  }>;
 };
 
 const controlClass =
@@ -31,6 +40,10 @@ const STORY_FIELD_ORDER: StoryField[] = [
   "progress",
   "outcome",
   "stack",
+  "releaseHistory",
+  "availability",
+  "liveDestinationUrl",
+  "evidence",
 ];
 
 const STORY_FIELD_LABELS: Record<StoryField, string> = {
@@ -40,6 +53,10 @@ const STORY_FIELD_LABELS: Record<StoryField, string> = {
   progress: "Project progress",
   outcome: "Outcome or lesson",
   stack: "Relevant stack",
+  releaseHistory: "Release history",
+  availability: "Current availability",
+  liveDestinationUrl: "Live destination",
+  evidence: "Evidence and media",
 };
 
 function FieldErrors({
@@ -82,6 +99,7 @@ export function StoryEditorForm({
   workingRevision,
   stateLabel = "Private draft",
   stateDescription = "Only you can see the saved working copy until you explicitly publish it.",
+  initialEvidence, initialCover, initialLead, initialFigures, initialAssets,
 }: StoryEditorFormProps) {
   const initialState: StoryEditorActionState = {
     attempt: 0,
@@ -297,6 +315,34 @@ export function StoryEditorForm({
           </div>
 
           <div className="flex flex-col gap-2">
+            <label htmlFor="releaseHistory" className="font-medium text-ink">Release history</label>
+            <FieldHelp id="releaseHistory-help">Independent of project progress. Unknown facts stay unconfirmed.</FieldHelp>
+            <select id="releaseHistory" name="releaseHistory"
+              defaultValue={state.values.releaseHistory ?? ""} className={controlClass}>
+              <option value="">Not confirmed</option>
+              <option value="SHIPPED">Shipped</option>
+              <option value="NEVER_SHIPPED">Never shipped</option>
+            </select>
+            <FieldErrors errors={state.fieldErrors.releaseHistory} id="releaseHistory-error" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="availability" className="font-medium text-ink">Current availability</label>
+            <select id="availability" name="availability"
+              defaultValue={state.values.availability ?? ""} className={controlClass}>
+              <option value="">Not confirmed</option>
+              <option value="LIVE_DESTINATION">Live destination</option>
+              <option value="NO_LIVE_DESTINATION">No live destination</option>
+            </select>
+            <FieldErrors errors={state.fieldErrors.availability} id="availability-error" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="liveDestinationUrl" className="font-medium text-ink">Confirmed live HTTPS URL</label>
+            <FieldHelp id="liveDestinationUrl-help">Only when a live destination is confirmed; never inferred from screenshots.</FieldHelp>
+            <input id="liveDestinationUrl" name="liveDestinationUrl" type="url" maxLength={2048}
+              defaultValue={state.values.liveDestinationUrl ?? ""} className={controlClass} />
+            <FieldErrors errors={state.fieldErrors.liveDestinationUrl} id="liveDestinationUrl-error" />
+          </div>
+          <div className="flex flex-col gap-2">
             <label htmlFor="outcome" className="font-medium text-ink">
               Outcome or lesson
             </label>
@@ -333,6 +379,21 @@ export function StoryEditorForm({
             <FieldErrors errors={state.fieldErrors.stack} id="stack-error" />
           </div>
         </section>
+        {storyId && initialEvidence && initialAssets ? (
+          <EvidenceEditor
+            storyId={storyId}
+            initialEvidence={initialEvidence}
+            initialCover={initialCover ?? null}
+            initialLead={initialLead ?? null}
+            initialFigures={initialFigures ?? []}
+            initialAssets={initialAssets}
+            onDirty={() => setDirty(true)}
+          />
+        ) : (
+          <section className="rounded-lg border border-boundary bg-surface p-5 text-sm text-muted-ink">
+            Save this Story privately before adding image, recording, diagram or link Evidence.
+          </section>
+        )}
       </div>
 
       <aside className="flex flex-col gap-4 lg:sticky lg:top-8">
