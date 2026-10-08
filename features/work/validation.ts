@@ -123,7 +123,9 @@ export const storyPublicationSchema = z.object({
   progress: progressSchema,
   outcome: optionalText(STORY_LIMITS.outcome),
   stack: stackSchema,
-  ...extraStoryDraft,
+  releaseHistory: z.enum(["SHIPPED", "NEVER_SHIPPED"]).nullable().optional(),
+  availability: z.enum(["LIVE_DESTINATION", "NO_LIVE_DESTINATION"]).nullable().optional(),
+  liveDestinationUrl: optionalHttps.optional(),
 }).superRefine(validateAvailability);
 
 export type PublishedStoryInput = z.infer<typeof storyPublicationSchema>;
