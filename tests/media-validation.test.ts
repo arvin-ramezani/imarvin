@@ -19,7 +19,12 @@ import {
 } from "../features/work/media-http";
 import { indexedPngFixture, MP4, WEBM } from "./support/media-fixtures";
 import { corruptH264Frame, corruptVp9Frame } from "./support/corrupt-video";
-import { VideoDecoderUnavailableError } from "../features/work/video-decoder";
+import {
+  VideoDecodeFailureError,
+  VideoDecoderUnavailableError,
+  DecodedFrameInspector,
+} from "../features/work/video-decoder";
+import { forgedH264Dimensions } from "./support/forged-video";
 
 const PNG =
   "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAxMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==";
@@ -246,6 +251,59 @@ describe("Work media validation", () => {
         new File([Uint8Array.from(bytes)], name, { type: contentType }),
       )).rejects.toMatchObject({ code: "MALFORMED_CONTENT" });
     }
+  });
+
+  it("rejects decodable forged MP4 dimensions, including under-limit disagreement", async () => {
+    for (const [intrinsicWidth, intrinsicHeight, declaredWidth, declaredHeight, expectedCode] of [
+      [4096, 32, 16, 32, "MEDIA_LIMIT_EXCEEDED"],
+      [64, 32, 16, 32, "MALFORMED_CONTENT"],
+    ] as const) {
+      const forged = forgedH264Dimensions(
+        intrinsicWidth, intrinsicHeight, declaredWidth, declaredHeight,
+      );
+      expect(parseMp4(forged)).toMatchObject({
+        width: declaredWidth, height: declaredHeight,
+      });
+      await expect(validateMediaFile(new File(
+        [Uint8Array.from(forged)], "forged.mp4", { type: "video/mp4" },
+      ))).rejects.toMatchObject({ code: expectedCode });
+    }
+  });
+
+  it("inspects every decoded frame, including split lines and changing dimensions", () => {
+    const inspector = new DecodedFrameInspector({ width: 16, height: 16 });
+    const frame0 = "[Parsed_showinfo_0 @ 0x1234] n:   0 pts:      0 pts_time:0 s:16x16 i:P iskey:1 type:I";
+    const frame1 = "[Parsed_showinfo_0 @ 0x1234] n:   1 pts:      1 pts_time:0.1 s:16x16 i:P iskey:0 type:P";
+    inspector.push(Buffer.from(frame0.slice(0, 30)));
+    inspector.push(Buffer.from(frame0.slice(30) + "\n" + frame1 + "\n"));
+    expect(() => inspector.finish()).not.toThrow();
+
+    for (const [line, code] of [
+      ["[Parsed_showinfo_0 @ 0x1234] n:   0 pts: 0 s:4096x32 i:P", "MEDIA_LIMIT_EXCEEDED"],
+      ["[Parsed_showinfo_0 @ 0x1234] n:   0 pts: 0 s:64x16 i:P", "MALFORMED_CONTENT"],
+      ["[Parsed_showinfo_0 @ 0x1234] n:   1 pts: 0 s:16x16 i:P", "MALFORMED_CONTENT"],
+      ["[Parsed_showinfo_0 @ 0x1234] n:   0 pts: 0 not-a-frame", "MALFORMED_CONTENT"],
+    ] as const) {
+      const rejecting = new DecodedFrameInspector({ width: 16, height: 16 });
+      expect(() => rejecting.push(Buffer.from(line + "\n"))).toThrow(
+        expect.objectContaining({ code }),
+      );
+    }
+    const changing = new DecodedFrameInspector({ width: 16, height: 16 });
+    changing.push(Buffer.from(frame0 + "\n"));
+    expect(() => changing.push(Buffer.from(
+      "[Parsed_showinfo_0 @ 0x1234] n:   1 pts: 1 s:32x16 i:P\n",
+    ))).toThrow(VideoDecodeFailureError);
+
+    expect(() => new DecodedFrameInspector({ width: 16, height: 16 }).finish())
+      .toThrow(VideoDecodeFailureError);
+    const oversizedLine = new DecodedFrameInspector({ width: 16, height: 16 });
+    expect(() => oversizedLine.push(Buffer.from("x".repeat(8193))))
+      .toThrow(expect.objectContaining({ code: "MEDIA_LIMIT_EXCEEDED" }));
+    const noisy = new DecodedFrameInspector({ width: 16, height: 16 });
+    expect(() => {
+      for (let i = 0; i < 9; i++) noisy.push(Buffer.from("x".repeat(8000) + "\n"));
+    }).toThrow(expect.objectContaining({ code: "MEDIA_LIMIT_EXCEEDED" }));
   });
 
   it("fails closed if the configured FFmpeg executable is missing", async () => {
