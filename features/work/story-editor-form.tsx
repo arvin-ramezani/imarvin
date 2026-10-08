@@ -2,7 +2,7 @@
 
 import { Eye, LockKeyhole, Send } from "lucide-react";
 import Link from "next/link";
-import { useActionState, useCallback, useEffect, useRef, useState } from "react";
+import { useActionState, useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 
 import {
   saveStoryAction,
@@ -10,6 +10,7 @@ import {
 } from "./actions";
 import type { StoryField, StoryFormValues, EvidenceDraftInput } from "./types";
 import { EvidenceEditor } from "./evidence-editor";
+import { parseStoryDraftFormData, storyFormValuesFromData, zodFieldErrors } from "./validation";
 
 type StoryEditorFormProps = {
   initialValues: StoryFormValues;
@@ -113,14 +114,74 @@ export function StoryEditorForm({
     initialState,
   );
   const [dirty, setDirty] = useState(false);
+  const [localPending, setLocalPending] = useState(false);
+  const [localState, setLocalState] = useState<StoryEditorActionState | null>(null);
   const markDirty = useCallback(() => setDirty(true), []);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
+  const presentedState = localState ?? state;
+  const saving = pending || localPending;
+
+  async function submitExisting(event: FormEvent<HTMLFormElement>) {
+    if (!storyId || !workingRevision) return; // New Story uses the existing action.
+    event.preventDefault();
+    if (localPending) return;
+    const formData = new FormData(event.currentTarget);
+    const submitter = (event.nativeEvent as SubmitEvent).submitter;
+    const intent = submitter instanceof HTMLButtonElement ?
+      submitter.value : "save";
+    const parsed = parseStoryDraftFormData(formData);
+    const values = storyFormValuesFromData(formData);
+    const attempt = (localState?.attempt ?? state.attempt) + 1;
+    if (!parsed.result.success) {
+      setLocalState({
+        attempt, status: "validation", values,
+        message: "Check the fields below. Your input has been kept.",
+        fieldErrors: zodFieldErrors(parsed.result.error),
+      });
+      return;
+    }
+    setLocalPending(true);
+    try {
+      const response = await fetch(
+        "/api/studio/work/" + encodeURIComponent(storyId) + "/candidate", {
+          method: "POST", credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            expectedWorkingRevision: workingRevision, intent,
+            draft: parsed.result.data,
+          }),
+        },
+      );
+      const result = await response.json() as {
+        target?: string; message?: string;
+        fieldErrors?: StoryEditorActionState["fieldErrors"];
+      };
+      if (response.ok && result.target) {
+        setDirty(false);
+        window.location.assign(result.target);
+        return;
+      }
+      setLocalState({
+        attempt, values, fieldErrors: result.fieldErrors ?? {},
+        status: response.status === 409 ? "conflict" :
+          response.status === 400 ? "validation" : "error",
+        message: result.message ?? "Save could not be confirmed; reload the current saved version before retrying.",
+      });
+    } catch {
+      setLocalState({
+        attempt, values, status: "error", fieldErrors: {},
+        message: "Save outcome is uncertain. Reload the latest saved version before retrying.",
+      });
+    } finally {
+      setLocalPending(false);
+    }
+  }
 
   useEffect(() => {
-    if (state.attempt > 0 && state.status !== "idle") {
+    if (presentedState.attempt > 0 && presentedState.status !== "idle") {
       errorSummaryRef.current?.focus();
     }
-  }, [state.attempt, state.status]);
+  }, [presentedState.attempt, presentedState.status]);
 
   useEffect(() => {
     if (!dirty) {
@@ -136,9 +197,9 @@ export function StoryEditorForm({
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
 
-  const hasErrors = state.status !== "idle";
+  const hasErrors = presentedState.status !== "idle";
   const summaryFieldErrors = STORY_FIELD_ORDER.flatMap((field) => {
-    const errors = state.fieldErrors[field];
+    const errors = presentedState.fieldErrors[field];
 
     return errors?.length ? [{ field, errors }] : [];
   });
@@ -150,6 +211,7 @@ export function StoryEditorForm({
   return (
     <form
       action={formAction}
+      onSubmit={(event) => { void submitExisting(event); }}
       className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start"
       onChange={() => setDirty(true)}
     >
@@ -173,7 +235,7 @@ export function StoryEditorForm({
             <h2 className="font-semibold text-destructive">
               Private save not completed
             </h2>
-            <p className="text-sm text-ink">{state.message}</p>
+            <p className="text-sm text-ink">{presentedState.message}</p>
             {summaryFieldErrors.length > 0 ? (
               <ul className="flex flex-col gap-1 text-sm">
                 {summaryFieldErrors.map(({ field, errors }) => (
@@ -196,7 +258,7 @@ export function StoryEditorForm({
                 ))}
               </ul>
             ) : null}
-            {state.status === "conflict" && storyId ? (
+            {presentedState.status === "conflict" && storyId ? (
               <Link
                 href={"/studio/work/" + storyId + "/edit"}
                 className="w-fit rounded-sm text-sm font-medium text-signal underline underline-offset-4 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
@@ -228,13 +290,13 @@ export function StoryEditorForm({
             <input
               id="title"
               name="title"
-              defaultValue={state.values.title}
+              defaultValue={presentedState.values.title}
               maxLength={120}
               aria-describedby="title-help title-error"
-              aria-invalid={Boolean(state.fieldErrors.title?.length)}
+              aria-invalid={Boolean(presentedState.fieldErrors.title?.length)}
               className={controlClass}
             />
-            <FieldErrors errors={state.fieldErrors.title} id="title-error" />
+            <FieldErrors errors={presentedState.fieldErrors.title} id="title-error" />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -247,13 +309,13 @@ export function StoryEditorForm({
             <textarea
               id="problem"
               name="problem"
-              defaultValue={state.values.problem}
+              defaultValue={presentedState.values.problem}
               maxLength={1200}
               aria-describedby="problem-help problem-error"
-              aria-invalid={Boolean(state.fieldErrors.problem?.length)}
+              aria-invalid={Boolean(presentedState.fieldErrors.problem?.length)}
               className={textareaClass}
             />
-            <FieldErrors errors={state.fieldErrors.problem} id="problem-error" />
+            <FieldErrors errors={presentedState.fieldErrors.problem} id="problem-error" />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -267,14 +329,14 @@ export function StoryEditorForm({
             <textarea
               id="contribution"
               name="contribution"
-              defaultValue={state.values.contribution}
+              defaultValue={presentedState.values.contribution}
               maxLength={1600}
               aria-describedby="contribution-help contribution-error"
-              aria-invalid={Boolean(state.fieldErrors.contribution?.length)}
+              aria-invalid={Boolean(presentedState.fieldErrors.contribution?.length)}
               className={textareaClass}
             />
             <FieldErrors
-              errors={state.fieldErrors.contribution}
+              errors={presentedState.fieldErrors.contribution}
               id="contribution-error"
             />
           </div>
@@ -302,9 +364,9 @@ export function StoryEditorForm({
             <select
               id="progress"
               name="progress"
-              defaultValue={state.values.progress}
+              defaultValue={presentedState.values.progress}
               aria-describedby="progress-help progress-error"
-              aria-invalid={Boolean(state.fieldErrors.progress?.length)}
+              aria-invalid={Boolean(presentedState.fieldErrors.progress?.length)}
               className={controlClass}
             >
               <option value="">Not set</option>
@@ -312,36 +374,36 @@ export function StoryEditorForm({
               <option value="COMPLETED">Completed</option>
               <option value="CANCELLED">Cancelled</option>
             </select>
-            <FieldErrors errors={state.fieldErrors.progress} id="progress-error" />
+            <FieldErrors errors={presentedState.fieldErrors.progress} id="progress-error" />
           </div>
 
           <div className="flex flex-col gap-2">
             <label htmlFor="releaseHistory" className="font-medium text-ink">Release history</label>
             <FieldHelp id="releaseHistory-help">Independent of project progress. Unknown facts stay unconfirmed.</FieldHelp>
             <select id="releaseHistory" name="releaseHistory"
-              defaultValue={state.values.releaseHistory ?? ""} className={controlClass}>
+              defaultValue={presentedState.values.releaseHistory ?? ""} className={controlClass}>
               <option value="">Not confirmed</option>
               <option value="SHIPPED">Shipped</option>
               <option value="NEVER_SHIPPED">Never shipped</option>
             </select>
-            <FieldErrors errors={state.fieldErrors.releaseHistory} id="releaseHistory-error" />
+            <FieldErrors errors={presentedState.fieldErrors.releaseHistory} id="releaseHistory-error" />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="availability" className="font-medium text-ink">Current availability</label>
             <select id="availability" name="availability"
-              defaultValue={state.values.availability ?? ""} className={controlClass}>
+              defaultValue={presentedState.values.availability ?? ""} className={controlClass}>
               <option value="">Not confirmed</option>
               <option value="LIVE_DESTINATION">Live destination</option>
               <option value="NO_LIVE_DESTINATION">No live destination</option>
             </select>
-            <FieldErrors errors={state.fieldErrors.availability} id="availability-error" />
+            <FieldErrors errors={presentedState.fieldErrors.availability} id="availability-error" />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="liveDestinationUrl" className="font-medium text-ink">Confirmed live HTTPS URL</label>
             <FieldHelp id="liveDestinationUrl-help">Only when a live destination is confirmed; never inferred from screenshots.</FieldHelp>
             <input id="liveDestinationUrl" name="liveDestinationUrl" type="url" maxLength={2048}
-              defaultValue={state.values.liveDestinationUrl ?? ""} className={controlClass} />
-            <FieldErrors errors={state.fieldErrors.liveDestinationUrl} id="liveDestinationUrl-error" />
+              defaultValue={presentedState.values.liveDestinationUrl ?? ""} className={controlClass} />
+            <FieldErrors errors={presentedState.fieldErrors.liveDestinationUrl} id="liveDestinationUrl-error" />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="outcome" className="font-medium text-ink">
@@ -353,13 +415,13 @@ export function StoryEditorForm({
             <textarea
               id="outcome"
               name="outcome"
-              defaultValue={state.values.outcome}
+              defaultValue={presentedState.values.outcome}
               maxLength={1200}
               aria-describedby="outcome-help outcome-error"
-              aria-invalid={Boolean(state.fieldErrors.outcome?.length)}
+              aria-invalid={Boolean(presentedState.fieldErrors.outcome?.length)}
               className={textareaClass}
             />
-            <FieldErrors errors={state.fieldErrors.outcome} id="outcome-error" />
+            <FieldErrors errors={presentedState.fieldErrors.outcome} id="outcome-error" />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -372,12 +434,12 @@ export function StoryEditorForm({
             <input
               id="stack"
               name="stack"
-              defaultValue={state.values.stack}
+              defaultValue={presentedState.values.stack}
               aria-describedby="stack-help stack-error"
-              aria-invalid={Boolean(state.fieldErrors.stack?.length)}
+              aria-invalid={Boolean(presentedState.fieldErrors.stack?.length)}
               className={controlClass}
             />
-            <FieldErrors errors={state.fieldErrors.stack} id="stack-error" />
+            <FieldErrors errors={presentedState.fieldErrors.stack} id="stack-error" />
           </div>
         </section>
         {storyId && initialEvidence && initialAssets ? (
@@ -432,10 +494,10 @@ export function StoryEditorForm({
             type="submit"
             name="intent"
             value="save"
-            disabled={pending}
+            disabled={saving}
             className="flex min-h-11 w-full items-center justify-center rounded-md bg-action-fill px-4 py-2 font-medium text-action-ink outline-none hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60"
           >
-            {pending ? "Saving…" : "Save privately"}
+            {saving ? "Saving…" : "Save privately"}
           </button>
 
           {storyId && !dirty ? (
@@ -451,7 +513,7 @@ export function StoryEditorForm({
               type="submit"
               name="intent"
               value="preview"
-              disabled={pending}
+              disabled={saving}
               className="flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-boundary bg-canvas px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60"
             >
               <Eye aria-hidden="true" className="size-4" />
@@ -472,7 +534,7 @@ export function StoryEditorForm({
               type="submit"
               name="intent"
               value="review"
-              disabled={pending}
+              disabled={saving}
               className="flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-boundary bg-canvas px-4 py-2 font-medium text-ink outline-none hover:bg-signal-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60"
             >
               <Send aria-hidden="true" className="size-4" />
