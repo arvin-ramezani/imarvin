@@ -1,6 +1,7 @@
 import {
   createAuthorizedMediaUpload,
   requireOwnerMediaStory,
+  reconcileMediaStorage,
 } from "@/features/work/media-service";
 import {
   parseSingleMediaUpload,
@@ -23,6 +24,7 @@ export async function POST(
 
     await requireOwnerMediaStory(request.headers, storyId);
     requireSameOriginMediaMutation(request);
+    await reconcileMediaStorage();
 
     const upload = await parseSingleMediaUpload(request);
     const asset = await createAuthorizedMediaUpload({
