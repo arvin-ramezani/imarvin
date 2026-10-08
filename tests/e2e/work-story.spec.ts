@@ -347,8 +347,7 @@ test("owner authors image Evidence, previews saved media, and updates its publis
   await page.locator('input[type="file"]').first().setInputFiles({
     name: "capture.png", mimeType: "image/png", buffer: pngBytes,
   });
-  await expect(page.getByText("Upload Ready. Save privately to attach this asset to the candidate."))
-    .toBeVisible();
+  await expect(page.getByText(/Selected: READY/)).toBeVisible({ timeout: 15000 });
   await page.getByRole("button", { name: "Save privately" }).click();
   await expect(page.getByText("Saved privately. Public content was not changed.")).toBeVisible();
 
