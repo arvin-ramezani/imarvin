@@ -33,7 +33,7 @@ Current visual approval: [Visual refinement](docs/visual-refinement-review.md). 
 | [Technical architecture](docs/architecture/architecture.md) | Next.js/PostgreSQL/Prisma server-first modular-monolith baseline |
 | [Runtime operations](docs/architecture/runtime-operations.md) | Better Auth, filesystem media, VPS/OLS, Google Drive backup, Pino/journald |
 | [Spec-driven development](docs/engineering/spec-driven-development.md) | Foundations → vertical slices → review → local acceptance → production |
-| [Lean QA and runtime acceptance](docs/engineering/qa-runtime-acceptance.md) | Risk-based AI-assisted scenarios and exact-head evidence without overtesting |
+| [AI-guided manual runtime acceptance](docs/engineering/qa-runtime-acceptance.md) | Human-run commands and observed results; no automated test generation |
 | [Specification plan](docs/specification-plan.md) | Current implementation order and specification status |
 | [UX principles](docs/ux-principles.md) | Design knowledge and reusable behavior contracts |
 | [Branding principles](docs/branding-principles.md) | Identity, evidence, and truthful storytelling |
