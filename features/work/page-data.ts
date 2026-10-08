@@ -2,6 +2,7 @@ import "server-only";
 
 import { headers } from "next/headers";
 import { db } from "@/lib/db";
+import { getStoryPublicationMediaErrors } from "./repository";
 import { notFound } from "next/navigation";
 
 import {
@@ -83,4 +84,10 @@ export async function loadOwnerMediaAssets(storyId: string) {
     },
     orderBy: { createdAt: "asc" },
   });
+}
+
+/** Evidence errors must not be queried for anonymous/public requests. */
+export async function loadOwnerMediaErrors(storyId: string) {
+  await authorizeOwnerPage();
+  return getStoryPublicationMediaErrors(storyId);
 }
