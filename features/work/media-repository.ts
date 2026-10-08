@@ -4,8 +4,6 @@ import { randomUUID } from "node:crypto";
 
 import { db } from "@/lib/db";
 
-const UPLOAD_LEASE_MS = 24 * 60 * 60 * 1000;
-
 export type UploadGeneration = {
   assetId: string;
   storyId: string;
@@ -62,34 +60,37 @@ export async function createPendingMediaAsset(input: {
 }): Promise<UploadGeneration> {
   await assertMediaStoryExists(input.storyId);
 
-  const now = new Date();
-  const leaseExpiresAt = new Date(now.getTime() + UPLOAD_LEASE_MS);
+  const assetId = randomUUID();
   const storageKey = randomUUID();
 
-  const asset = await db.mediaAsset.create({
-    data: {
-      storyId: input.storyId,
-      storageKey,
-      originalFileName: input.originalFileName,
-      mediaType: input.mediaType,
-      contentType: input.contentType,
-      byteSize: input.byteSize,
-      readiness: "PENDING",
-      uploadGeneration: 1,
-      leaseExpiresAt,
-      createdAt: now,
-      updatedAt: now,
-    },
-    select: {
-      id: true,
-      storyId: true,
-      uploadGeneration: true,
-      storageKey: true,
-      leaseExpiresAt: true,
-    },
-  });
+  // Keep the initial generation on PostgreSQL's clock, as with retry and
+  // expiry. Return the persisted lease so completion/failure compare the
+  // exact same generation/key/lease tuple.
+  const rows = await db.$queryRaw<
+    Array<{
+      id: string;
+      storyId: string;
+      uploadGeneration: number;
+      storageKey: string;
+      leaseExpiresAt: Date | null;
+    }>
+  >`
+    INSERT INTO "MediaAsset" (
+      "id", "storyId", "storageKey", "originalFileName", "mediaType",
+      "contentType", "byteSize", "readiness", "uploadGeneration",
+      "createdAt", "updatedAt", "leaseExpiresAt"
+    )
+    VALUES (
+      ${assetId}, ${input.storyId}, ${storageKey}, ${input.originalFileName},
+      CAST(${input.mediaType} AS "MediaAssetType"), ${input.contentType},
+      ${input.byteSize}, 'PENDING'::"MediaAssetReadiness", 1,
+      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + INTERVAL '24 hours'
+    )
+    RETURNING "id", "storyId", "uploadGeneration", "storageKey", "leaseExpiresAt"
+  `;
+  const asset = rows[0];
 
-  if (!asset.leaseExpiresAt) {
+  if (!asset?.leaseExpiresAt) {
     throw new Error("Pending media asset is missing its upload lease");
   }
 
