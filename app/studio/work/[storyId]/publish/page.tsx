@@ -28,6 +28,8 @@ function errorMessage(error: string | undefined): string | null {
       return "The current saved candidate does not meet publication requirements. Return to editing and complete the required fields.";
     case "session":
       return "The owner session is no longer available. Sign in again before retrying publication.";
+    case "origin":
+      return "Publication requires a trusted same-origin owner request. Reload this page before retrying.";
     case "failed":
       return "Publication could not be confirmed. The saved candidate and previous public version were not reported as changed; review current versions before retrying.";
     default:
