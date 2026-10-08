@@ -39,6 +39,7 @@ import { resetTestDatabase } from "./support/test-database";
 import { resetTestMediaStorage } from "./support/test-media";
 import { indexedPngFixture, MP4, WEBM } from "./support/media-fixtures";
 import { corruptH264Frame, corruptVp9Frame } from "./support/corrupt-video";
+import { forgedH264Dimensions } from "./support/forged-video";
 
 const APP_ORIGIN = "http://localhost:3000";
 const OWNER_EMAIL = "media-owner@example.com";
@@ -111,6 +112,41 @@ function uploadRequest(
       body: form,
     },
   );
+}
+
+function retryRequest(
+  storyId: string,
+  assetId: string,
+  cookie: string,
+  content: File | string,
+  origin = APP_ORIGIN,
+): Request {
+  const body = typeof content === "string" ? content : new FormData();
+  if (body instanceof FormData) body.set("file", content as File);
+  return new Request(
+    APP_ORIGIN + "/api/studio/work/" + storyId + "/media/" + assetId + "/retry",
+    {
+      method: "POST",
+      headers: { cookie, origin },
+      body,
+    },
+  );
+}
+
+async function expiredPendingAsset(storyId: string) {
+  const generation = await createPendingMediaAsset({
+    storyId,
+    originalFileName: "interrupted.png",
+    mediaType: "IMAGE",
+    contentType: "image/png",
+    byteSize: PNG_BYTES.length,
+  });
+  await writeStagedMedia(generation.storageKey, PNG_BYTES);
+  await db.mediaAsset.update({
+    where: { id: generation.assetId },
+    data: { leaseExpiresAt: new Date(Date.now() - 60_000) },
+  });
+  return generation;
 }
 
 async function createPublishableStory() {
@@ -530,6 +566,40 @@ describe("Work media persistence and delivery foundation", () => {
       .toMatchObject({ mediaType: "VTT", readiness: "READY" });
   });
 
+  it("rejects decodable oversized H264 dimensions when only avc1 metadata was forged", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+    const forged = forgedH264Dimensions(4096, 32, 16, 32);
+    const response = await uploadRoute(
+      uploadRequest(story.id, cookie, new File(
+        [Uint8Array.from(forged)], "oversized.mp4", { type: "video/mp4" },
+      )),
+      { params: Promise.resolve({ storyId: story.id }) },
+    );
+    expect(response.status).toBe(413);
+    const asset = await db.mediaAsset.findFirstOrThrow({ where: { storyId: story.id } });
+    expect(asset).toMatchObject({
+      readiness: "FAILED",
+      failureCode: "VALIDATION_REJECTED",
+      leaseExpiresAt: null,
+    });
+    for (const area of ["assets", ".staging"] as const) {
+      await expect(access(mediaStoragePath(area, asset.storageKey))).rejects.toThrow();
+    }
+    const privateResult = await privateMediaRoute(
+      new Request(APP_ORIGIN + "/api/studio/work/" + story.id + "/media/" + asset.id, {
+        headers: { cookie },
+      }),
+      { params: Promise.resolve({ storyId: story.id, assetId: asset.id }) },
+    );
+    const publicResult = await publicMediaRoute(
+      new Request(APP_ORIGIN + "/api/work/media/" + asset.id),
+      { params: Promise.resolve({ assetId: asset.id }) },
+    );
+    expect(privateResult.status).toBe(404);
+    expect(publicResult.status).toBe(404);
+  });
+
   it("fails malformed H264/VP9 uploads without exposing private or public bytes", async () => {
     const cookie = await ownerCookie();
     const story = await createPublishableStory();
@@ -665,6 +735,169 @@ describe("Work media persistence and delivery foundation", () => {
     await expect(
       access(mediaStoragePath("assets", ready.storageKey)),
     ).resolves.toBeUndefined();
+  });
+
+  it("recovers expired PENDING via authorized upload and retries expired target in one POST", async () => {
+    const cookie = await ownerCookie();
+    const firstStory = await createPublishableStory();
+    const otherStory = await createPublishableStory();
+    const old = await expiredPendingAsset(otherStory.id);
+
+    const upload = await uploadRoute(
+      uploadRequest(firstStory.id, cookie, pngFile()),
+      { params: Promise.resolve({ storyId: firstStory.id }) },
+    );
+    expect(upload.status).toBe(201);
+    const recovered = await db.mediaAsset.findUniqueOrThrow({ where: { id: old.assetId } });
+    expect(recovered).toMatchObject({
+      readiness: "FAILED", failureCode: "UPLOAD_INTERRUPTED",
+      uploadGeneration: 1, leaseExpiresAt: null, storageKey: old.storageKey,
+    });
+    await expect(access(mediaStoragePath(".staging", old.storageKey))).rejects.toThrow();
+
+    const pending = await expiredPendingAsset(firstStory.id);
+    const retry = await retryRoute(
+      retryRequest(firstStory.id, pending.assetId, cookie, pngFile()),
+      { params: Promise.resolve({ storyId: firstStory.id, assetId: pending.assetId }) },
+    );
+    expect(retry.status).toBe(200);
+    const ready = await db.mediaAsset.findUniqueOrThrow({ where: { id: pending.assetId } });
+    expect(ready).toMatchObject({
+      readiness: "READY", failureCode: null, uploadGeneration: 2, leaseExpiresAt: null,
+    });
+    expect(ready.storageKey).not.toBe(pending.storageKey);
+    await expect(access(mediaStoragePath(".staging", pending.storageKey))).rejects.toThrow();
+    await expect(access(mediaStoragePath("assets", ready.storageKey))).resolves.toBeUndefined();
+    await reconcileMediaStorage();
+    await expect(access(mediaStoragePath("assets", ready.storageKey))).resolves.toBeUndefined();
+  });
+
+  it("does not reconcile on unknown/cross-Story retry, unauthorized or cross-origin requests", async () => {
+    const cookie = await ownerCookie();
+    const first = await createPublishableStory();
+    const second = await createPublishableStory();
+    const target = await createPendingMediaAsset({
+      storyId: second.id,
+      originalFileName: "different-story.png",
+      mediaType: "IMAGE", contentType: "image/png", byteSize: PNG_BYTES.length,
+    });
+    const sentinel = await expiredPendingAsset(first.id);
+    const context = (storyId: string, assetId: string) => ({
+      params: Promise.resolve({ storyId, assetId }),
+    });
+    const checkSentinel = async () => {
+      const saved = await db.mediaAsset.findUniqueOrThrow({ where: { id: sentinel.assetId } });
+      expect(saved).toMatchObject({
+        readiness: "PENDING", uploadGeneration: 1, storageKey: sentinel.storageKey,
+      });
+      await expect(access(mediaStoragePath(".staging", sentinel.storageKey)))
+        .resolves.toBeUndefined();
+    };
+
+    for (const assetId of [target.assetId, randomUUID()]) {
+      const response = await retryRoute(
+        retryRequest(first.id, assetId, cookie, "not-multipart"),
+        context(first.id, assetId),
+      );
+      expect(response.status).toBe(404);
+      await checkSentinel();
+    }
+    const authDenied = await retryRoute(
+      retryRequest(first.id, sentinel.assetId, "", "not-multipart"),
+      context(first.id, sentinel.assetId),
+    );
+    expect(authDenied.status).toBe(401);
+    await checkSentinel();
+
+    for (const origin of ["https://evil.example", ""]) {
+      const denied = await retryRoute(
+        retryRequest(first.id, sentinel.assetId, cookie, "not-multipart", origin),
+        context(first.id, sentinel.assetId),
+      );
+      expect(denied.status).toBe(403);
+      await checkSentinel();
+    }
+    const unauthUpload = await uploadRoute(
+      uploadRequest(first.id, "", pngFile()),
+      { params: Promise.resolve({ storyId: first.id }) },
+    );
+    expect(unauthUpload.status).toBe(401);
+    await checkSentinel();
+
+    const publicRead = await publicMediaRoute(
+      new Request(APP_ORIGIN + "/api/work/media/" + sentinel.assetId),
+      { params: Promise.resolve({ assetId: sentinel.assetId }) },
+    );
+    expect(publicRead.status).toBe(404);
+    await checkSentinel();
+  });
+
+  it("preserves live PENDING and READY retry conflicts before request body consumption", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+    const pending = await createPendingMediaAsset({
+      storyId: story.id, originalFileName: "live.png",
+      mediaType: "IMAGE", contentType: "image/png", byteSize: PNG_BYTES.length,
+    });
+    const liveConflict = await retryRoute(
+      retryRequest(story.id, pending.assetId, cookie, "not-multipart"),
+      { params: Promise.resolve({ storyId: story.id, assetId: pending.assetId }) },
+    );
+    expect(liveConflict.status).toBe(409);
+
+    const readyUpload = await uploadRoute(
+      uploadRequest(story.id, cookie, pngFile()),
+      { params: Promise.resolve({ storyId: story.id }) },
+    );
+    const readyId = ((await readyUpload.json()) as { id: string }).id;
+    const readyConflict = await retryRoute(
+      retryRequest(story.id, readyId, cookie, "not-multipart"),
+      { params: Promise.resolve({ storyId: story.id, assetId: readyId }) },
+    );
+    expect(readyConflict.status).toBe(409);
+    expect(await db.mediaAsset.findUniqueOrThrow({ where: { id: pending.assetId } }))
+      .toMatchObject({ readiness: "PENDING", uploadGeneration: 1 });
+  });
+
+  it("returns safe 500 without creating a generation when recovery DB fails", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+    const pending = await expiredPendingAsset(story.id);
+    const failure = vi.spyOn(db, "$queryRaw").mockRejectedValueOnce(
+      new Error("synthetic private database error"),
+    );
+    try {
+      const result = await retryRoute(
+        retryRequest(story.id, pending.assetId, cookie, "not-multipart"),
+        { params: Promise.resolve({ storyId: story.id, assetId: pending.assetId }) },
+      );
+      expect(result.status).toBe(500);
+      expect(await result.text()).not.toContain("synthetic private database error");
+      expect(await db.mediaAsset.findUniqueOrThrow({ where: { id: pending.assetId } }))
+        .toMatchObject({
+          readiness: "PENDING", uploadGeneration: 1, storageKey: pending.storageKey,
+        });
+    } finally {
+      failure.mockRestore();
+    }
+  });
+
+  it("allows only one concurrent expired-PENDING retry winner", async () => {
+    const cookie = await ownerCookie();
+    const story = await createPublishableStory();
+    const pending = await expiredPendingAsset(story.id);
+    const responses = await Promise.all(
+      [0, 1].map(() => retryRoute(
+        retryRequest(story.id, pending.assetId, cookie, pngFile()),
+        { params: Promise.resolve({ storyId: story.id, assetId: pending.assetId }) },
+      )),
+    );
+    expect(responses.map((r) => r.status).sort()).toEqual([200, 409]);
+    const row = await db.mediaAsset.findUniqueOrThrow({ where: { id: pending.assetId } });
+    expect(row).toMatchObject({ readiness: "READY", uploadGeneration: 2 });
+    expect(row.storageKey).not.toBe(pending.storageKey);
+    await expect(access(mediaStoragePath("assets", row.storageKey))).resolves.toBeUndefined();
+    await expect(access(mediaStoragePath(".staging", pending.storageKey))).rejects.toThrow();
   });
 
   it("uses CAS so failure/completion/reconciliation/retry have one generation winner", async () => {
