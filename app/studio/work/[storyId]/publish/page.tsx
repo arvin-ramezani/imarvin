@@ -297,7 +297,8 @@ export default async function PublishStoryPage({
                 <OwnerMediaPreview storyId={story.id} rows={story.published.evidence}
                   cover={story.published.discoveryCoverEvidenceId}
                   lead={story.published.leadEvidenceId}
-                  figures={[]} />
+                  figures={story.published.evidence.flatMap((item) => item.problemFigures)
+                    .sort((a, b) => a.position - b.position).map((f) => f.evidenceId)} />
               </section>
             ) : null}
           </div>
