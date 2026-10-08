@@ -49,6 +49,22 @@ export function EvidenceEditor({
     onDirty();
   }, [rows, cover, lead, figures, onDirty]);
 
+  // A single owner-open reconciliation; no GET side effects or polling loop.
+  useEffect(() => {
+    let active = true;
+    void fetch("/api/studio/work/" + encodeURIComponent(storyId) +
+      "/media/reconcile", { method: "POST" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Unable to refresh upload readiness.");
+        return response.json() as Promise<{ assets: MediaEntry[] }>;
+      }).then((result) => {
+        if (active) setAssets(result.assets);
+      }).catch(() => {
+        if (active) setNotice("Upload readiness could not be refreshed. Retry opening this editor.");
+      });
+    return () => { active = false; };
+  }, [storyId]);
+
   const change = (evidenceId: string, patch: Partial<EvidenceDraftInput>) =>
     setRows((previous) => previous.map((row) =>
       row.id === evidenceId ? { ...row, ...patch } : row));
