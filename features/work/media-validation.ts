@@ -1396,10 +1396,10 @@ export async function validateMediaBytes(
     height = video.height;
     durationMs = video.durationMs;
     try {
-      await assertDecodedVideo(bytes, "mp4");
+      await assertDecodedVideo(bytes, "mp4", { width: video.width, height: video.height });
     } catch (error) {
       if (!(error instanceof VideoDecodeFailureError)) throw error;
-      throw new MediaValidationError("MALFORMED_CONTENT");
+      throw new MediaValidationError(error.code);
     }
   } else if (preliminary.contentType === "video/webm") {
     const video = parseWebm(bytes);
@@ -1407,10 +1407,10 @@ export async function validateMediaBytes(
     height = video.height;
     durationMs = video.durationMs;
     try {
-      await assertDecodedVideo(bytes, "webm");
+      await assertDecodedVideo(bytes, "webm", { width: video.width, height: video.height });
     } catch (error) {
       if (!(error instanceof VideoDecodeFailureError)) throw error;
-      throw new MediaValidationError("MALFORMED_CONTENT");
+      throw new MediaValidationError(error.code);
     }
   } else if (preliminary.contentType === "text/vtt") {
     parseVtt(bytes, recordingDurationMs);
