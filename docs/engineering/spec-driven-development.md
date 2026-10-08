@@ -4,7 +4,7 @@ Authority: this document owns implementation workflow; product/UX specs own beha
 Goal: every code change starts from a traceable requirement and ends with reviewed evidence.
 
 ## 1. Artifact hierarchy
-Authority chain: product decision/outcome → bounded feature issue → implementation spec when needed → PR with exact evidence → reviewed merge.
+Authority chain: product decision/requirement (why + expected user behavior) → bounded feature issue → implementation spec when needed → PR with exact evidence → reviewed merge.
 One fact should have one canonical owner. Link instead of copying long requirements between documents.
 Stable IDs from existing specs stay stable; implementation specs may add local IDs without renumbering product IDs.
 
@@ -15,8 +15,8 @@ Specs live under `docs/implementation/<issue>-<slug>.md` unless a scoped directo
 All AI-authored Markdown targets <=120 lines and has a hard maximum of 150 lines; shorter is preferred when complete.
 If a document would exceed 150 lines, split by authority/responsibility/lifecycle and cross-link rather than duplicate context.
 Implementation specs follow the same rule; do not pad documents to reach a minimum.
-Recommended spec sections: status/issue/dependencies/authority, goal/non-goals, user/system flow, data/API/server-action changes, UI/accessibility,
-failure/conflict/privacy/rollback/recovery, tests/acceptance mapping, and genuinely blocking open questions.
+Recommended spec sections: status/issue/dependencies with linked product/architecture authority, goal/non-goals, user/system flow, data/API/server-action changes, UI states/accessibility behavior,
+failure/conflict/privacy/rollback/recovery, test plan (positive/negative/boundary)/acceptance mapping, and genuinely blocking open questions.
 
 ## 3. Feature issue contract
 Every feature implementation starts from one GitHub issue.
