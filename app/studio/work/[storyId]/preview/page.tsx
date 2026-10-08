@@ -76,7 +76,7 @@ export default async function StoryPreviewPage({ params }: PreviewPageProps) {
           </ul>
         </aside>
       ) : null}
-      <OwnerMediaPreview storyId={story.id} rows={story.evidence}
+      <OwnerMediaPreview variant="candidate" storyId={story.id} rows={story.evidence}
         cover={story.discoveryCoverEvidenceId}
         lead={story.leadEvidenceId}
         figures={story.evidence.flatMap((evidence) => evidence.problemFigures)
