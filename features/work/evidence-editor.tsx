@@ -227,13 +227,17 @@ export function EvidenceEditor({
               </select>
             </label>
             <label className="text-sm text-muted-ink">
-              Upload {label.toLowerCase()} (normal file picker)
+              Upload / retry {label.toLowerCase()} (normal file picker)
               <input className="mt-2 block w-full min-w-0 text-sm" type="file"
                 accept={type === "IMAGE" ? ".png,.jpg,.jpeg,.webp" : type === "VIDEO" ? ".mp4,.webm" : ".vtt"}
                 disabled={Boolean(busy)}
                 onChange={(e) => {
                   const file = e.currentTarget.files?.[0];
-                  if (file) void upload(row, field, file);
+                  if (file) {
+                    const selected = assetFor(row[field]);
+                    void upload(row, field, file,
+                      selected?.readiness === "FAILED" ? selected.id : undefined);
+                  }
                 }} />
             </label>
             <p className="text-xs text-muted-ink">
@@ -242,7 +246,7 @@ export function EvidenceEditor({
               {field === "captionTrackAssetId" ? ". Save a Ready video source first; captions require its current duration." : ""}
             </p>
             {assetFor(row[field])?.readiness === "FAILED" ? (
-              <p className="text-sm text-destructive">Upload failed. Select the same asset and use the retry endpoint before publication.</p>
+              <p className="text-sm text-destructive">Upload failed. Select this asset and choose a corrected file above to retry.</p>
             ) : null}
           </div>
         );
