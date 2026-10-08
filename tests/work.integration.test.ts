@@ -44,79 +44,53 @@ describe("work story publishing", () => {
   });
 
   it("allows exactly one concurrent private save for a working revision", async () => {
-    // Temporary diagnostic reproduction; restore one iteration after capturing the error shape.
-    for (let replay = 0; replay < 20; replay += 1) {
-      const story = await createStory({
-        title: "Initial",
+    const story = await createStory({
+      title: "Initial",
+      problem: "",
+      contribution: "",
+      progress: null,
+      outcome: null,
+      stack: [],
+    });
+
+    const attempts = await Promise.allSettled([
+      saveStory(story.id, 1, {
+        title: "Concurrent title A",
         problem: "",
         contribution: "",
         progress: null,
         outcome: null,
         stack: [],
-      });
+      }),
+      saveStory(story.id, 1, {
+        title: "Concurrent title B",
+        problem: "",
+        contribution: "",
+        progress: null,
+        outcome: null,
+        stack: [],
+      }),
+    ]);
 
-      const attempts = await Promise.allSettled([
-        saveStory(story.id, 1, {
-          title: "Concurrent title A",
-          problem: "",
-          contribution: "",
-          progress: null,
-          outcome: null,
-          stack: [],
-        }),
-        saveStory(story.id, 1, {
-          title: "Concurrent title B",
-          problem: "",
-          contribution: "",
-          progress: null,
-          outcome: null,
-          stack: [],
-        }),
-      ]);
+    const fulfilled = attempts.filter(
+      (attempt) => attempt.status === "fulfilled",
+    );
+    const rejected = attempts.filter(
+      (attempt) => attempt.status === "rejected",
+    );
 
-      const fulfilled = attempts.filter(
-        (attempt) => attempt.status === "fulfilled",
-      );
-      const rejected = attempts.filter(
-        (attempt) => attempt.status === "rejected",
-      );
+    expect(fulfilled).toHaveLength(1);
+    expect(rejected).toHaveLength(1);
+    expect(
+      rejected[0]?.status === "rejected" ? rejected[0].reason : null,
+    ).toBeInstanceOf(StoryConflictError);
 
-      expect(fulfilled).toHaveLength(1);
-      expect(rejected).toHaveLength(1);
-      const loser = rejected[0]?.status === "rejected" ? rejected[0].reason : null;
-      const code = loser && typeof loser === "object" && "code" in loser
-        ? loser.code : null;
-      const meta = loser && typeof loser === "object" && "meta" in loser
-        ? loser.meta : null;
-      const adapter = meta && typeof meta === "object" && "driverAdapterError" in meta
-        ? meta.driverAdapterError : null;
-      const cause = adapter && typeof adapter === "object" && "cause" in adapter
-        ? adapter.cause : null;
-      const safeShape = (value: unknown) => {
-        if (!value || typeof value !== "object") return null;
-        const item = value as Record<string, unknown>;
-        const safe = (key: string) => typeof item[key] === "string" &&
-          /^[a-z0-9_]{1,40}$/i.test(item[key] as string) ? item[key] : null;
-        return {
-          name: value.constructor?.name,
-          keys: Object.keys(item).filter((k) => k !== "message"),
-          code: safe("code"), originalCode: safe("originalCode"),
-          sqlState: safe("sqlState"), sqlstate: safe("sqlstate"),
-          kind: safe("kind"),
-        };
-      };
-      expect(loser, "Concurrent-save error diagnostic: " + JSON.stringify({
-        name: loser?.constructor?.name, code, meta: safeShape(meta),
-        adapter: safeShape(adapter), cause: safeShape(cause),
-      })).toBeInstanceOf(StoryConflictError);
+    const current = await db.story.findUniqueOrThrow({
+      where: { id: story.id },
+    });
 
-      const current = await db.story.findUniqueOrThrow({
-        where: { id: story.id },
-      });
-
-      expect(["Concurrent title A", "Concurrent title B"]).toContain(current.title);
-      expect(current.workingRevision).toBe(2);
-    }
+    expect(["Concurrent title A", "Concurrent title B"]).toContain(current.title);
+    expect(current.workingRevision).toBe(2);
   });
 
   it("allows exactly one concurrent first publication", async () => {
