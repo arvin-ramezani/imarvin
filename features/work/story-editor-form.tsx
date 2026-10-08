@@ -118,6 +118,7 @@ export function StoryEditorForm({
   const [localState, setLocalState] = useState<StoryEditorActionState | null>(null);
   const markDirty = useCallback(() => setDirty(true), []);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
+  const navigating = useRef(false);
   const presentedState = localState ?? state;
   const saving = pending || localPending;
 
@@ -157,6 +158,7 @@ export function StoryEditorForm({
         fieldErrors?: StoryEditorActionState["fieldErrors"];
       };
       if (response.ok && result.target) {
+        navigating.current = true;
         setDirty(false);
         window.location.assign(result.target);
         return;
@@ -189,7 +191,7 @@ export function StoryEditorForm({
     }
 
     const warn = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
+      if (!navigating.current) event.preventDefault();
     };
 
     window.addEventListener("beforeunload", warn);
