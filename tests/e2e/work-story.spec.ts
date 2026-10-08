@@ -514,6 +514,9 @@ test("owner distinguishes incomplete and confirmed text-link Evidence from curre
   await captureEvidenceLayouts(page, testInfo, "text-link-public-vs-candidate");
 
   await page.getByRole("button", { name: "Update published content", exact: true }).click();
+  await expect(page.getByText(
+    "Published content updated. The public snapshot now matches this saved candidate.",
+  )).toBeVisible();
   await page.goto("/studio/work/" + storyId + "/publish");
   await expect(page.getByRole("region", { name: "Current public Evidence" })
     .getByText("Private contextual note")).toBeVisible();
