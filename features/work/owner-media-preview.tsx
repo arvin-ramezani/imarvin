@@ -79,19 +79,22 @@ export function OwnerMediaPreview({
         const isVideo = row.kind === "RECORDING";
         const isLink = row.kind === "TEXT_LINK";
         const validLink = Boolean(row.textLinkUrl && safeHttpsUrl(row.textLinkUrl));
-        const confirmedLink = validLink && row.permissionConfirmed === true;
+        const confirmedLink = validLink && Boolean(row.textLinkText?.trim()) &&
+          row.permissionConfirmed === true;
         return (
           <article key={row.id} className="flex min-w-0 flex-col gap-3 rounded-lg border border-boundary bg-surface p-4">
             <h3 className="text-xl font-semibold text-ink">
               {row.position + 1}. {row.title || row.kind.toLowerCase()} · {row.kind}
             </h3>
             <p className="text-sm text-muted-ink">
-              {row.captureStage?.replaceAll("_", " ").toLowerCase() || "Capture stage not confirmed"}
+              {isLink ? "External reference" :
+                row.captureStage?.replaceAll("_", " ").toLowerCase() || "Capture stage not confirmed"}
               {" · "}{isVideo
                 ? row.recordingAccessibilityMode === "SILENT" ? "Silent demo" :
                   row.recordingAccessibilityMode ? "Meaningful audio" : "Accessibility review required"
                 : isLink ? confirmedLink ? "HTTPS link · permission confirmed" :
-                  validLink ? "HTTPS link · permission not confirmed" : "Link missing or invalid"
+                  !validLink ? "Link missing or invalid" :
+                  !row.textLinkText?.trim() ? "Link text missing" : "HTTPS link · permission not confirmed"
                 : available ? "Ready" : "Incomplete source"}
             </p>
             {row.kind === "TEXT_LINK" ? (
@@ -99,7 +102,7 @@ export function OwnerMediaPreview({
                 <Link className="break-all text-signal underline" href={row.textLinkUrl}>
                   {row.textLinkText || "Open external evidence"}
                 </Link>
-              ) : <p className="text-sm">Link requires a valid HTTPS URL and permission confirmation.</p>
+              ) : <p className="text-sm">Link requires text, a valid HTTPS URL and permission confirmation.</p>
             ) : isVideo ? (
               available && poster?.readiness === "READY" ? (
                 <video
