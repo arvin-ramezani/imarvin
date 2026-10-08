@@ -35,7 +35,6 @@ export function EvidenceEditor({
   onDirty: () => void;
 }) {
   const id = useId();
-  const mounted = useRef(false);
   const [rows, setRows] = useState(initialEvidence);
   const [assets, setAssets] = useState(initialAssets);
   const [cover, setCover] = useState(initialCover ?? "");
@@ -46,11 +45,6 @@ export function EvidenceEditor({
   const reconciliation = useRef<{
     storyId: string; request: Promise<{ assets: MediaEntry[] }>;
   } | null>(null);
-
-  useEffect(() => {
-    if (!mounted.current) { mounted.current = true; return; }
-    onDirty();
-  }, [rows, cover, lead, figures, onDirty]);
 
   // One reconciliation per editor-open, including React Strict Mode re-effects.
   // Re-attach the observer on re-effect so the first response is not lost.
@@ -74,13 +68,16 @@ export function EvidenceEditor({
     return () => { active = false; };
   }, [storyId]);
 
-  const change = (evidenceId: string, patch: Partial<EvidenceDraftInput>) =>
+  const change = (evidenceId: string, patch: Partial<EvidenceDraftInput>) => {
+    onDirty();
     setRows((previous) => previous.map((row) =>
       row.id === evidenceId ? { ...row, ...patch } : row));
+  };
 
   function reorder(index: number, offset: number) {
     const next = index + offset;
     if (next < 0 || next >= rows.length) return;
+    onDirty();
     setRows((previous) => {
       const reordered = [...previous];
       [reordered[index], reordered[next]] = [reordered[next], reordered[index]];
@@ -99,6 +96,7 @@ export function EvidenceEditor({
       "Removing this Evidence will clear its " + used.join(", ") +
       " references on the next private Save. Continue?",
     )) return;
+    onDirty();
     setRows((previous) => previous.filter((row) => row.id !== evidenceId));
     if (cover === evidenceId) setCover("");
     if (lead === evidenceId) setLead("");
@@ -157,6 +155,7 @@ export function EvidenceEditor({
   const figureMove = (index: number, offset: number) => {
     const next = index + offset;
     if (next < 0 || next >= figures.length) return;
+    onDirty();
     setFigures((old) => {
       const changed = [...old];
       [changed[index], changed[next]] = [changed[next], changed[index]];
@@ -182,6 +181,7 @@ export function EvidenceEditor({
       <div className="flex flex-wrap gap-2">
         {(["IMAGE", "RECORDING", "DIAGRAM", "TEXT_LINK"] as const).map((kind) => (
           <button key={kind} type="button" className="min-h-11 rounded-md border border-boundary px-3 py-2 text-sm font-medium text-ink" onClick={() => {
+            onDirty();
             setRows((previous) => [...previous, emptyEvidence(kind)]);
             setNotice(kind + " Evidence added. Save privately when ready.");
           }}>Add {kind.toLowerCase().replace("_", " ")}</button>
@@ -330,8 +330,8 @@ export function EvidenceEditor({
             )}
             <label className="flex min-h-11 items-center gap-2 text-sm text-ink">
               <input type="checkbox" checked={figures.includes(row.id)}
-                onChange={(e) => setFigures((old) => e.target.checked ? [...old, row.id] :
-                  old.filter((item) => item !== row.id))} />
+                onChange={(e) => { onDirty(); setFigures((old) => e.target.checked ? [...old, row.id] :
+                  old.filter((item) => item !== row.id)); }} />
               Reference this Evidence as a Problem contextual figure
             </label>
           </fieldset>
@@ -354,7 +354,7 @@ export function EvidenceEditor({
           ([label, value, setter]) => (
             <label key={label} className="flex min-w-0 flex-col gap-1 text-sm font-medium text-ink">
               {label}
-              <select className={control} value={value} onChange={(e) => setter(e.target.value)}>
+              <select className={control} value={value} onChange={(e) => { onDirty(); setter(e.target.value); }}>
                 <option value="">No {label.toLowerCase()}</option>
                 {choices.map((row) => (
                   <option key={row.id} value={row.id}>
