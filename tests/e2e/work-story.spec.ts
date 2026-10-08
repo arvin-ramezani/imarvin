@@ -306,6 +306,9 @@ test("maximum-valid unbroken authored text reflows across Work surfaces at 320px
   await expect(page.getByText(title, { exact: true })).toBeVisible();
   await expectNoHorizontalPageOverflow();
   await page.getByRole("button", { name: "Publish", exact: true }).click();
+  await expect(page.getByText(
+    "Published. A fresh public request now uses this saved snapshot.",
+  )).toBeVisible();
 
   await page.goto("/work");
   await expect(
