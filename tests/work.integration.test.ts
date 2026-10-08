@@ -88,11 +88,26 @@ describe("work story publishing", () => {
         ? loser.code : null;
       const meta = loser && typeof loser === "object" && "meta" in loser
         ? loser.meta : null;
-      const metaCode = meta && typeof meta === "object" && "code" in meta
-        ? meta.code : null;
+      const adapter = meta && typeof meta === "object" && "driverAdapterError" in meta
+        ? meta.driverAdapterError : null;
+      const cause = adapter && typeof adapter === "object" && "cause" in adapter
+        ? adapter.cause : null;
+      const safeShape = (value: unknown) => {
+        if (!value || typeof value !== "object") return null;
+        const item = value as Record<string, unknown>;
+        const safe = (key: string) => typeof item[key] === "string" &&
+          /^[a-z0-9_]{1,40}$/i.test(item[key] as string) ? item[key] : null;
+        return {
+          name: value.constructor?.name,
+          keys: Object.keys(item).filter((k) => k !== "message"),
+          code: safe("code"), originalCode: safe("originalCode"),
+          sqlState: safe("sqlState"), sqlstate: safe("sqlstate"),
+          kind: safe("kind"),
+        };
+      };
       expect(loser, "Concurrent-save error diagnostic: " + JSON.stringify({
-        name: loser?.constructor?.name, code, metaCode,
-        metaKeys: meta && typeof meta === "object" ? Object.keys(meta) : [],
+        name: loser?.constructor?.name, code, meta: safeShape(meta),
+        adapter: safeShape(adapter), cause: safeShape(cause),
       })).toBeInstanceOf(StoryConflictError);
 
       const current = await db.story.findUniqueOrThrow({
