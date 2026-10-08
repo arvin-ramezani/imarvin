@@ -29,11 +29,35 @@ export async function POST(
   try {
     requireSameOriginMediaMutation(request);
     await requireOwnerSession(request.headers);
-    const length = Number(request.headers.get("content-length") ?? 0);
-    if (!Number.isSafeInteger(length) || length > 2048) {
-      return Response.json({ message: "Invalid confirmation payload." }, { status: 413, headers: noStore });
+    if (!request.headers.get("content-type")?.startsWith("application/json")) {
+      return Response.json({ message: "Invalid confirmation content type." },
+        { status: 415, headers: noStore });
     }
-    const parsed = inputSchema.safeParse(await request.json());
+    const reader = request.body?.getReader();
+    if (!reader) return Response.json(
+      { message: "Missing confirmation body." }, { status: 400, headers: noStore });
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (!value) continue;
+      size += value.byteLength;
+      if (size > 2048) {
+        await reader.cancel();
+        return Response.json({ message: "Confirmation payload too large." },
+          { status: 413, headers: noStore });
+      }
+      chunks.push(value);
+    }
+    let payload: unknown;
+    try {
+      payload = JSON.parse(Buffer.concat(chunks).toString("utf8")) as unknown;
+    } catch {
+      return Response.json({ message: "Malformed confirmation payload." },
+        { status: 400, headers: noStore });
+    }
+    const parsed = inputSchema.safeParse(payload);
     if (!parsed.success) {
       return Response.json({ message: "Invalid publication revisions." }, { status: 400, headers: noStore });
     }
