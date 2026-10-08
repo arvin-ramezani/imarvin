@@ -38,6 +38,12 @@ enum EvidenceCaptureStage {
   RECREATED_LOCAL_DEMO
 }
 
+enum RecordingAccessibilityMode {
+  SILENT
+  AUDIO_VISUALS_CONVEYED
+  AUDIO_DESCRIPTION_INCLUDED
+}
+
 enum MediaAssetType {
   IMAGE
   VIDEO
@@ -143,6 +149,7 @@ model Evidence {
   permissionConfirmed   Boolean?
   alternativeText       String?
   equivalentDescription String?
+  recordingAccessibilityMode RecordingAccessibilityMode?
   transcript            String?
   textLinkText          String?
   textLinkUrl           String?
@@ -184,6 +191,7 @@ model PublishedEvidence {
   permissionConfirmed   Boolean?
   alternativeText       String?
   equivalentDescription String?
+  recordingAccessibilityMode RecordingAccessibilityMode?
   transcript            String?
   textLinkText          String?
   textLinkUrl           String?
