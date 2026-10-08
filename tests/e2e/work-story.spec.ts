@@ -372,41 +372,17 @@ test("owner authors image Evidence, previews saved media, and updates its publis
     where: { storyId },
   });
   expect(first.caption).toBe("Initial capture");
-  // Temporary targeted browser diagnostic; restore after identifying the input cause.
-  await page.evaluate(() => {
-    const events: Array<Record<string, unknown>> = [];
-    (window as typeof window & { __captionEvents?: typeof events }).__captionEvents = events;
-    for (const type of ["focus", "beforeinput", "input", "change", "select"]) {
-      document.addEventListener(type, (event) => {
-        const el = event.target;
-        if (!(el instanceof HTMLTextAreaElement) ||
-          !el.closest("label")?.textContent?.includes("Purpose / caption")) return;
-        const input = event as InputEvent;
-        events.push({
-          type, inputType: input.inputType || "",
-          value: el.value, selectionStart: el.selectionStart,
-          selectionEnd: el.selectionEnd, defaultValue: el.defaultValue,
-        });
-      }, true);
-    }
-  });
   const caption = page.getByLabel("Purpose / caption");
-  const before = await caption.evaluate((el) => {
-    const t = el as HTMLTextAreaElement;
-    return { value: t.value, defaultValue: t.defaultValue,
-      selectionStart: t.selectionStart, selectionEnd: t.selectionEnd };
-  });
-  await caption.fill("Revised private caption");
-  const after = await caption.evaluate((el) => {
-    const t = el as HTMLTextAreaElement;
-    const serialized = t.closest("form")?.querySelector<HTMLInputElement>('input[name="evidenceJson"]');
-    return { value: t.value, defaultValue: t.defaultValue,
-      selectionStart: t.selectionStart, selectionEnd: t.selectionEnd,
-      serializedCaption: serialized ? JSON.parse(serialized.value)[0]?.caption : null,
-      events: (window as typeof window & { __captionEvents?: Array<Record<string, unknown>> }).__captionEvents,
-    };
-  });
-  expect(after.value, JSON.stringify({ before, after })).toBe("Revised private caption");
+  await expect(caption).toHaveValue("Initial capture");
+  // Exercise the real keyboard overwrite, including existing nonempty text.
+  await caption.click();
+  await caption.press("ControlOrMeta+A");
+  await caption.pressSequentially("Revised private caption");
+  await expect(caption).toHaveValue("Revised private caption");
+  const candidateEvidence = JSON.parse(
+    await page.locator('input[name="evidenceJson"]').inputValue(),
+  ) as Array<{ caption: string | null }>;
+  expect(candidateEvidence[0]?.caption).toBe("Revised private caption");
   await page.getByRole("button", { name: "Save privately" }).click();
   await expect(page.getByText("Saved privately. Public content was not changed.")).toBeVisible();
   expect((await db.publishedEvidence.findFirstOrThrow({ where: { storyId } })).caption)
