@@ -902,6 +902,169 @@ describe("Work media persistence and delivery foundation", () => {
     await expect(access(mediaStoragePath(".staging", pending.storageKey))).rejects.toThrow();
   });
 
+  it("creates the first upload lease on database time despite skewed application clocks", async () => {
+    const story = await createPublishableStory();
+    const keys = new Set<string>();
+
+    for (const skewedTime of ["2001-01-01T00:00:00.000Z", "2099-01-01T00:00:00.000Z"]) {
+      const [before] = await db.$queryRaw<Array<{ now: Date }>>`
+        SELECT CURRENT_TIMESTAMP AS "now"
+      `;
+      if (!before) throw new Error("Expected PostgreSQL time before create");
+
+      vi.useFakeTimers({ toFake: ["Date"] });
+      let created: Awaited<ReturnType<typeof createPendingMediaAsset>>;
+      try {
+        vi.setSystemTime(new Date(skewedTime));
+        created = await createPendingMediaAsset({
+          storyId: story.id,
+          originalFileName: "skew.png",
+          mediaType: "IMAGE",
+          contentType: "image/png",
+          byteSize: PNG_BYTES.length,
+        });
+      } finally {
+        vi.useRealTimers();
+      }
+
+      const [after] = await db.$queryRaw<Array<{ now: Date }>>`
+        SELECT CURRENT_TIMESTAMP AS "now"
+      `;
+      const [stored] = await db.$queryRaw<
+        Array<{
+          createdAt: Date;
+          updatedAt: Date;
+          leaseExpiresAt: Date | null;
+          uploadGeneration: number;
+          storageKey: string;
+          readiness: string;
+          exactLease: boolean;
+        }>
+      >`
+        SELECT
+          "createdAt", "updatedAt", "leaseExpiresAt", "uploadGeneration",
+          "storageKey", "readiness",
+          ("leaseExpiresAt" = "createdAt" + INTERVAL '24 hours') AS "exactLease"
+        FROM "MediaAsset"
+        WHERE "id" = ${created.assetId}
+      `;
+      if (!stored || !after || !stored.leaseExpiresAt) {
+        throw new Error("Expected persisted initial generation and database time");
+      }
+
+      expect(stored).toMatchObject({
+        readiness: "PENDING",
+        uploadGeneration: 1,
+        exactLease: true,
+        storageKey: created.storageKey,
+      });
+      expect(stored.createdAt.getTime()).toBeGreaterThanOrEqual(before.now.getTime() - 1);
+      expect(stored.createdAt.getTime()).toBeLessThanOrEqual(after.now.getTime() + 1);
+      expect(stored.updatedAt.getTime()).toBe(stored.createdAt.getTime());
+      expect(created.leaseExpiresAt.getTime()).toBe(stored.leaseExpiresAt.getTime());
+      expect(keys.has(created.storageKey)).toBe(false);
+      keys.add(created.storageKey);
+    }
+  });
+
+  it("uses database-time expiry for pre-lease completion and at-or-after recovery", async () => {
+    const story = await createPublishableStory();
+    const metadata = {
+      mediaType: "IMAGE" as const,
+      contentType: "image/png",
+      byteSize: PNG_BYTES.length,
+      width: 2,
+      height: 2,
+      durationMs: null,
+    };
+    const current = await createPendingMediaAsset({
+      storyId: story.id,
+      originalFileName: "unexpired.png",
+      mediaType: "IMAGE",
+      contentType: "image/png",
+      byteSize: PNG_BYTES.length,
+    });
+    await writeStagedMedia(current.storageKey, PNG_BYTES);
+    await promoteStagedMedia(current.storageKey);
+
+    const [future] = await db.$queryRaw<Array<{ leaseExpiresAt: Date }>>`
+      UPDATE "MediaAsset"
+      SET "leaseExpiresAt" = CURRENT_TIMESTAMP + INTERVAL '1 minute'
+      WHERE "id" = ${current.assetId}
+      RETURNING "leaseExpiresAt"
+    `;
+    if (!future) throw new Error("Expected future lease");
+
+    await reconcileMediaStorage();
+    expect(await db.mediaAsset.findUniqueOrThrow({ where: { id: current.assetId } }))
+      .toMatchObject({ readiness: "PENDING", storageKey: current.storageKey });
+    expect(await completeMediaUpload(
+      { ...current, leaseExpiresAt: future.leaseExpiresAt }, metadata,
+    )).toBe(true);
+    await reconcileMediaStorage();
+    await expect(access(mediaStoragePath("assets", current.storageKey)))
+      .resolves.toBeUndefined();
+
+    const expired = await createPendingMediaAsset({
+      storyId: story.id,
+      originalFileName: "expired.png",
+      mediaType: "IMAGE",
+      contentType: "image/png",
+      byteSize: PNG_BYTES.length,
+    });
+    await writeStagedMedia(expired.storageKey, PNG_BYTES);
+    // Reconciliation runs in a later SQL statement: this tests "at-or-after"
+    // expiry, not an artificial same-instant database equality.
+    await db.$executeRaw`
+      UPDATE "MediaAsset"
+      SET "leaseExpiresAt" = CURRENT_TIMESTAMP
+      WHERE "id" = ${expired.assetId}
+    `;
+    await reconcileMediaStorage();
+    expect(await db.mediaAsset.findUniqueOrThrow({ where: { id: expired.assetId } }))
+      .toMatchObject({
+        readiness: "FAILED",
+        failureCode: "UPLOAD_INTERRUPTED",
+        leaseExpiresAt: null,
+        storageKey: expired.storageKey,
+      });
+    await expect(access(mediaStoragePath(".staging", expired.storageKey)))
+      .rejects.toThrow();
+    expect(await completeMediaUpload(expired, metadata)).toBe(false);
+
+    const retried = await retryFailedMediaAsset({
+      assetId: expired.assetId,
+      storyId: story.id,
+      expectedGeneration: expired.generation,
+      expectedStorageKey: expired.storageKey,
+      originalFileName: "retried.png",
+      mediaType: "IMAGE",
+      contentType: "image/png",
+      byteSize: PNG_BYTES.length,
+    });
+    if (!retried) throw new Error("Expected a fresh retry generation");
+    const [newLease] = await db.$queryRaw<
+      Array<{ leaseExpiresAt: Date; exactLease: boolean }>
+    >`
+      SELECT "leaseExpiresAt",
+        ("leaseExpiresAt" = "updatedAt" + INTERVAL '24 hours') AS "exactLease"
+      FROM "MediaAsset"
+      WHERE "id" = ${retried.assetId}
+    `;
+    expect(retried.generation).toBe(2);
+    expect(retried.storageKey).not.toBe(expired.storageKey);
+    expect(newLease?.exactLease).toBe(true);
+    expect(retried.leaseExpiresAt.getTime()).toBe(newLease?.leaseExpiresAt.getTime());
+
+    await writeStagedMedia(retried.storageKey, PNG_BYTES);
+    await promoteStagedMedia(retried.storageKey);
+    expect(await completeMediaUpload(retried, metadata)).toBe(true);
+    await reconcileMediaStorage();
+    expect(await completeMediaUpload(expired, metadata)).toBe(false);
+    await expect(access(mediaStoragePath("assets", retried.storageKey)))
+      .resolves.toBeUndefined();
+  });
+
   it("uses CAS so failure/completion/reconciliation/retry have one generation winner", async () => {
     const story = await createPublishableStory();
     const generation = await createPendingMediaAsset({
