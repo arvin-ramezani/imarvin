@@ -81,9 +81,17 @@ describe("work story publishing", () => {
 
     expect(fulfilled).toHaveLength(1);
     expect(rejected).toHaveLength(1);
-    expect(
-      rejected[0]?.status === "rejected" ? rejected[0].reason : null,
-    ).toBeInstanceOf(StoryConflictError);
+    const loser = rejected[0]?.status === "rejected" ? rejected[0].reason : null;
+    const code = loser && typeof loser === "object" && "code" in loser
+      ? loser.code : null;
+    const meta = loser && typeof loser === "object" && "meta" in loser
+      ? loser.meta : null;
+    const metaCode = meta && typeof meta === "object" && "code" in meta
+      ? meta.code : null;
+    expect(loser, "Concurrent-save error diagnostic: " + JSON.stringify({
+      name: loser?.constructor?.name, code, metaCode,
+      metaKeys: meta && typeof meta === "object" ? Object.keys(meta) : [],
+    })).toBeInstanceOf(StoryConflictError);
 
     const current = await db.story.findUniqueOrThrow({
       where: { id: story.id },
