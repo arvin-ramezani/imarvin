@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import {
   STORY_PROGRESS_VALUES,
+  RECORDING_MODES,
   type StoryDraftInput,
   type StoryField,
   type StoryFormValues,
@@ -31,6 +32,68 @@ const stackSchema = z
   .max(STORY_LIMITS.stackEntries)
   .transform((items) => Array.from(new Set(items)));
 
+const nullableUuid = z.uuid().nullable();
+const nullableBounded = (max: number) => z.string().trim().max(max).nullable();
+const captureStage = z.enum([
+  "DESIGN", "PROTOTYPE", "LOCAL_BUILD", "PRODUCTION_CAPTURE",
+  "RECREATED_LOCAL_DEMO",
+]);
+
+const evidenceSchema = z.object({
+  id: z.uuid(),
+  kind: z.enum(["IMAGE", "RECORDING", "DIAGRAM", "TEXT_LINK"]),
+  title: nullableBounded(120),
+  caption: nullableBounded(1200),
+  captureStage: captureStage.nullable(),
+  permissionConfirmed: z.boolean().nullable(),
+  alternativeText: nullableBounded(600),
+  equivalentDescription: nullableBounded(3000),
+  transcript: nullableBounded(12000),
+  textLinkText: nullableBounded(240),
+  textLinkUrl: nullableBounded(2048),
+  sourceAssetId: nullableUuid,
+  posterAssetId: nullableUuid,
+  captionTrackAssetId: nullableUuid,
+  recordingAccessibilityMode: z.enum(RECORDING_MODES).nullable(),
+  confirmSourceAssetId: nullableUuid.optional(),
+});
+
+export function safeHttpsUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" && Boolean(url.hostname) &&
+      !url.username && !url.password;
+  } catch {
+    return false;
+  }
+}
+
+const optionalHttps = optionalText(2048).refine(
+  (value) => !value || safeHttpsUrl(value), "Use a credential-free HTTPS URL.",
+);
+
+const extraStoryDraft = {
+  releaseHistory: z.enum(["SHIPPED", "NEVER_SHIPPED"]).nullable().optional(),
+  availability: z.enum(["LIVE_DESTINATION", "NO_LIVE_DESTINATION"]).nullable().optional(),
+  liveDestinationUrl: optionalHttps.optional(),
+  evidence: z.array(evidenceSchema).max(60).optional(),
+  discoveryCoverEvidenceId: nullableUuid.optional(),
+  leadEvidenceId: nullableUuid.optional(),
+  problemFigureEvidenceIds: z.array(z.uuid()).max(60).optional(),
+};
+
+function validateAvailability(value: {
+  availability?: "LIVE_DESTINATION" | "NO_LIVE_DESTINATION" | null;
+  liveDestinationUrl?: string | null;
+}, ctx: z.RefinementCtx) {
+  if (value.availability === "LIVE_DESTINATION" && !value.liveDestinationUrl) {
+    ctx.addIssue({ code: "custom", path: ["liveDestinationUrl"], message: "Add the confirmed HTTPS destination." });
+  }
+  if (value.availability !== "LIVE_DESTINATION" && value.liveDestinationUrl) {
+    ctx.addIssue({ code: "custom", path: ["liveDestinationUrl"], message: "A URL requires confirmed live availability." });
+  }
+}
+
 export const storyDraftSchema = z.object({
   title: z.string().trim().max(STORY_LIMITS.title),
   problem: z.string().trim().max(STORY_LIMITS.problem),
@@ -38,7 +101,8 @@ export const storyDraftSchema = z.object({
   progress: progressSchema.nullable(),
   outcome: optionalText(STORY_LIMITS.outcome),
   stack: stackSchema,
-});
+  ...extraStoryDraft,
+}).superRefine(validateAvailability);
 
 export const storyPublicationSchema = z.object({
   title: z
@@ -59,7 +123,8 @@ export const storyPublicationSchema = z.object({
   progress: progressSchema,
   outcome: optionalText(STORY_LIMITS.outcome),
   stack: stackSchema,
-});
+  ...extraStoryDraft,
+}).superRefine(validateAvailability);
 
 export type PublishedStoryInput = z.infer<typeof storyPublicationSchema>;
 
@@ -93,11 +158,28 @@ export function storyFormValuesFromData(formData: FormData): StoryFormValues {
     progress: normalizedProgress,
     outcome: String(formData.get("outcome") ?? ""),
     stack: String(formData.get("stack") ?? ""),
+    releaseHistory: String(formData.get("releaseHistory") ?? ""),
+    availability: String(formData.get("availability") ?? ""),
+    liveDestinationUrl: String(formData.get("liveDestinationUrl") ?? ""),
+    evidenceJson: formData.has("evidenceJson") ? String(formData.get("evidenceJson") ?? "") : undefined,
+    discoveryCoverEvidenceId: String(formData.get("discoveryCoverEvidenceId") ?? ""),
+    leadEvidenceId: String(formData.get("leadEvidenceId") ?? ""),
+    problemFigureEvidenceIds: String(formData.get("problemFigureEvidenceIds") ?? ""),
   };
 }
 
 export function parseStoryDraftFormData(formData: FormData) {
   const values = storyFormValuesFromData(formData);
+
+  let evidence: unknown;
+  if (values.evidenceJson !== undefined) {
+    try {
+      if (values.evidenceJson.length > 60_000) throw new Error("Too large");
+      evidence = JSON.parse(values.evidenceJson);
+    } catch {
+      evidence = "Invalid Evidence payload";
+    }
+  }
 
   return {
     values,
@@ -108,6 +190,9 @@ export function parseStoryDraftFormData(formData: FormData) {
       progress: values.progress || null,
       outcome: values.outcome,
       stack: normalizeStack(formData.get("stack")),
+      ...(formData.has("releaseHistory") ? { releaseHistory: values.releaseHistory || null } : {}),
+      ...(formData.has("availability") ? { availability: values.availability || null, liveDestinationUrl: values.liveDestinationUrl || null } : {}),
+      ...(values.evidenceJson !== undefined ? { evidence, discoveryCoverEvidenceId: values.discoveryCoverEvidenceId || null, leadEvidenceId: values.leadEvidenceId || null, problemFigureEvidenceIds: values.problemFigureEvidenceIds?.split(",").filter(Boolean) ?? [] } : {}),
     }),
   };
 }
@@ -122,6 +207,9 @@ export function storyFormValuesFromDraft(
     progress: draft.progress ?? "",
     outcome: draft.outcome ?? "",
     stack: draft.stack.join(", "),
+    releaseHistory: draft.releaseHistory ?? "",
+    availability: draft.availability ?? "",
+    liveDestinationUrl: draft.liveDestinationUrl ?? "",
   };
 }
 
@@ -139,7 +227,11 @@ export function zodFieldErrors(
       field === "contribution" ||
       field === "progress" ||
       field === "outcome" ||
-      field === "stack"
+      field === "stack" ||
+      field === "releaseHistory" ||
+      field === "availability" ||
+      field === "liveDestinationUrl" ||
+      field === "evidence"
     ) {
       fieldErrors[field] = [...(fieldErrors[field] ?? []), issue.message];
     }
