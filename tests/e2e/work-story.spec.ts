@@ -350,7 +350,7 @@ test("owner authors image Evidence, previews saved media, and updates its publis
     name: "capture.png", mimeType: "image/png", buffer: pngBytes,
   });
   const uploadResponse = await uploaded;
-  expect(uploadResponse.status(), await uploadResponse.text()).toBe(201);
+  expect(uploadResponse.status()).toBe(201);
   await expect(page.getByText(/Selected: READY/)).toBeVisible({ timeout: 15000 });
   await page.getByRole("button", { name: "Save privately" }).click();
   await expect(page.getByText("Saved privately. Public content was not changed.")).toBeVisible();
