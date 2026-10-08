@@ -3,6 +3,8 @@ import "server-only";
 import Image from "next/image";
 import Link from "next/link";
 
+import { safeHttpsUrl } from "./validation";
+
 type Asset = {
   id: string;
   mediaType: string;
@@ -19,6 +21,7 @@ type Row = {
   title: string | null;
   caption: string | null;
   captureStage: string | null;
+  permissionConfirmed: boolean | null;
   alternativeText: string | null;
   equivalentDescription: string | null;
   transcript: string | null;
@@ -36,20 +39,29 @@ function privateUrl(storyId: string, assetId: string) {
 }
 
 export function OwnerMediaPreview({
-  storyId, rows, cover, lead, figures,
+  storyId, rows, cover, lead, figures, variant,
 }: {
   storyId: string;
+  variant: "candidate" | "published";
   rows: Row[];
   cover: string | null;
   lead: string | null;
   figures: string[];
 }) {
   const byId = new Map(rows.map((row) => [row.id, row]));
+  const isCandidate = variant === "candidate";
+  const headingId = "owner-evidence-" + variant;
   return (
-    <section className="flex min-w-0 flex-col gap-6" aria-labelledby="preview-evidence">
+    <section className="flex min-w-0 flex-col gap-6" aria-labelledby={headingId}>
       <header className="flex flex-col gap-1">
-        <h2 id="preview-evidence" className="text-2xl font-semibold text-ink">Saved Evidence</h2>
-        <p className="text-sm text-muted-ink">Private candidate media · only owner-authorized bytes can be shown.</p>
+        <h2 id={headingId} className="text-2xl font-semibold text-ink">
+          {isCandidate ? "Saved candidate Evidence" : "Current public Evidence"}
+        </h2>
+        <p className="text-sm text-muted-ink">
+          {isCandidate
+            ? "Saved private candidate · visible only to the owner until published."
+            : "Currently published snapshot · media here uses owner-authorized preview delivery."}
+        </p>
         <p className="text-sm text-muted-ink">
           Discovery cover: {cover ? byId.get(cover)?.title || cover.slice(0, 8) : "Not selected"}
           {" · "}Lead: {lead ? byId.get(lead)?.title || lead.slice(0, 8) : "Not selected"}
@@ -65,6 +77,9 @@ export function OwnerMediaPreview({
         const poster = row.posterAsset;
         const available = source?.readiness === "READY";
         const isVideo = row.kind === "RECORDING";
+        const isLink = row.kind === "TEXT_LINK";
+        const validLink = Boolean(row.textLinkUrl && safeHttpsUrl(row.textLinkUrl));
+        const confirmedLink = validLink && row.permissionConfirmed === true;
         return (
           <article key={row.id} className="flex min-w-0 flex-col gap-3 rounded-lg border border-boundary bg-surface p-4">
             <h3 className="text-xl font-semibold text-ink">
@@ -75,14 +90,16 @@ export function OwnerMediaPreview({
               {" · "}{isVideo
                 ? row.recordingAccessibilityMode === "SILENT" ? "Silent demo" :
                   row.recordingAccessibilityMode ? "Meaningful audio" : "Accessibility review required"
+                : isLink ? confirmedLink ? "HTTPS link · permission confirmed" :
+                  validLink ? "HTTPS link · permission not confirmed" : "Link missing or invalid"
                 : available ? "Ready" : "Incomplete source"}
             </p>
             {row.kind === "TEXT_LINK" ? (
-              row.textLinkUrl?.startsWith("https://") ? (
+              confirmedLink && row.textLinkUrl ? (
                 <Link className="break-all text-signal underline" href={row.textLinkUrl}>
                   {row.textLinkText || "Open external evidence"}
                 </Link>
-              ) : <p className="text-sm">Link not confirmed</p>
+              ) : <p className="text-sm">Link requires a valid HTTPS URL and permission confirmation.</p>
             ) : isVideo ? (
               available && poster?.readiness === "READY" ? (
                 <video
@@ -100,14 +117,18 @@ export function OwnerMediaPreview({
                 </video>
               ) : (
                 <p className="text-sm text-destructive">
-                  Recording not ready or poster missing. Complete the saved candidate before publication.
+                  {isCandidate
+                    ? "Recording not ready or poster missing. Complete the saved candidate before publication."
+                    : "Published recording preview unavailable: source or poster missing."}
                 </p>
               )
             ) : available && source && source.width && source.height ? (
               <Image unoptimized src={privateUrl(storyId, source.id)}
                 alt={row.alternativeText || ""} width={source.width} height={source.height}
                 className="h-auto max-h-[70vh] w-full max-w-3xl object-contain" />
-            ) : <p className="text-sm text-destructive">Image not Ready or source missing.</p>}
+            ) : <p className="text-sm text-destructive">
+              {isCandidate ? "Image not Ready or source missing." : "Published image preview unavailable or source missing."}
+            </p>}
             {row.caption ? <p className="whitespace-pre-wrap text-sm text-ink">{row.caption}</p> : null}
             {row.equivalentDescription ? (
               <p className="whitespace-pre-wrap text-sm text-ink">{row.equivalentDescription}</p>
@@ -118,7 +139,11 @@ export function OwnerMediaPreview({
             ) : null}
           </article>
         );
-      }) : <p className="text-sm text-muted-ink">No Evidence selected. The Story remains complete as text.</p>}
+      }) : <p className="text-sm text-muted-ink">
+        {isCandidate
+          ? "No saved candidate Evidence. The Story remains complete as text."
+          : "No Evidence in the current public snapshot. The Story remains complete as text."}
+      </p>}
     </section>
   );
 }
