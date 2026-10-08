@@ -444,3 +444,75 @@ test("owner authors image Evidence, previews saved media, and updates its publis
     .getByText("Revised private caption")).toBeVisible();
   await captureEvidenceLayouts(page, testInfo, "image-review-after-update");
 });
+
+test("owner distinguishes incomplete and confirmed text-link Evidence from current public content", async ({ page }, testInfo) => {
+  await signIn(page);
+  await page.goto("/studio/work/new");
+  await page.getByLabel("Title").fill("External evidence");
+  await page.getByLabel("Problem or hook").fill("Explain the design decisions");
+  await page.getByLabel("Your contribution").fill("Documented the real decisions");
+  await page.getByLabel("Project progress").selectOption("COMPLETED");
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await expect(page).toHaveURL(/\/studio\/work\/[0-9a-f-]+\/edit\?saved=1$/);
+  const storyId = new URL(page.url()).pathname.split("/").at(-2);
+  expect(storyId).toBeTruthy();
+
+  await page.getByRole("button", { name: "Add text link" }).click();
+  await page.getByLabel("Evidence title").fill("Decision reference");
+  await page.getByLabel("Confirmed HTTPS destination").fill("http://example.com/reference");
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await page.getByRole("link", { name: "Preview saved candidate" }).click();
+  let region = page.getByRole("region", { name: "Saved candidate Evidence" });
+  await expect(region.getByText(/Link missing or invalid/)).toBeVisible();
+  await expect(region.getByText(/Link requires text, a valid HTTPS URL/)).toBeVisible();
+  await expect(region.getByText(/Incomplete source/)).toHaveCount(0);
+  await captureEvidenceLayouts(page, testInfo, "text-link-invalid");
+
+  await page.getByRole("link", { name: "Back to editing" }).click();
+  await page.getByLabel("Confirmed HTTPS destination").fill("https://example.com/reference");
+  await page.getByLabel("Link text").fill("Decision notes");
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await page.getByRole("link", { name: "Preview saved candidate" }).click();
+  region = page.getByRole("region", { name: "Saved candidate Evidence" });
+  await expect(region.getByText(/permission not confirmed/)).toBeVisible();
+  await expect(region.getByText(/Incomplete source/)).toHaveCount(0);
+  await captureEvidenceLayouts(page, testInfo, "text-link-unconfirmed");
+
+  await page.getByRole("link", { name: "Back to editing" }).click();
+  await page.getByLabel("I confirm this Evidence may be published").check();
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await page.getByRole("link", { name: "Preview saved candidate" }).click();
+  region = page.getByRole("region", { name: "Saved candidate Evidence" });
+  await expect(region.getByText(/HTTPS link · permission confirmed/)).toBeVisible();
+  await expect(region.getByRole("link", { name: "Decision notes" })).toHaveAttribute(
+    "href", "https://example.com/reference",
+  );
+  await captureEvidenceLayouts(page, testInfo, "text-link-confirmed");
+
+  await page.getByRole("link", { name: "Back to editing" }).click();
+  await page.getByRole("link", { name: "Review publication" }).click();
+  await page.getByRole("button", { name: "Publish", exact: true }).click();
+  await expect(page.getByText("Published. A fresh public request now uses this saved snapshot."))
+    .toBeVisible();
+
+  await page.getByLabel("Purpose / caption").fill("Private contextual note");
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await page.getByRole("link", { name: "Review publication" }).click();
+  const candidate = page.getByRole("region", { name: "Saved candidate Evidence" });
+  const published = page.getByRole("region", { name: "Current public Evidence" });
+  await expect(candidate.getByText("Private contextual note")).toBeVisible();
+  await expect(published.getByText("Private contextual note")).toHaveCount(0);
+  await expect(published.getByText(/HTTPS link · permission confirmed/)).toBeVisible();
+  const headingIds = await page.locator('[id^="owner-evidence-"]').evaluateAll(
+    (nodes) => nodes.map((node) => node.id),
+  );
+  expect(headingIds).toHaveLength(2);
+  expect(new Set(headingIds).size).toBe(2);
+  await captureEvidenceLayouts(page, testInfo, "text-link-public-vs-candidate");
+
+  await page.getByRole("button", { name: "Update published content", exact: true }).click();
+  await page.goto("/studio/work/" + storyId + "/publish");
+  await expect(page.getByRole("region", { name: "Current public Evidence" })
+    .getByText("Private contextual note")).toBeVisible();
+  await captureEvidenceLayouts(page, testInfo, "text-link-after-update");
+});
