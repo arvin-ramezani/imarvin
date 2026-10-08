@@ -43,25 +43,34 @@ export function EvidenceEditor({
   const [figures, setFigures] = useState(initialFigures);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
+  const reconciliation = useRef<{
+    storyId: string; request: Promise<{ assets: MediaEntry[] }>;
+  } | null>(null);
 
   useEffect(() => {
     if (!mounted.current) { mounted.current = true; return; }
     onDirty();
   }, [rows, cover, lead, figures, onDirty]);
 
-  // A single owner-open reconciliation; no GET side effects or polling loop.
+  // One reconciliation per editor-open, including React Strict Mode re-effects.
+  // Re-attach the observer on re-effect so the first response is not lost.
   useEffect(() => {
+    if (reconciliation.current?.storyId !== storyId) {
+      reconciliation.current = {
+        storyId,
+        request: fetch("/api/studio/work/" + encodeURIComponent(storyId) +
+          "/media/reconcile", { method: "POST" }).then(async (response) => {
+            if (!response.ok) throw new Error("Unable to refresh upload readiness.");
+            return response.json() as Promise<{ assets: MediaEntry[] }>;
+          }),
+      };
+    }
     let active = true;
-    void fetch("/api/studio/work/" + encodeURIComponent(storyId) +
-      "/media/reconcile", { method: "POST" })
-      .then(async (response) => {
-        if (!response.ok) throw new Error("Unable to refresh upload readiness.");
-        return response.json() as Promise<{ assets: MediaEntry[] }>;
-      }).then((result) => {
-        if (active) setAssets(result.assets);
-      }).catch(() => {
-        if (active) setNotice("Upload readiness could not be refreshed. Retry opening this editor.");
-      });
+    void reconciliation.current.request.then((result) => {
+      if (active) setAssets(result.assets);
+    }).catch(() => {
+      if (active) setNotice("Upload readiness could not be refreshed. Retry opening this editor.");
+    });
     return () => { active = false; };
   }, [storyId]);
 
