@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { EvidenceDraftInput } from "./types";
 
 type MediaEntry = {
@@ -24,7 +24,7 @@ const emptyEvidence = (kind: EvidenceDraftInput["kind"]): EvidenceDraftInput => 
 
 export function EvidenceEditor({
   storyId, initialEvidence, initialCover, initialLead, initialFigures,
-  initialAssets,
+  initialAssets, onDirty,
 }: {
   storyId: string;
   initialEvidence: EvidenceDraftInput[];
@@ -32,8 +32,10 @@ export function EvidenceEditor({
   initialLead: string | null;
   initialFigures: string[];
   initialAssets: MediaEntry[];
+  onDirty: () => void;
 }) {
   const id = useId();
+  const mounted = useRef(false);
   const [rows, setRows] = useState(initialEvidence);
   const [assets, setAssets] = useState(initialAssets);
   const [cover, setCover] = useState(initialCover ?? "");
@@ -41,6 +43,11 @@ export function EvidenceEditor({
   const [figures, setFigures] = useState(initialFigures);
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!mounted.current) { mounted.current = true; return; }
+    onDirty();
+  }, [rows, cover, lead, figures, onDirty]);
 
   const change = (evidenceId: string, patch: Partial<EvidenceDraftInput>) =>
     setRows((previous) => previous.map((row) =>
@@ -80,6 +87,10 @@ export function EvidenceEditor({
     file: File,
     failedId?: string,
   ) {
+    if (field === "sourceAssetId" && row.kind === "RECORDING" &&
+      row.sourceAssetId && !window.confirm(
+        "Replacing this recording invalidates the prior sound review, captions, poster and permissions. Upload the replacement?",
+      )) return;
     setBusy(row.id + field);
     setNotice("");
     try {
