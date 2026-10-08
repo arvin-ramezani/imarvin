@@ -344,9 +344,13 @@ test("owner authors image Evidence, previews saved media, and updates its publis
   await page.getByLabel("Confirmed capture stage").selectOption("LOCAL_BUILD");
   await page.getByLabel("I confirm this Evidence may be published").check();
   await page.getByLabel("Image alternative text").fill("A two-pixel synthetic interface capture");
+  const uploaded = page.waitForResponse((response) =>
+    response.url().endsWith("/media") && response.request().method() === "POST");
   await page.locator('input[type="file"]').first().setInputFiles({
     name: "capture.png", mimeType: "image/png", buffer: pngBytes,
   });
+  const uploadResponse = await uploaded;
+  expect(uploadResponse.status(), await uploadResponse.text()).toBe(201);
   await expect(page.getByText(/Selected: READY/)).toBeVisible({ timeout: 15000 });
   await page.getByRole("button", { name: "Save privately" }).click();
   await expect(page.getByText("Saved privately. Public content was not changed.")).toBeVisible();
