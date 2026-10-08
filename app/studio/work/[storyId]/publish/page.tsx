@@ -293,7 +293,7 @@ export default async function PublishStoryPage({
           <div className="grid min-w-0 gap-4 lg:grid-cols-2">
             <section className="min-w-0">
               <h3 className="mb-3 font-semibold text-ink">Saved candidate · private</h3>
-              <OwnerMediaPreview storyId={story.id} rows={story.evidence}
+              <OwnerMediaPreview variant="candidate" storyId={story.id} rows={story.evidence}
                 cover={story.discoveryCoverEvidenceId} lead={story.leadEvidenceId}
                 figures={story.evidence.flatMap((item) => item.problemFigures)
                   .sort((a, b) => a.position - b.position).map((f) => f.evidenceId)} />
@@ -301,7 +301,7 @@ export default async function PublishStoryPage({
             {story.published ? (
               <section className="min-w-0">
                 <h3 className="mb-3 font-semibold text-ink">Current public snapshot</h3>
-                <OwnerMediaPreview storyId={story.id} rows={story.published.evidence}
+                <OwnerMediaPreview variant="published" storyId={story.id} rows={story.published.evidence}
                   cover={story.published.discoveryCoverEvidenceId}
                   lead={story.published.leadEvidenceId}
                   figures={story.published.evidence.flatMap((item) => item.problemFigures)
