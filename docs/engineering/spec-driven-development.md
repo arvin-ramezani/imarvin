@@ -52,11 +52,12 @@ After that, prefer vertical feature slices over layer-first delivery. A slice sh
 
 Do not build the entire database/backend, public UI, or owner UI in isolation when a bounded slice can validate the contract sooner.
 Introduce media, new dependencies, and shared abstractions when the first real feature needs them, not speculatively.
-During development, perform runtime acceptance locally when possible. Production deployment/acceptance is the final phase after development and local acceptance are complete.
+Command Center selects each issue's runtime gate before work: perform required real-environment acceptance locally before merge; group only safe, non-required manual scenarios into an explicitly tracked integrated milestone after related features. Production deployment/acceptance remains the final phase.
 Issue #13 tracks the current delivery order.
 
 ## 5. Agent implementation loop
 
+The Executor is a **normal ChatGPT chat with GitHub access**, not a mandated IDE or Codex agent. For meaningful work, first submit a **PLAN ONLY** (no source edits); a separate Independent Plan Review must PASS on that plan, spec revision and baseline before implementation. Command Center alone may mark Plan Review NOT REQUIRED for small, low-risk work, with a reason.
 1. Verify current `main`, issue, linked specs, AGENTS.md, and architecture baseline.
 2. Record exact starting SHA.
 3. Create a focused branch named for the issue.
@@ -90,11 +91,11 @@ If the PR head moves after deterministic/security review, affected verification 
 
 ## 7. Review and merge
 
-Use independent review for meaningful feature changes; do not rely only on the implementing agent's conclusion.
-Review against the issue/spec first, then code quality, accessibility, security/privacy, migrations, and regression risk.
-Security review is required when a change materially affects auth, authorization, private/public delivery, uploads, secrets, or trust boundaries.
-Merge only when required checks/reviews pass and no blocking acceptance item remains.
-Prefer squash merge for one coherent issue unless preserving individual commits has a concrete value.
+Select and record gates on the bounded issue before implementation. For meaningful work: Executor PLAN ONLY → separate Independent Plan Review → Implementation → deterministic verification → Design QA if meaningful UI → Security Review if security-sensitive → Independent Review → local runtime acceptance if required → Command Center merge. A failed gate returns to the appropriate executor/plan step.
+Follow [UI skill policy](ui-skill-policy.md) for media-role, mobile, responsive, animation and Design QA triggers. Security Review is required for auth/sessions, secrets, uploads, private/public or trust boundaries, filesystem/process permissions, network/TLS/proxy, privileged deployment and security fixes.
+Use **separate fresh ChatGPT reviewer chats** from the Executor and preferably fresh chats on each re-review. Reviewers inspect issue/spec, architecture, security, failure paths, regressions and exact-SHA evidence; record PASS/findings on the PR. Reviewers do not implement or merge.
+After a source change, invalidate affected SHA-bound verification/reviews and repeat those gates. Never reuse stale PASS or claim unrun checks passed.
+Command Center has standing owner merge authorization only after verifying open/mergeable PR, unchanged reviewed head, valid required PASS or justified NOT REQUIRED, no blockers/unresolved threads, and any required runtime PASS. Explicit owner prohibition overrides; prefer squash merge.
 
 ## 8. Testing strategy
 
@@ -102,8 +103,9 @@ Vitest is the unit/integration runner for deterministic domain/validation logic,
 React Testing Library runs with Vitest for React component behavior; test user-observable semantics such as roles, labels, text, focus, and visible state rather than component internals.
 Playwright is the E2E runner: use it only for critical browser journeys whose confidence cannot be obtained cheaply below the browser level.
 Do not duplicate the same assertion at every test layer.
-When guiding **human-executed runtime acceptance**, follow [AI-guided manual runtime acceptance](qa-runtime-acceptance.md) to give one shell-appropriate command step at a time, verify real output and record exact-head evidence; **do not author automated tests under that procedure**.
-Run local runtime/product-design acceptance when an implemented slice creates the relevant surface; defer production-only evidence to the final production phase.
+Choose **REQUIRED** local runtime acceptance when the issue/spec explicitly demands it or real-environment behavior cannot be established from automation (notably relevant auth, upload, permissions, delivery or browser/device risks). It must PASS before that PR merges.
+When automated evidence is sufficient and there is no material real-environment gap, Command Center may mark per-PR manual runtime **NOT REQUIRED**, with a reason; if useful integrated journeys remain, record their owner, scope and target checkpoint on a parent/tracker. That milestone acceptance stays open until performed and is not an earlier PR's PASS. Never silently defer an existing REQUIRED gate: changing it requires an explicit issue/spec decision and fresh affected approvals.
+For owner-executed runtime acceptance, a **separate normal ChatGPT chat** gives [one safe command at a time](qa-runtime-acceptance.md), checks observed output and records exact-head evidence. It **must not author automated tests** under this procedure. Defer production-only evidence to the final production phase.
 Runtime product-design checks from RV01–RV14 are executed when the implemented surface exists and recorded as evidence.
 CI/lint must reject direct application `console.*` use and direct Pino imports outside the shared logging module.
 Tests must cover env-schema failure for missing/invalid required config and logger redaction for sensitive fields.
@@ -120,7 +122,7 @@ Public motion is CSS-first. Use Framer Motion only for approved public springs/l
 
 ## 10. Definition of done
 
-A feature is done when its bounded slice matches the accepted spec, required tests and applicable local acceptance pass, configuration/logging guardrails pass, review findings are resolved, and evidence is recorded.
+A bounded feature is done when its accepted spec, required tests and required local acceptance pass, configuration/logging checks pass, review findings are resolved, and exact-head evidence is recorded. Separately tracked integrated-milestone acceptance remains open until actually performed.
 Done does not mean every future architecture/runtime validation item is closed; only the issue's declared acceptance must be satisfied.
 Any intentional deviation updates the authoritative spec/decision before or with the implementation PR.
 No undocumented product behavior becomes precedent merely because code was merged.
