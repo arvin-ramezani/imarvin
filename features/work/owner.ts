@@ -1,6 +1,7 @@
 import "server-only";
 
 import { requireOwnerSession } from "@/lib/auth";
+import { getServerConfig } from "@/lib/config/server";
 
 import {
   createStory,
@@ -43,6 +44,15 @@ export async function saveOwnerStory(
 ) {
   await requireOwnerSession(requestHeaders);
 
+  // Media-reference writes require a same-origin request, beyond cookie auth.
+  if (input.evidence !== undefined) {
+    const origin = requestHeaders.get("origin");
+    const fetchSite = requestHeaders.get("sec-fetch-site");
+    if (origin !== new URL(getServerConfig().APP_ORIGIN).origin ||
+      fetchSite?.toLowerCase() === "cross-site") {
+      throw new OwnerAuthorizationError();
+    }
+  }
   return saveStory(storyId, expectedWorkingRevision, input);
 }
 
