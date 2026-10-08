@@ -42,11 +42,7 @@ Graphify is navigation/context tooling, never repository authority. When `graphi
 
 Validate relative links, IDs, cross-document consistency, and changed-file scope. Describe actual checks; written review is not visual/usability/security verification.
 
-- Executors work in **normal ChatGPT chats** with appropriate GitHub access; no Codex, CLI agent or autonomous local browser is presumed. A worker that lacks local access must not claim a local check ran.
-- Use separate ChatGPT reviewer chats for Independent Plan Review, Design QA, Security Review and Independent Review when required. Prefer a fresh reviewer chat for re-review after a fix; reviewers record findings on the PR, never edit source or merge.
-- Follow [spec-driven development](docs/engineering/spec-driven-development.md) for plan-first gates, exact-head evidence, conditional reviews, and justified manual-runtime selection. For human runtime acceptance, the owner runs commands guided one step at a time by a separate ChatGPT chat; this is not test authoring.
-- Command Center may combine low-risk runtime journeys at a tracked integrated milestone **only when** no issue/spec requires earlier runtime evidence and no material real-environment risk remains; existing REQUIRED gates are not silently waived.
-- Do not implement without a bounded issue and any required linked spec/approved plan. Public content publishing remains an explicit owner action. Command Center may merge under standing owner authorization only after all required exact-head gates pass or are validly NOT REQUIRED, no blockers/review threads remain, and any required runtime acceptance passes; an explicit owner prohibition overrides this authorization.
+No code without a bounded GitHub issue and accepted/linked implementation spec as required by the spec-driven workflow. Do not merge or publish without explicit authorization/review.
 
 
 <!-- BEGIN:nextjs-agent-rules -->
