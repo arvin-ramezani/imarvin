@@ -2,7 +2,7 @@
 
 import { Eye, LockKeyhole, Send } from "lucide-react";
 import Link from "next/link";
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useCallback, useEffect, useRef, useState } from "react";
 
 import {
   saveStoryAction,
@@ -113,6 +113,7 @@ export function StoryEditorForm({
     initialState,
   );
   const [dirty, setDirty] = useState(false);
+  const markDirty = useCallback(() => setDirty(true), []);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -387,7 +388,7 @@ export function StoryEditorForm({
             initialLead={initialLead ?? null}
             initialFigures={initialFigures ?? []}
             initialAssets={initialAssets}
-            onDirty={() => setDirty(true)}
+            onDirty={markDirty}
           />
         ) : (
           <section className="rounded-lg border border-boundary bg-surface p-5 text-sm text-muted-ink">
