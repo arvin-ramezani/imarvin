@@ -384,6 +384,9 @@ test("owner authors image Evidence, previews saved media, and updates its publis
   const uploadResponse = await uploaded;
   expect(uploadResponse.status()).toBe(201);
   await expect(page.getByText(/Selected: READY/)).toBeVisible({ timeout: 15000 });
+  await page.getByLabel("Discovery cover").selectOption({ index: 1 });
+  await page.getByLabel("Lead media").selectOption({ index: 1 });
+  await page.getByLabel("Reference this Evidence as a Problem contextual figure").check();
   await captureEvidenceLayouts(page, testInfo, "image-editor-ready");
   await page.getByRole("button", { name: "Save privately" }).click();
   await expect(page.getByText("Saved privately. Public content was not changed.")).toBeVisible();
