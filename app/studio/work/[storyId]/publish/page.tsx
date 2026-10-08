@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { publishStoryAction } from "@/features/work/actions";
-import { loadOwnerStoryPage } from "@/features/work/page-data";
+import { loadOwnerStoryPage, loadOwnerMediaErrors } from "@/features/work/page-data";
+import { OwnerMediaPreview } from "@/features/work/owner-media-preview";
 import { StudioWorkFrame } from "@/features/work/studio-work-frame";
 import { storyProgressLabel } from "@/features/work/types";
 import { publicationFieldErrors } from "@/features/work/validation";
@@ -47,6 +48,9 @@ function ReviewFields({
     progress: "ONGOING" | "COMPLETED" | "CANCELLED" | null;
     outcome: string | null;
     stack: string[];
+    releaseHistory?: "SHIPPED" | "NEVER_SHIPPED" | null;
+    availability?: "LIVE_DESTINATION" | "NO_LIVE_DESTINATION" | null;
+    liveDestinationUrl?: string | null;
   };
   emphasized?: boolean;
 }) {
@@ -108,6 +112,18 @@ function ReviewFields({
             {story.outcome?.trim() || "Not added"}
           </dd>
         </div>
+        <div className="flex flex-col gap-1">
+          <dt className="text-sm font-medium text-muted-ink">Release history</dt>
+          <dd className="text-base text-ink">{story.releaseHistory?.replaceAll("_", " ").toLowerCase() || "Not confirmed"}</dd>
+        </div>
+        <div className="flex flex-col gap-1">
+          <dt className="text-sm font-medium text-muted-ink">Current availability</dt>
+          <dd className="text-base text-ink">{story.availability?.replaceAll("_", " ").toLowerCase() || "Not confirmed"}</dd>
+        </div>
+        <div className="flex min-w-0 flex-col gap-1 md:col-span-2">
+          <dt className="text-sm font-medium text-muted-ink">Live destination</dt>
+          <dd className="break-all text-base text-ink">{story.liveDestinationUrl || "Not confirmed"}</dd>
+        </div>
       </dl>
     </section>
   );
@@ -118,11 +134,39 @@ export default async function PublishStoryPage({
   searchParams,
 }: PublishPageProps) {
   const [{ storyId }, query] = await Promise.all([params, searchParams]);
-  const story = await loadOwnerStoryPage(storyId);
+  const [story, mediaErrors] = await Promise.all([
+    loadOwnerStoryPage(storyId), loadOwnerMediaErrors(storyId),
+  ]);
   const fieldErrors = publicationFieldErrors(story);
-  const errors = Object.entries(fieldErrors).flatMap(([field, messages]) =>
-    (messages ?? []).map((message) => ({ field, message })),
-  );
+  const errors = [
+    ...Object.entries(fieldErrors).flatMap(([field, messages]) =>
+      (messages ?? []).map((message) => ({ field, message }))),
+    ...mediaErrors.map((message) => ({ field: "evidence", message })),
+  ];
+  const oldEvidence = new Map(story.published?.evidence.map((row) => [row.id, row]) ?? []);
+  const evidenceChanges = [
+    ...story.evidence.flatMap((row) => {
+      const old = oldEvidence.get(row.id);
+      if (!old) return ["Added " + (row.title || row.kind)];
+      const changes = ([
+        "kind", "position", "title", "caption", "captureStage",
+        "permissionConfirmed", "alternativeText", "equivalentDescription",
+        "transcript", "textLinkText", "textLinkUrl",
+        "recordingAccessibilityMode", "sourceAssetId",
+        "posterAssetId", "captionTrackAssetId",
+      ] as const).filter((field) => row[field] !== old[field]);
+      return changes.length ? [
+        (row.title || row.kind) + ": " + changes.join(", ") + " changed",
+      ] : [];
+    }),
+    ...(story.published?.evidence ?? []).filter((row) =>
+      !story.evidence.some((current) => current.id === row.id))
+      .map((row) => "Removed " + (row.title || row.kind)),
+    ...(story.discoveryCoverEvidenceId !== story.published?.discoveryCoverEvidenceId
+      ? ["Discovery cover selection changed"] : []),
+    ...(story.leadEvidenceId !== story.published?.leadEvidenceId
+      ? ["Lead selection changed"] : []),
+  ];
   const actionLabel = story.published ? "Update published content" : "Publish";
   const failure = errorMessage(query.error);
   const boundaryMessage = story.published
@@ -230,6 +274,34 @@ export default async function PublishStoryPage({
             </section>
           )}
         </div>
+
+        <section className="flex flex-col gap-4 rounded-lg border border-boundary bg-surface p-5">
+          <h2 className="text-xl font-semibold text-ink">Candidate vs public Evidence changes</h2>
+          <p className="text-sm text-muted-ink">These changes affect the discovery cover, Story lead and Problem figures when their references change. Public media remains on its previous snapshot until confirmed Update.</p>
+          {evidenceChanges.length ? (
+            <ul className="list-disc ps-5 text-sm text-ink">
+              {evidenceChanges.map((change, i) => <li key={i}>{change}</li>)}
+            </ul>
+          ) : <p className="text-sm text-muted-ink">No Evidence metadata changes.</p>}
+          <div className="grid min-w-0 gap-4 lg:grid-cols-2">
+            <section className="min-w-0">
+              <h3 className="mb-3 font-semibold text-ink">Saved candidate · private</h3>
+              <OwnerMediaPreview storyId={story.id} rows={story.evidence}
+                cover={story.discoveryCoverEvidenceId} lead={story.leadEvidenceId}
+                figures={story.evidence.flatMap((item) => item.problemFigures)
+                  .sort((a, b) => a.position - b.position).map((f) => f.evidenceId)} />
+            </section>
+            {story.published ? (
+              <section className="min-w-0">
+                <h3 className="mb-3 font-semibold text-ink">Current public snapshot</h3>
+                <OwnerMediaPreview storyId={story.id} rows={story.published.evidence}
+                  cover={story.published.discoveryCoverEvidenceId}
+                  lead={story.published.leadEvidenceId}
+                  figures={[]} />
+              </section>
+            ) : null}
+          </div>
+        </section>
 
         <section className="flex flex-col gap-4 rounded-lg border border-boundary bg-surface p-5 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">
