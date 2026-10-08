@@ -142,10 +142,12 @@ async function expiredPendingAsset(storyId: string) {
     byteSize: PNG_BYTES.length,
   });
   await writeStagedMedia(generation.storageKey, PNG_BYTES);
-  await db.mediaAsset.update({
-    where: { id: generation.assetId },
-    data: { leaseExpiresAt: new Date(Date.now() - 60_000) },
-  });
+  // Boundary: exactly at DB time (now >= lease), not app-clock skew.
+  await db.$executeRaw`
+    UPDATE "MediaAsset"
+    SET "leaseExpiresAt" = CURRENT_TIMESTAMP
+    WHERE "id" = ${generation.assetId}
+  `;
   return generation;
 }
 
