@@ -52,6 +52,12 @@ function errorCode(error: unknown): string | null {
     "code" in error &&
     typeof error.code === "string"
   ) {
+    if (error.code === "P2010" && "meta" in error &&
+      typeof error.meta === "object" && error.meta !== null &&
+      "code" in error.meta &&
+      (error.meta.code === "40001" || error.meta.code === "40P01")) {
+      return "P2034";
+    }
     return error.code;
   }
 
