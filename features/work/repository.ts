@@ -407,7 +407,7 @@ export async function publishStory(input: {
 export async function listStoryWorkingCopies() {
   return db.story.findMany({
     orderBy: [{ updatedAt: "desc" }, { id: "asc" }],
-    include: { published: true },
+    include: { published: true, _count: { select: { evidence: true } } },
   });
 }
 
