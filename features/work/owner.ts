@@ -1,6 +1,6 @@
 import "server-only";
 
-import { requireOwnerSession } from "@/lib/auth";
+import { OwnerAuthorizationError, requireOwnerSession } from "@/lib/auth";
 import { getServerConfig } from "@/lib/config/server";
 
 import {
