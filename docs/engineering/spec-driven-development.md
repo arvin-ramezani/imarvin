@@ -15,8 +15,8 @@ Specs live under `docs/implementation/<issue>-<slug>.md` unless a scoped directo
 All AI-authored Markdown targets <=120 lines and has a hard maximum of 150 lines; shorter is preferred when complete.
 If a document would exceed 150 lines, split by authority/responsibility/lifecycle and cross-link rather than duplicate context.
 Implementation specs follow the same rule; do not pad documents to reach a minimum.
-Recommended spec sections: status/issue/dependencies/authority, goal/non-goals, user/system flow, data/API, UI/accessibility,
-failure/conflict/privacy/recovery, tests/acceptance mapping, and genuinely blocking open questions.
+Recommended spec sections: status/issue/dependencies/authority, goal/non-goals, user/system flow, data/API/server-action changes, UI/accessibility,
+failure/conflict/privacy/rollback/recovery, tests/acceptance mapping, and genuinely blocking open questions.
 
 ## 3. Feature issue contract
 Every feature implementation starts from one GitHub issue.
@@ -51,7 +51,7 @@ The Executor is a **normal ChatGPT chat with GitHub access**, not a mandated IDE
 Agents must not invent missing content, architecture, credentials, metrics, dependencies, or product behavior.
 
 ## 6. Pull request contract
-PR description: issue/spec links, exact base/head when verification requires them, changes/non-goals and schema/config/dependency effects;
+PR description: issue/spec links, exact base/head when verification requires them, changes/non-goals and schema/migration/config/dependency effects;
 checks actually run and results, pending manual/runtime evidence, and screenshots only when useful.
 A PR should be small enough for an independent reviewer to understand its behavioral impact.
 If the PR head moves after deterministic/security review, affected verification must be repeated on the new head.
@@ -59,7 +59,7 @@ If the PR head moves after deterministic/security review, affected verification 
 ## 7. Review and merge
 Select and record gates on the bounded issue before implementation. For meaningful work: Executor PLAN ONLY → separate Independent Plan Review → Implementation → deterministic verification → Design QA if meaningful UI → Security Review if security-sensitive → Independent Review → local runtime acceptance if required → Command Center merge. A failed gate returns to the appropriate executor/plan step.
 Follow [UI skill policy](ui-skill-policy.md) for media-role, mobile, responsive, animation and Design QA triggers. Security Review is required for auth/sessions, secrets, uploads, private/public or trust boundaries, filesystem/process permissions, network/TLS/proxy, privileged deployment and security fixes.
-Use **separate fresh ChatGPT reviewer chats** from the Executor and preferably fresh chats on each re-review. Reviewers inspect issue/spec, architecture, security, failure paths, regressions and exact-SHA evidence; record PASS/findings on the PR. Reviewers do not implement or merge.
+Use **separate fresh ChatGPT reviewer chats** from the Executor and preferably fresh chats on each re-review. Reviewers inspect issue/spec, architecture, code quality, accessibility, security/privacy, migrations, failure paths, regressions and exact-SHA evidence; record PASS/findings on the PR. Reviewers do not implement or merge.
 After a source change, invalidate affected SHA-bound verification/reviews and repeat those gates. Never reuse stale PASS or claim unrun checks passed.
 Command Center has standing owner merge authorization only after verifying open/mergeable PR, unchanged reviewed head, valid required PASS or justified NOT REQUIRED, no blockers/unresolved threads, and any required runtime PASS. Explicit owner prohibition overrides; prefer squash merge.
 
