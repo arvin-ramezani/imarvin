@@ -123,7 +123,13 @@ export function EvidenceEditor({
       const endpoint = "/api/studio/work/" + encodeURIComponent(storyId) +
         "/media" + (failedId ? "/" + encodeURIComponent(failedId) + "/retry" : "");
       const response = await fetch(endpoint, { method: "POST", body: data });
-      if (!response.ok) throw new Error("Upload rejected (" + response.status + "). Check file format/size or retry.");
+      if (!response.ok) {
+        const reason = (await response.text()).slice(0, 100);
+        throw new Error(
+          "Upload rejected (" + response.status + "): " +
+          (reason || "Check file format/size or retry."),
+        );
+      }
       const asset = await response.json() as MediaEntry;
       setAssets((old) => [...old.filter((item) => item.id !== asset.id), {
         ...asset, originalFileName: file.name,
