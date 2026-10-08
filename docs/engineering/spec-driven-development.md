@@ -102,7 +102,7 @@ Vitest is the unit/integration runner for deterministic domain/validation logic,
 React Testing Library runs with Vitest for React component behavior; test user-observable semantics such as roles, labels, text, focus, and visible state rather than component internals.
 Playwright is the E2E runner: use it only for critical browser journeys whose confidence cannot be obtained cheaply below the browser level.
 Do not duplicate the same assertion at every test layer.
-Use [lean AI-assisted QA and runtime acceptance](qa-runtime-acceptance.md) to select only high-value manual scenarios, compare expected/observed results and record exact-head evidence without overtesting.
+When guiding **human-executed runtime acceptance**, follow [AI-guided manual runtime acceptance](qa-runtime-acceptance.md) to give one shell-appropriate command step at a time, verify real output and record exact-head evidence; **do not author automated tests under that procedure**.
 Run local runtime/product-design acceptance when an implemented slice creates the relevant surface; defer production-only evidence to the final production phase.
 Runtime product-design checks from RV01–RV14 are executed when the implemented surface exists and recorded as evidence.
 CI/lint must reject direct application `console.*` use and direct Pino imports outside the shared logging module.
