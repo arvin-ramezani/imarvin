@@ -3,6 +3,8 @@ import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
+import { getServerConfig } from "../../lib/config/server";
+
 // Test-only synthetic capture: generate *valid decodable* H.264 once per
 // fixture, then forge only the avc1 sample-entry dimensions. No source asset,
 // shipping binary, external media or production filesystem is involved.
@@ -15,7 +17,7 @@ export function forgedH264Dimensions(
   const dir = mkdtempSync(join(tmpdir(), "imarvin-video-dimensions-"));
   try {
     const target = join(dir, "synthetic.mp4");
-    const ffmpeg = process.env.MEDIA_FFMPEG_PATH || "/usr/bin/ffmpeg";
+    const ffmpeg = getServerConfig().MEDIA_FFMPEG_PATH;
     const result = spawnSync(ffmpeg, [
       "-hide_banner", "-nostdin", "-loglevel", "error",
       "-f", "lavfi",
