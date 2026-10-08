@@ -158,7 +158,7 @@ export function EvidenceEditor({
   const choices = rows.filter((row) => row.kind === "IMAGE" || row.kind === "RECORDING");
 
   return (
-    <section className="flex min-w-0 flex-col gap-5 rounded-lg border border-boundary bg-surface p-5 md:p-6" aria-labelledby={id}>
+    <section id="evidence" className="flex min-w-0 flex-col gap-5 rounded-lg border border-boundary bg-surface p-5 md:p-6" aria-labelledby={id}>
       <input type="hidden" name="evidenceJson" value={JSON.stringify(rows)} />
       <input type="hidden" name="discoveryCoverEvidenceId" value={cover} />
       <input type="hidden" name="leadEvidenceId" value={lead} />
