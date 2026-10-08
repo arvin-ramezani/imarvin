@@ -53,10 +53,20 @@ function errorCode(error: unknown): string | null {
     typeof error.code === "string"
   ) {
     if (error.code === "P2010" && "meta" in error &&
-      typeof error.meta === "object" && error.meta !== null &&
-      "code" in error.meta &&
-      (error.meta.code === "40001" || error.meta.code === "40P01")) {
-      return "P2034";
+      typeof error.meta === "object" && error.meta !== null) {
+      if ("code" in error.meta &&
+        (error.meta.code === "40001" || error.meta.code === "40P01")) {
+        return "P2034";
+      }
+      const adapter = "driverAdapterError" in error.meta
+        ? error.meta.driverAdapterError : null;
+      const cause = adapter && typeof adapter === "object" && "cause" in adapter
+        ? adapter.cause : null;
+      if (cause && typeof cause === "object" && "kind" in cause &&
+        cause.kind === "TransactionWriteConflict" &&
+        "originalCode" in cause && cause.originalCode === "40001") {
+        return "P2034";
+      }
     }
     return error.code;
   }
