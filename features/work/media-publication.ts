@@ -117,7 +117,7 @@ export async function publicationEvidenceErrors(
           const file = new File([new Uint8Array(bytes)], "captions.vtt", {
             type: "text/vtt",
           });
-          await validateMediaBytes(file, bytes, row.sourceAsset.durationMs);
+          await validateMediaBytes(file, bytes, row.sourceAsset?.durationMs ?? null);
         } catch {
           bad("caption cues are unavailable or invalid for this video's duration.");
         }
