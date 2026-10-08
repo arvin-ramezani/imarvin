@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { OwnerAuthorizationError } from "@/lib/auth";
+import { getServerConfig } from "@/lib/config/server";
 import { logEvent } from "@/lib/logging/logger";
 
 import {
@@ -199,6 +200,13 @@ export async function publishStoryAction(formData: FormData): Promise<void> {
   }
 
   const incomingHeaders = requestHeaders(await headers());
+  // Explicit publication is a media-reference mutation when Evidence exists.
+  // Apply the same exact-Origin rule as owner uploads/reference edits.
+  const requestOrigin = incomingHeaders.get("origin");
+  if (requestOrigin !== new URL(getServerConfig().APP_ORIGIN).origin ||
+    incomingHeaders.get("sec-fetch-site")?.toLowerCase() === "cross-site") {
+    redirect(`/studio/work/${storyId.data}/publish?error=origin`);
+  }
   let target: string;
 
   try {
