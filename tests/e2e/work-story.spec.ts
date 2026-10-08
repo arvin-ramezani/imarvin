@@ -326,7 +326,7 @@ test("maximum-valid unbroken authored text reflows across Work surfaces at 320px
 
 test("owner authors image Evidence, previews saved media, and updates its published snapshot", async ({ page }) => {
   const pngBytes = Buffer.from(
-    "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==",
+    "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAxMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==",
     "base64",
   );
 
