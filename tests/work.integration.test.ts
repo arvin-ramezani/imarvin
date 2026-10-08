@@ -44,61 +44,64 @@ describe("work story publishing", () => {
   });
 
   it("allows exactly one concurrent private save for a working revision", async () => {
-    const story = await createStory({
-      title: "Initial",
-      problem: "",
-      contribution: "",
-      progress: null,
-      outcome: null,
-      stack: [],
-    });
-
-    const attempts = await Promise.allSettled([
-      saveStory(story.id, 1, {
-        title: "Concurrent title A",
+    // Temporary diagnostic reproduction; restore one iteration after capturing the error shape.
+    for (let replay = 0; replay < 20; replay += 1) {
+      const story = await createStory({
+        title: "Initial",
         problem: "",
         contribution: "",
         progress: null,
         outcome: null,
         stack: [],
-      }),
-      saveStory(story.id, 1, {
-        title: "Concurrent title B",
-        problem: "",
-        contribution: "",
-        progress: null,
-        outcome: null,
-        stack: [],
-      }),
-    ]);
+      });
 
-    const fulfilled = attempts.filter(
-      (attempt) => attempt.status === "fulfilled",
-    );
-    const rejected = attempts.filter(
-      (attempt) => attempt.status === "rejected",
-    );
+      const attempts = await Promise.allSettled([
+        saveStory(story.id, 1, {
+          title: "Concurrent title A",
+          problem: "",
+          contribution: "",
+          progress: null,
+          outcome: null,
+          stack: [],
+        }),
+        saveStory(story.id, 1, {
+          title: "Concurrent title B",
+          problem: "",
+          contribution: "",
+          progress: null,
+          outcome: null,
+          stack: [],
+        }),
+      ]);
 
-    expect(fulfilled).toHaveLength(1);
-    expect(rejected).toHaveLength(1);
-    const loser = rejected[0]?.status === "rejected" ? rejected[0].reason : null;
-    const code = loser && typeof loser === "object" && "code" in loser
-      ? loser.code : null;
-    const meta = loser && typeof loser === "object" && "meta" in loser
-      ? loser.meta : null;
-    const metaCode = meta && typeof meta === "object" && "code" in meta
-      ? meta.code : null;
-    expect(loser, "Concurrent-save error diagnostic: " + JSON.stringify({
-      name: loser?.constructor?.name, code, metaCode,
-      metaKeys: meta && typeof meta === "object" ? Object.keys(meta) : [],
-    })).toBeInstanceOf(StoryConflictError);
+      const fulfilled = attempts.filter(
+        (attempt) => attempt.status === "fulfilled",
+      );
+      const rejected = attempts.filter(
+        (attempt) => attempt.status === "rejected",
+      );
 
-    const current = await db.story.findUniqueOrThrow({
-      where: { id: story.id },
-    });
+      expect(fulfilled).toHaveLength(1);
+      expect(rejected).toHaveLength(1);
+      const loser = rejected[0]?.status === "rejected" ? rejected[0].reason : null;
+      const code = loser && typeof loser === "object" && "code" in loser
+        ? loser.code : null;
+      const meta = loser && typeof loser === "object" && "meta" in loser
+        ? loser.meta : null;
+      const metaCode = meta && typeof meta === "object" && "code" in meta
+        ? meta.code : null;
+      expect(loser, "Concurrent-save error diagnostic: " + JSON.stringify({
+        name: loser?.constructor?.name, code, metaCode,
+        metaKeys: meta && typeof meta === "object" ? Object.keys(meta) : [],
+      })).toBeInstanceOf(StoryConflictError);
 
-    expect(["Concurrent title A", "Concurrent title B"]).toContain(current.title);
-    expect(current.workingRevision).toBe(2);
+      const current = await db.story.findUniqueOrThrow({
+        where: { id: story.id },
+      });
+
+      expect(["Concurrent title A", "Concurrent title B"]).toContain(current.title);
+      expect(current.workingRevision).toBe(2);
+    }
   });
 
   it("allows exactly one concurrent first publication", async () => {
