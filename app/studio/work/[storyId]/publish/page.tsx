@@ -2,7 +2,7 @@ import { Globe2, LockKeyhole } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { publishStoryAction } from "@/features/work/actions";
+import { PublicationConfirmation } from "@/features/work/publication-confirmation";
 import { loadOwnerStoryPage, loadOwnerMediaErrors } from "@/features/work/page-data";
 import { OwnerMediaPreview } from "@/features/work/owner-media-preview";
 import { StudioWorkFrame } from "@/features/work/studio-work-frame";
@@ -325,25 +325,12 @@ export default async function PublishStoryPage({
 
           <div className="flex flex-wrap gap-3">
             {errors.length === 0 ? (
-              <form action={publishStoryAction}>
-                <input type="hidden" name="storyId" value={story.id} />
-                <input
-                  type="hidden"
-                  name="workingRevision"
-                  value={story.workingRevision}
-                />
-                <input
-                  type="hidden"
-                  name="publishedRevision"
-                  value={story.published?.revision ?? ""}
-                />
-                <button
-                  type="submit"
-                  className="min-h-12 rounded-md bg-action-fill px-6 py-2 font-semibold text-action-ink outline-none hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                >
-                  {actionLabel}
-                </button>
-              </form>
+              <PublicationConfirmation
+                storyId={story.id}
+                workingRevision={story.workingRevision}
+                publishedRevision={story.published?.revision ?? null}
+                label={actionLabel}
+              />
             ) : null}
             <Link
               href={"/studio/work/" + story.id + "/edit"}
