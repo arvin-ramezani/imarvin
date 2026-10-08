@@ -319,3 +319,64 @@ test("maximum-valid unbroken authored text reflows across Work surfaces at 320px
   ).toBeVisible();
   await expectNoHorizontalPageOverflow();
 });
+
+
+test("owner authors image Evidence, previews saved media, and updates its published snapshot", async ({ page }) => {
+  const pngBytes = Buffer.from(
+    "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGP8z8DAwMDAwMDAAAANHQEDasKb6QAAAABJRU5ErkJggg==",
+    "base64",
+  );
+
+  await signIn(page);
+  await page.goto("/studio/work/new");
+  await page.getByLabel("Title").fill("Evidence flow");
+  await page.getByLabel("Problem or hook").fill("Explain a built user interaction");
+  await page.getByLabel("Your contribution").fill("Built and reviewed the implementation");
+  await page.getByLabel("Project progress").selectOption("COMPLETED");
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await expect(page).toHaveURL(/\/studio\/work\/[0-9a-f-]+\/edit\?saved=1$/);
+
+  const storyId = new URL(page.url()).pathname.split("/").at(-2);
+  expect(storyId).toBeTruthy();
+  await page.getByRole("button", { name: "Add image" }).click();
+  await page.getByLabel("Evidence title").fill("Interface screenshot");
+  await page.getByLabel("Purpose / caption").fill("Initial capture");
+  await page.getByLabel("Confirmed capture stage").selectOption("LOCAL_BUILD");
+  await page.getByLabel("I confirm this Evidence may be published").check();
+  await page.getByLabel("Image alternative text").fill("A two-pixel synthetic interface capture");
+  await page.locator('input[type="file"]').first().setInputFiles({
+    name: "capture.png", mimeType: "image/png", buffer: pngBytes,
+  });
+  await expect(page.getByText("Upload Ready. Save privately to attach this asset to the candidate."))
+    .toBeVisible();
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await expect(page.getByText("Saved privately. Public content was not changed.")).toBeVisible();
+
+  await page.getByRole("link", { name: "Preview saved candidate" }).click();
+  await expect(page.getByText("Private preview", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Interface screenshot/ })).toBeVisible();
+  await page.getByRole("link", { name: "Back to editing" }).click();
+  await page.getByRole("link", { name: "Review publication" }).click();
+  await expect(page.getByText("Added Interface screenshot")).toBeVisible();
+  await page.getByRole("button", { name: "Publish", exact: true }).click();
+  await expect(page.getByText("Published. A fresh public request now uses this saved snapshot."))
+    .toBeVisible();
+
+  const first = await db.publishedEvidence.findFirstOrThrow({
+    where: { storyId },
+  });
+  expect(first.caption).toBe("Initial capture");
+  await page.getByLabel("Purpose / caption").fill("Revised private caption");
+  await page.getByRole("button", { name: "Save privately" }).click();
+  await expect(page.getByText("Saved privately. Public content was not changed.")).toBeVisible();
+  expect((await db.publishedEvidence.findFirstOrThrow({ where: { storyId } })).caption)
+    .toBe("Initial capture");
+  await page.getByRole("link", { name: "Review publication" }).click();
+  await expect(page.getByText(/caption changed/)).toBeVisible();
+  await page.getByRole("button", { name: "Update published content", exact: true }).click();
+  await expect(page.getByText(
+    "Published content updated. The public snapshot now matches this saved candidate.",
+  )).toBeVisible();
+  expect((await db.publishedEvidence.findFirstOrThrow({ where: { storyId } })).caption)
+    .toBe("Revised private caption");
+});
