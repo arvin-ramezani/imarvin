@@ -166,6 +166,11 @@ export default async function PublishStoryPage({
       ? ["Discovery cover selection changed"] : []),
     ...(story.leadEvidenceId !== story.published?.leadEvidenceId
       ? ["Lead selection changed"] : []),
+    ...(JSON.stringify(story.evidence.flatMap((row) => row.problemFigures)
+        .sort((a, b) => a.position - b.position).map((f) => f.evidenceId)) !==
+      JSON.stringify((story.published?.evidence ?? []).flatMap((row) => row.problemFigures)
+        .sort((a, b) => a.position - b.position).map((f) => f.evidenceId))
+      ? ["Problem figure selections/order changed"] : []),
   ];
   const actionLabel = story.published ? "Update published content" : "Publish";
   const failure = errorMessage(query.error);
