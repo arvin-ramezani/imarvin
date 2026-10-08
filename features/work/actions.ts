@@ -15,6 +15,7 @@ import {
 } from "./owner";
 import {
   StoryConflictError,
+  StoryCandidateValidationError,
   StoryNotFoundError,
   StoryPublicationValidationError,
 } from "./repository";
@@ -119,6 +120,9 @@ export async function saveStoryAction(
     revalidatePath(`/studio/work/${story.id}/publish`);
     target = targetForIntent(intent, story.id);
   } catch (error) {
+    if (error instanceof StoryCandidateValidationError) {
+      return validationState(previous, parsed.values, error.fieldErrors);
+    }
     if (error instanceof StoryConflictError) {
       return {
         attempt: previous.attempt + 1,
