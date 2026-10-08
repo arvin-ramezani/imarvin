@@ -419,6 +419,7 @@ export async function getStoryWorkingCopy(storyId: string) {
         include: {
           evidence: { orderBy: { position: "asc" }, include: {
             sourceAsset: true, posterAsset: true, captionTrackAsset: true,
+            problemFigures: true,
           } },
         },
       },
