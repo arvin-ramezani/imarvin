@@ -2,7 +2,8 @@ import { LockKeyhole } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { loadOwnerStoryPage } from "@/features/work/page-data";
+import { loadOwnerStoryPage, loadOwnerMediaErrors } from "@/features/work/page-data";
+import { OwnerMediaPreview } from "@/features/work/owner-media-preview";
 import { StorySummary } from "@/features/work/story-summary";
 import { publicationFieldErrors } from "@/features/work/validation";
 
@@ -17,9 +18,11 @@ export const metadata: Metadata = {
 
 export default async function StoryPreviewPage({ params }: PreviewPageProps) {
   const { storyId } = await params;
-  const story = await loadOwnerStoryPage(storyId);
+  const [story, mediaErrors] = await Promise.all([
+    loadOwnerStoryPage(storyId), loadOwnerMediaErrors(storyId),
+  ]);
   const publicationErrors = publicationFieldErrors(story);
-  const missingCount = Object.values(publicationErrors).flat().length;
+  const missingCount = Object.values(publicationErrors).flat().length + mediaErrors.length;
 
   return (
     <section className="flex flex-col gap-10">
@@ -57,6 +60,27 @@ export default async function StoryPreviewPage({ params }: PreviewPageProps) {
       ) : null}
 
       <StorySummary story={story} preview />
+      <section className="max-w-3xl rounded-lg border border-boundary bg-surface p-5">
+        <h2 className="font-semibold text-ink">Confirmed project facts</h2>
+        <p className="text-sm text-muted-ink">Release: {story.releaseHistory?.replaceAll("_", " ").toLowerCase() || "Not confirmed"}</p>
+        <p className="text-sm text-muted-ink">Availability: {story.availability?.replaceAll("_", " ").toLowerCase() || "Not confirmed"}</p>
+        {story.availability === "LIVE_DESTINATION" && story.liveDestinationUrl ? (
+          <p className="break-all text-sm text-ink">{story.liveDestinationUrl}</p>
+        ) : null}
+      </section>
+      {mediaErrors.length ? (
+        <aside className="max-w-3xl border-s-2 border-destructive ps-4">
+          <h2 className="font-semibold text-destructive">Publication repairs needed</h2>
+          <ul className="list-disc ps-5 text-sm text-ink">
+            {mediaErrors.map((error, i) => <li key={i}>{error}</li>)}
+          </ul>
+        </aside>
+      ) : null}
+      <OwnerMediaPreview storyId={story.id} rows={story.evidence}
+        cover={story.discoveryCoverEvidenceId}
+        lead={story.leadEvidenceId}
+        figures={story.evidence.flatMap((evidence) => evidence.problemFigures)
+          .sort((a, b) => a.position - b.position).map((figure) => figure.evidenceId)} />
     </section>
   );
 }
