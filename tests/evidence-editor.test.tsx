@@ -87,4 +87,38 @@ describe("private Evidence editor", () => {
     expect(row?.permissionConfirmed).toBeNull();
     expect(screen.getByRole("status").textContent).toContain("Save the reset");
   });
+  it("replaces a saved caption without retaining stale text and keeps other fields editable", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => ({
+      ok: true, json: async () => ({ assets: [] }),
+    })));
+    const onDirty = vi.fn();
+    const user = userEvent.setup();
+    const { container } = render(
+      <EvidenceEditor storyId="66666666-6666-4666-8666-666666666666"
+        initialEvidence={[{ ...recording, caption: "Initial capture" }]}
+        initialCover={EVIDENCE_ID} initialLead={EVIDENCE_ID}
+        initialFigures={[]} initialAssets={[]} onDirty={onDirty} />,
+    );
+
+    const caption = screen.getByLabelText("Purpose / caption") as HTMLTextAreaElement;
+    expect(caption.value).toBe("Initial capture");
+    await user.clear(caption);
+    await user.type(caption, "Revised private caption");
+    expect(caption.value).toBe("Revised private caption");
+    const candidate = () => JSON.parse(
+      container.querySelector<HTMLInputElement>('input[name="evidenceJson"]')?.value ?? "[]",
+    ) as EvidenceDraftInput[];
+    expect(candidate()[0]?.caption).toBe("Revised private caption");
+
+    await user.type(caption, "!");
+    expect(caption.value).toBe("Revised private caption!");
+    expect(candidate()[0]?.caption).toBe("Revised private caption!");
+
+    const title = screen.getByLabelText("Evidence title") as HTMLInputElement;
+    await user.clear(title);
+    await user.type(title, "Updated demo");
+    expect(candidate()[0]?.title).toBe("Updated demo");
+    expect(onDirty).toHaveBeenCalled();
+  });
+
 });
