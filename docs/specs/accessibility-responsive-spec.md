@@ -56,7 +56,7 @@ Image inspection does not add a crop/annotation/video editing suite requirement;
 
 Apply the same reading, contrast, focus, touch, reflow, and motion targets in Light and Dark. System is a preference, not a third palette. Check status, pending, error, disabled, selected, dialog, and sign-in states; do not rely on glow/shadow on dark surfaces.
 Theme selection has a clear accessible name/current choice and visible System/Light/Dark option labels. Preserve focus, open-dialog context, and unsaved input; no theme-change reload or motion-dependent feedback. Evidence/logo colors remain authentic.
-Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR09 in both modes. First-appearance/no-flash and persistence implementation remain architecture-dependent.
+Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR10 in both modes. First-appearance/no-flash and persistence implementation remain architecture-dependent.
 
 ## 5. Review scenarios
 
