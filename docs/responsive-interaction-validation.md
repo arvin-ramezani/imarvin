@@ -1,6 +1,6 @@
 # Responsive & Interaction Validation
 
-Status: earlier written review complete; P15 media coverage added, rendered/task/runtime checks Pending. Updated: 2026-10-07.
+Status: earlier written review complete; P15 media coverage and accepted P17 focus scenario added, rendered/task/runtime checks Pending. Updated: 2026-10-12.
 Earlier baseline: main `92867925b7021572a443fa861160110334e53ea5` (merged PR #2). P15 baseline: main `40ea65b8d891a78beb184a8481baa3ff981bc64b` (merged text-only #23). Scope: documents only.
 Authority: [decisions](decisions.md), [visual system](specs/visual-system-spec.md), [acceptance](specs/acceptance-spec.md). Behavior remains in linked specifications; this document owns validation coverage and evidence status.
 
@@ -47,7 +47,7 @@ RV identifiers are validation cases, not new product requirements. Expected beha
 | RV01 · PU01/PU06/PU07, VS01/VS05 | Enter → feature or Contact | Identity, one work action and independent Contact stay clear; narrow composition preserves work emphasis | Removed feature uses curated fallback or honest no-work state; no dead action or mandatory tour |
 | RV02 · PU02, NS01/NS06 | Filter → story → sections → Return/Back | Restore valid company filter, invoking item and position; tab changes do not add Back steps | Touch/keyboard have same loop; vanished item falls back safely with explanation |
 | RV03 · PU05, AR02/AR03 | Inspect → select section | Summary stays; zero sections has summary only, one has direct heading, two or more expose selected tab/panel | Arrow/Home/End move focus; Enter/Space activates; absent sections omitted; controls wrap |
-| RV04 · NS02/NS05, AR07 | Evidence → Close; resize or switch during request | Inline caption/heading fit; Close returns trigger; leaving Evidence closes inspection; late response cannot replace new state | Deep link opens same public evidence; failure offers Retry/Close and retains story; no inline focus trap |
+| RV04 · NS02/NS05/NS07, AR07/AR10 | Figure/Evidence/direct-link → Evidence → Close; resize or switch during request | Figure origin restores Problem/Decisions and figure focus (or visible heading fallback); Evidence/direct-link Close stays in Evidence; leaving stops inspection; late response cannot replace current state | No hidden focus target or extra Back entry; deep link and scoped Retry/Close retain story; no inline focus trap |
 | RV05 · PU04, CP11, AR06 | Experience → work | Shared name/logo context; multiple choices or main story directly; same underlying story | Missing logo/media needs no filler or extra click; long titles/URLs wrap |
 | RV06 · NS03/NS04, PU06 | Shared/stale link → Back/Forward | Valid selections round-trip; direct Return leads to All work; invalid location uses defined fallback | No private title/asset in unavailable response; Contact remains accessible |
 | RV07 · OU08, AR01/AR04 | Edit → reorder → review at minimum width/zoom | Labels, values, status/error links visible; move buttons announce position; labeled comparison groups stack | Keyboard/picker alternatives; on-screen keyboard/action bars never cover focused field/error/action |
