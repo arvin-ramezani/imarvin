@@ -40,6 +40,7 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P15 | Extend product/UI/UX documents with purposeful project images/video, including cancelled or never-shipped work and recorded animations | 2026-10-07: owner requests documentation updates only, explicitly excludes image/app creation. [Media/evidence](specs/media-evidence-spec.md); detailed placement/player/authoring proposals await review, not covered by earlier rendered approval. |
 | P16 | Owner/admin UI uses no interface animation or transitions at any screen size; public UI uses purposeful motion where it improves UX across public routes/screen sizes, with reduced-motion parity and CSS-first implementation | 2026-10-07 owner instruction. Framer Motion is public-only when CSS is insufficient. User-controlled project media playback is content, not owner UI chrome motion. [UI skill policy](engineering/ui-skill-policy.md). |
 | P17 | Close of Evidence opened from a Problem/Decisions figure restores that section and focuses its figure, or a safe visible heading if unavailable. Evidence-origin/direct-link Close stays in Evidence with valid focus. | 2026-10-12 owner confirmation of UX-A01; [navigation](specs/navigation-state-spec.md), [media](specs/media-evidence-spec.md), [accessibility](specs/accessibility-responsive-spec.md). Only this Close/focus rule is accepted; other P15 media proposals remain unapproved. |
+| P18 | UI/UX mockups and non-production development/tests use explicitly synthetic fixture data, not real projects, customer records, real contact destinations, or actual project Evidence. Assume project-owner media permission for planning; do not present synthetic captures as real or include sensitive information. | 2026-10-12 owner instruction; [visual workflow](specs/visual-source-workflow-spec.md), [content fixtures](content-inventory.md#screen-scoped-visual-content-gates). Fixture approval is visual only; O01–O03 still gate actual public publication. |
 
 ## Architecture baseline
 
@@ -60,10 +61,10 @@ Public navigation/history and component behavior remain contracts to validate at
 | ID | Needed | Gate |
 | --- | --- | --- |
 | O01 | Company identity, role/dates, responsibility/team boundaries | Factual publication |
-| O02 | Actual featured work, decisions/evidence/files and permission, captured stage, release history/availability, curated grouping/order | Content-backed public design review |
+| O02 | Actual featured work, decisions/evidence/files and permission, captured stage, release history/availability, curated grouping/order | Real content publication, not fixture-based UI mockups/tests |
 | O03 | Real contact destinations/availability wording | Contact/publication |
 
-O05 is resolved at architecture level by T01/T03–T07. Application implementation still requires the T02 issue/spec workflow and feature-specific technical details.
+O05 is resolved at architecture level by T01/T03–T07. Application implementation still requires the T02 issue/spec workflow and feature-specific technical details. P18 applies only to mockups, development and tests: it does not clear factual publication gates, production permissions or public media review.
 
 ## Superseded direction
 
