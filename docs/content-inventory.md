@@ -1,6 +1,6 @@
 # Content Inventory
 
-Status: planning snapshot of owner-reported candidates, updated 2026-10-12. This is not publish-ready copy or confirmation that assets exist; O01–O03 remain open.
+Status: real-content inventory for eventual publication, updated 2026-10-12. P18 uses synthetic fixtures for mockups/non-production development; O01–O03 remain open only for real publication.
 
 ## Unixsee
 
@@ -45,17 +45,17 @@ Select one representative still/poster for discovery and a few complementary ite
 
 ## Screen-scoped visual content gates
 
-The next image-design task must record its **bounded screen set**, linked specs and precisely which owner-confirmed content/media are available. [VSRC05–VSRC07](specs/visual-source-workflow-spec.md) govern the visual variants and approval registry. Missing facts block only the affected content-backed mockups, not unrelated layout/policy work.
+**P18: use synthetic fixture data for UI images, prototypes, local development and automated tests.** No real project text, real personal/contact details or genuine customer/project images are needed to design UI. Record the selected bounded screen set and linked spec IDs in [VSRC05–VSRC07](specs/visual-source-workflow-spec.md); distinguish fixture presentation from later real publication.
 
-| Intended screen | Required confirmed input | If missing |
+| Screen | Permitted mockup / development fixtures | Required only before real publication |
 | --- | --- | --- |
-| Home featured object | Owner's chosen published featured Story, accurate hook/status, permitted still/poster **if authored** (O02) | Do not automatically feature Waiting Room or invent a cover; defer content-backed Home image |
-| Work detail: Problem/Decisions/Evidence | Problem/tasks/decision truth; supported Evidence identities, capture stage, permitted/redacted media **if used** (O02) | Design only independently grounded text/state structures; never fake customer/project screenshots or invent Decisions |
-| Company Experience | Employer identity/role/date/team facts (O01), actual Story projection and permission (O02) | Do not invent company identity or media; hold affected image |
-| Personal context / Contact | Owner-approved wording and real destinations (O03); portrait permission if one is used | Do not create a fake persona, portrait, email or dead Contact controls |
-| Owner editing/preview | Actual supported fields/flows from bounded implementation spec, representative clearly labelled test-only values | Test fixture must never be presented as real published project evidence |
+| Home feature / Work browse | Clearly fictional project title, contribution, status and authored featured selection; fictional poster/neutral visual | Actual featured Story, truthful status/copy and permitted cover (O02) |
+| Work detail: Problem / Decisions / Evidence | Fictional Problem/Decision copy and labelled sample Evidence/media to demonstrate UI; observe W43's no-Decisions-model boundary in current Work scope | Actual decisions, stage, outcomes, approved captures and media rights (O02) |
+| Company Experience | Fictional company name, roles/dates and related fixture projects | Correct employer/roles/dates and permission for displayed media (O01–O02) |
+| Personal context / Contact | Generic sample wording and nonfunctional example destinations, clearly fixture-labelled outside final public content | Real personal text, working contact destinations and any portrait approval (O03) |
+| Owner editor / preview | Test-only media uploads, draft/public revisions, failure, loading, no-media, empty and validation fixtures | Actual owned content/media and readiness before production publication |
 
-**Unknown media ≠ deliberately no media.** A genuine no-media layout can be reviewed with explicitly labelled state fixtures, but absence of owner-supplied images does not establish that the Story has no assets. Recording/capture rights, redaction and provenance are separate from approval of an imarvin UI mockup.
+Fixtures must be explicitly marked **FICTIONAL / TEST ONLY** in fixture records, image metadata/approval evidence and development environments; mockup content may appear naturally within a screen but must never be represented as a real project, actual capture, customer, claim, or working contact. A synthetic UI placeholder may show where media belongs; it is **not authentic project Evidence**. No secrets, real customer data or private identifiers. Distinct authored fixture **no-media** states are valid; missing actual assets do not imply no media. Owner-reported project permissions are assumed for planning only; do not claim specific captured assets have been inspected or approved. Real publication remains gated by O01–O03, truthful copy and asset-specific disclosure review.
 
 ## Capture worksheet
 
