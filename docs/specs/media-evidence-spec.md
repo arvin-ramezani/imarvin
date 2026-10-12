@@ -1,6 +1,6 @@
 # Project Images, Video, and Evidence
 
-Status: P15 confirms the documentation brief; detailed UX below is proposed, with rendered/runtime validation pending. Updated: 2026-10-07.
+Status: P15 media UX proposed except owner-accepted P17 Evidence Close/focus behavior; rendered/runtime validation pending. Updated: 2026-10-12.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companions: [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md), [visual system](visual-system-spec.md), [accessibility](accessibility-responsive-spec.md).
 Trace: R04, R06, R08–R09, R13–R19, R20–R26; A01–A12. Documentation only: no asset creation, application changes, or upload infrastructure approval.
 
@@ -44,7 +44,7 @@ Example fixture, not a claim about Unixsee: Cancelled · Never shipped; Local bu
 
 ## 4. Inspection and playback
 
-ME05: identify the item and purpose → Open evidence or Play demo → inline image/player with caption, stage, alternatives and controls → Close/Retry → restore the invoking control. Opening a poster does not require a second Play action; an explicit Play request starts playback when ready, subject to browser permission. Deep links only select content and never start playback.
+ME05: identify the item and purpose → Open evidence or Play demo → inline image/player with caption, stage, alternatives and controls → Close to restore valid focus, or Retry within inspection. A Problem/Decisions figure opens its canonical Evidence item; Close restores the originating section and focuses that figure. If the figure is gone, focus its section heading; if the section is gone, apply the safe navigation fallback and focus its heading. Evidence-origin Close stays in Evidence and focuses the invoking item (or Evidence heading if missing); direct-link Close stays in Evidence and focuses its heading. Never target a hidden trigger. Opening a poster does not require a second Play action; an explicit Play request starts playback when ready, subject to browser permission. Deep links only select content and never start playback.
 Pause, seek, replay and volume/mute (when audio exists) are operable by touch/keyboard and have accessible names. Show duration and silent/with-audio context before Play. Do not add background music solely for presentation.
 No autoplay on load, scroll, hover, focus, theme change, resize or return. End stops on a meaningful frame and offers Replay; no default looping. Only one recording plays at a time. Closing, hiding its panel, changing item or leaving the story stops playback/audio.
 Lead media remains visible with the summary when sections change. Section/evidence/history behavior follows [navigation/state](navigation-state-spec.md); selecting evidence from a figure opens that same item in Evidence. Playback time is not a shareable location. Returning, resizing or switching theme never starts/restarts playback; preserve playback position in the active view where feasible, with no cross-visit persistence promise.
