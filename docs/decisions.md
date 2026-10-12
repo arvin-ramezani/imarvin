@@ -1,6 +1,6 @@
 # Decisions
 
-Updated: 2026-10-07. Confirmed = owner constraint. Accepted = owner-approved choice. Proposed = detailed behavior/value for review. Open = missing input. Superseded = do not implement.
+Updated: 2026-10-12. Confirmed = owner constraint. Accepted = owner-approved choice. Proposed = detailed behavior/value for review. Open = missing input. Superseded = do not implement.
 
 Authority: arvin-ramezani/imarvin only. No inheritance from the older project. Documentation and concept selection do not authorize code, images, merge, or deployment.
 
@@ -39,6 +39,7 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P11 | Current Signal Studio visual system: refined hierarchy/surfaces/controls, approved light/dark palette target, responsive composition intent | 2026-10-03: owner approved the rendered public/owner visual direction and requested PR #2 record that approval. [Visual system](specs/visual-system-spec.md). |
 | P15 | Extend product/UI/UX documents with purposeful project images/video, including cancelled or never-shipped work and recorded animations | 2026-10-07: owner requests documentation updates only, explicitly excludes image/app creation. [Media/evidence](specs/media-evidence-spec.md); detailed placement/player/authoring proposals await review, not covered by earlier rendered approval. |
 | P16 | Owner/admin UI uses no interface animation or transitions at any screen size; public UI uses purposeful motion where it improves UX across public routes/screen sizes, with reduced-motion parity and CSS-first implementation | 2026-10-07 owner instruction. Framer Motion is public-only when CSS is insufficient. User-controlled project media playback is content, not owner UI chrome motion. [UI skill policy](engineering/ui-skill-policy.md). |
+| P17 | Close of Evidence opened from a Problem/Decisions figure restores that section and focuses its figure, or a safe visible heading if unavailable. Evidence-origin/direct-link Close stays in Evidence with valid focus. | 2026-10-12 owner confirmation of UX-A01; [navigation](specs/navigation-state-spec.md), [media](specs/media-evidence-spec.md), [accessibility](specs/accessibility-responsive-spec.md). Only this Close/focus rule is accepted; other P15 media proposals remain unapproved. |
 
 ## Architecture baseline
 
