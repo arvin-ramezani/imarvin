@@ -1,6 +1,6 @@
 # Public UX Specification
 
-Status: draft for review, including P15 media extension | Updated: 2026-10-07 | Model: Personal Studio.
+Status: full-product UX draft including P15 media; P17 Close/focus accepted, bounded W43 Work behavior accepted by scope | Updated: 2026-10-12 | Model: Personal Studio.
 Owner-selected: P05 one featured work; P06 projects first; P07 summary then selectable sections. Other behavior below is proposed, not implementation approval.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md), [content inventory](../content-inventory.md). Trace: R01–R11, R23–R26; A01–A04, A10–A12.
 Companions: [navigation/state](navigation-state-spec.md), [accessibility/responsive](accessibility-responsive-spec.md), [media/evidence](media-evidence-spec.md). No code, asset creation, or empirical usability claims.
@@ -53,9 +53,11 @@ After title/contribution/status, show one optional lead image or recording poste
 Default selection is Problem when published, otherwise the first available section in the order above. Summary remains visible when switching. Hide absent sections; never fabricate a decision or show empty disabled tabs to fill the design.
 With no sections, show summary alone; with one, render its heading/content directly. Section selectors are useful when at least two sections exist.
 Selecting a section changes its panel, active label, and shareable location. It does not require completing a sequence. No autoplay; every section is directly reachable.
-Evidence provides an authored ordered set of captioned items, with one detailed inline inspection at a time and Close evidence. Closing restores its trigger; failure retains the explanation and a Retry action. [ME05](media-evidence-spec.md#4-inspection-and-playback) governs player/inspection behavior; no auto-rotating gallery or required media modal.
+Evidence provides an authored ordered set of captioned items, with one detailed inline inspection at a time and Close evidence. Figure-origin Close returns to its originating Problem/Decisions section and focuses its figure, with a safe visible fallback; Evidence-origin/direct-link Close stays in Evidence with valid focus (P17). Failure retains the explanation and a Retry action. [ME05](media-evidence-spec.md#4-inspection-and-playback) governs player/inspection behavior; no auto-rotating gallery or required media modal.
 External links state their destination and use normal navigation; visitors can choose a new tab. Do not render dead Visit site buttons for offline work.
 At the end of detail, offer a contextual Return action and Contact. Label Return for its actual origin (work, company, or previous story); direct-entry fallback is All work. Related work is optional and appears only for an authored relationship; do not invent similarity from shared technology.
+
+**Delivery boundary:** accepted [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) adds bounded Work media and Problem figures only; it does **not** add a Decisions content model or validate full-product P15 media compositions. Those remain proposed pending separate visual approval and later bounded implementation. The current Work app is not automatically certified by W43's written contract.
 
 ## 5. Company experience: one model, two content cases
 
