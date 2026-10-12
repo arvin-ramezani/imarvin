@@ -1,7 +1,7 @@
 # Visual Source Registry
 
 Status: **NO APPROVED SOURCE IMAGES** as of 2026-10-12. This is an empty approval index, not a mockup deliverable or implementation signoff.
-Authority: [VSRC01–VSRC10](specs/visual-source-workflow-spec.md), [#54](https://github.com/arvin-ramezani/imarvin/issues/54), [Signal Studio](specs/visual-system-spec.md). Actual image creation/approval happens in a separate bounded issue/PR. The registry is populated only after actual sources exist.
+Authority: [VSRC01–VSRC10](specs/visual-source-workflow-spec.md), [#54](https://github.com/arvin-ramezani/imarvin/issues/54), [Signal Studio](specs/visual-system-spec.md). Actual image creation/approval happens in [issue #56](https://github.com/arvin-ramezani/imarvin/issues/56) and its separate future PR. The registry is populated only after actual sources exist.
 
 ## Required entry per visual revision
 
