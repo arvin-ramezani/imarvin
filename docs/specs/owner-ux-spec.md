@@ -1,6 +1,6 @@
 # Owner UX Specification
 
-Status: owner-approved behavior contract for P12; P15 media additions proposed; technical mechanisms deferred | Updated: 2026-10-07.
+Status: P12 owner-approved; full-product P15 media additions proposed; bounded Work media behavior defined in accepted W43 contract, not blanket UI approval | Updated: 2026-10-12.
 Accepted: P02 explicit publishing; P03–P04 focused V1; P08 structured editing; P12 explicit save/candidate review/conflict/session recovery/accessible confirmations.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [content/publishing](content-publishing-spec.md). Trace: R12–R21; A05–A09.
 
@@ -28,6 +28,7 @@ Expired session stops writes and shows Sign in again. Retain in-session editing 
 Field help gives one short purpose and an optional example labeled as an example. It never autofills invented outcomes or identity. Drafts may be incomplete; publication checks show missing inputs.
 Experience associations reuse stories. A main-product selection must belong to that experience; switching mode changes presentation without duplicating story content. Explicitly detach an association to make a story standalone.
 For a new main-product experience, guide context-only publication → associated story publication → explicit experience update selecting that story. Explain the temporary public no-project state before each confirmation.
+Full-product Decisions/media authoring here remains proposed; [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) is the narrower accepted Work retrofit with Story media/Problem figures but no Decisions content model. Its rendered owner UI still needs exact-source approval/verification under [VSRC](visual-source-workflow-spec.md).
 Evidence editing follows [ME07](media-evidence-spec.md#6-authoring-and-publication): image/recording/diagram/text-link, purpose/caption, capture stage, permission, alternatives, file/link, lead/cover/poster selection and accessible order. Upload/readiness is distinct from Save. Failed/pending selected assets require retry or explicit candidate removal before publication; other input stays. T04's filesystem/native FormData and 10 MiB baseline remain unchanged; exact video support/limits require a bounded upload spec.
 Order controls include Move up/Move down and an explicit featured-story selector; drag is optional and never the only method. Selecting/order editing changes a private settings draft until publication.
 
