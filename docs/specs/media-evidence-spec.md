@@ -1,8 +1,9 @@
 # Project Images, Video, and Evidence
 
-Status: P15 media UX proposed except owner-accepted P17 Evidence Close/focus behavior; rendered/runtime validation pending. Updated: 2026-10-12.
+Status: full-product P15 media UX proposed; P17 Close/focus accepted, W43 bounded Work media behavior accepted by scope. Rendered/runtime validation pending. Updated: 2026-10-12.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companions: [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md), [visual system](visual-system-spec.md), [accessibility](accessibility-responsive-spec.md).
 Trace: R04, R06, R08–R09, R13–R19, R20–R26; A01–A12. Documentation only: no asset creation, application changes, or upload infrastructure approval.
+Scope: [W43 bounded Work retrofit](../implementation/43-work-p15-p16-media-motion-retrofit.md) accepts Work Evidence/lead/cover/Problem figures but does not include a Decisions content model or approve full-product P15 compositions. New actual visual revisions need [VSRC owner approval](visual-source-workflow-spec.md).
 
 ## 1. Purpose and choice
 
