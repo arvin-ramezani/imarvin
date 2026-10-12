@@ -1,6 +1,6 @@
 # UI Skill Policy
 
-Status: accepted implementation policy | Updated: 2026-10-07 | Issue: #32.
+Status: accepted implementation policy with #54 visual-source gate | Updated: 2026-10-12 | Issue: #32.
 Authority: [decisions](../decisions.md) P16 and [Signal Studio](../specs/visual-system-spec.md). Third-party skills advise implementation; they never override product/UX specs.
 
 ## 1. Installed skills and mandatory triggers
@@ -38,6 +38,8 @@ Do not add `framer-motion` speculatively. Add it in the first bounded public-mot
 Do not install Expo/Swift-only skills for this web project.
 
 ## 4. Verification order
+
+For meaningful new visual UI, start with [VSRC01–VSRC10](../specs/visual-source-workflow-spec.md): canonical specs + confirmed inputs → separately authorized actual images → owner approval of exact revisions/variants in the [registry](../visual-source-registry.md) → bounded plan/implementation. Only documented small/nonvisual exceptions may say `VISUAL SOURCE NOT REQUIRED`. Markdown is not a visual-fidelity source even if a skill's target-identification step lists "spec." Missing/inaccessible/stale source means visual Design QA `BLOCKED`, never simulated PASS. PR #51 captures are proposed new-baseline candidates unless individually approved; compare source/render at the exact PR SHA, independently of accessibility, security or runtime gates. Approved visuals never override P15/P16, media identity, privacy or truthful content.
 
 Before dependent public UI or related owner editor/preview/review implementation or review, resolve ambiguous media choices with `$media-role-selection`. Retain its compact decision and authority citations in task/PR evidence; unresolved choices block only dependent work. Follow canonical Story discovery projections for browse/Experience choices; do not request a redundant surface assignment for a valid mapped source. Ask the smallest precise owner question only when specs/content cannot resolve the choice or conflict. Skip UI with no media concern; explicit choices still require canonical review. This skill does not approve P15 layouts or replace media implementation/accessibility checks.
 For public UI without motion: implementation → deterministic checks → `$break-ui` when variable content applies → `$mobile-native` when touch/mobile applies → Design QA.
