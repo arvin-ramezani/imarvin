@@ -1,6 +1,6 @@
 # Content Inventory
 
-Status: planning snapshot from the owner's statements, extended for P15 on 2026-10-07. This is not publish-ready copy or confirmation that assets exist.
+Status: planning snapshot of owner-reported candidates, updated 2026-10-12. This is not publish-ready copy or confirmation that assets exist; O01–O03 remain open.
 
 ## Unixsee
 
@@ -42,6 +42,20 @@ These are capture suggestions conditional on available, permitted artifacts. The
 | Previous company's shop | Confirmed product/browse/basket or other implemented screen worth discussing | One real implemented shopper workflow/transition, if available | Application source, responsibility/team boundaries, permission, release/availability and capture stage |
 
 Select one representative still/poster for discovery and a few complementary items for depth; do not prescribe a minimum image count or repeat the same screenshot to fill every section. Original historical capture, current local recording and recreated demo must be distinguished. Cancelled/unshipped work can be featured with these assets after factual/permission review.
+
+## Screen-scoped visual content gates
+
+The next image-design task must record its **bounded screen set**, linked specs and precisely which owner-confirmed content/media are available. [VSRC05–VSRC07](specs/visual-source-workflow-spec.md) govern the visual variants and approval registry. Missing facts block only the affected content-backed mockups, not unrelated layout/policy work.
+
+| Intended screen | Required confirmed input | If missing |
+| --- | --- | --- |
+| Home featured object | Owner's chosen published featured Story, accurate hook/status, permitted still/poster **if authored** (O02) | Do not automatically feature Waiting Room or invent a cover; defer content-backed Home image |
+| Work detail: Problem/Decisions/Evidence | Problem/tasks/decision truth; supported Evidence identities, capture stage, permitted/redacted media **if used** (O02) | Design only independently grounded text/state structures; never fake customer/project screenshots or invent Decisions |
+| Company Experience | Employer identity/role/date/team facts (O01), actual Story projection and permission (O02) | Do not invent company identity or media; hold affected image |
+| Personal context / Contact | Owner-approved wording and real destinations (O03); portrait permission if one is used | Do not create a fake persona, portrait, email or dead Contact controls |
+| Owner editing/preview | Actual supported fields/flows from bounded implementation spec, representative clearly labelled test-only values | Test fixture must never be presented as real published project evidence |
+
+**Unknown media ≠ deliberately no media.** A genuine no-media layout can be reviewed with explicitly labelled state fixtures, but absence of owner-supplied images does not establish that the Story has no assets. Recording/capture rights, redaction and provenance are separate from approval of an imarvin UI mockup.
 
 ## Capture worksheet
 
