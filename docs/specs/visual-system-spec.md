@@ -2,7 +2,7 @@
 
 Status: existing visual system target approved (P09/P11/P13/P14); P15 media composition extension proposed, rendered validation pending. Updated: 2026-10-07.
 Authority: [decisions](../decisions.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R27; A01, A09, A12.
-Owner approved representative rendered wide light/dark public and owner screens on 2026-10-03. The reviewed images are approval evidence but are not stored here as implementation assets. [Refinement review](../visual-refinement-review.md) records the approval and remaining validation.
+Owner approved representative rendered wide light/dark public and owner screens on 2026-10-03. Those historical approvals established Signal Studio direction, not retrievable versioned implementation source assets nor new P15 media layouts. [Refinement review](../visual-refinement-review.md) records that scope. Exact new variant approval uses the [source registry](../visual-source-registry.md) under [VSRC](visual-source-workflow-spec.md); none are registered yet.
 
 ## 1. Visual communication
 
