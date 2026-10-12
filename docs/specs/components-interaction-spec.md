@@ -1,8 +1,8 @@
 # Components and Interaction Contract
 
-Status: draft component/state behavior contract | Updated: 2026-10-07 | Existing Signal Studio treatment approved (P09/P11/P13/P14); P15 media additions and behavior details remain subject to validation.
+Status: full-product draft; Signal Studio P09/P11/P13/P14 accepted, P17 Close/focus accepted, W43 Work behavior accepted by scope only; other P15 compositions unapproved | Updated: 2026-10-12.
 Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R27; A01–A12.
-Names describe design responsibilities, not React components, library choices, database models, or coding assignments.
+Names describe design responsibilities, not React components, library choices, database models, or coding assignments. [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) bounds accepted Work behavior/roles without a Decisions model; proposals here do not expand it. New substantive composition needs [visual-source approval](visual-source-workflow-spec.md).
 
 ## 1. Public component roles
 
