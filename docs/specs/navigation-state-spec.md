@@ -1,6 +1,6 @@
 # Navigation and State Specification
 
-Status: proposed behavior for review, including P15 media transitions | Updated: 2026-10-07.
+Status: proposed behavior except the owner-accepted P17 Evidence Close/focus rule | Updated: 2026-10-12.
 Depends on [public UX](public-ux-spec.md), [PRD](../../PRD.md), [decisions](../decisions.md). Trace: R07, R11, R19–R25; A03–A04, A07–A09, A11.
 URL shapes below are conceptual contracts; routing implementation and storage are deferred to architecture. Public delivery uses published content only; this document does not approve P02's authoring lifecycle.
 
@@ -40,7 +40,7 @@ No login is needed to browse. No cross-device or permanent personalization is re
 | Choose/clear company filter | Update collection and location; replace current history entry | Keep filter control focused; announce count; reset results to start |
 | Open a story from collection/experience | Preserve origin and return position; add story destination | Focus story heading; explicit Return targets stored origin |
 | Switch detail section | Update selected panel/location; replace current history entry | Focus stays on section control; summary remains available |
-| Open/close inline evidence | Update selection/location; replace current history entry | Open focuses inspection heading; Close restores its trigger |
+| Open/close inline evidence | Select/clear canonical Evidence item; replace current history entry | Open focuses inspection heading; figure-origin Close restores originating Problem/Decisions section and figure focus; other Close paths stay in Evidence with valid focus |
 | Play/Pause/seek recording in lead or evidence | Player state only; no new history/location; explicit Play starts when ready | Focus stays on control; Close/leave/hide/item change stops playback/audio; ME05 |
 | Choose authored related story | Add new story destination; previous story is its origin | Back returns to previous story section/position |
 | Browser Back/Forward | Restore the destination and its saved selection | Restore invoking item/reading position when available |
@@ -74,7 +74,9 @@ If the old item disappeared, restore the valid filter and nearest meaningful pos
 | Content becomes nonpublic | Remove content from the active surface when detected | Neutral unavailable state; safe navigation |
 
 Retry does not add history, reset the filter, duplicate an action, or overwrite the currently selected destination. Late results from an earlier selection must not replace a newer selection.
-Evidence selection is valid only inside Evidence: switching away closes inspection and its playback. Summary lead media stays visible across section changes; a contextual figure can select the same evidence item in Evidence. Opening a deep link selects content without playing video; Close leaves Evidence selected. With no sections, keep summary/optional lead alone and remove obsolete section/evidence parameters. [ME05](media-evidence-spec.md#4-inspection-and-playback) owns player/position/return behavior.
+Evidence selection is valid only inside Evidence; switching away closes inspection and stops playback. A contextual Problem/Decisions figure opens its canonical Evidence item; Close clears inspection, returns to that section, and focuses its figure. If the figure has disappeared, focus its section heading; if the section is unavailable, use the current safe section fallback in §4 and focus the resulting heading.
+Inspection opened within Evidence closes in Evidence and restores focus to its invoking item, or the Evidence heading if that item is missing. A direct Evidence link selects content without playback; Close stays in Evidence and focuses its heading. All such section/evidence selection changes replace history entries, avoiding extra Back steps. Summary lead media stays visible across section changes.
+With no sections, keep summary/optional lead alone and remove obsolete section/evidence parameters. [ME05](media-evidence-spec.md#4-inspection-and-playback) owns player/position/return behavior.
 An unavailable live demo is not a story error. Historical/local/prototype evidence retains its confirmed stage; progress, release history and availability stay distinct from loading/failure states. Failed cover/poster/image keeps the story-opening action and truthful text; failed playback retains explanation and recovery.
 
 ## 6. Public privacy contract
@@ -92,5 +94,6 @@ Owner preview is a separate private path, not a public section/state. Authorizat
 | NS04 | Open stale section/filter/nonpublic story link | Defined safe fallback; no private identity disclosed |
 | NS05 | Request fails; retry; switch before response | Current selection wins; no history duplication |
 | NS06 | Repeat flow at mobile width/by keyboard | Same content and return semantics; no hidden origin control |
+| NS07 | Problem/Decisions figure → Evidence → Close; repeat with removed figure/section; compare Evidence-origin and direct link | Return to valid origin and focus figure/visible heading fallback; Evidence-origin/direct link stays in Evidence with valid focus; no extra Back steps |
 
 Checks are pending implementation. Companion [accessibility contract](accessibility-responsive-spec.md) governs focus and announcements. Detailed route encoding, history restoration mechanism, and delivery failures remain technical-spec work.
