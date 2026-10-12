@@ -1,6 +1,6 @@
 # Accessibility and Responsive Specification
 
-Status: draft public-flow contract with P15 media accessibility extension | Updated: 2026-10-07.
+Status: draft public-flow contract; owner-accepted P17 Close/focus rule, other P15 media UX proposed | Updated: 2026-10-12.
 Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R27; A04, A09, A11–A12.
 Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). The rendered wide visual direction is owner-approved; rendered accessibility and responsive validation have not yet occurred.
 
@@ -28,7 +28,7 @@ On a layout change, retain focus on the same control when it remains available. 
 - Tab behavior is semantic: it does not require pill tabs, boxed segments, or a generic active fill. Selection may use weight/shape/icon and restrained emphasis; preserve the selected state and associated panel.
 - Keep selection/focus visibly distinct. Unpublished or absent sections are omitted from tab order and accessibility tree.
 - Filtering uses a clearly labeled control with All work/reset. Result changes announce count politely; focus stays at the filter.
-- New destinations focus their title; section changes retain the selector focus. Evidence opens inline, focuses its heading, and closes back to its trigger. No focus trap for inline inspection.
+- New destinations focus their title; ordinary section changes retain selector focus. Inline Evidence inspection focuses its heading. Closing figure-opened inspection restores the originating Problem/Decisions section and focuses its figure, or that section heading when the figure is gone. If the section is gone, focus the valid navigation fallback heading. Evidence-origin Close restores its invoking item in Evidence (or its heading if missing); direct-link Close focuses the Evidence heading. Do not focus a hidden control or trap focus for inline inspection.
 - Restoring a collection returns focus to the invoking item after restoring context. If it no longer exists, focus a valid heading and explain changed availability.
 - Loading, errors, empty results, and unavailable states use understandable text. Announce changes without rereading the whole page; errors link to an actionable Retry/return control.
 - Every action works with keyboard, touch, and ordinary pointer use. No hover-only labels, drag-only navigation, hidden gestures, or required animation completion.
@@ -71,7 +71,8 @@ Run TH01–TH06 from [visual system](visual-system-spec.md) alongside AR01–AR0
 | AR07 | Resize with evidence open and company filter stored | Same selected content and valid return context |
 | AR08 | Later signature-composition review | Identity/composition remains distinctive while hierarchy, contrast, and focus stay usable |
 | AR09 | Screenshot, silent/narrated recording; keyboard/320px/reduced motion; no playback | Meaningful alternatives/captions/description convey the demonstrated state/motion; operable player, readable captions/focus and scoped failure recovery; MV03–MV04/MV07 |
+| AR10 | Keyboard: figure-opened Evidence → Close, missing figure/section, Evidence-origin and direct-link Close | Valid visible focus on restored section figure/heading or within Evidence; no hidden target or extra Back step |
 
-The [responsive/interaction validation matrix](../responsive-interaction-validation.md) owns review profiles and evidence status; AR01–AR09 remain the canonical accessibility scenarios.
+The [responsive/interaction validation matrix](../responsive-interaction-validation.md) owns review profiles and evidence status; AR01–AR10 remain the canonical accessibility scenarios.
 Later verification combines manual tasks, accessibility inspection, and representative rendered states. Automated checks alone cannot certify usability. These numerical targets are proposed design acceptance thresholds, not a compliance certification.
 Approved visual palette/type/spacing intent and responsive modes are in [Signal Studio](visual-system-spec.md); component states are in [components](components-interaction-spec.md). The rendered wide light/dark direction is approved, but actual responsive values, focus behavior, icon comprehension, and library choices still require accessibility validation. Preserve the approved visual character without using accessibility as a reason to restore the rejected CV layout.
