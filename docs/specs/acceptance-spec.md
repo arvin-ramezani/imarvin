@@ -1,6 +1,6 @@
 # Integrated UX and Design Acceptance
 
-Status: review contract; P15 media extension added, execution pending | Updated: 2026-10-07.
+Status: review contract; P17 Close/focus accepted, W43 Work behavior distinct from proposed full-product P15 compositions; execution pending | Updated: 2026-10-12.
 Authority: [PRD](../../PRD.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md), [visual system](visual-system-spec.md), [components](components-interaction-spec.md).
 Scope: complete public/owner product-design contract. Does not certify implementation, accessibility conformance, security, or production readiness.
 
@@ -16,16 +16,16 @@ Scope: complete public/owner product-design contract. Does not certify implement
 | A06 | OU03–OU05/OU10, CP01–CP04/CP08/CP12, MV05–MV06; R16–R18 | Save stays private; explicit successful update changes text/media/projections; failure/conflict retains input/public version | Before/after public checks + injected failure/concurrency evidence |
 | A07 | OU09, CP02/CP09/CP12, MV06; R12, R19, R22 | Anonymous draft/preview/asset/poster/rendition/track/owner access denied; public metadata/counts published only | Architecture-dependent authorization/delivery verification |
 | A08 | NS04–NS05, OU06–OU07, CP05–CP07; R11, R18 | Empty/error/unavailable/removal states explain next actions and correct impact | Representative state walkthrough + destructive-action checks |
-| A09 | NS06, AR01–AR07/AR09, OU08, TH01–TH06, MV03–MV05/MV07–MV08; R20–R21, R23, R25, R27 | Public/owner/media loops work in Light/Dark/System at 320px, keyboard, zoom, reduced motion; alternatives complete, theme/state preserved | Manual accessibility/responsive/player tasks; focus/reflow evidence |
+| A09 | NS06–NS07, AR01–AR07/AR09–AR10, OU08, TH01–TH06, MV03–MV05/MV07–MV08; R20–R21, R23, R25, R27 | Public/owner/media loops work in Light/Dark/System at 320px, keyboard, zoom, reduced motion; alternatives complete, theme/state preserved | Manual accessibility/responsive/player tasks; focus/reflow evidence |
 | A10 | PU01, PU03, PU05/PU09, MV02/MV07; R06, R08–R09, R24 | Summary identifies contribution; decisions/outcomes and visual proof limits grounded in approved facts | Content/capture review and visitor explanation task |
-| A11 | PU02, PU05, NS01–NS03; R11, R24–R25 | Selection reveals meaningful content; return restores origin and collection state | State/history interaction walkthrough |
+| A11 | PU02, PU05, NS01–NS03/NS07; R11, R24–R25 | Selection reveals meaningful content; return restores origin and collection state | State/history interaction walkthrough |
 | A12 | PU08, AR08, VS01–VS06, MV01/MV04; R01, R26–R27 | Work-led offset stage, project imagery, hierarchy and inspection recognizable without CV/grid skeleton; no prescribed decorative motifs | Rendered composition review with real/no-media work; not prose approval alone |
 
 ## Review procedure
 
 1. Contract review now: check accepted decisions, scopes, source authority, cross-flow consistency, required states, and truthful unknowns.
 2. Owner review: P10/P12 behavior and T01–T07 architecture/runtime defaults are approved. Remaining review concerns factual inputs, runtime evidence, and feature-specific implementation details.
-3. Rendered wide light/dark direction was owner-approved on 2026-10-03. Remaining design validation uses real featured content plus no-media/long-title/empty/error cases and compares narrow/responsive and owner/public states against that approved direction.
+3. Rendered wide light/dark direction was owner-approved on 2026-10-03; it is not an approved/retrievable new P15 source image. New meaningful UI requires [VSRC](visual-source-workflow-spec.md) and [registry](../visual-source-registry.md): actual proposed images → exact revision owner approval → later independent implementation-versus-source Design QA. Remaining validation uses confirmed featured content plus honest no-media/long-title/empty/error cases; no invented captures.
 4. Implemented-interaction review only after separate authorization: execute public and owner tasks, failure/concurrency/privacy checks, and record exact head/environment/evidence.
 
 Repeat public/owner/state reviews in both Light and Dark and with System resolved to each. TH01–TH06 cover preference, persistence/fallback, device changes, preserved editing/reading state, and first appearance; these are not executed checks.
@@ -39,4 +39,4 @@ Apply P13's [visual refinement review](../visual-refinement-review.md) to A09/A1
 ## Remaining readiness boundaries
 
 O05 architecture defaults are resolved by T01–T07. Implementation acceptance must still verify authorization/recovery, transaction/retry identity, safe asset delivery/cache behavior, backup restore, and deployment on the exact implementation head.
-O01–O03 remain factual-content/contact gates. O04 visual approval is resolved: Signal Studio and the current rendered light/dark composition are approved. Exact production font/library remains an implementation detail; responsive/usability/accessibility evidence is still required. No automatic code, asset creation, or deployment authorization follows this document.
+O01–O03 remain screen-specific factual-content/contact gates. Work-specific media/Problem-figure behavior follows [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md); full-product Decisions behavior and P15 visual compositions are still proposed. O04 visual approval is resolved: Signal Studio and the current rendered light/dark composition are approved. Exact production font/library remains an implementation detail; responsive/usability/accessibility evidence is still required. No automatic code, asset creation, or deployment authorization follows this document.
