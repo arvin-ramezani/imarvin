@@ -1,6 +1,6 @@
 # Specification Plan
 
-Phase: implementation underway. Existing behavior/visual direction and O05 runtime baseline approved; P15 full-product media UX remains proposed, P17 Close/focus accepted, W43 behavior bounded to Work. Delivery follows Issues #13/#54. Updated: 2026-10-12.
+Phase: implementation underway. Existing behavior/visual direction and O05 runtime baseline approved; P15 full-product media UX remains proposed, P17 Close/focus accepted, W43 behavior bounded to Work. Delivery follows Issues #13/#54. Updated: 2026-10-14.
 
 ## Order and current status
 
@@ -30,6 +30,9 @@ Introduce media or additional shared infrastructure when the first bounded featu
 
 | Document | Status / coverage | PRD trace |
 | --- | --- | --- |
+| [P19 public checkpoint](specs/ux-public-checkpoint.md) | Canonical owner-approved scoped requirements: UXH01–UXH08, UXN01–UXN06, UXC01–UXC06; checks UXP01–UXP07. Exact layouts/media inspection/nav details remain open | R01–R11, R23–R27 |
+| [P19 Project/Story](specs/project-story-spec.md) | Canonical owner-approved relationships/visibility/lifecycle: PS01–PS12; checks PSP01–PSP08. Schema, migrations, bulk failure/concurrency and media cleanup remain open | R07, R13–R19, R22 |
+| [P19 Contact checkpoint](specs/contact-ux-checkpoint.md) | Canonical owner-approved enquiry fields/channels: CT01–CT08; checks CTP01–CTP06. Conditional phone-only Telegram, delivery provider, privacy/spam and layout remain open | R10–R11, R20–R21 |
 | [Public UX](specs/public-ux-spec.md) | Full-product proposals, bounded W43 Work and P17 Close/focus differentiated; PU01–PU09 | R01–R11, R23–R26 |
 | [Media/evidence](specs/media-evidence-spec.md) | Full-product P15 proposed; W43 Work media + P17 accepted by scope, MV01–MV08 unrun | R04, R06, R08–R09, R13–R26 |
 | [Navigation/state](specs/navigation-state-spec.md) | Draft history/context plus P17 approved Close/focus; NS01–NS07 | R07, R11, R19–R25 |
@@ -45,6 +48,10 @@ Introduce media or additional shared infrastructure when the first bounded featu
 | [Runtime operations](architecture/runtime-operations.md) | Accepted T03–T07 auth/storage/deployment/backup/logging baseline | R12, R19, R22 |
 | [Spec-driven development](engineering/spec-driven-development.md) | Accepted T02 issue/spec/vertical-slice/PR/review workflow | Engineering process |
 
+The three P19 contracts are approved requirements within their stated scopes, not complete UX, image or implementation approval. They take precedence over conflicting older inventory entries; older approval/status labels apply only to compatible scopes and historical delivery evidence.
+
+Pending reconciliation: public/media/navigation, owner/publishing, components/accessibility and acceptance companions must align affected Home, Project/Story, Contact and lifecycle assumptions before dependent images or implementation. Fixture/VSRC guidance and [#56](https://github.com/arvin-ramezani/imarvin/issues/56) must use P19 now. Keep checkpoint open decisions deferred; do not infer schema migration, old-route deletion/redirect authorization or a new media player contract.
+
 ## Agent context
 
 Each specification states status/dependencies, IDs, triggers/results, recovery/parity, scenarios, and open decisions. Read only relevant contracts together; do not turn conceptual entities into a schema or components into a library mandate.
@@ -53,7 +60,7 @@ O01–O03 are factual gates; O04 and O05 are resolved at design/architecture lev
 
 ## Implementation readiness
 
-Require a bounded issue plus accepted/linked implementation spec when needed and appropriate evidence before each implementation PR. Substantive new UI first needs approved exact-revision images under VSRC; small/nonvisual exceptions need rationale. W43 accepts bounded Work media/Problem figures but not the future full-product Decisions model or new UI appearances. O01–O03 remain factual gates.
+Require a bounded issue plus accepted/linked implementation spec when needed and appropriate evidence before each implementation PR. Substantive new UI first needs approved exact-revision images under VSRC; small/nonvisual exceptions need rationale. W43 records historical bounded Work media/Problem figures, not a current mandatory P19 Project/Story layout or approval for new UI appearances. P19 governs affected future slices; reconcile their older companions first. O01–O03 remain factual gates.
 The merged #23 story summary is deliberately text-only; do not rewrite its historical contract or treat media absence there as a failed requirement. P15 is design documentation, not approval to implement uploads/video.
 Before the first media slice, Command Center validates the proposed UX and selects bounded work. Its implementation spec must pin schema/revisions, allowlist/size/duration/codec limits, private source/derivative delivery and removal/cache behavior, owner/public routes and tests. Keep T04's 10 MiB baseline unless separately justified/reviewed; do not assume a large-video pipeline or external provider.
 Required future media gates: deterministic verification, Design QA, Security Review (uploads/private-public delivery), independent review and justified local runtime acceptance. Decompose still-image and recording support only when needed to retain one clear PR/session boundary; do not create the entire media backlog now.
