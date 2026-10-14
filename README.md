@@ -12,7 +12,7 @@ Current validation: [Responsive & Interaction Validation](docs/responsive-intera
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
-Current requirements: [P19–P21 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its companions distinguish delegated content direction from approved publishing minima, simplified status, Contact additions and [content-list management](docs/specs/owner-content-checkpoint.md). Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
+Current requirements: [P19–P22 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its companions distinguish delegated content direction from approved publishing minima, simplified status, Contact additions and [content-list management](docs/specs/owner-content-checkpoint.md). P22 records Home-only manual order, shared pins and Apply/Discard; Story component/editor decisions remain deferred until high-level UX completion. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
 
 ## Read in order
 

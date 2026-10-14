@@ -1,6 +1,6 @@
 # Owner UX Specification
 
-Current scope: [P19–P21 UX checkpoint](../ux-requirements-checkpoint.md) and [owner content checkpoint](owner-content-checkpoint.md) supersede overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+Current scope: [P19–P22 UX checkpoint](../ux-requirements-checkpoint.md) and [owner content checkpoint](owner-content-checkpoint.md) supersede overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
 
 
 Status: P12 owner-approved; full-product P15 media additions proposed; bounded Work media behavior defined in accepted W43 contract, not blanket UI approval | Updated: 2026-10-12.
@@ -35,7 +35,7 @@ Experience associations reuse stories. A main-product selection must belong to t
 For a new main-product experience, guide context-only publication → associated story publication → explicit experience update selecting that story. Explain the temporary public no-project state before each confirmation.
 Full-product Decisions/media authoring here remains proposed; [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) is the narrower accepted Work retrofit with Story media/Problem figures but no Decisions content model. Its rendered owner UI still needs exact-source approval/verification under [VSRC](visual-source-workflow-spec.md).
 Evidence editing follows [ME07](media-evidence-spec.md#6-authoring-and-publication): image/recording/diagram/text-link, purpose/caption, capture stage, permission, alternatives, file/link, lead/cover/poster selection and accessible order. Upload/readiness is distinct from Save. Failed/pending selected assets require retry or explicit candidate removal before publication; other input stays. T04's filesystem/native FormData and 10 MiB baseline remain unchanged; exact video support/limits require a bounded upload spec.
-OWN01–OWN05 own current selection/order locations and independent scopes. Move up/Move down remain; drag is optional, never the sole method. Save stays private until explicit publication; exact order-publication units remain open.
+OWN01–OWN05 own current views, shared pins and Home-only manual ordering. Home Move up/Move down remain; drag is optional. Apply/Discard controls arrangements separately from entry Save/Preview/Publish; exact arrangement persistence/publication units remain open.
 
 ## 4. Editing state and actions
 
