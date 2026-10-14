@@ -1,6 +1,6 @@
 # Public UX — approved checkpoint
-Status: owner-approved P19–P22 requirements; UXD01–UXD05 record delegated working direction, UXD06–UXD07 are approved publishing minima. Exact rendered composition and runtime behavior remain unverified.
-Recorded: 2026-10-14; Home revision approved 18:59 Asia/Tehran | Authority: [P19–P22 checkpoint](../ux-requirements-checkpoint.md).
+Status: owner-approved P19–P23 requirements; UXD01–UXD05 record delegated working direction, UXD06–UXD07 are approved publishing minima. Exact rendered composition and runtime behavior remain unverified.
+Recorded: 2026-10-14; Home revision approved 18:59 Asia/Tehran | Authority: [P19–P23 checkpoint](../ux-requirements-checkpoint.md).
 Companions: [Project/Story](project-story-spec.md), [Contact](contact-ux-checkpoint.md).
 Scope: records the agreed product experience; does not authorize code or approve rendered design.
 
@@ -29,7 +29,7 @@ Scope: records the agreed product experience; does not authorize code or approve
 - UXH08: About provides introduction, interests and learning; do not repeat the full Home Experience section. Home's compact About introduction sits after Experience and before How I can help; its More about me link opens About. Essential identity remains in the combined hero.
 
 ## Destinations and browsing — UXN01–UXN06
-- UXN01: Dedicated Projects and Stories browse pages; each Project and Story has its own detail page. About and Contact also have dedicated pages.
+- UXN01: Dedicated Projects and Stories browse pages; each Project and Story has its own detail page. About and Contact also have dedicated pages. P23 adds a simple Privacy page linked beside the Contact form (CT12); exact route/navigation placement remains component/implementation work.
 - UXN02: On Home, header section links scroll to their corresponding sections; About targets the separate About introduction, not the hero. Explicit View all / More about me / Contact page links open the dedicated destinations.
 - UXN03: On every dedicated/detail page, header Projects/Stories/About/Contact links open those pages directly, never their Home previews. Arvin's name/logo returns to Home; Home top is the return target.
 - UXN04: Projects and Stories accept optional, reusable, owner-created labels and multiple labels per entry. One simple label system, not separate mandatory Topic and Type systems. Visitors filter by one label at a time; default All Projects / All Stories.
@@ -39,7 +39,7 @@ Scope: records the agreed product experience; does not authorize code or approve
 - Apply the selected label filter before sorting; only matching published pinned/unpinned entries appear. Pin state is shared across filters. Exact ties, pin persistence through unpublish/republish and publication mechanics remain open.
 - UXN06: Use Load more, preserving filter/order. Returning from detail restores filter, loaded entries and scroll position. Exact batches/tie-breakers remain open.
 
-## Content and media — UXC01–UXC08
+## Content and media — UXC01–UXC09
 - UXC01: Project detail is a concise visual overview: title/short description, compact role/status/company/link facts, optional showcase and related Stories. It is not media-only, a long article or a forced Problem/Solution case study.
 - UXC02: Project media showcases appearance and actual behavior. Support UI-heavy web apps, complex components/animations, CLI tools and backend apps through the same simple structure.
 - Media may be absent, one item, or several images/videos. No-media and single-media layouts must be complete, with no forced gallery, empty media panel or placeholder. Terminal captures/recordings are optional; no dedicated terminal/code component is required now. Detailed code examples, when needed, belong in Stories.
@@ -54,6 +54,8 @@ Scope: records the agreed product experience; does not authorize code or approve
 
 - Research rationale: [web-writing guidance](https://www.nngroup.com/articles/genai-write-for-the-web/) supports concise, scannable main-point-first communication; [2026 UX guidance](https://www.nngroup.com/articles/state-of-ux-2026/) supports contextual judgment and curation. Applying these to Stories is product interpretation, not evidence for a specific editor/field/group pattern or user-tested layout.
 - UXC08: Story value must be easy to scan and understand through designed hierarchy, with concise content and easy creation for Arvin's marketing goals. Keep implementation simple without reducing the public experience to an undifferentiated paragraph. This is a presentation/outcome constraint, not approval of a rich-text editor, repeatable groups, block builder, heading controls or a particular plain-text editor. Requirements and constraints come first; component/data-field/editor design follows high-level UX completion.
+
+- UXC09 — APPROVED 2026-10-15 at 01:27 Asia/Tehran: no automatic related-Story suggestions. Discovery uses labels and the linked public Project's published Stories. Standalone/private-parent Stories still use the Stories collection/labels without a public parent path. This does not approve another manually authored Story-relation feature from legacy specs.
 
 ## Working direction and approved publishing minima — UXD01–UXD07
 The owner delegated UX choices and requested their record at 19:03 Asia/Tehran. UXD01–UXD05 remain working content direction; UXD06–UXD07 were explicitly approved later under P21. Exact schema, controls/limits, component-library and image approval remain separate.
@@ -82,4 +84,5 @@ Conceptual coverage used explicitly fictional UI-decision, CLI/backend-decision 
 | UXP11 | Label filter with matching/nonmatching pins | Matching pins by last pin first, then matching unpinned by first publication; nonmatches absent |
 | UXP12 | Pin Story once and apply | Stories browse and its published Project's related list share priority; Home unchanged |
 | UXP13 | Story requirement/design handoff | Flexible concise designed explanation; no mandatory article sections or premature editor/group schema |
+| UXP14 | Finish a standalone / linked Story | No automatic related recommendations; browse/label and eligible public Project paths remain |
 These are requirements checks, not executed browser or visual acceptance. UXD01–UXD05 and exact implementation/rendering remain scoped as above.

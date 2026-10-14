@@ -12,7 +12,7 @@ Current validation: [Responsive & Interaction Validation](docs/responsive-intera
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
-Current requirements: [P19–P22 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its companions distinguish delegated content direction from approved publishing minima, simplified status, Contact additions and [content-list management](docs/specs/owner-content-checkpoint.md). P22 records Home-only manual order, shared pins and Apply/Discard; Story component/editor decisions remain deferred until high-level UX completion. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
+Current requirements: [P19–P23 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its companions distinguish delegated content direction from approved publishing minima, simplified status, Contact additions and [content-list management](docs/specs/owner-content-checkpoint.md). P22 records Home-only manual order, shared pins and Apply/Discard; Story component/editor decisions remain deferred until high-level UX completion. P23 records subsequent Contact/Privacy/discovery and applied-removal approvals. [Journey audit](docs/ux-journey-audit.md) maps covered paths and four pending high-level decisions. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
 
 ## Read in order
 
@@ -26,7 +26,7 @@ Current requirements: [P19–P22 UX checkpoint](docs/ux-requirements-checkpoint.
 | [Project images/video/evidence](docs/specs/media-evidence-spec.md) | Purposeful placement, truthful recording stages, inspection, authoring and MV01–MV08 checks |
 | [Navigation/state specification](docs/specs/navigation-state-spec.md) | Destinations, return context, failures, safe deep links |
 | [Accessibility/responsive specification](docs/specs/accessibility-responsive-spec.md) | Public-flow mobile, keyboard, reading, motion contracts |
-| [Owner content management](docs/specs/owner-content-checkpoint.md) | P21 area/control ownership, independent selection/order scopes and editor/publication boundaries |
+| [Owner content management](docs/specs/owner-content-checkpoint.md) | P21–P23 management views, shared pins/Home-only manual order, Apply and editor/removal boundaries |
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |
 | [Content/publishing](docs/specs/content-publishing-spec.md) | Private/public versions, dependencies, removal and conflicts |
 | [Visual exploration](docs/visual-exploration.md) | Three written directions; Signal Studio approved |

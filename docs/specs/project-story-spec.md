@@ -1,6 +1,6 @@
 # Project–Story relationship and lifecycle
 Status: owner-approved UX requirements; NOT an implementation-ready schema/migration specification.
-Recorded: 2026-10-14 | Authority: [P19 checkpoint](../ux-requirements-checkpoint.md).
+Recorded: 2026-10-15 | Authority: [P19–P23 checkpoint](../ux-requirements-checkpoint.md).
 Companions: [public experience](ux-public-checkpoint.md), [existing publishing](content-publishing-spec.md).
 Preserve unaffected authorization, private asset and explicit-update guarantees; resolve overlapping legacy contracts before implementation.
 
@@ -32,7 +32,7 @@ Preserve unaffected authorization, private asset and explicit-update guarantees;
 | Keep Stories | Become standalone; content and publication states preserved |
 | Delete all related Stories | Every linked Story, private or published, permanently removed |
 - Confirm scope/counts and identify published content being removed. Story deletion never implies Project deletion.
-- PS09: A manually chosen Home Project or Story cannot be unpublished/deleted while selected. First replace it or explicitly remove it from the Home selection.
+- PS09: A manually chosen Home Project or Story cannot be unpublished/deleted while selected on public Home. First replace it or explicitly remove it from Home selection and successfully Apply changes. A merely pending removal/replacement does not unlock the operation; public Home still references the item. Approved 2026-10-14 at 21:22 Asia/Tehran.
 - Applies to featured Project, manual More Projects and manual Home Stories, including indirectly affected Stories in Project bulk unpublish/delete.
 - If any affected manually selected item remains, block that operation with the specific items and a path to edit Home selection; do not silently hide/replace them.
 - PS10: Automatic latest sections do not lock entries; eligible published items refill naturally after removal. No automatic replacement in manual mode.
@@ -52,6 +52,6 @@ Preserve unaffected authorization, private asset and explicit-update guarantees;
 | PSP04 | Select 2 of 3 private Stories | Selected entries checked; unselected entry remains private |
 | PSP05 | Unpublish with each choice | Public Stories retained or all children hidden as explicitly chosen |
 | PSP06 | Delete Project with each choice | Standalone preservation or permanent removal of all children |
-| PSP07 | Home-selected child affected by bulk removal | Blocked until selection changed explicitly |
+| PSP07 | Home-selected child affected by bulk removal | Blocked until Home replacement/removal is successfully applied; pending or confirmed failed Apply does not unlock |
 | PSP08 | Save edits to public entry | Candidate private; old public version retained until Update |
 These scenarios are not executed tests. Schema, migration, concurrency/recovery, record limits and exact endpoints remain unresolved.

@@ -1,5 +1,5 @@
 # Owner content management — approved checkpoint
-Status: owner-approved P21–P22 requirements; exact controls, layout and implementation remain open.
+Status: owner-approved P21–P23 requirements; exact controls, layout and implementation remain open.
 Recorded: 2026-10-14; P21 placement approved 19:58; P22 pin rules/views/recovery approved 20:15–21:01 Asia/Tehran.
 Authority: [UX checkpoint](../ux-requirements-checkpoint.md), [decisions](../decisions.md).
 Companions: [public content](ux-public-checkpoint.md), [relationships/publication](project-story-spec.md), [Contact](contact-ux-checkpoint.md), [owner recovery/accessibility](owner-ux-spec.md).
@@ -24,8 +24,8 @@ This scoped record supersedes Site settings → Home content and Project-editor 
 
 ## Publishing and protection — OWN04–OWN05
 - OWN04: Pin/Home-selection/order edits remain pending until Apply changes in the changed view. Apply updates only membership/pin priority/order; it never publishes draft entries or pending Project/Story content. Item editors separately retain Save → Preview → Publish/Update under PS11–PS12. Prior public arrangement remains until confirmed success.
-- Offer Apply changes and Discard changes for pending arrangement edits. Leaving that view prompts Apply, Discard or Stay. On confirmed application failure, retain pending choices/order/pins for retry and keep the prior public arrangement. Exact persistence, transaction/publication unit, unknown-outcome reconciliation and candidate-versus-live Home protection remain unresolved; no schema is chosen.
-- OWN05: PS09–PS10 Home-removal protections remain: manually selected entries, including indirectly affected children, block unpublish/delete until explicitly replaced/removed from the Home selection. Explain affected items and link to the appropriate Projects/Stories Home selection list. Automatic latest sections refill normally; manual sections do not silently refill.
+- Offer Apply changes and Discard changes for pending arrangement edits. Leaving that view prompts Apply, Discard or Stay. On confirmed application failure, retain pending choices/order/pins for retry and keep the prior public arrangement. Exact persistence, transaction/publication unit and unknown-outcome reconciliation remain unresolved; no schema is chosen. PS09 now fixes the live-selection removal boundary.
+- OWN05: PS09–PS10 Home-removal protections remain: manually selected entries, including indirectly affected children, block unpublish/delete until Home replacement/removal is successfully applied. Pending changes never unlock removal; failed Apply keeps protection. Explain affected items and link to the appropriate Projects/Stories Home selection list. Automatic latest sections refill normally; manual sections do not silently refill.
 - Home reordering supports visible Move up/Move down controls; drag may supplement them, never replace them. Preserve clear scope, feedback and keyboard/mobile access; owner interface motion remains off under P16.
 
 ## Observable checks
