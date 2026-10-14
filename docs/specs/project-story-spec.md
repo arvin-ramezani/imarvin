@@ -1,6 +1,6 @@
 # Project–Story relationship and lifecycle
 Status: owner-approved UX requirements; NOT an implementation-ready schema/migration specification.
-Recorded: 2026-10-15 | Authority: [P19–P23 checkpoint](../ux-requirements-checkpoint.md).
+Recorded: 2026-10-15 | Authority: [P19–P25 checkpoint](../ux-requirements-checkpoint.md).
 Companions: [public experience](ux-public-checkpoint.md), [existing publishing](content-publishing-spec.md).
 Preserve unaffected authorization, private asset and explicit-update guarantees; resolve overlapping legacy contracts before implementation.
 
@@ -22,7 +22,7 @@ Preserve unaffected authorization, private asset and explicit-update guarantees;
 - PS06: Readiness is Arvin's selection plus required publishing-field checks before confirmation; no manual Ready flag or automatic publication merely because fields are complete.
 - Existing published Stories remain unchanged during Project publishing; this action does not silently publish their pending edits.
 - Show selected/affected counts and missing required fields before confirmation; preserve input for corrections. Do not describe every unpublished Story as invalid or unfinished.
-- The earlier blanket all-Stories invalidity example was corrected by explicit selection. Bulk partial failure/retry/concurrency mechanics remain unresolved, not implementation discretion.
+- The earlier blanket all-Stories invalidity example was corrected by explicit selection. PS13 fixes confirmed bulk failure outcomes; retry/unknown-outcome/concurrency mechanisms remain bounded-spec work, not implementation discretion.
 - PS07: Unpublish choices preserve stored content for later editing/publication. Project progress/launch status is independent from visibility.
 
 ## Permanent deletion and Home protection — PS08–PS10
@@ -43,6 +43,10 @@ Preserve unaffected authorization, private asset and explicit-update guarantees;
 - Visitors retain the previous published version until successful Update; Save or failure never partially exposes edits.
 - PS12: Owner workflow must distinguish saved/unsaved edits and public/private state, explain blocked actions and preserve input on failure. Existing P12 session/conflict/focus/accessibility recovery remains in scope.
 
+## Confirmed bulk outcomes — PS13
+- PS13 — APPROVED 2026-10-15 at 01:49 Asia/Tehran: each confirmed Project bulk publish/unpublish/delete action succeeds together or leaves its affected entries unchanged. Project plus selected private Stories publish together; unselected/existing public Stories keep their states/content under PS06. The same confirmed-scope rule applies to keep/detach/delete and unpublish choices; preserve candidate/input/selection on confirmed failure for retry.
+- A timeout/unknown outcome is not confirmed failure: determine current state before claiming success/rollback or retrying. Exact record transactions, publication units, media cleanup, cache and concurrency recovery remain technical-spec work; no schema or file cascade is chosen.
+
 ## Observable checks
 | ID | Scenario | Expected |
 | --- | --- | --- |
@@ -54,4 +58,5 @@ Preserve unaffected authorization, private asset and explicit-update guarantees;
 | PSP06 | Delete Project with each choice | Standalone preservation or permanent removal of all children |
 | PSP07 | Home-selected child affected by bulk removal | Blocked until Home replacement/removal is successfully applied; pending or confirmed failed Apply does not unlock |
 | PSP08 | Save edits to public entry | Candidate private; old public version retained until Update |
+| PSP09 | Confirmed Project bulk operation failure | Affected entries unchanged, no partial success; candidate/input/selection retained; unknown outcomes reconciled before retry |
 These scenarios are not executed tests. Schema, migration, concurrency/recovery, record limits and exact endpoints remain unresolved.

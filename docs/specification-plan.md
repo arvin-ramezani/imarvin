@@ -4,7 +4,7 @@ Phase: implementation underway. Existing behavior/visual direction and O05 runti
 
 ## Order and current status
 
-P19–P23 [requirements checkpoint](ux-requirements-checkpoint.md) overrides affected legacy UX assumptions. First complete high-level UX before Story component/editor design, then reconcile specs/skills/fixture coverage and issue dependencies, then create and approve visual sources. Do not continue affected implementation from the old Project-as-Story or no-form model.
+P19–P25 [requirements checkpoint](ux-requirements-checkpoint.md) overrides affected legacy UX assumptions. P24 closes the audited high-level gaps; P25 approves detail hierarchy only. Now reconcile specs/skills/fixture coverage and issue dependencies, then design components/editor/layouts and create/approve visual sources when separately requested. Do not continue affected implementation from the old Project-as-Story or no-form model.
 
 1. Owner UX + publishing/content: P10/P12 behavior approved; implementation mechanisms remain feature-specific.
 2. Signal Studio visual direction and light/dark token foundation are approved and implemented.
@@ -30,13 +30,13 @@ Introduce media or additional shared infrastructure when the first bounded featu
 
 | Document | Status / coverage | PRD trace |
 | --- | --- | --- |
-| [P19 public checkpoint](specs/ux-public-checkpoint.md) | Canonical public requirements: UXH01–UXH08, UXN01–UXN06, UXC01–UXC09; checks UXP01–UXP14. P20 Home and P21 UXD06–UXD07 minima/status approved; UXD01–UXD05 remain working direction. Exact layouts/controls/validation/gallery/nav details open | R01–R11, R23–R27 |
-| [P19 Project/Story](specs/project-story-spec.md) | Canonical owner-approved relationships/visibility/lifecycle: PS01–PS12; checks PSP01–PSP08. Schema, migrations, bulk failure/concurrency and media cleanup remain open | R07, R13–R19, R22 |
+| [P19 public checkpoint](specs/ux-public-checkpoint.md) | Canonical public requirements: UXH01–UXH09, UXN01–UXN07, UXC01–UXC09; checks UXP01–UXP17. P20 Home and P21 UXD06–UXD07 minima/status approved; UXD01–UXD02 hierarchy approved by P25; UXD03–UXD05 remain working direction. Exact layouts/controls/validation/gallery/nav details open | R01–R11, R23–R27 |
+| [P19 Project/Story](specs/project-story-spec.md) | Canonical owner-approved relationships/visibility/lifecycle: PS01–PS13; checks PSP01–PSP09. Schema, migrations, retry/unknown-outcome/concurrency and media cleanup remain open; confirmed bulk failure outcome approved | R07, R13–R19, R22 |
 | [P19 Contact checkpoint](specs/contact-ux-checkpoint.md) | Canonical owner-approved enquiry fields/channels: CT01–CT12; checks CTP01–CTP11. Telegram identity/no attachments, Contact result/email handling and Privacy note/page approved; factual copy/retention, identifier validation, delivery/spam and layout open | R10–R11, R20–R21 |
 | [Public UX](specs/public-ux-spec.md) | Full-product proposals, bounded W43 Work and P17 Close/focus differentiated; PU01–PU09 | R01–R11, R23–R26 |
 | [Media/evidence](specs/media-evidence-spec.md) | Full-product P15 proposed; W43 Work media + P17 accepted by scope, MV01–MV08 unrun | R04, R06, R08–R09, R13–R26 |
 | [Navigation/state](specs/navigation-state-spec.md) | Draft history/context plus P17 approved Close/focus; NS01–NS07 | R07, R11, R19–R25 |
-| [P21 owner content](specs/owner-content-checkpoint.md) | Canonical OWN01–OWN05; checks OWNP01–OWNP09. P22 views/shared pins/Home-only manual ordering/Apply/Discard approved; publication units, ties/pin lifecycle and exact editor layout remain open | R13–R18, R20–R21 |
+| [P21 owner content](specs/owner-content-checkpoint.md) | Canonical OWN01–OWN06; checks OWNP01–OWNP10. P22 views/shared pins/Home-only manual ordering/Apply/Discard approved; pin lifecycle/label maintenance approved by P24; publication units, ties and exact editor layout remain open | R13–R18, R20–R21 |
 | [Owner UX](specs/owner-ux-spec.md) | Approved P12 behavior; proposed P15 media workflow; OU01–OU10 | R12–R21 |
 | [Content/publishing](specs/content-publishing-spec.md) | Approved P10 lifecycle; proposed P15 media snapshot/projection extension; CP01–CP12 | R06–R09, R12–R19, R22 |
 | [Accessibility/responsive](specs/accessibility-responsive-spec.md) | Draft public parity, P17 approved focus; AR01–AR10 | R20–R27 |
@@ -49,9 +49,9 @@ Introduce media or additional shared infrastructure when the first bounded featu
 | [Runtime operations](architecture/runtime-operations.md) | Accepted T03–T07 auth/storage/deployment/backup/logging baseline | R12, R19, R22 |
 | [Spec-driven development](engineering/spec-driven-development.md) | Accepted T02 issue/spec/vertical-slice/PR/review workflow | Engineering process |
 
-[Journey audit](ux-journey-audit.md) J01–J12 maps current document/conversation coverage; JG01–JG04 are pending product decisions, not implementation permission. Resolve them before component work; routine defaults and later technical/factual/visual gates are separate.
+[Journey audit](ux-journey-audit.md) J01–J12 maps current document/conversation coverage; JG01–JG04 are closed by P24, without implementation permission. Reconcile affected legacy contracts before dependent component work; routine defaults and later technical/factual/visual gates are separate.
 
-The P19–P23 public, relationship, Contact and owner-content contracts are approved only within their stated scopes; marked working direction remains distinct from complete UX/image/implementation approval. They take precedence over conflicting older inventory entries; older approval/status labels apply only to compatible scopes and historical delivery evidence.
+The P19–P25 public, relationship, Contact and owner-content contracts are approved only within their stated scopes; marked working direction remains distinct from complete UX/image/implementation approval. They take precedence over conflicting older inventory entries; older approval/status labels apply only to compatible scopes and historical delivery evidence.
 
 Pending reconciliation: public/media/navigation, owner/publishing, components/accessibility and acceptance companions must align affected Home, Project/Story, Contact and lifecycle assumptions before dependent images or implementation. Fixture/VSRC guidance and [#56](https://github.com/arvin-ramezani/imarvin/issues/56) must use P19 now. Keep checkpoint open decisions deferred; do not infer schema migration, old-route deletion/redirect authorization or a new media player contract.
 

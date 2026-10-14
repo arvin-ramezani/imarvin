@@ -1,10 +1,10 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.14 | Updated: 2026-10-15
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.15 | Updated: 2026-10-15
 
-Status: revised draft. Confirmed constraints: C01–C10. P01–P15 and T01–T07 are owner-approved where listed in decisions. P15 confirms the media documentation brief; detailed new media UX remains proposed. Remaining work includes the [high-level journey gaps](docs/ux-journey-audit.md), component design, factual inputs, runtime validation and feature-level implementation details; the complete PRD is not blanket implementation approval.
+Status: revised draft. Confirmed constraints: C01–C10. P01–P15 and T01–T07 are owner-approved where listed in decisions. P15 confirms the media documentation brief; detailed new media UX remains proposed. The [journey audit](docs/ux-journey-audit.md)'s four high-level gaps are closed by P24. Remaining work includes legacy reconciliation, component design, factual inputs, runtime validation and feature-level implementation details; the complete PRD is not blanket implementation approval.
 
-P19–P23: [UX checkpoint](docs/ux-requirements-checkpoint.md) records latest requirements, including the owner-approved combined hero/Home About placement. The scoped checkpoints separate delegated working direction from approved publishing minima, status, Contact and content-list management; unresolved design/implementation details remain explicit.
+P19–P25: [UX checkpoint](docs/ux-requirements-checkpoint.md) records latest requirements, including the owner-approved combined hero/Home About placement. The scoped checkpoints separate delegated working direction from approved publishing minima, status, Contact and content-list management; unresolved design/implementation details remain explicit.
 
 ## 1. Product intent
 
@@ -12,7 +12,7 @@ A creative personal web app where visitors explore Arvin's work, thinking, and p
 
 Freelance clients are the primary audience; job opportunities and curious exploration remain supported outcomes. ImArvin focuses on Arvin; BluCode is out of scope for now. The product is not a portfolio/résumé site. The former five-section homepage is superseded; evidence about work remains useful content.
 
-Selected model: Personal Studio (P01). Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. P19 selects one featured Project, distinct Project/Story pages, and a Home overview with deeper dedicated pages. Working content hierarchy is recorded in the public checkpoint; exact Project/Story fields and rendered components remain to design. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [public UX](docs/specs/public-ux-spec.md).
+Selected model: Personal Studio (P01). Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. P19 selects one featured Project, distinct Project/Story pages, and a Home overview with deeper dedicated pages. Approved Project/Story detail hierarchy and remaining working direction are separated in the public checkpoint; exact Project/Story fields and rendered components remain to design. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [public UX](docs/specs/public-ux-spec.md).
 
 ## 2. Users and outcomes
 
@@ -71,7 +71,7 @@ R27: Light and Dark support public/owner/preview states; default System with Sys
 
 ## 6. V1 boundaries
 
-One owner and English public content remain. P19 replaces P03's no-form rule with [Contact form + direct channels](docs/specs/contact-ux-checkpoint.md), Telegram preferred, no service selector/BluCode. P20 Home has Identity + Featured Project (one hero) → Stories → More Projects → Experience → About introduction → How I can help → Contact invitation. Dedicated Projects/Stories/About/Contact pages provide depth; a simple Privacy page supports the Contact note. No Services/company page. P23 confirms email inbox handling without a dashboard enquiry inbox or automatic confirmation email and excludes automatic related-Story suggestions. P19–P23 remain requirements/direction only. Project publication requires name/overview/contribution; Story publication requires title/introduction/explanation (UXD06–UXD07); private drafts may be incomplete. P21 keeps status metadata optional, requires Telegram identity only when selected and excludes Contact attachments.
+One owner and English public content remain. P19 replaces P03's no-form rule with [Contact form + direct channels](docs/specs/contact-ux-checkpoint.md), Telegram preferred, no service selector/BluCode. P20 Home has Identity + Featured Project (one hero) → Stories → More Projects → Experience → About introduction → How I can help → Contact invitation. Dedicated Projects/Stories/About/Contact pages provide depth; a simple Privacy page supports the Contact note. No Services/company page. P23 confirms email inbox handling without a dashboard enquiry inbox or automatic confirmation email and excludes automatic related-Story suggestions. P19–P25 remain requirements/direction only. Project publication requires name/overview/contribution; Story publication requires title/introduction/explanation (UXD06–UXD07); private drafts may be incomplete. P21 keeps status metadata optional, requires Telegram identity only when selected and excludes Contact attachments.
 
 Exclude public accounts, community, blog/newsletter, customer portal, booking/payment, AI generation, multilingual publishing, analytics dashboards, mandatory 3D/game navigation, and runnable simulations as baseline scope. Interactive evidence must not execute untrusted project code.
 
