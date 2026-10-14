@@ -1,10 +1,10 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.11 | Updated: 2026-10-14
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.12 | Updated: 2026-10-14
 
 Status: revised draft. Confirmed constraints: C01–C10. P01–P15 and T01–T07 are owner-approved where listed in decisions. P15 confirms the media documentation brief; detailed new media UX remains proposed. Remaining open items are factual inputs, runtime validation, and feature-level implementation details; the complete PRD is not blanket implementation approval.
 
-P19/P20: [UX checkpoint](docs/ux-requirements-checkpoint.md) records latest requirements, including the owner-approved combined hero/Home About placement. The public checkpoint separates delegated working content direction from proposed publishing fields; unresolved design/implementation details remain explicit.
+P19–P21: [UX checkpoint](docs/ux-requirements-checkpoint.md) records latest requirements, including the owner-approved combined hero/Home About placement. The scoped checkpoints separate delegated working direction from approved publishing minima, status, Contact and content-list management; unresolved design/implementation details remain explicit.
 
 ## 1. Product intent
 
@@ -48,7 +48,7 @@ A Project is a body of work, distinct from a focused Story. UI-heavy, CLI and ba
 | ID | Requirement |
 | --- | --- |
 | R12 | Owner sign-in/out; no public registration; server-side authorization |
-| R13 | Manage identity/personal context, Experience, distinct Projects/Stories, optional media, custom reusable labels, Contact, manual Home selections and order; fields/layouts remain to design |
+| R13 | Manage identity/personal context, Experience, distinct Projects/Stories, optional media, labels and Contact. P21 places selection/ordering in independently scoped content lists; [owner content](docs/specs/owner-content-checkpoint.md) governs locations. Publishing minima are approved; exact controls/layouts remain to design |
 | R14 | Choose zero/one Project for a Story at creation; no move/attach/detach operation now, except Keep Stories on Project deletion. Independent visibility/bulk choices follow [Project/Story](docs/specs/project-story-spec.md) |
 | R15 | Preview the public layout privately; show unsaved/saved and private/published states |
 | R16 | Explicit publishing: Save private draft; Publish new content; Update published content explicitly |
@@ -71,7 +71,7 @@ R27: Light and Dark support public/owner/preview states; default System with Sys
 
 ## 6. V1 boundaries
 
-One owner and English public content remain. P19 replaces P03's no-form rule with [Contact form + direct channels](docs/specs/contact-ux-checkpoint.md), Telegram preferred, no service selector/BluCode. P20 Home has Identity + Featured Project (one hero) → Stories → More Projects → Experience → About introduction → How I can help → Contact invitation. Dedicated Projects/Stories/About/Contact pages provide depth; no Services/company page. P19/P20 remain requirements/direction only; UXD06 Project publication minima remain proposed.
+One owner and English public content remain. P19 replaces P03's no-form rule with [Contact form + direct channels](docs/specs/contact-ux-checkpoint.md), Telegram preferred, no service selector/BluCode. P20 Home has Identity + Featured Project (one hero) → Stories → More Projects → Experience → About introduction → How I can help → Contact invitation. Dedicated Projects/Stories/About/Contact pages provide depth; no Services/company page. P19–P21 remain requirements/direction only. Project publication requires name/overview/contribution; Story publication requires title/introduction/explanation (UXD06–UXD07); private drafts may be incomplete. P21 keeps status metadata optional, requires Telegram identity only when selected and excludes Contact attachments.
 
 Exclude public accounts, community, blog/newsletter, customer portal, booking/payment, AI generation, multilingual publishing, analytics dashboards, mandatory 3D/game navigation, and runnable simulations as baseline scope. Interactive evidence must not execute untrusted project code.
 

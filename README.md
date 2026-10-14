@@ -12,7 +12,7 @@ Current validation: [Responsive & Interaction Validation](docs/responsive-intera
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
-Current requirements: [P19/P20 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its public companion distinguishes delegated content direction and unapproved publishing-field proposals. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
+Current requirements: [P19–P21 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its companions distinguish delegated content direction from approved publishing minima, simplified status, Contact additions and [content-list management](docs/specs/owner-content-checkpoint.md). Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
 
 ## Read in order
 
@@ -26,6 +26,7 @@ Current requirements: [P19/P20 UX checkpoint](docs/ux-requirements-checkpoint.md
 | [Project images/video/evidence](docs/specs/media-evidence-spec.md) | Purposeful placement, truthful recording stages, inspection, authoring and MV01–MV08 checks |
 | [Navigation/state specification](docs/specs/navigation-state-spec.md) | Destinations, return context, failures, safe deep links |
 | [Accessibility/responsive specification](docs/specs/accessibility-responsive-spec.md) | Public-flow mobile, keyboard, reading, motion contracts |
+| [Owner content management](docs/specs/owner-content-checkpoint.md) | P21 area/control ownership, independent selection/order scopes and editor/publication boundaries |
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |
 | [Content/publishing](docs/specs/content-publishing-spec.md) | Private/public versions, dependencies, removal and conflicts |
 | [Visual exploration](docs/visual-exploration.md) | Three written directions; Signal Studio approved |

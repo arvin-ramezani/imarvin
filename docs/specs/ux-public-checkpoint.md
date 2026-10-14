@@ -1,5 +1,5 @@
 # Public UX — approved checkpoint
-Status: owner-approved P19/P20 requirements; UXD01–UXD05 record delegated working direction, UXD06 is proposed. Exact rendered composition and runtime behavior remain unverified.
+Status: owner-approved P19–P21 requirements; UXD01–UXD05 record delegated working direction, UXD06–UXD07 are approved publishing minima. Exact rendered composition and runtime behavior remain unverified.
 Recorded: 2026-10-14; Home revision approved 18:59 Asia/Tehran | Authority: [P19/P20 checkpoint](../ux-requirements-checkpoint.md).
 Companions: [Project/Story](project-story-spec.md), [Contact](contact-ux-checkpoint.md).
 Scope: records the agreed product experience; does not authorize code or approve rendered design.
@@ -38,7 +38,7 @@ Scope: records the agreed product experience; does not authorize code or approve
 - UXN05: Full browse lists and Stories within a Project default to first-publication date, newest first, with optional manual ordering. Editing or republishing does not reset the first-publication date.
 - UXN06: Use Load more, preserving filter/order. Returning from detail restores filter, loaded entries and scroll position. Exact batches/tie-breakers remain open.
 
-## Content and media — UXC01–UXC06
+## Content and media — UXC01–UXC07
 - UXC01: Project detail is a concise visual overview: title/short description, compact role/status/company/link facts, optional showcase and related Stories. It is not media-only, a long article or a forced Problem/Solution case study.
 - UXC02: Project media showcases appearance and actual behavior. Support UI-heavy web apps, complex components/animations, CLI tools and backend apps through the same simple structure.
 - Media may be absent, one item, or several images/videos. No-media and single-media layouts must be complete, with no forced gallery, empty media panel or placeholder. Terminal captures/recordings are optional; no dedicated terminal/code component is required now. Detailed code examples, when needed, belong in Stories.
@@ -49,14 +49,17 @@ Scope: records the agreed product experience; does not authorize code or approve
 - Deeper problems, solutions and decisions belong in Stories; do not force those sections into the Project overview. UXD02 records the working content hierarchy; exact authoring/publication fields and rendered components remain to design.
 - UXC06: Public Project pages list only their published Stories; hide the section completely when none exist. A public Story links to its Project only while that Project is public; standalone or private-parent Stories remain complete.
 
-## Delegated working direction — UXD01–UXD06
-The owner delegated UX choices and requested this record at 19:03 Asia/Tehran. UXD01–UXD05 capture the current content direction for continued grilling; they are not exact schema, required-field, component-library or image approval.
+- UXC07: Keep Project progress, release history, current availability and ImArvin publication distinct, with simple public presentation. Show one optional progress label: In progress / Completed / Cancelled; a usable live link when supplied; a short factual note such as Not released or No longer available only when useful. Purpose → contribution → showcase lead; status is secondary. No permanent three-badge status row, automatic launch inference, required live/source URL or required release/availability field. Optional owner release/availability context belongs under Additional details (OWN03); no label is inferred from missing data.
+
+## Working direction and approved publishing minima — UXD01–UXD07
+The owner delegated UX choices and requested their record at 19:03 Asia/Tehran. UXD01–UXD05 remain working content direction; UXD06–UXD07 were explicitly approved later under P21. Exact schema, controls/limits, component-library and image approval remain separate.
 - UXD01: Project detail hierarchy: name/concise purpose and audience → short, prominent individual contribution → compact relevant status, optional company/technologies/links → optional showcase → published related Stories. UI-heavy work may emphasize media; CLI/backend work may emphasize text within the same structure. Keep deeper reasoning in Stories; missing optional parts leave no empty placeholders.
 - UXD02: One shared Story hierarchy: prominent title/short introduction conveying the main point → secondary labels/optional public Project context → concise explanation groups, short subject-specific headings where useful → optional supporting media/examples near the relevant explanation. Explain Arvin's action, reasoning or learning and distinguish individual/team contribution. Support problem/solution, decision, lesson and experiment content without identical mandatory sections. Results, metrics, media and public links are optional; outcomes must be supported. Text-only Stories remain complete; no arbitrary article/page builder.
 - UXD03: Public previews are short introductions, distinct from owner-only private Preview. Featured Project shows name/overview/contribution, optional prominent media and Explore Project; other Projects show name/overview, optional thumbnail and secondary relevant labels/status; Stories show title/main point, secondary labels, optional supporting image and public Project name only when applicable. Selecting a preview opens detail; public external Project actions belong on detail. Reuse information hierarchy across Home/browse, without forcing identical cards or fabricated media.
 - UXD04: Dedicated About hierarchy: concise identity/professional direction → approach to building/collaborating grounded in actual experience → genuine interests/current learning → relevant work and Contact links. Portrait is optional; no duplicate full Home Experience list or invented personal facts.
-- UXD05: Candidate Story authoring controls: title, introduction, explanation, optional short headings/media, labels and optional Project at creation under PS01–PS05. Labels do not choose a layout. Exact editor grouping, limits, formatting/code examples and required publication fields remain open; no database schema is selected.
-- UXD06 — PROPOSED, NOT APPROVED: require Project name, overview and individual contribution for publication; company, technologies, media and external links stay optional. Private drafts may remain incomplete under existing Save rules. Do not enforce this proposed validation or infer Story publishing fields before confirmation.
+- UXD05: Candidate Story authoring controls: title, introduction, explanation, optional short headings/media, labels and optional Project at creation under PS01–PS05. Labels do not choose a layout. Exact editor grouping, limits and formatting/code examples remain open; UXD07 fixes only the publishing minimum. No database schema is selected.
+- UXD06 — APPROVED 19:32 Asia/Tehran: publishing a Project requires name, overview (what it does/who it serves) and individual contribution (what Arvin built/was responsible for). A solo contribution can describe the work; no formal job title is required. Company, technologies, media, links and status details remain optional. Private drafts may be incomplete; exact validation/limits belong to a bounded implementation spec.
+- UXD07 — APPROVED 19:34 Asia/Tehran: publishing a Story requires title, short introduction and explanation. Headings, media, labels and Project relationship remain optional; drafts may be incomplete. These content requirements do not force Problem/Solution/Results sections, a blog/article format, successful outcome, metrics, live/source URLs or media. UXD02/UXC03/UXC05 and PS01–PS05 retain flexibility and independent visibility.
 Conceptual coverage used explicitly fictional UI-decision, CLI/backend-decision and standalone-lesson examples; this is not user testing, real Arvin content, visual approval or runtime evidence.
 
 ## Observable checks
@@ -70,4 +73,6 @@ Conceptual coverage used explicitly fictional UI-decision, CLI/backend-decision 
 | UXP06 | Public Project with private-only Stories | No public child titles, counts or empty Stories section |
 | UXP07 | Standalone text-only Story | Discoverable on Stories page; labels optional; no parent/media required |
 | UXP08 | Combined hero/Home About navigation | Identity and one featured Project share the opening; later About introduction is the Home anchor; More about me opens About |
-These are requirements checks, not executed browser or visual acceptance. UXD direction and UXD06 validation remain scoped as above.
+| UXP09 | Publish Project/Story with minimum text and no optional metadata/media | UXD06/UXD07 satisfied; optional absence adds no requirement; incomplete private Save stays available |
+| UXP10 | Completed never-released Project without live link | Optional Completed label plus useful factual Not released note; no Online/Shipped inference or dead Visit action |
+These are requirements checks, not executed browser or visual acceptance. UXD01–UXD05 and exact implementation/rendering remain scoped as above.

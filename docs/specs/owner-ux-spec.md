@@ -1,6 +1,6 @@
 # Owner UX Specification
 
-Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+Current scope: [P19–P21 UX checkpoint](../ux-requirements-checkpoint.md) and [owner content checkpoint](owner-content-checkpoint.md) supersede overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
 
 
 Status: P12 owner-approved; full-product P15 media additions proposed; bounded Work media behavior defined in accepted W43 contract, not blanket UI approval | Updated: 2026-10-12.
@@ -10,7 +10,7 @@ Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [conten
 ## 1. Owner's job and workspace
 
 Curate accurate work, preview its presentation, and change public content deliberately. The private workspace favors clear editing over expressive public composition; no résumé builder, analytics dashboard, page builder, or AI generation.
-Proposed navigation: Work, Experiences, Studio settings. Studio settings contains identity, personal context, contact, featured work, and curated order. Decisions/evidence are edited inside their story, not separate publishing products.
+P21 management areas/control locations are canonical in [OWN01–OWN05](owner-content-checkpoint.md). The earlier Work/Experiences/Studio settings and settings-owned selection/order proposals are superseded. Compatible P12 save/recovery/accessibility rules below remain; reconcile legacy Story/Experience field associations before implementation.
 Landing view is the Work list: title, project status, publication state, Edit, and New story. No vanity metrics. Experiences distinguish multiple projects from main product; settings explain which public surfaces they affect.
 
 ## 2. Identity and access
@@ -20,6 +20,8 @@ Sign-out returns to sign-in and prevents revisiting private content through cach
 Expired session stops writes and shows Sign in again. Retain in-session editing input where feasible; after reauthentication reload the saved revision and require conflict handling before retry. Cross-refresh persistence of unsaved input is not promised. Emergency credential recovery is SSH-only per T03; editor recovery behavior remains P12.
 
 ## 3. Structured authoring
+
+The older field matrix below retains historical P12/P15 context; its Story/Experience associations and settings-owned featuring/order are superseded by the scoped public/owner-content checkpoints. It does not override P21 minima/control locations; full companion reconciliation remains pending.
 
 | Area | Editable content | Publishing checks |
 | --- | --- | --- |
@@ -33,7 +35,7 @@ Experience associations reuse stories. A main-product selection must belong to t
 For a new main-product experience, guide context-only publication → associated story publication → explicit experience update selecting that story. Explain the temporary public no-project state before each confirmation.
 Full-product Decisions/media authoring here remains proposed; [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) is the narrower accepted Work retrofit with Story media/Problem figures but no Decisions content model. Its rendered owner UI still needs exact-source approval/verification under [VSRC](visual-source-workflow-spec.md).
 Evidence editing follows [ME07](media-evidence-spec.md#6-authoring-and-publication): image/recording/diagram/text-link, purpose/caption, capture stage, permission, alternatives, file/link, lead/cover/poster selection and accessible order. Upload/readiness is distinct from Save. Failed/pending selected assets require retry or explicit candidate removal before publication; other input stays. T04's filesystem/native FormData and 10 MiB baseline remain unchanged; exact video support/limits require a bounded upload spec.
-Order controls include Move up/Move down and an explicit featured-story selector; drag is optional and never the only method. Selecting/order editing changes a private settings draft until publication.
+OWN01–OWN05 own current selection/order locations and independent scopes. Move up/Move down remain; drag is optional, never the sole method. Save stays private until explicit publication; exact order-publication units remain open.
 
 ## 4. Editing state and actions
 
