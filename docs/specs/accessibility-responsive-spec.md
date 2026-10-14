@@ -1,5 +1,8 @@
 # Accessibility and Responsive Specification
 
+Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+
+
 Status: draft public-flow contract; owner-accepted P17 Close/focus rule, other P15 media UX proposed | Updated: 2026-10-12.
 Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R27; A04, A09, A11–A12.
 Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). The rendered wide visual direction is owner-approved; rendered accessibility and responsive validation have not yet occurred.

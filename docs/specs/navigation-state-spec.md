@@ -1,5 +1,8 @@
 # Navigation and State Specification
 
+Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+
+
 Status: proposed behavior except the owner-accepted P17 Evidence Close/focus rule | Updated: 2026-10-12.
 Depends on [public UX](public-ux-spec.md), [PRD](../../PRD.md), [decisions](../decisions.md). Trace: R07, R11, R19–R25; A03–A04, A07–A09, A11.
 URL shapes below are conceptual contracts; routing implementation and storage are deferred to architecture. Public delivery uses published content only; this document does not approve P02's authoring lifecycle.

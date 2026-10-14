@@ -1,5 +1,8 @@
 # Design Direction
 
+Current scope: [P19 UX checkpoint](ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+
+
 Status: Personal Studio and Signal Studio selected; existing light/dark visual direction approved (P09/P11/P13/P14); P15 media extension proposed for review. Updated: 2026-10-07.
 
 ## Product and expression

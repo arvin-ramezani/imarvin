@@ -1,5 +1,8 @@
 # Owner UX Specification
 
+Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+
+
 Status: P12 owner-approved; full-product P15 media additions proposed; bounded Work media behavior defined in accepted W43 contract, not blanket UI approval | Updated: 2026-10-12.
 Accepted: P02 explicit publishing; P03–P04 focused V1; P08 structured editing; P12 explicit save/candidate review/conflict/session recovery/accessible confirmations.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [content/publishing](content-publishing-spec.md). Trace: R12–R21; A05–A09.

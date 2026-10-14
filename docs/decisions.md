@@ -1,6 +1,6 @@
 # Decisions
 
-Updated: 2026-10-12. Confirmed = owner constraint. Accepted = owner-approved choice. Proposed = detailed behavior/value for review. Open = missing input. Superseded = do not implement.
+Updated: 2026-10-14. Confirmed = owner constraint. Accepted = owner-approved choice. Proposed = detailed behavior/value for review. Open = missing input. Superseded = do not implement.
 
 Authority: arvin-ramezani/imarvin only. No inheritance from the older project. Documentation and concept selection do not authorize code, images, merge, or deployment.
 
@@ -12,7 +12,7 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | C02 | Employment/freelance outcomes do not prescribe a CV layout |
 | C03 | Private dashboard for content editing |
 | C04 | Company identity/header uses logos/name only; no company photos/screenshot covers. Project media can appear in project choices/main stories within company context (P15 clarification) |
-| C05 | Experience supports several projects or the company's main application directly |
+| C05 | Prior multi-project/main-product Experience model; P19 replaces public company-detail presentation with compact Home credibility and optional Project links; old routes require reconciliation |
 | C06 | Premium/simple means focused/intentional, not mandatory visual quietness |
 | C07 | Current design task is documents/knowledge only; explaining future image/video use does not authorize creating assets, prototype, application code or deployment |
 | C08 | Source repository arvin-ramezani/imarvin; requirements file PRD.md |
@@ -25,9 +25,9 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | --- | --- | --- |
 | P01 | Personal Studio: select work, inspect decisions/evidence, retain context | 2026-10-03: “I choose Personal Studio”; product model, not every detailed contract |
 | P02 | Save private draft → preview → explicit Publish/Update; old public version stays until success | 2026-10-03: chose Explicit publishing; R16–R18, A06 |
-| P03 | One owner, English public content, email/professional links, no contact form | 2026-10-03: chose Yes, focused V1; R10, R12, A01 |
+| P03 | One owner and English public content retained; contact presentation/no-form restriction superseded by P19 | 2026-10-03: chose Yes, focused V1; R10, R12, A01 |
 | P04 | Curated work/decisions/evidence; no blog/community/customer portal/AI generation | 2026-10-03: chose Yes, focused V1; PRD V1 boundaries |
-| P05 | Entry leads with one featured work | 2026-10-03: chose One featured work; actual story remains O02; R01–R02 |
+| P05 | Entry leads with one featured work; P19 clarifies this as a Project within the approved Home sequence | 2026-10-03: chose One featured work; actual story remains O02; R01–R02 |
 | P06 | Projects-first browse; secondary company context | 2026-10-03: chose Projects first; filter details draft; R03–R07 |
 | P07 | Summary then selectable sections | 2026-10-03: chose Summary then sections; exact state/history details draft; R06, R24–R25 |
 | P08 | Structured authoring; design controls page layout | 2026-10-03: chose Structured content; R13–R15, A05 |
@@ -41,6 +41,8 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P16 | Owner/admin UI uses no interface animation or transitions at any screen size; public UI uses purposeful motion where it improves UX across public routes/screen sizes, with reduced-motion parity and CSS-first implementation | 2026-10-07 owner instruction. Framer Motion is public-only when CSS is insufficient. User-controlled project media playback is content, not owner UI chrome motion. [UI skill policy](engineering/ui-skill-policy.md). |
 | P17 | Close of Evidence opened from a Problem/Decisions figure restores that section and focuses its figure, or a safe visible heading if unavailable. Evidence-origin/direct-link Close stays in Evidence with valid focus. | 2026-10-12 owner confirmation of UX-A01; [navigation](specs/navigation-state-spec.md), [media](specs/media-evidence-spec.md), [accessibility](specs/accessibility-responsive-spec.md). Only this Close/focus rule is accepted; other P15 media proposals remain unapproved. |
 | P18 | UI/UX mockups and non-production development/tests use explicitly synthetic fixture data, not real projects, customer records, real contact destinations, or actual project Evidence. Assume project-owner media permission for planning; do not present synthetic captures as real or include sensitive information. | 2026-10-12 owner instruction; [visual workflow](specs/visual-source-workflow-spec.md), [content fixtures](content-inventory.md#screen-scoped-visual-content-gates). Fixture approval is visual only; O01–O03 still gate actual public publication. |
+
+| P19 | Approved UX requirements checkpoint: distinct Projects/optional-parent Stories, Home order/Experience/offerings, browse/labels/navigation, private/public/bulk/removal and form/direct contact. Supersedes affected P03/P05/P07/P10 and C05 assumptions only; full design/implementation remains open. | Owner clarification/approvals on 2026-10-14 through 06:35 Asia/Tehran; [checkpoint and authority map](ux-requirements-checkpoint.md). Latest media-inspection suggestion unapproved; no assets/code authorized. |
 
 ## Architecture baseline
 
@@ -70,6 +72,8 @@ O05 is resolved at architecture level by T01/T03–T07. Application implementati
 
 Light-only V1 theme guidance is superseded by P14. Dark mode adapts Signal Studio; it does not select Night Instrument.
 Inspection-only project media placement is superseded by P15's proposed entry/browse/lead/contextual placements. Logos-only company identity and complete no-media stories remain required. Earlier rendered evidence does not validate the new media compositions.
+
+P19 replaces the earlier Project-as-Story, no-form/contact-only-links, company-detail and conflicting lifecycle assumptions. Its approved Home order is an explicit owner revision; preserve historical rendered/implementation evidence within its original scope.
 
 Former P01 Engineering Practice as a résumé/editorial public model, fixed introduction/experience/projects/about/contact sequence, quiet/neutral defaults, and career chronology are superseded. Problem/contribution/decision/outcome remains a shared content model. Work Atlas/Story Explorer and VS-B/VS-C are unselected history, not V1 modules.
 

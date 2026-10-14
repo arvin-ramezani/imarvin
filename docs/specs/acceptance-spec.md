@@ -1,5 +1,8 @@
 # Integrated UX and Design Acceptance
 
+Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+
+
 Status: review contract; P17 Close/focus accepted, W43 Work behavior distinct from proposed full-product P15 compositions; execution pending | Updated: 2026-10-12.
 Authority: [PRD](../../PRD.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md), [visual system](visual-system-spec.md), [components](components-interaction-spec.md).
 Scope: complete public/owner product-design contract. Does not certify implementation, accessibility conformance, security, or production readiness.

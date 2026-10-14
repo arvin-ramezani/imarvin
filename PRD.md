@@ -1,16 +1,18 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.9 | Updated: 2026-10-07
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.10 | Updated: 2026-10-14
 
 Status: revised draft. Confirmed constraints: C01–C10. P01–P15 and T01–T07 are owner-approved where listed in decisions. P15 confirms the media documentation brief; detailed new media UX remains proposed. Remaining open items are factual inputs, runtime validation, and feature-level implementation details; the complete PRD is not blanket implementation approval.
+
+P19: [approved UX checkpoint](docs/ux-requirements-checkpoint.md) records the 2026-10-14 requirements and supersedes overlapping older contracts; unresolved design/implementation details remain explicit.
 
 ## 1. Product intent
 
 A creative personal web app where visitors explore Arvin's work, thinking, and personality through meaningful interaction. It should feel like entering his own digital space.
 
-Job and freelance conversations remain desired outcomes. The product is not a portfolio/résumé site. The former five-section homepage is superseded; evidence about work remains useful content.
+Freelance clients are the primary audience; job opportunities and curious exploration remain supported outcomes. ImArvin focuses on Arvin; BluCode is out of scope for now. The product is not a portfolio/résumé site. The former five-section homepage is superseded; evidence about work remains useful content.
 
-Selected model: Personal Studio (P01). Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. Selected entry/flow choices: one featured work, projects-first browsing, and summary then selectable sections. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [public UX](docs/specs/public-ux-spec.md).
+Selected model: Personal Studio (P01). Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. P19 selects one featured Project, distinct Project/Story pages, and a Home overview with deeper dedicated pages. Exact Project/Story components remain to design. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [public UX](docs/specs/public-ux-spec.md).
 
 ## 2. Users and outcomes
 
@@ -29,25 +31,25 @@ Success hypotheses: visitors understand a contribution/decision, recognize Arvin
 | --- | --- |
 | R01 | Entry is an authored exploration surface with one clear primary action; no mandated résumé section sequence |
 | R02 | Identity and purpose are clear; work, personal context, and contact remain discoverable |
-| R03 | Company entries show logo/name, role, dates, and a concrete contribution; name fallback for absent logo; placement is contextual rather than homepage-first |
-| R04 | Company identity/header uses logos/name only, no company photos/screenshot covers; project choices/main stories may show their own media within that context; open shareable experience details |
-| R05 | Experience shares a context header; show several project choices or the company's main product directly |
-| R06 | Each story supports problem, personal tasks/responsibility, decisions, outcomes/status, and relevant stack |
-| R07 | Exploring by work, decision, or company resolves to one underlying story; main-product content remains directly linkable |
+| R03 | Home Experience conveys credibility through company logo/name, role, concise contribution/responsibilities; dates remain a factual requirement pending P19 reconciliation; no duplicate full About experience |
+| R04 | Company logo/name may link to the real website; no separate company detail page. Company identity remains logos/name only; project media has its own showcase |
+| R05 | Home Experience sits after More Projects and before How I can help; optional relevant Project links. Earlier company Experience routes require compatibility reconciliation |
+| R06 | Stories are concise designed explanations of problem/solution, decisions, lessons or experiments, without forced identical sections or article format; exact components/fields remain open |
+| R07 | Distinct Projects have zero/many Stories; Stories have zero/one Project and can stand alone. Public navigation, labels and direct links follow [P19 public requirements](docs/specs/ux-public-checkpoint.md) |
 | R08 | Ongoing/completed/cancelled progress, release history (shipped/never shipped), current availability and capture stage remain distinct; cancelled/offline/never-shipped work is eligible for full published stories and featuring |
 | R09 | Purposeful permitted project images/recordings support discovery and inspection, including real animations/workflows; captions identify context and proof limits. Media is optional; text layouts remain complete and only usable public external links appear |
 | R10 | Personal context communicates real interests/learning; contact is available independently of completing exploration |
 | R11 | Navigation, back/reset, absent content, and unavailable destinations have understandable behavior |
 
-A company is the organization; experience is Arvin's role; a project is a body of work. Engineering Practice is retained only as an internal story structure, not the public visual concept. Standalone work is allowed. Decisions/evidence are parts of a story, not a required new blog or separate publishing system.
+A Project is a body of work, distinct from a focused Story. UI-heavy, CLI and backend Projects share a simple complete overview with optional zero/one/many media and optional links; the live Project link has priority over company context. Deeper problems/solutions/decisions belong in Stories. [P19](docs/ux-requirements-checkpoint.md) owns the current relationship, Home, browsing and contact requirements; no blog is implied.
 
 ## 4. Owner requirements
 
 | ID | Requirement |
 | --- | --- |
 | R12 | Owner sign-in/out; no public registration; server-side authorization |
-| R13 | Manage identity/personal context, experience, stories and their decisions/evidence, lead/cover/poster and alternatives, contact, featured work, grouping and order |
-| R14 | Associate work with companies; support multiple projects and the main product without duplicated stories |
+| R13 | Manage identity/personal context, Experience, distinct Projects/Stories, optional media, custom reusable labels, Contact, manual Home selections and order; fields/layouts remain to design |
+| R14 | Choose zero/one Project for a Story at creation; no move/attach/detach operation now, except Keep Stories on Project deletion. Independent visibility/bulk choices follow [Project/Story](docs/specs/project-story-spec.md) |
 | R15 | Preview the public layout privately; show unsaved/saved and private/published states |
 | R16 | Explicit publishing: Save private draft; Publish new content; Update published content explicitly |
 | R17 | Saving edits leaves existing public content intact; publish/update failure preserves it |
@@ -69,7 +71,7 @@ R27: Light and Dark support public/owner/preview states; default System with Sys
 
 ## 6. V1 boundaries
 
-Accepted P03–P04: one owner, English public content, email/professional contact links, no contact form. Include curated existing work and contextual decisions/evidence; one coherent exploration model.
+One owner and English public content remain. P19 replaces P03's no-form rule with [Contact form + direct channels](docs/specs/contact-ux-checkpoint.md), Telegram preferred, no service selector/BluCode. Home has Introduction → Featured Project → Stories → More Projects → Experience → How I can help → Contact invitation. Dedicated Projects/Stories/About/Contact pages provide depth; no Services/company page. P19 remains requirements-only.
 
 Exclude public accounts, community, blog/newsletter, customer portal, booking/payment, AI generation, multilingual publishing, analytics dashboards, mandatory 3D/game navigation, and runnable simulations as baseline scope. Interactive evidence must not execute untrusted project code.
 
@@ -80,8 +82,8 @@ Architecture is defined by [technical architecture](docs/architecture/architectu
 | ID | Observable outcome | Requirements |
 | --- | --- | --- |
 | A01 | Entry explains the space and offers a clear exploration action plus discoverable contact | R01–R02, R10–R11 |
-| A02 | Unixsee supports several projects; the previous company's core shop is shown directly | R03–R05, R14 |
-| A03 | Work/decision/company paths and deep links resolve consistently without duplicating content | R06–R07 |
+| A02 | Experience provides concise credibility and optional relevant Project links, without required company detail pages | R03–R05, R14 |
+| A03 | Distinct Project/Story routes, optional parent and Home/dedicated-page navigation follow P19; previous URL compatibility requires a migration contract | R06–R07 |
 | A04 | Offline/cancelled/never-shipped work remains truthful and complete with permitted captures/recordings or without optional media; capture stage never implies a launch | R08–R09, R23 |
 | A05 | Owner curates/edits/associates/previews/publishes without editing source files | R12–R16 |
 | A06 | Save does not publish; explicit successful update does; failure preserves public content and input | R16–R18 |
@@ -98,4 +100,4 @@ The visual direction is owner-approved. Responsive, interaction, accessibility, 
 
 Signal Studio (P09) and the existing light/dark visual system/rendered target (P11/P13/P14) are approved. P15 extends documentation for project images/video; new media compositions/player behavior have not been rendered or approved. The [visual system](docs/specs/visual-system-spec.md) is the visual authority; [media](docs/specs/media-evidence-spec.md) and [components](docs/specs/components-interaction-spec.md) define proposals requiring later validation.
 
-Confirm O01–O03 and finish runtime responsive/interaction/accessibility validation. O04 visual approval and O05 architecture baseline are resolved. Implementation proceeds only through the accepted issue/spec/PR workflow.
+Continue P19 requirements discovery, reconcile overlapping legacy specs before dependent design/implementation, and obtain exact-image approvals. O01–O03 still gate actual publication; P18 fixtures support design/development. Finish runtime responsive/interaction/accessibility validation. O04 visual approval and O05 architecture baseline are resolved. Implementation proceeds only through the accepted issue/spec/PR workflow.

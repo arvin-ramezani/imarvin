@@ -1,5 +1,8 @@
 # Content and Publishing Specification
 
+Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+
+
 Status: P02/P10 lifecycle approved; full-product P15 media extensions proposed; W43 media publication accepted for bounded Work scope only | Updated: 2026-10-12.
 Saving is private; publishing/updating is explicit. Removal/reference/concurrency behavior below is approved; T01–T07 provide architecture/runtime defaults and feature specs define exact mechanisms. [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) governs bounded Work media snapshots and Problem figures, not full-product Decisions content or visual signoff.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [owner UX](owner-ux-spec.md). Trace: R06–R09, R12–R19, R22; A03–A08, A10.

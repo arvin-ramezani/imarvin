@@ -12,10 +12,13 @@ Current validation: [Responsive & Interaction Validation](docs/responsive-intera
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
+Current requirements: [P19 UX checkpoint](docs/ux-requirements-checkpoint.md) records the latest owner-approved model, Home hierarchy, browsing, lifecycle and Contact decisions. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
+
 ## Read in order
 
 | Document | Purpose |
 | --- | --- |
+| [Approved UX checkpoint](docs/ux-requirements-checkpoint.md) | Latest scoped authority, approved requirements and unresolved decisions |
 | [PRD](PRD.md) | User outcomes, scope, requirements, acceptance |
 | [Design concepts](docs/design-concepts.md) | Selected concept and two unselected alternatives |
 | [Design direction](docs/design-direction.md) | Personal Studio direction and draft UX contracts |

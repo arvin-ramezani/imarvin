@@ -4,6 +4,8 @@ Phase: implementation underway. Existing behavior/visual direction and O05 runti
 
 ## Order and current status
 
+P19 [requirements checkpoint](ux-requirements-checkpoint.md) overrides affected legacy UX assumptions. First resume open requirement clarification, then reconcile specs/skills/fixture coverage and issue dependencies, then create and approve visual sources. Do not continue affected implementation from the old Project-as-Story or no-form model.
+
 1. Owner UX + publishing/content: P10/P12 behavior approved; implementation mechanisms remain feature-specific.
 2. Signal Studio visual direction and light/dark token foundation are approved and implemented.
 3. Responsive/interaction contracts are written; rendered narrow/responsive, interaction, accessibility, empty/error, and implementation checks remain Pending. Meaningful new visual UI first requires [VSRC](specs/visual-source-workflow-spec.md) source images and exact-revision owner approval. #54 has a documentation workstream and a separately bounded image workstream.

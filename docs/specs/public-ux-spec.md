@@ -1,5 +1,8 @@
 # Public UX Specification
 
+Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
+
+
 Status: full-product UX draft including P15 media; P17 Close/focus accepted, bounded W43 Work behavior accepted by scope | Updated: 2026-10-12 | Model: Personal Studio.
 Owner-selected: P05 one featured work; P06 projects first; P07 summary then selectable sections. Other behavior below is proposed, not implementation approval.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md), [content inventory](../content-inventory.md). Trace: R01–R11, R23–R26; A01–A04, A10–A12.
