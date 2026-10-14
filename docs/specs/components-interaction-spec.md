@@ -1,74 +1,57 @@
 # Components and Interaction Contract
 
-Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
-
-
-Status: full-product draft; Signal Studio P09/P11/P13/P14 accepted, P17 Close/focus accepted, W43 Work behavior accepted by scope only; other P15 compositions unapproved | Updated: 2026-10-12.
+Status: reconciled P19–P25 responsibilities; components/widgets unapproved; P17/W43 historical only. Updated: 2026-10-15.
+Authority: [public checkpoint](ux-public-checkpoint.md), [owner content](owner-content-checkpoint.md), [relationships](project-story-spec.md), [Contact](contact-ux-checkpoint.md); [visual system](visual-system-spec.md) keeps approved art direction.
 Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R27; A01–A12.
 Names describe design responsibilities, not React components, library choices, database models, or coding assignments. [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) bounds accepted Work behavior/roles without a Decisions model; proposals here do not expand it. New substantive composition needs [visual-source approval](visual-source-workflow-spec.md).
 
 ## 1. Public component roles
 
-| Role | Required content / action | States / variation | Narrow and keyboard contract |
-| --- | --- | --- | --- |
-| Theme utility | System/Light/Dark; current preference/resolved appearance | System default, explicit override, persistence unavailable | Icons lead; short option labels; keyboard/touch; focus returns to trigger |
-| Studio navigation | Identity, Work, personal context, Contact | Current destination; private owner entry need not be promoted | Links wrap or use labeled menu; Contact directly discoverable |
-| Featured work object | Title, hook, truthful status, optional published still/poster, Open work | Available, fallback, no work, no media | Work-first hierarchy; one story-opening action; no player/autoplay |
-| Work collection | Curated objects, optional company selection | All, filtered, loading, empty, request error | Readable sequence; aligned visual/focus order; clear reset |
-| Work object | Title, hook, truthful status, optional published discovery-cover projection/company context | Default, hover, focus, active, no media, failed discovery delivery | Reuse Story image/static poster only; one story-opening action; no Browse-only thumbnail, player, autoplay or hover playback; text/action remain usable on failure |
-| Context rail/header | Selected title, company/role context, return | Collection/company/previous-story origin or All work fallback | Rail folds above content; return label retains real destination |
-| Story summary | Problem, contribution/tasks, progress/outcome, stack | Complete without media; absent optional fields omitted | Readable text; one hierarchy, no badge inventory |
-| Lead media / recording | Image or truthful poster, stage/caption, Play, alternatives | Loading, ready, playing/paused/ended, failed, absent | Inline keyboard/touch controls; no autoplay; summary/return visible |
-| Section controls/panel | Problem, Decisions, Evidence | Two-plus: tabs; one: heading/content; zero: summary only | Tab semantics with icon-and-short-label styling; wrap labels; selected state announced |
-| Decision object | Constraint, alternatives, choice, consequence/lesson | Authored content, absent section | Strong choice hierarchy; text supports meaning without diagram |
-| Contextual figure | Relevant Story Evidence reference beside Problem/Decision explanation | Image/poster/diagram reference, absent, failed delivery, selected for inspection | Same underlying Evidence identity; never an independently editable duplicate; selection/inspection targets canonical Evidence item; essential explanation remains text |
-| Evidence item/inspection | Ordered items, caption, proof limits, alternative, Open/Close | Image/video/diagram/text/link, loading, failed, unavailable | One detailed inline item; Close follows P17 origin-specific visible-focus restoration; Retry keeps story |
-| Experience context | Company name/logo, role/dates/contribution; Story-owned project media where applicable | Logo/name fallback; multi-project choice with published discovery projection or direct main story | Logo/name-only company header; choices reuse Story projection without Experience-owned copy/playback; direct main story uses normal lead/evidence; no extra main-product click |
-| Contact destination | Approved destination label and address/link | Available only with confirmed destination | Independent navigation; no form/placeholder links |
-| Feedback area | Loading/error/empty/unavailable explanation | State-specific next action | Text and accessible announcement, never color alone |
+| Role | Content/action and scope | States / responsive/accessibility |
+| --- | --- | --- |
+| Shared header / theme | Home name returns to top; Home section anchors, dedicated-page navigation; System/Light/Dark | Active destination and visible focus, keyboard/touch, no lost state |
+| Combined identity + Featured Project hero | Brief identity, one published manually configured Project, contribution, Explore Project, secondary Contact | No configured feature: identity/eligible sections only; no fallback or media requirement |
+| Home Stories / More Projects | Up to four Stories / three other Projects; latest or manually ordered Home selections | No duplicate featured Project; View all, absent/fewer items no fillers |
+| Home Experience / About / offerings | Logo/name, concise factual contributions and optional Project links; brief About; three offerings | No company page, About repetition, service selector or fabricated links |
+| Projects/Stories collections | Distinct items, one reusable label filter, published-only results, Load more | **Filter → pinned last-pinned-first → unpinned newest**; preserve filter/load/scroll |
+| Project detail | Name/overview → individual contribution → optional showcase → secondary facts/links → public Stories | Zero/one/many Project media; no blank children area or mandatory case-study sections |
+| Story detail | Title/introduction → concise designed explanation, optional contextual media/labels/public parent | Standalone or private-parent public Story complete; no forced tabs/article format |
+| Image/player content | Optional authored real capture, truthful stage and alternatives; explicitly controlled playback | No autoplay; exact gallery/zoom/player design pending; text remains complete |
+| Contact / Privacy | Email-or-phone form, conditional Telegram identity, direct channels; privacy note/page | Sending/safe accepted/failure statuses; no uploads, dashboard inbox or fake read receipt |
+| Public feedback | Loading/empty/unavailable/error and valid recovery | No leaked private data, dead CTA, misleading status or motion-only meaning |
 
-Visual priority: hierarchy, icon/shape, spacing, and state change. Labels support these cues without becoming long instructions. Retain visible names for sections and consequential actions; no tooltip-only meaning.
-Section selectors integrate into the reading surface: proposed icon plus short label, selected weight/shape/local mark. No obligatory pill strip, boxed segmented control, glow, or large tinted active tile. Tab semantics do not prescribe tab styling.
-Hover offers a small emphasis only. Keyboard focus remains clearly visible; active selection is a separate marker. No required information appears exclusively on hover.
-Every public component uses published data. Missing media does not change the core hierarchy or disable exploration. Failed discovery delivery preserves the Story/Experience choice text and opening action; failed lead/evidence delivery preserves caption/explanation with scoped recovery. Errors do not replace the whole application when only a media area fails. [Media/evidence](media-evidence-spec.md#5-composition-and-delivery-experience) owns the canonical absence/failure distinctions.
+P17 inline Evidence focus/Close, section-tab semantics, authored Evidence IDs, and W43 lead/cover/media placement apply **only to the historical Work slice**; they are not prescribed Story components. Old Story-as-Project, company-detail and automatic related-Story controls are superseded. Treat the table as responsibilities, **not** a React component list, rich-text editor, chosen gallery design or visual approval.
 
 ## 2. Owner component roles
 
-| Role | Required content / action | States / variation | Narrow and keyboard contract |
-| --- | --- | --- | --- |
-| Content list | Title, progress, public/editing state, Edit/New | Loading, empty, failed; Work/Experiences | Stack table content; actions keep explicit labels |
-| Structured editor | Labeled fields, help, optional section controls | Clean, unsaved, saving, saved, validation error, conflict | Preserve input; error summary links to fields |
-| Association/order controls | Experience/mode/main story, feature/order | Eligible, missing/unpublished dependency | Labeled choices; move buttons and position announcements |
-| Evidence editor | Kind, caption/stage/permission, alternatives, asset/poster/link, cover/lead/order | Selected, uploading, processing, ready, failed, removed from candidate | Picker/move-button alternatives to drag; retain other fields; no implicit Save/Publish |
-| Publication status | Draft/public state, private changes, last success | No public version, matches public, private changes | Text remains adjacent to relevant action |
-| Editor actions | Save draft, Preview, Publish/Update | Pending prevents duplicate action; invalid operation explains why | Wrap or stack; never hide errors/focus beneath action bar |
-| Private preview banner | Private preview, saved candidate identity, Back to editing | Missing dependency warning; session expired | Keyboard return; no public sharing affordance |
-| Publication review | Public/candidate text/media comparison, changed cover/poster/captions/order, impacts | Ready, stale, invalid dependency/media, pending, outcome unknown, confirmed failed | Stack labelled old/new groups; confirm specific operation |
-| Confirmation dialog | Item, impact, retained/deleted content, Confirm/Cancel | Unpublish, delete, discard unsaved edits, changed impact | Focus contained; safe cancel; restore invoking control |
-| Conflict/session recovery | Reason, retained input, Copy text/Reload or Sign in | No silent overwrite; recheck after recovery | Clear next action; no unusable background submission |
+| Role | Visible requirement | Accessible/recovery scope |
+| --- | --- | --- |
+| Private management | Projects, Stories, Experience, Site settings; Projects/Stories All items and Home selection | Title, Private/Published, Edit, published Pin/Unpin; Project filter in All Stories |
+| Home/pin arrangement | Published Featured Project/More Projects/Home Stories; shared pins; Experience order in its list | Home-only manual order, Move up/down; pending **Apply changes/Discard**; leaving Apply/Discard/Stay |
+| Item editor / private preview | Separate Project/Story edit; UXD06–UXD07 minima, optional facts/media/labels/parent at creation | Explicit Save → Preview → Publish/Update; private input retained; no mandatory grouping/widget |
+| Publication / deletion review | Project bulk Publish/Unpublish/Delete scoped selection, Keep/Unpublish/Delete child choices | PS13 together-or-unchanged confirmed; counts, applied-Home selection blocker, conflict/unknown recovery |
+| Site settings / labels | Identity/About/offerings/Contact; reusable labels can be renamed/deleted | No Home ordering under settings or mandatory taxonomy page; never auto-publish entry edits |
+| Confirmation/status | Separate public/private/unsaved, candidate/public comparison | Focus containment, Escape/Cancel, no animated owner UI chrome |
 
-During a pending write, prevent duplicate confirmation but keep safe navigation/recovery meaningful; leaving does not promise cancellation of a server operation. Determine the actual outcome before retrying.
-Publication/destructive operations keep explicit short wording even when an icon leads visually. Save draft / Preview / Publish / Update published content / Unpublish / Delete remain distinguishable; do not collapse them into unlabeled utility icons.
-Unavailable buttons have an adjacent reason and resolution path; do not rely on a disabled hover tooltip. Private preview and public view always use distinguishable labels.
-
-Theme utility is shared by public, sign-in, owner, and private-preview surfaces. Its actions alter local appearance only; never Save/Publish, history, filter/story/section/evidence, open dialog, or unsaved editor input. Light/dark palette roles and detailed behavior are canonical in visual-system-spec section 7.
+Meaningful labels, selected/focus distinction, accessible names and no-motion owner rule remain. [OWN01–OWN06](owner-content-checkpoint.md) own actions; [PS](project-story-spec.md) owns publication/destruction; exact widget/layout/schema remains undecided.
 
 ## 3. Interaction boundaries
 
-Navigation/history/focus transitions belong to navigation-state-spec; content lifecycle belongs to content-publishing-spec. Components expose those contracts rather than inventing local alternatives.
-Section selection changes the panel immediately or shows scoped loading. It replaces history state; Back returns to origin, not each tab. Evidence inspection closes when leaving Evidence; lead media stays with the summary. [Media/evidence](media-evidence-spec.md) governs playback, shared asset identity and public projections. Modal dialog behavior applies to owner confirmations, not inline public evidence.
-Structured editing uses explicitly requested operations. No autosave/publish shortcut, implicit dependency release, cross-tab last-write-wins, auto-playing evidence, or new widget invented solely for decoration.
-Do not invent empty cards, fake screenshots, dates, author quotes, telemetry, or progress percentages for visual completeness. Use the real long/no-media/absent-section cases in review.
+Navigation/return/focus follow [navigation](navigation-state-spec.md), privacy/versions follow [publishing](content-publishing-spec.md), and media ownership follows [media](media-evidence-spec.md). Do not invent autosave, Story suggestions, attachment transfers, company-detail route, per-Project manual rank or automatic publication. Public motion is purposeful, with reduced-motion equivalents; owner/admin motion is absent.
+Substantive new compositions require [VSRC](visual-source-workflow-spec.md) actual image/version approvals before implementation planning. Never pass off old W43 renders as matching new P19 screens; P18 synthetic TEST ONLY visual fixtures are not real project captures.
 
 ## 4. State coverage for future design review
 
-| Surface | Required representative states |
+| Surface | Representative states not yet visually approved |
 | --- | --- |
-| Theme | System resolves light/dark; explicit modes; device change; remembered/fallback preference; first appearance; editor/dialog/media parity |
-| Home/collection | Feature available/removed; zero/one/many work; company selected/cleared/empty; long title; project cover/poster/no media/failed discovery delivery |
-| Story/experience | Multi/main product; reused choice projection; zero/one/three sections; cancelled/never shipped/offline; no logo/media; failed lead/evidence; missing recording source; unavailable link; playing/paused/ended |
-| Editor | New incomplete draft; unsaved public edit; media kind/cover/poster/order; validation/upload/processing failure; concurrent conflict; expired session |
-| Preview/review | Exact saved candidate; missing dependency/media alternatives; public/candidate media changes; pending/failed/successful update |
-| Removal | Feature/main-product/related impacts; blocked delete; safe cancel; unpublish success/failure |
+| Combined Home | Feature/no-feature; Stories/More Projects 0/fewer/full; Experience/About/offerings/Contact |
+| Collections | Pins/unpinned, labels/filter-before-sort, Load more/return, zero results, long title, media absent/failed |
+| Details | UI/CLI/backend Project; Story standalone/private parent/public parent; zero/one/many optional media/links; no related Stories |
+| Contact / Privacy | Email-only, phone-only, Telegram username conditional, safe send/failed retry, form note/page |
+| Owner lists / arrangement | All items/Home selection, pending/Apply/Discard/fail, preserved pin priority on republish |
+| Editor / bulk / deletion | Minimal publish, incomplete draft, old public candidate, selected child bulk atomicity, Keep Stories, Home blocker, conflict/expiry |
+| Theme/mobile | Light/Dark/System, 320px, focus/keyboard, no owner animation, media no-autoplay |
+
+These are design-review inputs
 
 These are design-review inputs, not screens already drawn or checks already executed. See [refinement review](../visual-refinement-review.md) for public/owner wide/narrow contracts. Use [acceptance](acceptance-spec.md) and [design review](../design-review.md) to record evidence at the correct stage.
