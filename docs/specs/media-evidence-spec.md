@@ -61,8 +61,8 @@ Fallback/failure states are distinct:
 | State | Canonical behavior |
 | --- | --- |
 | No authored media | Render the complete text composition with no filler, reserved empty slot, or dead Play control. |
-| Failed discovery media delivery | Keep the Story or Experience project choice usable/openable with its known text/status/context; show no broken-placeholder replacement and do not silently substitute another asset. |
-| Failed lead/evidence delivery | Keep caption/explanation and surrounding story usable; offer scoped Retry and Close for an open inspection rather than replacing the whole destination. |
+| Failed discovery media delivery | Keep the Project or Story discovery entry usable/openable with its known text/status/context; never expose a broken replacement or silently substitute another asset. |
+| Failed selected Project-showcase/Story-media delivery | Keep caption/explanation and surrounding content usable with scoped Retry; historical Work Evidence inspection also retains its Close action. |
 | Missing actual recording/source | A poster can remain a static visual only; never expose Play or fabricate a recording/source that is not available. |
 | Owner selected media pending/failed | Publication remains blocked until the item is Ready or explicitly removed from the candidate; preserve candidate input and the existing public state. See [owner UX](owner-ux-spec.md#3-structured-authoring) and [publishing](content-publishing-spec.md#4-publication-checks). |
 

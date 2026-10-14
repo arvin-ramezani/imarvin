@@ -52,6 +52,4 @@ Substantive new compositions require [VSRC](visual-source-workflow-spec.md) actu
 | Editor / bulk / deletion | Minimal publish, incomplete draft, old public candidate, selected child bulk atomicity, Keep Stories, Home blocker, conflict/expiry |
 | Theme/mobile | Light/Dark/System, 320px, focus/keyboard, no owner animation, media no-autoplay |
 
-These are design-review inputs
-
 These are design-review inputs, not screens already drawn or checks already executed. See [refinement review](../visual-refinement-review.md) for public/owner wide/narrow contracts. Use [acceptance](acceptance-spec.md) and [design review](../design-review.md) to record evidence at the correct stage.
