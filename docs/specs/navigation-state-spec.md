@@ -1,7 +1,7 @@
 # Navigation and State Specification
 
 Status: reconciled P19–P25 public destinations/return; route encoding and old-URL migration open. Updated: 2026-10-15.
-Current authority: [UXN01–UXN07](ux-public-checkpoint.md), [Contact](contact-ux-checkpoint.md) and [relationship](project-story-spec.md). P17 is scoped to historical Work Evidence behavior.
+Current authority: [UXN01–UXN07](ux-public-checkpoint.md), [Contact](contact-ux-checkpoint.md) and [relationship](project-story-spec.md). P17 origin-aware Close/focus applies wherever figure-to-Evidence inspection exists; W43 implementation evidence is historical.
 Depends on [public UX](public-ux-spec.md), [PRD](../../PRD.md), [decisions](../decisions.md). Trace: R07, R11, R19–R25; A03–A04, A07–A09, A11.
 URL shapes below are conceptual contracts; routing implementation and storage are deferred to architecture. Public delivery uses published content only; this document does not approve P02's authoring lifecycle.
 
@@ -42,7 +42,7 @@ History persistence, tie-breakers and exact route encoding are implementation co
 | Submit Contact | Stay on Contact with sending, accepted confirmation or retained input/Retry; direct channels remain usable |
 | Inspect/play actual media | Explicit user control only; leaving/hiding stops audio; no unnecessary Back steps |
 
-No automatic Story suggestions, company detail destination or mandated Story section selector. Historical W43 section/evidence selection retains its **own** replace-history and P17 figure-origin Close/focus contract.
+No automatic Story suggestions, company detail destination or mandated Story section selector. Where figure-to-Evidence inspection exists, P17 Close/focus restores its origin with no extra Back steps. W43 section/evidence history behavior remains historical implementation scope.
 
 ## 4. Share and invalid locations
 
@@ -59,7 +59,7 @@ Nonexistent/private/deleted item locations share a neutral unavailable response;
 | Item becomes nonpublic | Neutral unavailable content, no leaked titles/assets/metadata |
 | Contact pending/failed/accepted | In-place status, preserved input on confirmed failure, safe accepted confirmation only |
 
-For the **historical Work implementation**, P17 figure-opened Evidence Close restores Problem/Decisions source figure or safe visible heading; Evidence-origin/direct Close stays in Evidence with valid focus. Selection changes replace history, stop playback when leaving; this rule does **not** require Problem/Decisions/Evidence sections in P19 Stories. No forced gallery/player components or autoplay.
+P17 applies to any figure-to-Evidence flow: figure-origin Close restores its originating section and focuses the figure or safe visible heading if the figure/section is unavailable. Evidence-origin/direct-entry Close stays in Evidence with valid focus; avoid extra Back steps/autoplay. W43 section-selection, playback and tests are historical evidence, not mandatory P19 sections/schema/gallery.
 
 ## 6. Public privacy contract
 
@@ -76,6 +76,6 @@ Owner preview is a separate private path, not a public section/state. Authorizat
 | NS04 | Stale label/nonpublic Project/Story link | Neutral published-only fallback |
 | NS05 | Request fails; retry; selection changes | Current selection wins, no duplicate history |
 | NS06 | Keyboard/mobile same journey | Accessible heading/focus/Return; no hidden control |
-| NS07 | Historical W43 figure/Evidence/direct link → Close | P17 valid focus/fallback without extra Back steps |
+| NS07 | Applicable figure/Evidence/direct-entry → Close | P17 origin/focus fallback or valid Evidence focus, no extra Back steps; W43 evidence historical |
 
 Checks are pending implementation. Companion [accessibility contract](accessibility-responsive-spec.md) governs focus and announcements. Detailed route encoding, history restoration mechanism, and delivery failures remain technical-spec work.

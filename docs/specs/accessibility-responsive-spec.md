@@ -1,6 +1,6 @@
 # Accessibility and Responsive Specification
 
-Status: P19–P25 public and owner a11y/responsive contract; P17 legacy Work focus remains accepted; new visual checks pending. Updated: 2026-10-15.
+Status: P19–P25 public and owner a11y/responsive contract; P17 focus applies to any relevant figure-to-Evidence flow; W43 evidence historical; new visual checks pending. Updated: 2026-10-15.
 Authority: [public checkpoint](ux-public-checkpoint.md), [Contact](contact-ux-checkpoint.md), [owner content](owner-content-checkpoint.md) and [navigation](navigation-state-spec.md).
 Depends on [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md). Trace: R20–R27; A04, A09, A11–A12.
 Scope: homepage, collection, experience, detail, evidence, personal context, Contact. Owner-dashboard coverage is now defined in [owner UX](owner-ux-spec.md), with component states in [components](components-interaction-spec.md). The rendered wide visual direction is owner-approved; rendered accessibility and responsive validation have not yet occurred.
@@ -28,7 +28,7 @@ At 320px/200% text/400% zoom, no page horizontal overflow, covered essential con
 - Tab behavior is semantic: it does not require pill tabs, boxed segments, or a generic active fill. Selection may use weight/shape/icon and restrained emphasis; preserve the selected state and associated panel.
 - Keep selection/focus visibly distinct. Absent optional content has no dead focus targets; private parent/content remains absent from public accessibility tree.
 - Projects/Stories each have a clearly labelled single-label filter and All/reset. Announce published matching count; preserve pin/latest order and filter focus.
-- New Project/Story destinations focus their title; returning restores actual invoking item or visible fallback. P17 applies **only to existing W43 figure-origin Work Evidence**: Close restores Problem/Decisions figure or visible heading; Evidence-origin/direct link Close stays in Evidence with valid focus. No hidden target or inline focus trap. It does not mandate those sections for P19 Stories.
+- New Project/Story destinations focus their title; returning restores actual invoking item or visible fallback. Whenever a figure opens Evidence, P17 Close restores its originating section and focuses its figure or safe visible heading if figure/section disappeared. Evidence-origin/direct-entry Close stays in Evidence with valid focus; no hidden target or inline focus trap. W43 tests are historical; no Problem/Decisions sections or Evidence schema are mandated for P19 Stories.
 - Restoring a collection returns focus to the invoking item after restoring context. If it no longer exists, focus a valid heading and explain changed availability.
 - Loading, errors, empty results, and unavailable states use understandable text. Announce changes without rereading the whole page; errors link to an actionable Retry/return control.
 - Every action works with keyboard, touch, and ordinary pointer use. No hover-only labels, drag-only navigation, hidden gestures, or required animation completion.

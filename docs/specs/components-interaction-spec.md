@@ -1,6 +1,6 @@
 # Components and Interaction Contract
 
-Status: reconciled P19–P25 responsibilities; components/widgets unapproved; P17/W43 historical only. Updated: 2026-10-15.
+Status: reconciled P19–P25 responsibilities; components/widgets unapproved; P17 origin-aware Close/focus accepted wherever applicable; W43 implementation evidence historical. Updated: 2026-10-15.
 Authority: [public checkpoint](ux-public-checkpoint.md), [owner content](owner-content-checkpoint.md), [relationships](project-story-spec.md), [Contact](contact-ux-checkpoint.md); [visual system](visual-system-spec.md) keeps approved art direction.
 Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R27; A01–A12.
 Names describe design responsibilities, not React components, library choices, database models, or coding assignments. [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) bounds accepted Work behavior/roles without a Decisions model; proposals here do not expand it. New substantive composition needs [visual-source approval](visual-source-workflow-spec.md).
@@ -20,7 +20,7 @@ Names describe design responsibilities, not React components, library choices, d
 | Contact / Privacy | Email-or-phone form, conditional Telegram identity, direct channels; privacy note/page | Sending/safe accepted/failure statuses; no uploads, dashboard inbox or fake read receipt |
 | Public feedback | Loading/empty/unavailable/error and valid recovery | No leaked private data, dead CTA, misleading status or motion-only meaning |
 
-P17 inline Evidence focus/Close, section-tab semantics, authored Evidence IDs, and W43 lead/cover/media placement apply **only to the historical Work slice**; they are not prescribed Story components. Old Story-as-Project, company-detail and automatic related-Story controls are superseded. Treat the table as responsibilities, **not** a React component list, rich-text editor, chosen gallery design or visual approval.
+Where a contextual figure opens Evidence, P17 restores the originating section/figure with safe visible focus fallback; Evidence-origin/direct-entry Close retains valid Evidence focus. W43 tabs, Evidence IDs and lead/cover roles are historical, not required P19 Story components. Old Story-as-Project, company-detail and automatic related-Story controls are superseded. Treat the table as responsibilities, **not** a React component list, rich-text editor, chosen gallery design or visual approval.
 
 ## 2. Owner component roles
 
