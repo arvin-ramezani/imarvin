@@ -22,8 +22,8 @@ Current requirements: [P19–P25 UX checkpoint](docs/ux-requirements-checkpoint.
 | [PRD](PRD.md) | User outcomes, scope, requirements, acceptance |
 | [Design concepts](docs/design-concepts.md) | Selected concept and two unselected alternatives |
 | [Design direction](docs/design-direction.md) | Personal Studio direction and draft UX contracts |
-| [Public UX specification](docs/specs/public-ux-spec.md) | Homepage, projects-first browsing, summary/section detail |
-| [Project images/video/evidence](docs/specs/media-evidence-spec.md) | Purposeful placement, truthful recording stages, inspection, authoring and MV01–MV08 checks |
+| [Public UX specification](docs/specs/public-ux-spec.md) | P20 combined Home, distinct Project/Story browsing and P25 hierarchy |
+| [Project images/video/evidence](docs/specs/media-evidence-spec.md) | Independent optional Project/Story media, truthful stages, legacy Work Evidence and MV01–MV08 checks |
 | [Navigation/state specification](docs/specs/navigation-state-spec.md) | Destinations, return context, failures, safe deep links |
 | [Accessibility/responsive specification](docs/specs/accessibility-responsive-spec.md) | Public-flow mobile, keyboard, reading, motion contracts |
 | [Owner content management](docs/specs/owner-content-checkpoint.md) | P21–P23 management views, shared pins/Home-only manual order, Apply and editor/removal boundaries |
@@ -68,6 +68,6 @@ CI preserves the same safety model with an ephemeral PostgreSQL `imarvin_test` s
 
 The owner rejects a portfolio/résumé product. The former fixed homepage sequence and résumé/editorial treatment are superseded.
 
-Selected concept A: Personal Studio (P01, owner-approved). Visitors select work and inspect its problem, decisions, and evidence. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
+Selected concept A: Personal Studio (P01, owner-approved). Visitors explore distinct Projects and flexible Stories with optional media; no mandatory Problem/Decisions structure. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
 
 P02–P14 decisions are recorded in the product docs. T01–T07 define the technical/runtime baseline and spec-driven delivery workflow. O05 is resolved at architecture level. Implementation should establish only necessary cross-cutting foundations, then deliver product capabilities as bounded end-to-end slices. Development/runtime acceptance is local where possible; production deployment is the final phase.
