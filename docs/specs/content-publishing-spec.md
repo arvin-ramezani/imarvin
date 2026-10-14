@@ -1,9 +1,7 @@
 # Content and Publishing Specification
 
-Current scope: [P19 UX checkpoint](../ux-requirements-checkpoint.md) supersedes overlapping older Project/Story, Home, company-page, browse, contact and lifecycle assumptions below. Unaffected rules and prior evidence remain; reconcile affected details before design/implementation. P19 does not approve new visual compositions.
-
-
-Status: P02/P10 lifecycle approved; full-product P15 media extensions proposed; W43 media publication accepted for bounded Work scope only | Updated: 2026-10-12.
+Status: reconciled P19–P25 lifecycle; P02/P10 private/published guarantees remain, PS13 bulk outcomes approved; W43 evidence historical. Updated: 2026-10-15.
+Authority: [PS01–PS13](project-story-spec.md), [UXD06–UXD07](ux-public-checkpoint.md), [OWN01–OWN06](owner-content-checkpoint.md), [Contact](contact-ux-checkpoint.md).
 Saving is private; publishing/updating is explicit. Removal/reference/concurrency behavior below is approved; T01–T07 provide architecture/runtime defaults and feature specs define exact mechanisms. [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) governs bounded Work media snapshots and Problem figures, not full-product Decisions content or visual signoff.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [owner UX](owner-ux-spec.md). Trace: R06–R09, R12–R19, R22; A03–A08, A10.
 
@@ -11,73 +9,56 @@ Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [owner 
 
 | Unit | Owns | Relationships |
 | --- | --- | --- |
-| Story | Summary, tasks, progress/release history, decisions/evidence, lead/cover/poster selections, outcome/lesson, stack, availability/links | Optional experience; optional authored related stories; one evidence identity reused by placements |
-| Experience | Company identity/logo, role/dates/contribution, multiple/main-product mode | Stories reference it; main-product selection identifies one associated story |
-| Studio settings | Identity, personal context, contact, featured selection, curated order | References published stories by stable identity |
+| Project | Name/overview/contribution; optional factual status/company/tech, links and independent cover/showcase | Zero/many Stories; independent Private/Published visibility |
+| Story | Title/introduction/explanation; optional Story media, labels | Zero/one Project selected **at creation**; public even with private parent |
+| Home/collection arrangement | Published Featured Project, optional Home Stories/More Projects and their manual Home order; shared pins for browse | Managed in Projects/Stories lists, not settings or entry editor |
+| Experience / Site settings | Home company credibility/order; identity/About/offerings/Contact | No current dedicated public company-detail page |
 
-Decisions/evidence are children of a story and publish with it. A company has contextual experience records; do not duplicate story bodies under companies. Stable public identity survives title edits and is not reused after deletion.
-Each unit has a saved private working copy and, optionally, a published snapshot. Unsaved input belongs to an editing session. Assets referenced by draft-only content are private; an asset used by public content cannot be overwritten by a draft upload.
+Each entry keeps privately saved candidate and optional published snapshot; session input may be unsaved. Stable identity survives titles/republishing and is not reused after permanent deletion. **Historical W43:** earlier Story/Evidence snapshot and main-product Experience bootstrap remain records of their original delivery, not a P19 data model or UI mandate.
 
 ## 2. Orthogonal states
 
-| Dimension | States | Meaning |
-| --- | --- | --- |
-| Working copy | None, saved privately, unsaved session edits | What the owner is editing |
-| Public version | Absent, published | What visitors can receive |
-| Relationship to public | Matches public, private changes | Whether saved work differs from publication |
-| Project progress | Ongoing, completed, cancelled | Factual work status; independent of publication |
-| Release history | Shipped, never shipped; unconfirmed fact omitted publicly | Whether a production release happened; not inferred from progress/availability |
-| Availability | Usable public destination or no live destination | Separate from progress and optional evidence |
-| Capture stage | Confirmed design, prototype, local build, production capture or recreated local demo | What an evidence item actually depicts; not a project launch claim |
+| Dimension | States / meaning |
+| --- | --- |
+| Working copy/public copy | Unsaved vs privately Saved; separate absent/published public snapshot; private candidate changes |
+| Project progress | **Optional** In progress, Completed, Cancelled; never inferred from publication |
+| Release history / availability | Separate optional truthful notes/live destinations; Completed never implies Shipped or Online |
+| Captured evidence stage | Confirmed Design/Prototype/Local build/Production/Recreated demo; never inferred from a video |
+| Pin/manual Home | Shared persisted pin priority across browse/related Stories; Home-only manual membership/order independent of content updates |
 
-First publication may describe incomplete historical/cancelled/never-shipped work when the required truthful story summary is complete. Such stories can be featured and carry permitted screenshots/recordings without a live release. Live URLs, media, metrics, and decision sections are not mandatory; unknown release/availability facts are not guessed.
+Cancelled/unfinished/never-released Projects may publish without media/live links; unknown facts are omitted and no mandatory status matrix is created.
 
 ## 3. Lifecycle contracts
 
-| Operation | Preconditions | Result | Failure behavior |
-| --- | --- | --- | --- |
-| Save draft | Authorized owner; input passes draft-format validation; saved revision current | Working copy changes only | Retain input and saved/public versions; explain error/conflict |
-| Preview | Exact saved candidate; authorized owner | Private presentation with public dependencies and owner-only missing-reference warnings | No public change; return to editing |
-| Publish | No public version; saved candidate reviewed; publication checks pass | Candidate becomes public snapshot | Candidate retained; no partial public version |
-| Update published content | Public version exists; reviewed saved candidate and public revision current | Replace public snapshot explicitly | Old public version and draft remain intact |
-| Unpublish | Published; current impact reviewed and confirmed | Public version removed; saved working copy retained | Public remains available if operation fails |
-| Republish | Unpublished item; current saved candidate passes checks | New public snapshot at same identity | Stays unpublished on failure |
-| Delete | Unpublished; no saved/public incoming references; impact confirmed | Remove working copy and exclusive assets; identity stays reserved | Keep item on failure; no cascade deletion |
+| Operation | Result | Failure/unknown outcome |
+| --- | --- | --- |
+| Save candidate / Preview | Private saved copy only; exact owner-authorized preview | Retain input/public, no false Save/Preview |
+| Publish / Update | Explicit reviewed candidate becomes public, old public kept until successful Update | Confirmed failure leaves public unchanged; unknown outcome checked before retry |
+| Project bulk publish | Project-only or Project + **selected private** Stories; others remain unchanged | PS13 confirmed chosen scope together-or-unchanged |
+| Project unpublish | Keep Stories published or Unpublish all linked Stories | PS13 together-or-unchanged; private candidates retained |
+| Project Delete | Keep Stories (detach, preserve states) or Delete all related Stories permanently | Confirmed chosen scope together-or-unchanged; no Trash/automatic file cascade |
+| Story unpublish/Delete | Story only; parent Project remains | Block if still applied-manual-Home-selected; no silent dependency deletion |
+| Pin/Home selection/order Apply | Arrangement changes only, not entry content publication | Pending choices retained after failure; previous public arrangement stays |
 
-Publication is atomic per unit, including its child decisions/evidence. It never publishes another unit's private edits. No site-wide transaction, bulk publish, scheduled release, or historical restore UI.
-Save failure cannot be described as Saved. Publication failure cannot be described as Updated. Unknown operation outcome requires checking current versions before retry; duplicate confirmation must not create duplicate items or releases.
-A confirmed rejection/failure means no release committed. A timeout or uncertain delivery is Outcome unknown: inspect current candidate/public revisions before deciding success, failure, or retry. Do not promise rollback or old-public preservation for an outcome that has not been determined.
-Confirmed publication must be visible on a fresh public request; stale delivery/cache invalidation is an architecture acceptance concern, not an excuse to report success while showing older content.
+Separate candidate Publish/Update from **Apply changes/Discard changes** for arrangement (OWN04). No automatic dependency publication, pending draft update or feature replacement. Unknown timeout/delivery/atomic outcomes must be investigated before retry; exact transaction/locking/cache mechanisms belong to implementation specs. Prior “no bulk publish” and single-Story-only lifecycle limits are superseded for P19; retain historical P10/W43 evidence in its bounded context.
 
 ## 4. Publication checks
 
-- Story: title/problem/contribution/progress present and confirmed; sections contain meaningful content or are omitted. Outcomes may be qualitative; no invented responsibility or metrics.
-- Experience: confirmed company/role/date/contribution context; a main-product selection, when supplied, belongs to that experience and is published. A context-only experience is valid; missing logo is allowed.
-- Settings: real identity/personal context, at least one approved contact destination, feature/order reference eligible published stories; no placeholder address.
-- References: candidate association/related/main-product/feature targets are currently published, valid, and accessible. Offer Publish target first, detach/change reference, or Keep draft; never automatically publish dependencies.
-- Evidence: permitted disclosure/captured stage confirmed; selected source/poster/renditions/tracks ready; captions/alternatives satisfy [media accessibility](accessibility-responsive-spec.md#4-evidence-and-motion); external destinations usable. Failed/pending selected media requires retry or explicit removal, never silent omission. Text-only evidence is valid.
-- Format: safe content/link handling, valid fields, no invalid relationship cycles affecting navigation. Specific validation/security mechanisms belong to architecture.
+- **Project** publication minimum (UXD06): name, overview of what it does/who it serves, and Arvin's individual contribution. No mandatory company, role title, technologies, media, links, status or live URL.
+- **Story** publication minimum (UXD07): title, short introduction and explanation. No mandatory problem, decisions, section groups, outcome, metrics, parent, labels or media. Incomplete private drafts are allowed.
+- **Relationship:** Story may publish beneath a private Project but must omit private parent name/link/derived metadata; Project may publish without Stories. Bulk action validates **chosen** private Stories and gives actionable missing-field errors.
+- **Home:** selected manual items must be published; when no Featured Project configured, Home retains identity/available sections with **no auto fallback**. Applied Home picks block impacted unpublish/delete until successfully removed via arrangement Apply.
+- **Media/links:** truthful stage/disclosure/accessibility for optional selected assets; failed selected upload needs explicit repair/removal, never silent exposure. Missing media/link remains a complete public text composition.
+- **Contact/Experience:** real company/contact destinations and nonmisleading facts; approved CT05/CT11/CT12 acceptance/email inbox/Privacy handling, not a dashboard messages module.
 
-Draft validation may permit missing required publication facts but must reject malformed data. Publication errors name the field/reference and next action. Recheck against current revisions immediately before committing.
-Bootstrap a new main-product experience without a circular dependency: publish its confirmed context with no main story selected → publish the associated story → explicitly update the experience to select that story. The intermediate public experience uses the honest no-project state; never auto-publish either dependency. Feature/order/related links can be selected after the story is published.
+Candidate/relevant revision checks must precede commit; failed/unknown results keep saved candidate/input. Do not introduce editor widgets, schema or endpoint constraints here.
 
 ## 5. Removal and relationships
 
-Before unpublishing, show affected homepage feature/order, company main-product/choices, related-story links, and incoming public destinations. Do not silently republish their owning units.
-
-| Removed public unit | Public projection after success | Private treatment |
-| --- | --- | --- |
-| Story | Omit from choices/order/related links; feature uses curated fallback; company shows remaining choices or honest no-project state | Preserve working copy and references for repair/republish |
-| Experience | Hide its company-context lookup/link; independently published stories remain available | Preserve associations; warn before later publishing linked candidates |
-| Studio settings | V1 must retain identity and at least one contact path | Unpublish settings is unavailable; update them explicitly |
-| Evidence child | Removed only by explicitly publishing its story's edited candidate | Old public asset remains available until that successful update |
-
-Public views resolve only currently published relationship targets; retained stale references never disclose unpublished names/assets or create dead selection controls. Main-product mode does not silently switch to multi-project mode; missing main product shows an honest empty explanation.
-Unpublishing an experience does not scrub employer names manually written in other published story text. Show that limitation in the impact review; edit those stories explicitly if removal is intended.
-Delete never erases related stories. Incoming saved or published references must first be detached/updated. Show each reference with an editing destination; only currently unpublished, unreferenced units can be deleted.
-Assets stay available while any public snapshot references them. Draft-only assets remain private; remove unused assets after confirming no draft/public reference. T04/T06 define filesystem storage and off-host backup; application-level historical restore is still not a promised product feature.
-Media source, poster, renditions, caption tracks and described versions inherit that lifecycle. Replacement is immutable; cover/lead/figure references must resolve within the reviewed story snapshot. Derived public placements/share images use only published references; a story update refreshes those projections without publishing private settings/experience edits. Asset delivery/caches must enforce removal; [ME08](media-evidence-spec.md#6-authoring-and-publication) adds no independent media publishing system.
-Existing public deep links to removed units receive the neutral unavailable response in [navigation/state](navigation-state-spec.md); nonexistence, removal, and private state are not distinguished publicly.
+Explain current applied Home selections, linked private/published Stories, affected public links and counts before unpublish/Delete. A manually featured Project, Home Story or More Projects choice **cannot** be removed until Home selection replacement/removal has **successfully Applied** (PS09); pending or failed Apply does not unlock. Automatic latest sections refill; manual selections never silently refill.
+Unpublish Project with **Keep Stories published** hides Project but leaves published Stories accessible without private parent metadata. Unpublish all hides all children. Delete with **Keep Stories** detaches all children as standalone with original content/visibility; **Delete all** permanently deletes them. One confirmed operation succeeds together or leaves affected entries unchanged (PS13). Do not silently cascade storage assets or delete shared media; ownership/refs/cleanup remain technical contracts.
+A Project detail includes published Stories only and omits its Story area when none; Story detail never shows nonpublic parent identity. Pin/label projections publish only eligible entries; unpublish/republish restores old pinned priority unless explicitly repinned (UXN07). Former company main-product removal/fallback and P10 one-unit evidence behavior are historical and must not reappear as active P19 UI.
+Public assets remain only while referenced by authorized published snapshots; drafts stay private, replacements immutable, and stale public caches/incoming references need safe reconciliation. Removed/private/nonexistent public links use indistinguishable neutral unavailable responses. No backup restore product is implied.
 
 ## 6. Concurrency and privacy
 
@@ -89,17 +70,17 @@ T01–T07 define auth, storage, deployment, backup, and logging defaults. Publis
 
 | ID | Scenario | Expected result |
 | --- | --- | --- |
-| CP01 | Save unpublished/public item | Only private working copy changes |
-| CP02 | Upload replacement evidence → Save | Old public asset unchanged; new draft asset private |
-| CP03 | Publish story referencing unpublished experience | Blocked with target-first/detach paths; no dependency auto-publish |
-| CP04 | Confirm update; write/delivery fails | No partial release or false success; determine current state before retry |
-| CP05 | Unpublish featured or main-product story | References filtered, valid fallback/empty state, draft retained |
-| CP06 | Unpublish experience with public stories | Context lookup hidden; stories remain; authored text limitation explained |
-| CP07 | Delete unit with draft/public incoming references | Blocked; no cascade or deletion of still-used asset |
-| CP08 | Concurrent draft/dependency/public change | Stale operation blocked; candidate/input retained |
-| CP09 | Anonymous access to draft/preview/asset | No draft content or owner operation; public metadata also clean |
-| CP10 | Unpublish → edit → republish | Same identity; explicit new public candidate; no unsolicited dependent publication |
-| CP11 | Publish a new main-product experience and story | Context-first sequence works without circular prerequisites or automatic publication |
-| CP12 | Replace cover/video/poster/track in a draft → publish/update/remove | Every derivative stays private until explicit success; projections use the same published snapshot; reference-safe removal; MV06 |
+| CP01 | Save public Project/Story candidate | Private only, old public intact |
+| CP02 | Replace optional candidate media | Draft private, old public media intact |
+| CP03 | Publish Story with private parent | Story public with no private parent metadata |
+| CP04 | Confirmed publish/update failure or unknown | Together-or-unchanged known scope; unknown reconciled |
+| CP05 | Unpublish manually Home-selected entry | Block until applied selection removal; no auto replacement |
+| CP06 | Project Unpublish Keep/Unpublish all children | Explicit correct child states; atomic confirmed scope |
+| CP07 | Project Delete Keep Stories/Delete all | Detach/preserve or delete chosen children; no file cascade assumption |
+| CP08 | Stale concurrent candidate/dependency/public state | Retain input, reject stale operation |
+| CP09 | Anonymous draft/preview/asset access | Denied; published-only metadata/counts |
+| CP10 | Unpublish, edit, republish pinned entry | Same identity/date and saved pin priority |
+| CP11 | Project-only versus selected private Stories bulk Publish | Only selected scope changes; existing public child candidates unchanged |
+| CP12 | Replace/remove selected media then Update | Private assets protected; public projections switch only on success |
 
-P10 is owner-approved. Implementation checks must verify failures/concurrency/privacy, not just happy-path screen labels.
+P10 private/public guarantees remain approved where compatible; P19–P25 override old Work lifecycle assumptions. These updated CP scenarios are **unrun**; previous W43 evidence applies only to that delivered slice. Detailed transactions, media cleanup, race/retry rules, migrations and tests await bounded technical specs.
