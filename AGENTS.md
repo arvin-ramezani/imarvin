@@ -2,7 +2,7 @@
 
 ## Scope and authority
 
-P19: read the [approved UX checkpoint](docs/ux-requirements-checkpoint.md) and its scoped public/relationship/contact records before affected work. It supersedes older conflicting Project-as-Story, company-detail, Home, taxonomy, contact and lifecycle guidance below. Requirements are partial; reconcile legacy specs/skills before implementation. No new visual approval or code authorization.
+P19/P20: read the [approved UX checkpoint](docs/ux-requirements-checkpoint.md) and its scoped public/relationship/contact records before affected work. It supersedes older conflicting Project-as-Story, company-detail, Home, taxonomy, contact and lifecycle guidance below. Requirements are partial; P20 owns the latest combined hero/Home order/About placement. Public UXD01–UXD05 are documented working direction; UXD06 publishing minima are unapproved. Reconcile legacy specs/skills before implementation. No new visual approval or code authorization.
 
 Source of truth: arvin-ramezani/imarvin. Product/UX and architecture documents are authoritative by scope; implementation begins only from a bounded issue/spec.
 

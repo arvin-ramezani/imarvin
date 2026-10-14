@@ -12,7 +12,7 @@ Current validation: [Responsive & Interaction Validation](docs/responsive-intera
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
-Current requirements: [P19 UX checkpoint](docs/ux-requirements-checkpoint.md) records the latest owner-approved model, Home hierarchy, browsing, lifecycle and Contact decisions. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
+Current requirements: [P19/P20 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its public companion distinguishes delegated content direction and unapproved publishing-field proposals. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
 
 ## Read in order
 

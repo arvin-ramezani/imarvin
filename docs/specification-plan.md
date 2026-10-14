@@ -4,7 +4,7 @@ Phase: implementation underway. Existing behavior/visual direction and O05 runti
 
 ## Order and current status
 
-P19 [requirements checkpoint](ux-requirements-checkpoint.md) overrides affected legacy UX assumptions. First resume open requirement clarification, then reconcile specs/skills/fixture coverage and issue dependencies, then create and approve visual sources. Do not continue affected implementation from the old Project-as-Story or no-form model.
+P19/P20 [requirements checkpoint](ux-requirements-checkpoint.md) overrides affected legacy UX assumptions. First resume open requirement clarification, then reconcile specs/skills/fixture coverage and issue dependencies, then create and approve visual sources. Do not continue affected implementation from the old Project-as-Story or no-form model.
 
 1. Owner UX + publishing/content: P10/P12 behavior approved; implementation mechanisms remain feature-specific.
 2. Signal Studio visual direction and light/dark token foundation are approved and implemented.
@@ -30,7 +30,7 @@ Introduce media or additional shared infrastructure when the first bounded featu
 
 | Document | Status / coverage | PRD trace |
 | --- | --- | --- |
-| [P19 public checkpoint](specs/ux-public-checkpoint.md) | Canonical owner-approved scoped requirements: UXH01–UXH08, UXN01–UXN06, UXC01–UXC06; checks UXP01–UXP07. Exact layouts/media inspection/nav details remain open | R01–R11, R23–R27 |
+| [P19 public checkpoint](specs/ux-public-checkpoint.md) | Canonical owner-approved scoped requirements: UXH01–UXH08, UXN01–UXN06, UXC01–UXC06; checks UXP01–UXP07. P20 combined hero/later Home About resolved; UXD01–UXD05 working content direction and UXD06 unapproved publishing proposal; UXP08 Home/About check. Exact layouts/fields/gallery/nav details remain open | R01–R11, R23–R27 |
 | [P19 Project/Story](specs/project-story-spec.md) | Canonical owner-approved relationships/visibility/lifecycle: PS01–PS12; checks PSP01–PSP08. Schema, migrations, bulk failure/concurrency and media cleanup remain open | R07, R13–R19, R22 |
 | [P19 Contact checkpoint](specs/contact-ux-checkpoint.md) | Canonical owner-approved enquiry fields/channels: CT01–CT08; checks CTP01–CTP06. Conditional phone-only Telegram, delivery provider, privacy/spam and layout remain open | R10–R11, R20–R21 |
 | [Public UX](specs/public-ux-spec.md) | Full-product proposals, bounded W43 Work and P17 Close/focus differentiated; PU01–PU09 | R01–R11, R23–R26 |

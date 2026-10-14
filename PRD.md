@@ -1,10 +1,10 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.10 | Updated: 2026-10-14
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.11 | Updated: 2026-10-14
 
 Status: revised draft. Confirmed constraints: C01–C10. P01–P15 and T01–T07 are owner-approved where listed in decisions. P15 confirms the media documentation brief; detailed new media UX remains proposed. Remaining open items are factual inputs, runtime validation, and feature-level implementation details; the complete PRD is not blanket implementation approval.
 
-P19: [approved UX checkpoint](docs/ux-requirements-checkpoint.md) records the 2026-10-14 requirements and supersedes overlapping older contracts; unresolved design/implementation details remain explicit.
+P19/P20: [UX checkpoint](docs/ux-requirements-checkpoint.md) records latest requirements, including the owner-approved combined hero/Home About placement. The public checkpoint separates delegated working content direction from proposed publishing fields; unresolved design/implementation details remain explicit.
 
 ## 1. Product intent
 
@@ -12,7 +12,7 @@ A creative personal web app where visitors explore Arvin's work, thinking, and p
 
 Freelance clients are the primary audience; job opportunities and curious exploration remain supported outcomes. ImArvin focuses on Arvin; BluCode is out of scope for now. The product is not a portfolio/résumé site. The former five-section homepage is superseded; evidence about work remains useful content.
 
-Selected model: Personal Studio (P01). Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. P19 selects one featured Project, distinct Project/Story pages, and a Home overview with deeper dedicated pages. Exact Project/Story components remain to design. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [public UX](docs/specs/public-ux-spec.md).
+Selected model: Personal Studio (P01). Core loop: enter → choose a work item → inspect a decision/evidence → explore related work or contact. P19 selects one featured Project, distinct Project/Story pages, and a Home overview with deeper dedicated pages. Working content hierarchy is recorded in the public checkpoint; exact Project/Story fields and rendered components remain to design. See [concepts](docs/design-concepts.md), [direction](docs/design-direction.md), and [public UX](docs/specs/public-ux-spec.md).
 
 ## 2. Users and outcomes
 
@@ -33,7 +33,7 @@ Success hypotheses: visitors understand a contribution/decision, recognize Arvin
 | R02 | Identity and purpose are clear; work, personal context, and contact remain discoverable |
 | R03 | Home Experience conveys credibility through company logo/name, role, concise contribution/responsibilities; dates remain a factual requirement pending P19 reconciliation; no duplicate full About experience |
 | R04 | Company logo/name may link to the real website; no separate company detail page. Company identity remains logos/name only; project media has its own showcase |
-| R05 | Home Experience sits after More Projects and before How I can help; optional relevant Project links. Earlier company Experience routes require compatibility reconciliation |
+| R05 | Home Experience follows More Projects; About introduction follows Experience before How I can help; optional relevant Project links. Earlier company Experience routes require compatibility reconciliation |
 | R06 | Stories are concise designed explanations of problem/solution, decisions, lessons or experiments, without forced identical sections or article format; exact components/fields remain open |
 | R07 | Distinct Projects have zero/many Stories; Stories have zero/one Project and can stand alone. Public navigation, labels and direct links follow [P19 public requirements](docs/specs/ux-public-checkpoint.md) |
 | R08 | Ongoing/completed/cancelled progress, release history (shipped/never shipped), current availability and capture stage remain distinct; cancelled/offline/never-shipped work is eligible for full published stories and featuring |
@@ -71,7 +71,7 @@ R27: Light and Dark support public/owner/preview states; default System with Sys
 
 ## 6. V1 boundaries
 
-One owner and English public content remain. P19 replaces P03's no-form rule with [Contact form + direct channels](docs/specs/contact-ux-checkpoint.md), Telegram preferred, no service selector/BluCode. Home has Introduction → Featured Project → Stories → More Projects → Experience → How I can help → Contact invitation. Dedicated Projects/Stories/About/Contact pages provide depth; no Services/company page. P19 remains requirements-only.
+One owner and English public content remain. P19 replaces P03's no-form rule with [Contact form + direct channels](docs/specs/contact-ux-checkpoint.md), Telegram preferred, no service selector/BluCode. P20 Home has Identity + Featured Project (one hero) → Stories → More Projects → Experience → About introduction → How I can help → Contact invitation. Dedicated Projects/Stories/About/Contact pages provide depth; no Services/company page. P19/P20 remain requirements/direction only; UXD06 Project publication minima remain proposed.
 
 Exclude public accounts, community, blog/newsletter, customer portal, booking/payment, AI generation, multilingual publishing, analytics dashboards, mandatory 3D/game navigation, and runnable simulations as baseline scope. Interactive evidence must not execute untrusted project code.
 

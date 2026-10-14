@@ -41,8 +41,8 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P16 | Owner/admin UI uses no interface animation or transitions at any screen size; public UI uses purposeful motion where it improves UX across public routes/screen sizes, with reduced-motion parity and CSS-first implementation | 2026-10-07 owner instruction. Framer Motion is public-only when CSS is insufficient. User-controlled project media playback is content, not owner UI chrome motion. [UI skill policy](engineering/ui-skill-policy.md). |
 | P17 | Close of Evidence opened from a Problem/Decisions figure restores that section and focuses its figure, or a safe visible heading if unavailable. Evidence-origin/direct-link Close stays in Evidence with valid focus. | 2026-10-12 owner confirmation of UX-A01; [navigation](specs/navigation-state-spec.md), [media](specs/media-evidence-spec.md), [accessibility](specs/accessibility-responsive-spec.md). Only this Close/focus rule is accepted; other P15 media proposals remain unapproved. |
 | P18 | UI/UX mockups and non-production development/tests use explicitly synthetic fixture data, not real projects, customer records, real contact destinations, or actual project Evidence. Assume project-owner media permission for planning; do not present synthetic captures as real or include sensitive information. | 2026-10-12 owner instruction; [visual workflow](specs/visual-source-workflow-spec.md), [content fixtures](content-inventory.md#screen-scoped-visual-content-gates). Fixture approval is visual only; O01–O03 still gate actual public publication. |
-
-| P19 | Approved UX requirements checkpoint: distinct Projects/optional-parent Stories, Home order/Experience/offerings, browse/labels/navigation, private/public/bulk/removal and form/direct contact. Supersedes affected P03/P05/P07/P10 and C05 assumptions only; full design/implementation remains open. | Owner clarification/approvals on 2026-10-14 through 06:35 Asia/Tehran; [checkpoint and authority map](ux-requirements-checkpoint.md). Latest media-inspection suggestion unapproved; no assets/code authorized. |
+| P19 | Approved UX requirements checkpoint: distinct Projects/optional-parent Stories, Home order/Experience/offerings, browse/labels/navigation, private/public/bulk/removal and form/direct contact. Supersedes affected P03/P05/P07/P10 and C05 assumptions only; full design/implementation remains open. | Owner clarification/approvals on 2026-10-14 through 06:35 Asia/Tehran; [checkpoint and authority map](ux-requirements-checkpoint.md). Later routine media usability defaults recorded in the checkpoint; exact media/field/layout details remain open; no assets/code authorized. |
+| P20 | Home combines concise identity and one Featured Project in an open/asymmetric hero, then Stories → More Projects → Experience → About introduction → How I can help → Contact. Home About scrolls to its later section; More about me opens About. Supersedes earlier separate hero/feature order and hero-contained About proposal; exact images/layout remain unapproved. | Explicit owner “approved” at 18:59 Asia/Tehran on 2026-10-14; [public checkpoint](specs/ux-public-checkpoint.md), UXH01–UXH08/UXN02/UXP08. |
 
 ## Architecture baseline
 
@@ -57,6 +57,9 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | T07 | Small observability layer: Pino JSON → stdout/journald, correlation IDs, health check, external uptime check | [Runtime operations](architecture/runtime-operations.md) |
 
 Public navigation/history and component behavior remain contracts to validate at runtime. T01–T07 choose architecture defaults; feature specs own exact schema, commands, limits, and deployment details.
+
+## Delegated working direction and pending proposals
+The owner requested PR documentation after delegated Project/Story/detail/preview/About exploration. [Public checkpoint UXD01–UXD05](specs/ux-public-checkpoint.md) records that working direction; exact fields/schema/rendered composition are not approved. UXD06's required Project name/overview/contribution was suggested after P20 approval and remains PROPOSED. Do not promote it into publishing validation.
 
 ## Open inputs
 
@@ -73,7 +76,7 @@ O05 is resolved at architecture level by T01/T03–T07. Application implementati
 Light-only V1 theme guidance is superseded by P14. Dark mode adapts Signal Studio; it does not select Night Instrument.
 Inspection-only project media placement is superseded by P15's proposed entry/browse/lead/contextual placements. Logos-only company identity and complete no-media stories remain required. Earlier rendered evidence does not validate the new media compositions.
 
-P19 replaces the earlier Project-as-Story, no-form/contact-only-links, company-detail and conflicting lifecycle assumptions. Its approved Home order is an explicit owner revision; preserve historical rendered/implementation evidence within its original scope.
+P19 replaces the earlier Project-as-Story, no-form/contact-only-links, company-detail and conflicting lifecycle assumptions. P20 is the latest explicit Home order/hero/About revision; preserve historical rendered/implementation evidence within its original scope.
 
 Former P01 Engineering Practice as a résumé/editorial public model, fixed introduction/experience/projects/about/contact sequence, quiet/neutral defaults, and career chronology are superseded. Problem/contribution/decision/outcome remains a shared content model. Work Atlas/Story Explorer and VS-B/VS-C are unselected history, not V1 modules.
 

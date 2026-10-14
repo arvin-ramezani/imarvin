@@ -1,31 +1,36 @@
 # Public UX — approved checkpoint
-Status: owner-approved requirements; component composition and runtime behavior remain unverified.
-Recorded: 2026-10-14 | Authority: [P19 checkpoint](../ux-requirements-checkpoint.md).
+Status: owner-approved P19/P20 requirements; UXD01–UXD05 record delegated working direction, UXD06 is proposed. Exact rendered composition and runtime behavior remain unverified.
+Recorded: 2026-10-14; Home revision approved 18:59 Asia/Tehran | Authority: [P19/P20 checkpoint](../ux-requirements-checkpoint.md).
 Companions: [Project/Story](project-story-spec.md), [Contact](contact-ux-checkpoint.md).
 Scope: records the agreed product experience; does not authorize code or approve rendered design.
 
 ## Home — UXH01–UXH08
 - UXH01: Home summarizes the personal app; dedicated pages provide depth. Keep work visually primary and Stories secondary.
 - UXH02: Approved content sequence:
+
 | Order | Content | Boundary |
 | --- | --- | --- |
-| 1 | Introduction | Identity and concise personal context; fuller About page |
-| 2 | Featured Project | One manually selected published Project; strongest emphasis |
-| 3 | Stories | Up to 4 published previews, not Instagram-style Stories |
-| 4 | More Projects | Up to 3 published Project previews |
-| 5 | Experience | Compact professional credibility |
+| 1 | Identity + Featured Project | One combined hero; concise identity, one manually selected published Project with strongest emphasis |
+| 2 | Stories | Up to 4 published previews, not Instagram-style Stories |
+| 3 | More Projects | Up to 3 published Project previews |
+| 4 | Experience | Compact professional credibility |
+| 5 | About introduction | Brief personality, interests and direction; More about me opens About |
 | 6 | How I can help | Up to 3 concise offerings |
 | 7 | Contact invitation | Direct channels and link to dedicated Contact page |
+
+- P20 replaces the separate Introduction/Featured Project sections and the earlier proposal to keep the fuller About introduction inside the hero. The hero shows Arvin's name, full-stack identity and one concise purpose sentence alongside the Project overview/contribution and optional media. Explore Project is primary; Contact stays available secondarily.
+- Composition intent: open/asymmetric, identity anchors the space and the Project is the focal point. No-media emphasis comes from typography/contribution. On mobile, concise identity precedes the Project closely. This is an approved direction, not an exact-image or fixed-height/layout approval.
+- Rationale, not a measured conversion result: concrete work → judgment → breadth → credibility → personality → collaboration → contact. [Homepage guidance](https://www.nngroup.com/articles/homepage-design-principles/) supports clear purpose/examples; [2026 UX guidance](https://www.nngroup.com/articles/state-of-ux-2026/) supports human judgment/curation. Neither proves this exact section order.
 - UXH03: Story and More Projects sections use newest first by first publication date by default; allow manual selection and ordering.
 - UXH04: Exclude the featured Project from More Projects. Show fewer than the limit when fewer eligible items exist; never fabricate filler.
 - UXH05: Provide View all Stories and View all Projects links. Home is not the complete collection.
 - UXH06: Experience shows company logo/name, role, concise contributions and responsibilities; optional links to relevant Projects. Company identity can link to its real website. No separate company or Experience page is required by this model.
 - UXH07: Offerings are Frontend development, Backend development, Full-stack development. No separate Services page, price table or required client service selection. Enquiry actions lead to Contact without preselecting a service.
-- UXH08: About provides introduction, interests and learning; do not repeat the full Home Experience section. Home includes a brief personal overview; exact preview placement remains open.
+- UXH08: About provides introduction, interests and learning; do not repeat the full Home Experience section. Home's compact About introduction sits after Experience and before How I can help; its More about me link opens About. Essential identity remains in the combined hero.
 
 ## Destinations and browsing — UXN01–UXN06
 - UXN01: Dedicated Projects and Stories browse pages; each Project and Story has its own detail page. About and Contact also have dedicated pages.
-- UXN02: On Home, header section links scroll to their corresponding sections. Explicit View all / More about me / Contact page links open the dedicated destinations.
+- UXN02: On Home, header section links scroll to their corresponding sections; About targets the separate About introduction, not the hero. Explicit View all / More about me / Contact page links open the dedicated destinations.
 - UXN03: On every dedicated/detail page, header Projects/Stories/About/Contact links open those pages directly, never their Home previews. Arvin's name/logo returns to Home; Home top is the return target.
 - UXN04: Projects and Stories accept optional, reusable, owner-created labels and multiple labels per entry. One simple label system, not separate mandatory Topic and Type systems. Visitors filter by one label at a time; default All Projects / All Stories.
 - Label examples: Development, Design, Problem-solving, Decision, Lesson, Experiment. Labels describe context; they do not determine templates.
@@ -41,8 +46,18 @@ Scope: records the agreed product experience; does not authorize code or approve
 - UXC04: Unlaunched, unfinished, cancelled, offline and never-shipped Projects remain eligible to publish and feature. Show truthful status; a recording does not imply launch. Live URLs, source code and documentation links are all optional, including when disclosure is prohibited.
 - Live Project link has highest external-action priority when available. Company logo/name and real-company website are secondary context. Omit absent/unusable links, never show dead Visit site controls.
 - UXC05: Stories are concise designed explanations, not blog articles. Permit problem/solution, decision, lesson or experiment context without mandatory identical sections. Visual hierarchy must make context and value easy to understand and content creation easy for Arvin.
-- Deeper problems, solutions and decisions belong in Stories; do not force those sections into the Project overview. Exact Story components/fields remain to design.
+- Deeper problems, solutions and decisions belong in Stories; do not force those sections into the Project overview. UXD02 records the working content hierarchy; exact authoring/publication fields and rendered components remain to design.
 - UXC06: Public Project pages list only their published Stories; hide the section completely when none exist. A public Story links to its Project only while that Project is public; standalone or private-parent Stories remain complete.
+
+## Delegated working direction — UXD01–UXD06
+The owner delegated UX choices and requested this record at 19:03 Asia/Tehran. UXD01–UXD05 capture the current content direction for continued grilling; they are not exact schema, required-field, component-library or image approval.
+- UXD01: Project detail hierarchy: name/concise purpose and audience → short, prominent individual contribution → compact relevant status, optional company/technologies/links → optional showcase → published related Stories. UI-heavy work may emphasize media; CLI/backend work may emphasize text within the same structure. Keep deeper reasoning in Stories; missing optional parts leave no empty placeholders.
+- UXD02: One shared Story hierarchy: prominent title/short introduction conveying the main point → secondary labels/optional public Project context → concise explanation groups, short subject-specific headings where useful → optional supporting media/examples near the relevant explanation. Explain Arvin's action, reasoning or learning and distinguish individual/team contribution. Support problem/solution, decision, lesson and experiment content without identical mandatory sections. Results, metrics, media and public links are optional; outcomes must be supported. Text-only Stories remain complete; no arbitrary article/page builder.
+- UXD03: Public previews are short introductions, distinct from owner-only private Preview. Featured Project shows name/overview/contribution, optional prominent media and Explore Project; other Projects show name/overview, optional thumbnail and secondary relevant labels/status; Stories show title/main point, secondary labels, optional supporting image and public Project name only when applicable. Selecting a preview opens detail; public external Project actions belong on detail. Reuse information hierarchy across Home/browse, without forcing identical cards or fabricated media.
+- UXD04: Dedicated About hierarchy: concise identity/professional direction → approach to building/collaborating grounded in actual experience → genuine interests/current learning → relevant work and Contact links. Portrait is optional; no duplicate full Home Experience list or invented personal facts.
+- UXD05: Candidate Story authoring controls: title, introduction, explanation, optional short headings/media, labels and optional Project at creation under PS01–PS05. Labels do not choose a layout. Exact editor grouping, limits, formatting/code examples and required publication fields remain open; no database schema is selected.
+- UXD06 — PROPOSED, NOT APPROVED: require Project name, overview and individual contribution for publication; company, technologies, media and external links stay optional. Private drafts may remain incomplete under existing Save rules. Do not enforce this proposed validation or infer Story publishing fields before confirmation.
+Conceptual coverage used explicitly fictional UI-decision, CLI/backend-decision and standalone-lesson examples; this is not user testing, real Arvin content, visual approval or runtime evidence.
 
 ## Observable checks
 | ID | Scenario | Expected |
@@ -54,4 +69,5 @@ Scope: records the agreed product experience; does not authorize code or approve
 | UXP05 | UI Project with one/multiple captures | Composition supports actual content, no fabricated filler |
 | UXP06 | Public Project with private-only Stories | No public child titles, counts or empty Stories section |
 | UXP07 | Standalone text-only Story | Discoverable on Stories page; labels optional; no parent/media required |
-These are requirements checks, not executed browser or visual acceptance.
+| UXP08 | Combined hero/Home About navigation | Identity and one featured Project share the opening; later About introduction is the Home anchor; More about me opens About |
+These are requirements checks, not executed browser or visual acceptance. UXD direction and UXD06 validation remain scoped as above.
