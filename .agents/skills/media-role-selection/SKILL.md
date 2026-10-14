@@ -50,7 +50,7 @@ The current P19 roles below take precedence; exact full-product gallery/player c
 | No authored media | No media assignment | Complete text/no blank slot, no dead Play action |
 
 **Historical W43-only routes:** Story discovery cover for Work browse, multi-project Experience choices, Story lead/Evidence and Problem/Decisions figure-to-Evidence focus follow their delivered-slice P17/ME roles. Their IDs and script fixtures are not an authority for new P19 Project/Story layouts. Unknown actual authored source means `OWNER DECISION REQUIRED`, not invented no-media content.
- 
+
 ## Playback, fallback and checks
 
 - For any approved playback surface apply ME05's no-autoplay/accessibility bounds; exact full-product gallery/player/zoom/return components still need design. Do not impose a second Play control or historical Work Evidence UI on P19 Stories. Stop playback/audio on close, hide, item change or leaving; retain the canonical focus/return behavior. Discovery remains static and does not preload all videos.
