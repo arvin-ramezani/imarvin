@@ -8,7 +8,7 @@ description: Resolve ambiguous image, video, poster, Evidence identity, or no-me
 ## Authority and boundaries
 
 Resolve a media decision only; do not create/edit assets, generate posters, search for substitute imagery, change authored selections, implement UI, or change schema/storage/upload behavior through this skill.
-Locate repository root. Read [agent rules](../../../AGENTS.md), [decisions](../../../docs/decisions.md), P19–P25 [requirements checkpoint](../../../docs/ux-requirements-checkpoint.md), [public](../../../docs/specs/ux-public-checkpoint.md), [Project/Story](../../../docs/specs/project-story-spec.md), and [media/evidence](../../../docs/specs/media-evidence-spec.md), then scoped companions. Inspect the supplied surface and existing authored Story/Evidence records or fixtures; do not infer assets from filenames, screenshots in prior reviews, or implementation placeholders.
+Locate repository root. Read [agent rules](../../../AGENTS.md), [decisions](../../../docs/decisions.md), P19–P25 [requirements checkpoint](../../../docs/ux-requirements-checkpoint.md), [public](../../../docs/specs/ux-public-checkpoint.md), [Project/Story](../../../docs/specs/project-story-spec.md), and [media/evidence](../../../docs/specs/media-evidence-spec.md), then scoped companions. Inspect the supplied surface and existing authored Project/Story/media records or fixtures; do not infer assets from filenames, screenshots in prior reviews, or implementation placeholders.
 
 | Authority | Read for |
 | --- | --- |
@@ -30,7 +30,7 @@ Preserve proposed/pending status: P15 media layouts require later validation and
 2. Resolve role/source from the current placement map and companions plus existing authored selections compatible with those contracts. For P19: Projects browse uses Project's own authored public cover; Stories browse uses Story's independently authored public visual; each may have none. Historical W43 Work browse/multi-project Experience choices reused Story discovery-cover projections; that mapping applies **only to the historical slice**, not new P19 UI (media/evidence §2). If no canonical role/source exists or authored choices are insufficient/incompatible, return `OWNER DECISION REQUIRED`; examples cannot create product rules.
 3. Trace the assignment to its existing **Project or Story** identity, snapshot/candidate revision, media identity and source/poster/rendition where available; legacy Work Evidence IDs apply only to that slice. Public surfaces use only currently published authorized references; preview uses the exact saved candidate with published dependencies. Reuse references, never independent editable copies. Record actual identifiers or verified record locations; never fabricate IDs or schema support.
 4. Check source readiness, permission, capture stage and required alternatives. Distinguish confirmed absence, a failed selected item, and content/identity that has not been supplied or cannot be inspected. Inaccessible or unknown content is not proof of no authored media.
-5. Choose image, static video poster, explicit inline inspection/player, text/link Evidence, logo/name, or complete text-only presentation under the role rules below. An existing poster must depict the actual recording or identified same-build/state screenshot (ME07); never promise a missing video or generate a poster.
+5. Choose image, static video poster, approved inspection/player if applicable, authored text/link, logo/name, or complete text-only presentation under the role rules below. An existing poster must depict the actual recording or identified same-build/state screenshot (ME07); never promise a missing video or generate a poster.
 6. Specify playback, loading/failure/absence behavior and accessibility/truthfulness checks. If valid candidates remain equally suitable, a required assignment/fact is missing, or authorities conflict, stop the dependent choice and ask the owner as described below.
 
 ## Role routing
@@ -49,7 +49,7 @@ The current P19 roles below take precedence; exact full-product gallery/player c
 | Owner editor/preview/review | Exact Project or Story candidate media, independently private until publication | Never Apply arrangement as Publish or borrow private Story media |
 | No authored media | No media assignment | Complete text/no blank slot, no dead Play action |
 
-**Historical W43-only routes:** Story discovery cover for Work browse, multi-project Experience choices, Story lead/Evidence and Problem/Decisions figure-to-Evidence focus follow their delivered-slice P17/ME roles. Their IDs and script fixtures are not an authority for new P19 Project/Story layouts. Unknown actual authored source means `OWNER DECISION REQUIRED`, not invented no-media content.
+**Historical W43-only source roles:** Story discovery cover for Work browse, multi-project Experience choices, and Story lead/Evidence identity are W43-only. P17 figure-to-Evidence Close/focus behavior applies wherever that interaction exists; W43 supplies historical implementation/test evidence only. Their IDs and script fixtures are not an authority for new P19 Project/Story layouts. Unknown actual authored source means `OWNER DECISION REQUIRED`, not invented no-media content.
 
 ## Playback, fallback and checks
 
@@ -58,9 +58,9 @@ Keep these states separate under media/evidence §5, ME03/ME05/ME07–ME08, publ
 
 | Condition | Required decision / fallback |
 | --- | --- |
-| No authored media, confirmed | Complete text-only composition; omit empty slots/media controls; retain text Evidence where authored |
-| Failed discovery delivery | Keep Story/Experience choice text, status/context and Story-opening action usable; retain selected identity; no broken-placeholder replacement or silent asset substitution |
-| Failed lead/Evidence delivery | Keep published caption/explanation and surrounding Story usable; scoped Retry plus Close for open inspection; no silent substitution; a working authorized poster stays static until recording delivery succeeds |
+| No authored media, confirmed | Complete Project or Story text and its opening action; omit empty media slots/controls. Historical Work text Evidence remains when authored. |
+| Failed discovery delivery | Keep affected Project or Story context and its own opening action usable; retain media identity for recovery, never silently substitute assets. Historical W43 Experience choice follows its Work behavior. |
+| Failed Project showcase / Story media delivery | Keep affected Project/Story content, published caption and navigation usable; scoped Retry for failed selected media. Close only if an approved inspection is actually open (P17 where figure-to-Evidence applies); historical W43 lead/Evidence keeps its original Close. Never substitute media; an authorized poster remains static without video. |
 | Missing actual recording/source | An existing valid authored/authorized poster can remain static only; omit Play and never manufacture playable video/source. Request owner repair/selection only if a dependent requested choice remains unresolved |
 | Owner selected media pending or failed | Block publication until ready or explicitly removed and the saved candidate reviewed; retain input and current public snapshot; do not silently drop media or publish dependencies |
 | Removed/nonpublic reference | Neutral unavailable state without leaking private identity/metadata; not equivalent to empty optional media |
@@ -85,8 +85,8 @@ For maintenance validation, run `python .agents/skills/media-role-selection/scri
 ```text
 Surface: <surface and public/candidate/editor context>
 Media role: <canonical role, none, or OWNER DECISION REQUIRED; authority>
-Source identity: <existing Story/revision/Evidence/source/poster reference, none, or unresolved>
-Presentation: <show/hide; image/static poster/inline inspection/player/text-only/logo-name>
+Source identity: <verified Project-or-Story identity and published snapshot/private candidate revision; optional authored media/source/poster reference; W43 Evidence ID only where applicable; none or unresolved otherwise>
+Presentation: <show/hide; image/static poster/approved inspection/player if applicable/text-only/logo-name; no invented gallery controls>
 Playback: <not applicable/prohibited/explicit Play only; stop conditions>
 Fallback: <absent, loading, failed and nonpublic-reference behavior as applicable>
 Accessibility/truthfulness checks: <relevant requirements and verified/missing/unverified status>

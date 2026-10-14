@@ -27,14 +27,15 @@ Full-product media editing is still a design task. Historical [W43](../implement
 | Action | Visible result | Failure / next action |
 | --- | --- | --- |
 | Edit / Save | Explicit Saved privately; public version remains until Publish/Update | Retain input and explain field/error conflict |
-| Private Preview | Exact saved candidate, conspicuous Private state | Unsaved input requires Save or Keep editing; no public share |
+| Private Preview | Exact saved candidate with Private label; Back returns to editing context | Unsaved input requires Save or Keep editing; preview success does not establish publication readiness |
 | Publish / Update content | Review candidate; explicit confirmation updates live on success | Older public content remains after confirmed failure; unknown result checked before retry |
 | Unpublish | Explicit Project-only/Keep or Unpublish linked Stories scope | Applied Home choices block affected entries (PS09); confirmed together-or-unchanged (PS13) |
 | Delete permanently | Explicit Keep Stories (detach) or Delete all related Stories; no Trash | Confirm counts/indirect impact, reject stale scope; no file cascade inferred |
+| Discard unsaved editor edits | Restore last saved working copy, discarding only unsaved session input | Never delete saved copy or change published content; distinct from permanent Delete |
 | Pin / Home order / selection | Changes stay pending in matching All items or Home selection view | Apply changes or Discard changes; confirmed failure retains pending work and prior live arrangement |
 
 Apply arrangement changes only, never draft text or item publication (OWN04); leaving pending arrangement offers **Apply / Discard / Stay**. Leaving unsaved editor offers **Save / Discard / Keep editing**. Applied Home-feature/Story/More Projects choices must be successfully changed before affected unpublish/delete; merely pending removal does not unlock. Automatic latest refills; manually curated selection never silently replaced.
-Full candidate preview/media comparison labels Public versus Candidate; no mandatory rich-text diff/history browser. Pending writes prevent duplicate confirmation but do not claim that navigation cancels server work.
+Returning from private preview restores editing context; preview success does not establish publication readiness. Full candidate preview/media comparison labels Public versus Candidate; no mandatory rich-text diff/history browser. Pending writes prevent duplicate confirmation but do not claim that navigation cancels server work.
 
 ## 5. Navigation, conflicts, and destructive actions
 
@@ -56,9 +57,9 @@ Owner/admin interface feedback is motionless at every breakpoint: no CSS/view/mo
 | ID | Action | Expected result |
 | --- | --- | --- |
 | OU01 | Public Project/Story → Save | Working copy only; public content unchanged |
-| OU02 | Unsaved draft → Preview → save fails | Retain input; no stale preview |
+| OU02 | Unsaved draft → Preview → return | Failed Save retains input/no stale preview; Back restores editing context; preview does not prove readiness |
 | OU03 | Update confirmed fail / outcome unknown | Keep previous public content on confirmed failure; reconcile unknown before retry |
-| OU04 | Leave editor or pending arrangement | Correct Save versus Apply / Discard / Stay; failed operation retains input |
+| OU04 | Discard unsaved edits or leave pending arrangement | Editor Discard restores saved copy without public change; arrangement Apply/Discard/Stay separate; failures retain input |
 | OU05 | Concurrent tabs edit entry | Stale writes blocked, local input recoverable |
 | OU06 | Unpublish manually Home-selected item | Block until successful Home Apply removes reference |
 | OU07 | Delete Project with linked Stories | Keep/detach versus Delete all choices; confirmed atomic scope |

@@ -40,7 +40,7 @@ Cancelled/unfinished/never-released Projects may publish without media/live link
 | Story unpublish/Delete | Story only; parent Project remains | Block if still applied-manual-Home-selected; no silent dependency deletion |
 | Pin/Home selection/order Apply | Arrangement changes only, not entry content publication | Pending choices retained after failure; previous public arrangement stays |
 
-Separate candidate Publish/Update from **Apply changes/Discard changes** for arrangement (OWN04). No automatic dependency publication, pending draft update or feature replacement. Unknown timeout/delivery/atomic outcomes must be investigated before retry; exact transaction/locking/cache mechanisms belong to implementation specs. Prior “no bulk publish” and single-Story-only lifecycle limits are superseded for P19; retain historical P10/W43 evidence in its bounded context.
+Separate candidate Publish/Update from **Apply changes/Discard changes** for arrangement (OWN04). No automatic dependency publication, pending draft update or feature replacement. Unknown timeout/delivery/atomic outcomes must be investigated before retry; exact transaction/locking/cache mechanisms belong to implementation specs. Confirmed Publish/Update must be visible on a fresh public request; stale public content cannot accompany a success claim. Cache/delivery details remain bounded implementation work. Prior “no bulk publish” and single-Story-only lifecycle limits are superseded for P19; retain historical P10/W43 evidence in its bounded context.
 
 ## 4. Publication checks
 
@@ -50,6 +50,7 @@ Separate candidate Publish/Update from **Apply changes/Discard changes** for arr
 - **Home:** selected manual items must be published; when no Featured Project configured, Home retains identity/available sections with **no auto fallback**. Applied Home picks block impacted unpublish/delete until successfully removed via arrangement Apply.
 - **Media/links:** truthful stage/disclosure/accessibility for optional selected assets; failed selected upload needs explicit repair/removal, never silent exposure. Missing media/link remains a complete public text composition.
 - **Contact/Experience:** real company/contact destinations and nonmisleading facts; approved CT05/CT11/CT12 acceptance/email inbox/Privacy handling, not a dashboard messages module.
+- **Site settings:** retain identity and at least one approved contact path; settings cannot be unpublished, only explicitly updated. Home selection/order remains in content lists.
 
 Candidate/relevant revision checks must precede commit; failed/unknown results keep saved candidate/input. Do not introduce editor widgets, schema or endpoint constraints here.
 
@@ -58,7 +59,7 @@ Candidate/relevant revision checks must precede commit; failed/unknown results k
 Explain current applied Home selections, linked private/published Stories, affected public links and counts before unpublish/Delete. A manually featured Project, Home Story or More Projects choice **cannot** be removed until Home selection replacement/removal has **successfully Applied** (PS09); pending or failed Apply does not unlock. Automatic latest sections refill; manual selections never silently refill.
 Unpublish Project with **Keep Stories published** hides Project but leaves published Stories accessible without private parent metadata. Unpublish all hides all children. Delete with **Keep Stories** detaches all children as standalone with original content/visibility; **Delete all** permanently deletes them. One confirmed operation succeeds together or leaves affected entries unchanged (PS13). Do not silently cascade storage assets or delete shared media; ownership/refs/cleanup remain technical contracts.
 A Project detail includes published Stories only and omits its Story area when none; Story detail never shows nonpublic parent identity. Pin/label projections publish only eligible entries; unpublish/republish restores old pinned priority unless explicitly repinned (UXN07). Former company main-product removal/fallback and P10 one-unit evidence behavior are historical and must not reappear as active P19 UI.
-Public assets remain only while referenced by authorized published snapshots; drafts stay private, replacements immutable, and stale public caches/incoming references need safe reconciliation. Removed/private/nonexistent public links use indistinguishable neutral unavailable responses. No backup restore product is implied.
+Public assets remain only while referenced by authorized published snapshots; drafts stay private, replacements immutable, and stale public caches/incoming references need safe reconciliation. Settings cannot be unpublished. Removed/private/nonexistent public links use indistinguishable neutral unavailable responses. No backup restore product is implied.
 
 ## 6. Concurrency and privacy
 
@@ -73,7 +74,7 @@ T01–T07 define auth, storage, deployment, backup, and logging defaults. Publis
 | CP01 | Save public Project/Story candidate | Private only, old public intact |
 | CP02 | Replace optional candidate media | Draft private, old public media intact |
 | CP03 | Publish Story with private parent | Story public with no private parent metadata |
-| CP04 | Confirmed publish/update failure or unknown | Together-or-unchanged known scope; unknown reconciled |
+| CP04 | Confirm Publish/Update or handle failure/unknown | Success visible on fresh public request, never stale; confirmed failure unchanged, unknown outcome reconciled |
 | CP05 | Unpublish manually Home-selected entry | Block until applied selection removal; no auto replacement |
 | CP06 | Project Unpublish Keep/Unpublish all children | Explicit correct child states; atomic confirmed scope |
 | CP07 | Project Delete Keep Stories/Delete all | Detach/preserve or delete chosen children; no file cascade assumption |
@@ -83,4 +84,4 @@ T01–T07 define auth, storage, deployment, backup, and logging defaults. Publis
 | CP11 | Project-only versus selected private Stories bulk Publish | Only selected scope changes; existing public child candidates unchanged |
 | CP12 | Replace/remove selected media then Update | Private assets protected; public projections switch only on success |
 
-P10 private/public guarantees remain approved where compatible; P19–P25 override old Work lifecycle assumptions. These updated CP scenarios are **unrun**; previous W43 evidence applies only to that delivered slice. Detailed transactions, media cleanup, race/retry rules, migrations and tests await bounded technical specs.
+Settings checks must verify retained identity/contact path and absence of settings-unpublish action. These are requirements, not executed tests. P10 private/public guarantees remain approved where compatible; P19–P25 override old Work lifecycle assumptions. These updated CP scenarios are **unrun**; previous W43 evidence applies only to that delivered slice. Detailed transactions, media cleanup, race/retry rules, migrations and tests await bounded technical specs.
