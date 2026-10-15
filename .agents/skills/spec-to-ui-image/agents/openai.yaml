@@ -1,0 +1,4 @@
+interface:
+  display_name: "Spec to UI Image"
+  short_description: "Create traceable UI mockups from approved UX"
+  default_prompt: "Use $spec-to-ui-image to generate proposed imarvin screen images from the selected brief and verified specifications."

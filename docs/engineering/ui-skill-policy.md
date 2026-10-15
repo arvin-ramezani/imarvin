@@ -15,6 +15,8 @@ Authority: [decisions](../decisions.md) P16 and [Signal Studio](../specs/visual-
 
 Meaningful React/Next.js UI work still uses the repo-local shadcn, Vercel React/composition, test-engineering and Design QA workflows when their existing triggers apply.
 
+For authorized image-first design, use the [four-role workflow](image-first-design-workflow.md): `$ui-art-director` for initial composition alternatives, `$spec-to-ui-image` for actual mockups, `$senior-design-critic` for read-only image critique, and `$approved-image-to-code` for later bounded planning/implementation. Follow their task triggers; do not invoke all four for every UI change. Repository installation does not automatically install ChatGPT skills. Complete the owner's main-screen image phase before coding; image generation, implementation and approval still require their own authorization/evidence.
+
 ## 2. Motion boundary
 
 P16 is strict: owner/admin UI has **no interface animation or transition at any viewport size**. Sign-in, `/studio/**`, private preview, publication review, owner dialogs, hover/press/focus feedback, responsive rearrangement, loading, validation, reordering, status changes and save/publish feedback update immediately. Do not use animated spinners/shimmers, press scale, hover travel, enter/exit motion, stagger or layout animation on owner/admin surfaces.

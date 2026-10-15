@@ -1,0 +1,4 @@
+interface:
+  display_name: "Approved Image to Code"
+  short_description: "Plan and implement from approved visual sources"
+  default_prompt: "Use $approved-image-to-code to verify exact visual approvals and prepare the next authorized bounded implementation step."
