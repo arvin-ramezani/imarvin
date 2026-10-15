@@ -1,6 +1,6 @@
 # Public UX Specification
 
-Status: reconciled P19–P25 public UX; approved requirements differ from working component direction. Updated: 2026-10-15.
+Status: P19–P26 public UX; scoped presentation is approved, exact images/editor design remain open. Updated: 2026-10-15.
 Current authority: [public checkpoint](ux-public-checkpoint.md) (UXH/UXN/UXC/UXD), [Project/Story](project-story-spec.md), [Contact](contact-ux-checkpoint.md). Historical W43/PU examples below are not approval for revised UI.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md), [content inventory](../content-inventory.md). Trace: R01–R11, R23–R26; A01–A04, A10–A12.
 Companions: [navigation/state](navigation-state-spec.md), [accessibility/responsive](accessibility-responsive-spec.md), [media/evidence](media-evidence-spec.md). No code, asset creation, or empirical usability claims.
@@ -14,18 +14,18 @@ Design knowledge: focus reduces competing choices; progressive depth supports qu
 ## 2. Homepage: one authored invitation
 
 [UXH01–UXH09](ux-public-checkpoint.md) require a combined concise identity + one manually featured published **Project** hero, then Stories (up to four), More Projects (up to three, excluding feature), Experience, About introduction, How I can help and Contact invitation. The hero's Explore Project is primary; secondary Contact is available. Home headers scroll to Home sections; View all and More about me navigate to dedicated pages.
-A project cover/video poster is optional; no autoplay. Without an explicitly configured feature, keep identity and eligible sections, omit feature area/action, and never automatically select a replacement (UXH09). Content order and information emphasis are approved, not exact layout. Manual Home selection/order uses [OWN01–OWN05](owner-content-checkpoint.md) and never implies content publication; default Home latest ignores collection pins.
+A project cover/video poster is optional; no autoplay. Without an explicitly configured feature, keep identity and eligible sections, omit feature area/action, and never automatically select a replacement (UXH09). UXH10 adds compact title-led Home Story rows, smaller More Projects previews and mobile stacking; exact rendered layout remains unapproved. Manual Home selection/order uses [OWN01–OWN05](owner-content-checkpoint.md) and never implies content publication; default Home latest ignores collection pins.
 
 ## 3. Browse: projects before companies
 
 Separate published **Projects** and **Stories** collections and detail routes (UXN01); no required company-detail page. Visitors filter by one optional reusable label at a time, default All. Filter **before** sorting: matching pinned entries most recently pinned first, then unpinned entries newest by first publication date (UXN04–UXN07). Shared Story pins apply equally to Stories browse and its public Project's related list; unpublish/republish restores previous pin priority. There is no global or per-Project manual order; Home-only manual order is independent.
-Load more retains filter/order/loaded items; detail return restores reading position and invoking item. A missing cover never creates a placeholder or dead link. Discovery uses Project title/overview/contribution or Story title/introduction; [UXD03](ux-public-checkpoint.md) remains **working direction**, not approved layout. No automatic related Story recommendations, company-group filtering or algorithmic suggestions. Company/role is optional factual context, not an additional page or mandatory grouping.
+Load more retains filter/order/loaded items; detail return restores reading position and invoking item. A missing cover never creates a placeholder or dead link. Discovery uses Project title/overview/contribution or Story title/introduction; [UXD03](ux-public-checkpoint.md) preview content priorities are P26-approved; reuse existing overview/introduction without another summary field. Exact rendered layout remains unapproved. No automatic related Story recommendations, company-group filtering or algorithmic suggestions. Company/role is optional factual context, not an additional page or mandatory grouping.
 
 ## 4. Detail: summary first, depth by choice
 
-Approved P25 hierarchy (UXD01–UXD02): **Project name + overview → individual contribution → optional showcase → secondary facts/links → published linked Stories**. Project media/links/status are optional; zero/one/many media must work with no forced gallery. Project details hide the Stories area completely if no published children.
-**Story title + short introduction → concise designed explanation**, with optional contextual media, labels and currently published Project relationship secondary. A Story may stand alone or remain public while its parent Project is private; never reveal private parent metadata (PS05). Stories may express decisions, lessons, problems or experiments without mandatory Problem/Decisions/Evidence tabs, article format or mandated heading/group editor (UXC05/UXC08). No automated “related Stories” (UXC09). Optional Project In progress/Completed/Cancelled status and factual release/availability notes must never imply shipping from completion or privacy from no live link (UXC07). Cancelled/never-launched projects remain publishable.
-Image enlargement/user-controlled playback are ordinary usability defaults, but exact gallery/player/return design remains open; no autoplay. P17 applies wherever a contextual figure opens Evidence: Close restores its originating section and focuses its figure, or a safe visible heading if unavailable; Evidence-origin/direct-entry Close stays in Evidence with valid focus. Do not mandate Problem/Decisions sections, an Evidence schema or gallery in P19 Projects/Stories. W43 implementation evidence remains historical. No misleading captures, fabricated contributions or unusable external actions.
+Approved P25 hierarchy (UXD01–UXD02): **Project name + overview → individual contribution → optional showcase → secondary facts/links → published linked Stories**. Project media/links/status are optional; zero/one/many media must work with no forced gallery. Project details hide the Stories area completely if no published children. UXD08 approves one scrolling page with openly visible opening content; UXD09 approves vertical media in authored order with optional short captions, not a collection-order control.
+**Story title + short introduction → concise designed explanation**, with optional contextual media, labels and currently published Project relationship secondary. A Story may stand alone or remain public while its parent Project is private; never reveal private parent metadata (PS05). UXD10 uses one shared Story presentation with media alongside its relevant explanation, adjacent or stacked as appropriate; labels never select templates. Stories may express decisions, lessons, problems or experiments without mandatory Problem/Decisions/Evidence tabs, article format or mandated heading/group editor (UXC05/UXC08). No automated “related Stories” (UXC09). Optional Project In progress/Completed/Cancelled status and factual release/availability notes must never imply shipping from completion or privacy from no live link (UXC07). Cancelled/never-launched projects remain publishable.
+Image enlargement/user-controlled playback are ordinary usability defaults, but UXD09's vertical showcase is approved while exact sizing/player/inspection-return design remains open; no autoplay. P17 applies wherever a contextual figure opens Evidence: Close restores its originating section and focuses its figure, or a safe visible heading if unavailable; Evidence-origin/direct-entry Close stays in Evidence with valid focus. Do not mandate Problem/Decisions sections, an Evidence schema or gallery in P19 Projects/Stories. W43 implementation evidence remains historical. No misleading captures, fabricated contributions or unusable external actions.
 
 ## 5. Company experience: one model, two content cases
 
@@ -33,7 +33,7 @@ Image enlargement/user-controlled playback are ordinary usability defaults, but 
 
 ## 6. Personal context and contact
 
-Home About introduction sits after Experience and links to dedicated About; authentic interests/learning, optional approved portrait and work/contact paths take precedence over invented personality facts or duplicated CV.
+Home About introduction sits after Experience and links to dedicated About; P26 approves UXD04's short, separated personal/approach/learning sections, optional portrait and work/Contact links. Retain truthful content and no duplicate full Experience.
 Dedicated Contact includes Name, Message, Email or Phone, optional job position, reply channel when Phone supplied, conditional Telegram identifier, no upload and no service selection. Send through app to owner's email inbox; success means safely accepted for delivery and stays on Contact, not “message read.” Home and Contact offer Telegram-first direct choices plus WhatsApp, LinkedIn and email. Short form Privacy note links to a Privacy page (CT01–CT12); no dashboard enquiries inbox.
 
 ## 7. Review scenarios
@@ -50,7 +50,7 @@ Dedicated Contact includes Name, Message, Email or Phone, optional job position,
 | PU08 | Visual review | Distinctive Signal Studio, no CV skeleton; approved image required | A12 |
 | PU09 | Cancelled/never-shipped Project | Truthful contribution, optional local capture/stage and no dead Visit action | A01, A04, A10–A11 |
 
-Historical PU identifiers were previously exercised against Story-as-Project proposals; scenarios now describe P19 and are **unrun**. [UXP01–UXP17](ux-public-checkpoint.md) own the accepted product requirement checks.
+Historical PU identifiers were previously exercised against Story-as-Project proposals; scenarios now describe P19 and are **unrun**. [UXP01–UXP22](ux-public-checkpoint.md) own the accepted product requirement checks.
 
 ## 8. Open scope and agent boundary
 

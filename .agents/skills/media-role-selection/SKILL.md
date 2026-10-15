@@ -8,7 +8,7 @@ description: Resolve ambiguous image, video, poster, Evidence identity, or no-me
 ## Authority and boundaries
 
 Resolve a media decision only; do not create/edit assets, generate posters, search for substitute imagery, change authored selections, implement UI, or change schema/storage/upload behavior through this skill.
-Locate repository root. Read [agent rules](../../../AGENTS.md), [decisions](../../../docs/decisions.md), P19–P25 [requirements checkpoint](../../../docs/ux-requirements-checkpoint.md), [public](../../../docs/specs/ux-public-checkpoint.md), [Project/Story](../../../docs/specs/project-story-spec.md), and [media/evidence](../../../docs/specs/media-evidence-spec.md), then scoped companions. Inspect the supplied surface and existing authored Project/Story/media records or fixtures; do not infer assets from filenames, screenshots in prior reviews, or implementation placeholders.
+Locate repository root. Read [agent rules](../../../AGENTS.md), [decisions](../../../docs/decisions.md), P19–P26 [requirements checkpoint](../../../docs/ux-requirements-checkpoint.md), [public](../../../docs/specs/ux-public-checkpoint.md), [Project/Story](../../../docs/specs/project-story-spec.md), and [media/evidence](../../../docs/specs/media-evidence-spec.md), then scoped companions. Inspect the supplied surface and existing authored Project/Story/media records or fixtures; do not infer assets from filenames, screenshots in prior reviews, or implementation placeholders.
 
 | Authority | Read for |
 | --- | --- |
@@ -22,7 +22,7 @@ Locate repository root. Read [agent rules](../../../AGENTS.md), [decisions](../.
 | [UI skill policy](../../../docs/engineering/ui-skill-policy.md) | P16 motion boundary and companion skill routing |
 
 Apply explicit owner instructions and confirmed decisions before proposals, with each document authoritative in its own scope. Canonical repo specs always override this skill's routing index and examples. Resolve from current P19 Project/Story roles and existing authored selections. Project and Story own independent optional media; do not reuse historical Story discovery/Evidence identity as a new Project's automatic source. Never infer a full-product component/gallery role from a legacy W43 test fixture. If role/source remains unspecified, conflicting or incompatible, return `OWNER DECISION REQUIRED`; never supply a missing product rule. Cite paths and stable IDs/sections; do not silently rewrite authority.
-Preserve proposed/pending status: P15 media layouts require later validation and bounded implementation authority. A selection decision does not approve assets, layouts, schema, dependencies or application code. Treat the roles below as design responsibilities, not new database fields/enums.
+Preserve scoped status: P26 approves public previews, vertical Project showcase and contextual Story media as requirements; exact images, inspection/player/editor composition still need visual review and bounded implementation authority. A selection decision does not approve assets, layouts, schema, dependencies or application code. Treat the roles below as design responsibilities, not new database fields/enums.
 
 ## Decision procedure
 
