@@ -44,7 +44,7 @@ When a comparison finds any P0/P1/P2 issue:
 A later pass must identify the earlier findings, the fixes made, and the post-fix visual evidence. Build, dependency, lint, deployment, and preview troubleshooting do not count as design-QA iterations.
 
 1. Identify the comparison target.
-   - Determine the source design: Figma node, image, design board, screenshot, spec, or mockup.
+   - Determine the source design: actual **owner-approved, exact-revision image/Figma frame/mockup/capture** recorded under the repository's VSRC policy. A Markdown specification alone is **not** a visual source; missing visual source blocks fidelity QA.
    - Determine the implementation: local URL, deployed URL, app screen, component, screenshot, or code-rendered view.
    - Match the same viewport, state, theme, device density, route, content, auth state, and interaction state before judging.
    - If artifacts do not represent the same state, call that out first and avoid false precision.

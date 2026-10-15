@@ -1,19 +1,20 @@
 # Visual System: Signal Studio
 
-Status: existing visual system target approved (P09/P11/P13/P14); P15 media composition extension proposed, rendered validation pending. Updated: 2026-10-07.
+Status: approved Signal Studio palette/visual direction preserved; P20 combined hero and P25 hierarchy now govern future composition, exact revised images unapproved. Updated: 2026-10-15.
+Authority: [public checkpoint](ux-public-checkpoint.md), [visual-source workflow](visual-source-workflow-spec.md), [refinement review](../visual-refinement-review.md) (historical approval only).
 Authority: [decisions](../decisions.md), [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [accessibility](accessibility-responsive-spec.md). Trace: R01–R02, R20–R27; A01, A09, A12.
-Owner approved representative rendered wide light/dark public and owner screens on 2026-10-03. The reviewed images are approval evidence but are not stored here as implementation assets. [Refinement review](../visual-refinement-review.md) records the approval and remaining validation.
+Owner approved representative rendered wide light/dark public and owner screens on 2026-10-03. Those historical approvals established Signal Studio direction, not retrievable versioned implementation source assets nor new P15 media layouts. [Refinement review](../visual-refinement-review.md) records that scope. Exact new variant approval uses the [source registry](../visual-source-registry.md) under [VSRC](visual-source-workflow-spec.md); none are registered yet.
 
 ## 1. Visual communication
 
 Owner preference: communicate first through hierarchy, icons, shape, spacing, and visible state changes; labels are short and visually secondary. Selective decoration may reinforce an identifiable relationship or personality.
 
-VS01: compact identity is an offset anchor; featured work's problem/contribution dominates. One attached Open work action leads into inspection; Browse/Contact remain discoverable.
+VS01: concise identity and the manually Featured **Project** share one authored asymmetric hero; Project overview/contribution leads to Explore Project, while Contact stays available. An unconfigured feature leaves identity and available sections with no automatic fallback (UXH09).
 VS02: active work/section uses stable position, weight, icon/shape, and optional local accent. A cobalt edge, bracket, tinted card, or filled pill is not a required signature. Focus and active selection remain distinct.
-VS03: selected work owns a large inspection stage; context/return sits beside it when space permits. Content changes while title and return stay anchored.
-VS04: work objects share an open surface with authored variations in emphasis. Do not enclose the app in a card or make every item an identical tile.
+VS03: approved P25 **Project** reading hierarchy leads overview → individual contribution → optional showcase → secondary facts/links → related published Stories; **Story** leads title/introduction → designed explanation with contextual optional media. Contextual return remains discoverable; no mandated identical tabs.
+VS04: Projects/Stories have distinct browse/detail surfaces with authored variation, not identical card walls. Home alone permits manual item order; published collections use filter-before-pinned/latest sorting (UXN05–UXN07).
 VS05: offset composition, work-led scale, and purposeful inspection form the signature. Background effects or generic active-control styling cannot substitute for it.
-VS06: real project captures/posters become authored objects within that same work stage: one focal visual at entry, smaller discovery stills, and full detail inspection. [Media/evidence](media-evidence-spec.md) owns placement/proportion/crop/player rules; this proposal preserves the palette/signature and does not extend earlier rendered approval to new layouts.
+VS06: permitted optional Project cover/showcase and independently optional Story media participate in the work stage; zero-media content is complete. [Media/evidence](media-evidence-spec.md) owns truthful source/alternatives. Exact image/player composition remains unapproved; historical 2026-10-03 wide/light/dark renders do not approve revised P19 screens.
 
 Grouping and recognizable control shapes precede explanatory text. Work titles, story content, and consequential private/public states remain understandable. Secondary labels are visible/readable, not hidden or low contrast.
 
@@ -27,7 +28,7 @@ Grouping and recognizable control shapes precede explanatory text. Work titles, 
 | Shape | Explains grouping/control/selection; no arbitrary blob behind every object |
 | Shadow | Actual overlay separation when needed; no decorative shadow lines or floating-card wall |
 | Selected state | Weight/position/shape/icon plus modest local emphasis; no default wash/glow/border stack |
-| Section controls | Compact icon-and-label selectors integrated into the story; no automatic pill strip or boxed segmented-control look |
+| Optional controls | No prescribed Story tab/section widget. If a separately approved tab exists, integrate it without default pill strip/boxed styling |
 
 For each accent, name its job and affected relationship/state. Remove it if it competes with work, repeats without meaning, or creates noise. It cannot impersonate evidence, telemetry, or a control.
 
@@ -86,7 +87,7 @@ At 320px/zoom, focus, errors, and essential actions remain visible. No sticky ra
 ## 6. Public/owner states and motion
 
 Public composition is expressive; owner editing stays structured. Share visual language without turning the editor into a decorative workspace.
-Saved privately, Published, Private changes, Error, and Cancelled are distinct meanings. Use shape/icon/state plus concise text; never imply Save publishes through motion.
+Saved privately, Published, Private changes and Error are editing/publication states; optional In progress/Completed/Cancelled describes a Project's real progress, never visibility. Use shape/icon/state plus concise text; never imply Save publishes through motion.
 Publish/Update and Unpublish/Delete are not interchangeable icon actions. Reviews and confirmations identify operation and effect.
 
 **Owner/admin UI:** no interface animation or transition at any viewport size. Hover, press, focus, navigation, dialogs, responsive changes, saving/publishing feedback, loading, validation and state changes update immediately with no animated spinner/shimmer, press scale, hover travel, enter/exit effect, stagger or layout animation. Explicit user-invoked playback of authored project media is content playback, not workspace UI animation, and never autoplays.

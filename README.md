@@ -12,17 +12,21 @@ Current validation: [Responsive & Interaction Validation](docs/responsive-intera
 
 Current visual approval: [Visual refinement](docs/visual-refinement-review.md). Foundations review: [Design review](docs/design-review.md). The rendered wide light/dark direction is approved; responsive/interaction/accessibility checks remain.
 
+Current requirements: [P19–P25 UX checkpoint](docs/ux-requirements-checkpoint.md) records the model, latest combined hero/Home order/About placement, browsing, lifecycle and Contact decisions; its companions distinguish delegated content direction from approved publishing minima, simplified status, Contact additions and [content-list management](docs/specs/owner-content-checkpoint.md). P22 records Home-only manual order, shared pins and Apply/Discard; Story component/editor decisions remain deferred until high-level UX completion. P23 records subsequent Contact/Privacy/discovery and applied-removal approvals. P24 closes the [journey audit](docs/ux-journey-audit.md)'s four high-level decisions; P25 approves detail hierarchy only. Component/editor/layout/image work remains separate. Read it before overlapping older UX docs; detailed design/spec reconciliation remains pending.
+
 ## Read in order
 
 | Document | Purpose |
 | --- | --- |
+| [Approved UX checkpoint](docs/ux-requirements-checkpoint.md) | Latest scoped authority, approved requirements and unresolved decisions |
 | [PRD](PRD.md) | User outcomes, scope, requirements, acceptance |
 | [Design concepts](docs/design-concepts.md) | Selected concept and two unselected alternatives |
 | [Design direction](docs/design-direction.md) | Personal Studio direction and draft UX contracts |
-| [Public UX specification](docs/specs/public-ux-spec.md) | Homepage, projects-first browsing, summary/section detail |
-| [Project images/video/evidence](docs/specs/media-evidence-spec.md) | Purposeful placement, truthful recording stages, inspection, authoring and MV01–MV08 checks |
+| [Public UX specification](docs/specs/public-ux-spec.md) | P20 combined Home, distinct Project/Story browsing and P25 hierarchy |
+| [Project images/video/evidence](docs/specs/media-evidence-spec.md) | Independent optional Project/Story media, truthful stages, legacy Work Evidence and MV01–MV08 checks |
 | [Navigation/state specification](docs/specs/navigation-state-spec.md) | Destinations, return context, failures, safe deep links |
 | [Accessibility/responsive specification](docs/specs/accessibility-responsive-spec.md) | Public-flow mobile, keyboard, reading, motion contracts |
+| [Owner content management](docs/specs/owner-content-checkpoint.md) | P21–P23 management views, shared pins/Home-only manual order, Apply and editor/removal boundaries |
 | [Owner UX](docs/specs/owner-ux-spec.md) | Structured editing, private preview, confirmations and recovery |
 | [Content/publishing](docs/specs/content-publishing-spec.md) | Private/public versions, dependencies, removal and conflicts |
 | [Visual exploration](docs/visual-exploration.md) | Three written directions; Signal Studio approved |
@@ -64,6 +68,6 @@ CI preserves the same safety model with an ephemeral PostgreSQL `imarvin_test` s
 
 The owner rejects a portfolio/résumé product. The former fixed homepage sequence and résumé/editorial treatment are superseded.
 
-Selected concept A: Personal Studio (P01, owner-approved). Visitors select work and inspect its problem, decisions, and evidence. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
+Selected concept A: Personal Studio (P01, owner-approved). Visitors explore distinct Projects and flexible Stories with optional media; no mandatory Problem/Decisions structure. Employer/client opportunities remain outcomes; they do not prescribe a CV layout.
 
 P02–P14 decisions are recorded in the product docs. T01–T07 define the technical/runtime baseline and spec-driven delivery workflow. O05 is resolved at architecture level. Implementation should establish only necessary cross-cutting foundations, then deliver product capabilities as bounded end-to-end slices. Development/runtime acceptance is local where possible; production deployment is the final phase.

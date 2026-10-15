@@ -1,23 +1,24 @@
 # Design Direction
 
-Status: Personal Studio and Signal Studio selected; existing light/dark visual direction approved (P09/P11/P13/P14); P15 media extension proposed for review. Updated: 2026-10-07.
+Status: historical Personal Studio/Signal Studio direction preserved; P20 combined Home and P25 hierarchy govern current screens. Updated: 2026-10-15.
+Authority: [P19–P25 UX checkpoint](ux-requirements-checkpoint.md) and [public UX](specs/ux-public-checkpoint.md); exact images unapproved.
 
 ## Product and expression
 
-Enter Arvin's space → choose work → inspect decisions/evidence → explore again or contact. P05–P07 fix one featured entry, projects-first browsing, and summary then sections.
+Enter Arvin's space → choose work → inspect decisions/evidence → explore again or contact. P19–P25 define one optionally configured Featured Project with concise identity in a combined hero, separate Projects/Stories browse/detail, and flexible Story explanations without prescribed sections.
 
 Signal Studio retains work-led readable type, offset identity, open space, and a main inspection stage with contextual return. Communicate first through hierarchy, icons, shape, spacing, and state changes; keep supporting labels short. P14 adds Light and Dark, defaulting to System, for public/owner/preview views. Theme changes preserve content/navigation/editing state. The current light/dark palette and visual treatment are approved design targets.
 
 Selective decoration may reinforce meaning/personality. Dot grids, decorative background shadow lines, glow fields, repeated ornamental motifs, and generic pill/segmented tab treatments are not baseline requirements. No mandatory active bracket/edge or filled card. See [visual system](specs/visual-system-spec.md) for the canonical policy.
 
-Premium means crafted hierarchy and recognizable identity. Simple means few meaningful choices and predictable recovery. Real project images can identify featured/browsed work and support the inspection stage; recordings reveal actual UI/animations through explicit playback. Company identity remains logos-only while contextual project media is allowed. Cancelled/offline/never-shipped/no-media work remains complete; live deployment is not an eligibility gate.
+Premium means crafted hierarchy and recognizable identity. Simple means few meaningful choices and predictable recovery. Optional independent Project cover/showcase and Story media can identify work and support appropriate inspection; recordings reveal actual UI/animations through explicit playback. Company identity remains logos-only while contextual project media is allowed. Cancelled/offline/never-shipped/no-media work remains complete; live deployment is not an eligibility gate.
 
 ## Canonical contracts
 
 | Concern | Authority |
 | --- | --- |
-| Public entry/browse/detail and company cases | [Public UX](specs/public-ux-spec.md) |
-| Project visual placement, captured stages, playback and media workflow | [Media/evidence](specs/media-evidence-spec.md) |
+| Combined Home/Project/Story/browse/detail/current Home Experience | [Public UX checkpoint](specs/ux-public-checkpoint.md) + [public companion](specs/public-ux-spec.md) |
+| Independent optional media, capture truth, proposed player | [Media/evidence](specs/media-evidence-spec.md) |
 | Destinations, history, return, errors, public privacy | [Navigation/state](specs/navigation-state-spec.md) |
 | Structured private authoring and review/recovery | [Owner UX](specs/owner-ux-spec.md) |
 | Draft/public versions, dependencies, removal | [Content/publishing](specs/content-publishing-spec.md) |

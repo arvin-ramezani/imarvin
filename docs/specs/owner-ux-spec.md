@@ -1,14 +1,14 @@
 # Owner UX Specification
 
-Status: owner-approved behavior contract for P12; P15 media additions proposed; technical mechanisms deferred | Updated: 2026-10-07.
+Status: reconciled P19–P25 owner behavior; P02/P12 recovery approved; P15 full-product media/editor components unapproved. Updated: 2026-10-15.
+Authority: [OWN01–OWN06](owner-content-checkpoint.md), [UXD06–UXD07](ux-public-checkpoint.md), [PS01–PS13](project-story-spec.md), [CT01–CT12](contact-ux-checkpoint.md).
 Accepted: P02 explicit publishing; P03–P04 focused V1; P08 structured editing; P12 explicit save/candidate review/conflict/session recovery/accessible confirmations.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companion: [content/publishing](content-publishing-spec.md). Trace: R12–R21; A05–A09.
 
 ## 1. Owner's job and workspace
 
-Curate accurate work, preview its presentation, and change public content deliberately. The private workspace favors clear editing over expressive public composition; no résumé builder, analytics dashboard, page builder, or AI generation.
-Proposed navigation: Work, Experiences, Studio settings. Studio settings contains identity, personal context, contact, featured work, and curated order. Decisions/evidence are edited inside their story, not separate publishing products.
-Landing view is the Work list: title, project status, publication state, Edit, and New story. No vanity metrics. Experiences distinguish multiple projects from main product; settings explain which public surfaces they affect.
+Private management areas are **Projects, Stories, Experience, Site settings**, per [OWN01–OWN06](owner-content-checkpoint.md). Projects and Stories each have **All items** and **Home selection** views; item editors are separate. All items show Private/Published, Edit and published-only Pin/Unpin. All Stories may filter by Project; pins are shared with public browse and the linked published Project's Stories list. Experience order is managed in Experience; Site settings controls identity, About, offerings and Contact **but not Home selection/order**.
+Home manual membership/order belongs to its matching Projects/Stories Home selection view, not settings/item editor. Apply/Discard arrangements are separate from item Save/Publish. Public Home's fixed section order, manual selection limits and exclusions follow UXH; pins do not impose a manual full-collection or per-Project rank. No résumé builder, enquiries inbox, analytics dashboard or mandatory taxonomy editor.
 
 ## 2. Identity and access
 
@@ -18,43 +18,29 @@ Expired session stops writes and shows Sign in again. Retain in-session editing 
 
 ## 3. Structured authoring
 
-| Area | Editable content | Publishing checks |
-| --- | --- | --- |
-| Story summary | Title, problem hook, responsibility/tasks, progress/release/availability, known outcome/lesson, relevant stack | Accurate summary; never infer shipped from completed; metrics/media optional |
-| Story depth/media | Problem, decisions, evidence, lead/cover/poster, alternatives, authored related work | Omit empty optional sections; confirmed capture stage/permission; selected media ready and alternatives complete |
-| Experience | Company name/logo, role/dates, contribution, multiple-project/main-product mode | Confirmed company/role/date facts; valid main-story association where selected |
-| Studio settings | Name/description, personal context, contact destinations, featured story, order | Real contact destination; eligible published work references |
-
-Field help gives one short purpose and an optional example labeled as an example. It never autofills invented outcomes or identity. Drafts may be incomplete; publication checks show missing inputs.
-Experience associations reuse stories. A main-product selection must belong to that experience; switching mode changes presentation without duplicating story content. Explicitly detach an association to make a story standalone.
-For a new main-product experience, guide context-only publication → associated story publication → explicit experience update selecting that story. Explain the temporary public no-project state before each confirmation.
-Evidence editing follows [ME07](media-evidence-spec.md#6-authoring-and-publication): image/recording/diagram/text-link, purpose/caption, capture stage, permission, alternatives, file/link, lead/cover/poster selection and accessible order. Upload/readiness is distinct from Save. Failed/pending selected assets require retry or explicit candidate removal before publication; other input stays. T04's filesystem/native FormData and 10 MiB baseline remain unchanged; exact video support/limits require a bounded upload spec.
-Order controls include Move up/Move down and an explicit featured-story selector; drag is optional and never the only method. Selecting/order editing changes a private settings draft until publication.
+P08 structured editing means purposeful labelled content, **not** mandated rich text, plain-text paragraph, repeatable groups or a Story Problem/Decisions/Evidence editor. P21 [UXD06–UXD07](ux-public-checkpoint.md) own publishing minima: Project **name, overview (what/who), individual contribution**; Story **title, short introduction, explanation**. Private drafts may be incomplete; exact controls, formatting, fields and validation/limits remain open. P25 hierarchy defines public reading order, not editor implementation.
+A Story optionally chooses one Project at creation; no later reassign/detach except Project deletion with Keep Stories (PS01–PS03/PS08). Both publish independently, including public Story under private Project with no parent metadata exposure. Optional labels can be reused/renamed/deleted (OWN06). Company, technologies, cover/showcase, Story media, live/source/docs links and Project factual progress/release/availability remain optional; no invented job title or shipped status. Project progress is optional **In progress/Completed/Cancelled** with release/availability notes in Additional details (UXC07/OWN03).
+Full-product media editing is still a design task. Historical [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) accepted existing Work media and Problem figures but no mandatory P19 Story media schema/section controls. Where optional selected media is authored, protect private assets, captions/alternatives/rights/readiness and retained input; no automatic video pipeline or fake screenshot. New source images require [VSRC](visual-source-workflow-spec.md).
 
 ## 4. Editing state and actions
 
-Show separate project facts (progress, release history, availability), public state and editing state. For example: Cancelled · Never shipped / Published / Unsaved changes, only when confirmed. Saved privately/Published describes the story, not a project launch. Saving a cancelled project never changes its progress status.
-
 | Action | Visible result | Failure / next action |
 | --- | --- | --- |
-| Edit | Saved working copy loads; title/public state visible | Retry or return to list without replacing existing input |
-| Save draft | Explicit saving state, then Saved privately | Inline errors plus summary; retain values; retry |
-| Preview | Open private public-layout preview of the exact saved candidate | If unsaved: Save and preview or Keep editing; save failure stays in editor |
-| Publish / Update published content | Review candidate, affected surfaces, and dependencies; confirm | Unsaved/invalid/stale candidate cannot proceed; keep editing or save |
-| Unpublish | Confirm removal impact and retained draft | Cancel keeps state; failure preserves public content |
-| Delete draft/item | Confirm irreversible deletion and affected references | Block when still published or referenced; explain how to resolve |
-| Discard unsaved edits | Confirm; reload latest saved working copy | Never deletes the working copy or changes public content |
+| Edit / Save | Explicit Saved privately; public version remains until Publish/Update | Retain input and explain field/error conflict |
+| Private Preview | Exact saved candidate with Private label; Back returns to editing context | Unsaved input requires Save or Keep editing; preview success does not establish publication readiness |
+| Publish / Update content | Review candidate; explicit confirmation updates live on success | Older public content remains after confirmed failure; unknown result checked before retry |
+| Unpublish | Explicit Project-only/Keep or Unpublish linked Stories scope | Applied Home choices block affected entries (PS09); confirmed together-or-unchanged (PS13) |
+| Delete permanently | Explicit Keep Stories (detach) or Delete all related Stories; no Trash | Confirm counts/indirect impact, reject stale scope; no file cascade inferred |
+| Discard unsaved editor edits | Restore last saved working copy, discarding only unsaved session input | Never delete saved copy or change published content; distinct from permanent Delete |
+| Pin / Home order / selection | Changes stay pending in matching All items or Home selection view | Apply changes or Discard changes; confirmed failure retains pending work and prior live arrangement |
 
-Preview carries a persistent Private preview label and Back to editing. It displays the exact saved candidate's text, images, poster, recording and alternatives with currently published dependencies; draft-only/missing dependencies are owner-only warnings, not silently included. Preview success does not claim publication readiness.
-Review distinguishes public content from the candidate using labelled fields/media and changed sections, including added/replaced/removed evidence, caption/stage/alternative changes, lead/cover/order and affected public placements (ME07). V1 needs no rich-text diff engine or version-history browser.
-After confirmed success, show Published/Updated with the public link and timestamp. A confirmed rejection preserves the candidate/prior public version. If a request times out or delivery is uncertain, show Checking publication / Outcome unknown, inspect actual versions, and only then allow a safe retry; never claim rollback or success without evidence.
+Apply arrangement changes only, never draft text or item publication (OWN04); leaving pending arrangement offers **Apply / Discard / Stay**. Leaving unsaved editor offers **Save / Discard / Keep editing**. Applied Home-feature/Story/More Projects choices must be successfully changed before affected unpublish/delete; merely pending removal does not unlock. Automatic latest refills; manually curated selection never silently replaced.
+Returning from private preview restores editing context; preview success does not establish publication readiness. Full candidate preview/media comparison labels Public versus Candidate; no mandatory rich-text diff/history browser. Pending writes prevent duplicate confirmation but do not claim that navigation cancels server work.
 
 ## 5. Navigation, conflicts, and destructive actions
 
-Leaving with unsaved changes offers Save and leave, Discard and leave, or Keep editing; save failure stays on the current edit. Private-preview return restores editing context. Browser reload/close uses a native warning when available; no guarantee of unsaved recovery.
-Two tabs can edit the same item. Stale saves/publications must not overwrite a newer version silently. Show a conflict: retain local input, offer Copy local text and Reload latest; retry only after review. No collaborative merge editor or actor audit is required in V1.
-Unpublish/delete dialogs identify the item, public effect, affected feature/company/related links, and whether the draft remains. Safe Cancel is always available. Recheck dependencies at confirmation; newly changed impact requires renewed review.
-Unsaved-change discard and permanent deletion are different labels/actions. Do not use Delete for removing optional evidence from an editor before its draft is saved.
+P12 retains unsaved input, warning/leave choices, safe sign-out, expiry reauthentication, stale-revision conflict handling and Copy local text / Reload latest recovery. Two-tab edits must never silently overwrite. Native browser close warning is best-effort, not guaranteed recovery.
+Confirm removal impact for Projects, Stories, Home picks and linked private/public children; project bulk choices succeed **together or unchanged** on confirmed outcome (PS13). A timeout/unknown outcome requires checking versions before retry. No automatic attachment/reassignment or silent Story/asset deletion. Dialogs allow Cancel; renewed impact requires renewed confirmation. Pin/label operations never publish unsaved Project/Story content.
 
 ## 6. Responsive and accessible owner editing
 
@@ -70,17 +56,19 @@ Owner/admin interface feedback is motionless at every breakpoint: no CSS/view/mo
 
 | ID | Action | Expected result |
 | --- | --- | --- |
-| OU01 | Edit public story → Save → public view | Saved privately; public content unchanged |
-| OU02 | Unsaved draft → Preview → save fails | Input remains; no stale preview presented as current |
-| OU03 | Update candidate → publish fails → retry | Old public version intact; success only after confirmed update |
-| OU04 | Leave/sign out with unsaved edits | Three clear choices; failed save preserves editor |
-| OU05 | Edit same item in two tabs | Stale operation blocked; local text recoverable before reload |
-| OU06 | Unpublish featured/main-product story | Impact explained; safe public fallback; draft retained |
-| OU07 | Delete published/referenced experience | Blocked with affected references and resolution paths |
-| OU08 | Keyboard/320px: edit, reorder, preview, confirm | Complete flow, visible labels/errors/focus, no covered controls |
-| OU09 | Session expires mid-edit | Writes stop; sign-in/conflict recovery; no private public-preview link |
-| OU10 | Add/replace/reorder image/video → Save → Preview → explicit update | Exact media candidate reviewed; pending/failed media resolved explicitly; prior public assets intact until success; MV05–MV06 |
+| OU01 | Public Project/Story → Save | Working copy only; public content unchanged |
+| OU02 | Unsaved draft → Preview → return | Failed Save retains input/no stale preview; Back restores editing context; preview does not prove readiness |
+| OU03 | Update confirmed fail / outcome unknown | Keep previous public content on confirmed failure; reconcile unknown before retry |
+| OU04 | Discard unsaved edits or leave pending arrangement | Editor Discard restores saved copy without public change; arrangement Apply/Discard/Stay separate; failures retain input |
+| OU05 | Concurrent tabs edit entry | Stale writes blocked, local input recoverable |
+| OU06 | Unpublish manually Home-selected item | Block until successful Home Apply removes reference |
+| OU07 | Delete Project with linked Stories | Keep/detach versus Delete all choices; confirmed atomic scope |
+| OU08 | Keyboard/320px: edit, pin, Home move, preview | All actions usable; visible state/focus/errors |
+| OU09 | Session expires during edit | Block private writes; preserve recoverable input |
+| OU10 | Optional Project/Story media → Save/Preview/Update | No leaked draft media; old public retained on failure |
+
+Historical P12/Work evidence does not certify new P19/PS13/OWN flows.
 
 ## 8. Open boundaries
 
-P12 behavior is approved. O01–O03 block truthful publication; T01–T07 resolve O05 architecture defaults. Exact implementation mechanisms are defined only in bounded feature/bootstrap specs. No autosave, bulk publishing, scheduling, reusable page blocks, revision-history UI, or multi-owner workflows in this draft.
+P12 recovery remains approved. Specific schema, widgets, media limits, label persistence, bulk/retry transactions, migrations and visual layouts require bounded specs. O01–O03 gate real publication only. No autosave, scheduled publishing, version browser or multi-owner flows. Exact-image approval and later implementation/review remain separate.

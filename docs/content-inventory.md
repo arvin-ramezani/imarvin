@@ -1,6 +1,6 @@
 # Content Inventory
 
-Status: planning snapshot from the owner's statements, extended for P15 on 2026-10-07. This is not publish-ready copy or confirmation that assets exist.
+Status: real-content inventory for eventual publication, fixture guidance reconciled P19–P25 on 2026-10-15. P18 uses synthetic fixtures for mockups/non-production development; O01–O03 remain open only for real publication.
 
 ## Unixsee
 
@@ -20,7 +20,7 @@ The owner explicitly reports implementing the user-dashboard and admin-panel UI/
 
 Owner reports building the company's main full-stack online shop using Next.js, NestJS, Prisma, and PostgreSQL. Working project reference: Tarsim; the employer's exact name is not yet confirmed.
 
-Present this product directly within the company experience page. It is the employer's main application, not an unrelated freelance project.
+Present this employer-owned product as a Project with truthful company context. P19 Home Experience may link to its Project detail; it does not require a dedicated company/Experience page.
 
 Need: company name/logo, role/dates, team context, scope of ownership, main features, important decisions, outcome, and permitted evidence. The earlier GitHub lookup found backup-tarsim with only a README on its default branch; the application repository/branch still needs resolution.
 
@@ -28,30 +28,45 @@ Need: company name/logo, role/dates, team context, scope of ownership, main feat
 
 The owner earlier mentioned three projects, two offline; later described the three Unixsee projects plus the previous company's product. Final featured selection and availability are unconfirmed. Do not assign live/offline status to individual entries by guessing.
 
-Choose featured work by curiosity, contribution, relevance, and evidence. A live deployment is not a requirement. Work/decision/company views reuse one story. Entry selection supports a creative exploration surface, not a résumé homepage.
+Choose featured work by curiosity, contribution, relevance, and evidence. A live deployment is not a requirement. P19 uses distinct Projects and Stories: a Project may have zero or more independently published Stories, and a Story may stand alone. Their optional media is independent. Entry selection supports a creative exploration surface, not a résumé homepage.
 
 ## Candidate visual evidence to collect
 
-These are capture suggestions conditional on available, permitted artifacts. They are not assertions about implemented features, production releases, ownership, or media already supplied. [Media/evidence](specs/media-evidence-spec.md) governs placement and truthful stage labels.
+These are capture suggestions conditional on available, permitted artifacts. They are not assertions about implemented features, production releases, ownership, or media already supplied. The [P19 public checkpoint](specs/ux-public-checkpoint.md) governs optional media and Project/Story presentation; retain compatible [media/evidence](specs/media-evidence-spec.md) provenance and truthful stage labels.
 
-| Story | Candidate still / detail | Candidate recording | Confirmation needed |
+| Project | Candidate still / detail | Candidate recording | Confirmation needed |
 | --- | --- | --- | --- |
 | Unixsee landing page | Representative implemented page and a readable responsive/detail capture | One actual interaction/animation, if implemented and useful | Arvin's contribution; capture source/stage; permission; release/availability |
 | Cancelled Unixsee app | Customer-dashboard/admin-panel UI Arvin reports implementing; selected states rather than every screen | One implemented navigation, feedback or animation sequence in a runnable local build; design prototype if code is unavailable, labelled accordingly | Completed/unfinished scope, never-shipped versus prior release, real behavior versus prototype, permitted/redacted data |
 | Waiting room | Relevant admission screen or permitted management workflow, if available | A confirmed working admission/configuration sequence when it supports the story | Current build/readiness and individual role; safe customer/host/key disclosure boundaries; no production inference |
 | Previous company's shop | Confirmed product/browse/basket or other implemented screen worth discussing | One real implemented shopper workflow/transition, if available | Application source, responsibility/team boundaries, permission, release/availability and capture stage |
 
-Select one representative still/poster for discovery and a few complementary items for depth; do not prescribe a minimum image count or repeat the same screenshot to fill every section. Original historical capture, current local recording and recreated demo must be distinguished. Cancelled/unshipped work can be featured with these assets after factual/permission review.
+When media is available and useful, select a representative still/poster for discovery and complementary items for depth; do not prescribe a minimum image count or repeat the same screenshot to fill every section. Original historical capture, current local recording and recreated demo must be distinguished. Cancelled/unshipped work can be featured with these assets after factual/permission review.
+
+## Screen-scoped visual content gates
+
+**P18: use synthetic fixture data for UI images, prototypes, local development and automated tests.** No real project text, real personal/contact details or genuine customer/project images are needed to design UI. Record the selected bounded screen set and linked spec IDs in [VSRC05–VSRC07](specs/visual-source-workflow-spec.md); distinguish fixture presentation from later real publication.
+
+| Screen | Permitted mockup / development fixtures | Required only before real publication |
+| --- | --- | --- |
+| Home Featured Project / previews | Concise fictional Arvin identity + one manually selected published fictional Project in the combined hero; separate Story and More Projects previews (UXH01–UXH05). Optional Project cover; complete no-media variant | Actual selected Featured Project and truthful independent entries; any displayed media permitted (O02) |
+| Projects browse / Project detail | Name/overview → individual contribution → optional showcase → secondary facts/links → published Stories (UXD01). Zero/one/many media and linked published Stories; no compulsory case-study sections; label filter then shared pin/latest priority | Actual Project scope/status/role, optional working links, media rights and independently published related Stories (O02) |
+| Stories browse / Story detail | Title/introduction → flexible concise designed explanation (UXD02); standalone/public-parent/private-parent without private metadata; independent zero/one/many optional media, labels, no imposed article/tab/group or automatic recommendations | Truthful Story context, optional permitted media and public parent relationship only where permitted (O02) |
+| Home Experience | Fictional company logo/name, role/dates, contributions and optional relevant Project links; no dedicated company page (UXH06) | Correct employer/roles/dates/contributions and permission for displayed media (O01–O02) |
+| Home About introduction / About / Home Contact invitation / Contact page | Later Home About introduction after Experience/before offerings, More about me opens About; generic labelled personal copy and nonfunctional example destinations; distinct Contact form with Name/Message and email or phone, optional job position and preferred reply channel when Phone is supplied (UXH07–UXH08, CT01–CT08). Defer unresolved Telegram/field layout variants | Real personal text and working destinations; delivery/privacy decisions and portrait permission where relevant (O03) |
+| Owner All items / Home selection / editor | Independent private/public Project/Story candidates, minimum publication texts (UXD06–UXD07), pins/filter/order/Apply/Discard, live Home removal blocker, bulk Keep/Delete together-or-unchanged (OWN01–OWN06, PS01–PS13). Do not assume editor widgets | Actual owned content/media and approved lifecycle/security mechanisms before production publication |
+
+Fixtures must be explicitly marked **FICTIONAL / TEST ONLY** in fixture records, image metadata/approval evidence and development environments; mockup content may appear naturally within a screen but must never be represented as a real project, actual capture, customer, claim, or working contact. When a media-bearing variant is intentionally selected, synthetic media may demonstrate its optional slot; it is **not authentic project Evidence**. No secrets, real customer data or private identifiers. Distinct authored fixture **no-media** states are valid; missing actual assets do not imply no media. Owner-reported project permissions are assumed for planning only; do not claim specific captured assets have been inspected or approved. Real publication remains gated by O01–O03, truthful copy and asset-specific disclosure review.
 
 ## Capture worksheet
 
-For each story, collect:
-- Problem and users affected.
+For each Project and any independently authored Story, collect only relevant facts; this worksheet is not a required public layout:
+- Concise Project overview; optional Story problem, decision, lesson or experiment context and users affected.
 - Personal role, tasks, and team boundaries.
-- One or two consequential decisions and their constraints.
+- Consequential decisions and constraints when relevant; do not require a Decisions section.
 - What was completed/unfinished; progress, release history, current availability and confirmed lessons.
 - Evidence permitted for public use; source/capture stage/date when known, what it demonstrates and cannot prove; stack and usable public links.
-- Selected discovery/lead image or video poster; relevant detail figures/recordings; authored sequence and meaningful captions/alternatives.
+- Optional Project cover/showcase and independently optional Story media; relevant sequence, captions/alternatives. Zero-media content is complete; do not borrow private Story media.
 - For recordings: actual starting state/action/result, duration, silent/with-audio, captions/description/transcript needs; source redaction and permission review before publishing.
 
 Do not upload source code, credentials, private operational identifiers, internal tickets, or confidential employer material merely to make a story more impressive. The owner determines appropriate publishable evidence.
