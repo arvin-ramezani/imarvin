@@ -49,6 +49,8 @@ Authority: arvin-ramezani/imarvin only. No inheritance from the older project. D
 | P24 | Closes journey-audit JG01–JG04: no-feature Home keeps identity/available sections without automatic replacement; confirmed Project bulk actions succeed together or leave affected entries unchanged; unpublish/republish preserves pin priority; labels may be renamed/deleted without deleting Projects/Stories. | Explicit owner approvals 2026-10-15, Asia/Tehran: 01:47, 01:49, 02:03, 02:04 respectively. Canonical UXH09/UXN07, PS13 and OWN06; [audit](ux-journey-audit.md) records closure, not runtime proof. |
 | P25 | Approved detail information hierarchies: Project name/overview → contribution → optional showcase → secondary facts/links → published Stories; Story title/introduction → explanation with contextual optional media, labels/public Project link secondary. Supersedes UXD01's facts-before-showcase working order. | Clickable owner Approved responses 2026-10-15 at 02:21 (Project), 02:22 (Story), Asia/Tehran; [UXD01–UXD02](specs/ux-public-checkpoint.md). Exact editor fields/components/layouts/images remain unapproved. |
 
+| P26 | Post-#55 presentation refinements and approval of existing preview/About working direction; canonical UXH10, UXD03–UXD04/UXD08–UXD10 and UXP18–UXP22. Existing UXH06 Experience/Contact requirements are retained without duplicate definitions. | Clickable owner approvals on 2026-10-15 after #55 merge, through 06:12 Asia/Tehran; [public checkpoint](specs/ux-public-checkpoint.md). Presentation scope only; no editor/schema, exact-image, implementation or runtime approval. |
+
 ## Architecture baseline
 
 | ID | Decision | Authority |

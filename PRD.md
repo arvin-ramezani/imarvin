@@ -1,10 +1,10 @@
 # PRD
 
-Product: imarvin | Owner: Arvin Ramezani | Version: 0.15 | Updated: 2026-10-15
+Product: imarvin | Owner: Arvin Ramezani | Version: 0.16 | Updated: 2026-10-15
 
 Status: revised draft. Confirmed constraints: C01–C10. P01–P15 and T01–T07 are owner-approved where listed in decisions. P15 confirms the media documentation brief; detailed new media UX remains proposed. The [journey audit](docs/ux-journey-audit.md)'s four high-level gaps are closed by P24. Remaining work includes legacy reconciliation, component design, factual inputs, runtime validation and feature-level implementation details; the complete PRD is not blanket implementation approval.
 
-P19–P25: [UX checkpoint](docs/ux-requirements-checkpoint.md) records latest requirements, including the owner-approved combined hero/Home About placement. The scoped checkpoints separate delegated working direction from approved publishing minima, status, Contact and content-list management; unresolved design/implementation details remain explicit.
+P19–P26: [UX checkpoint](docs/ux-requirements-checkpoint.md) records latest requirements, including the owner-approved combined hero/Home About placement. The scoped checkpoints separate delegated working direction from approved publishing minima, status, Contact and content-list management; P26 approves scoped public presentation/preview/About direction; exact images and editor/implementation details remain open.
 
 ## 1. Product intent
 

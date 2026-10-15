@@ -30,7 +30,7 @@ Introduce media or additional shared infrastructure when the first bounded featu
 
 | Document | Status / coverage | PRD trace |
 | --- | --- | --- |
-| [P19 public checkpoint](specs/ux-public-checkpoint.md) | Canonical public requirements: UXH01–UXH09, UXN01–UXN07, UXC01–UXC09; checks UXP01–UXP17. P20 Home and P21 UXD06–UXD07 minima/status approved; UXD01–UXD02 hierarchy approved by P25; UXD03–UXD05 remain working direction. Exact layouts/controls/validation/gallery/nav details open | R01–R11, R23–R27 |
+| [P19 public checkpoint](specs/ux-public-checkpoint.md) | Canonical public requirements: UXH01–UXH10, UXN01–UXN07, UXC01–UXC09; checks UXP01–UXP22. P20 Home and P21 UXD06–UXD07 minima/status approved; UXD01–UXD02 hierarchy approved by P25; P26 approves UXD03–UXD04 and UXD08–UXD10 presentation; UXD05 authoring open. Exact images/editor/controls/validation/nav details remain open | R01–R11, R23–R27 |
 | [P19 Project/Story](specs/project-story-spec.md) | Canonical owner-approved relationships/visibility/lifecycle: PS01–PS13; checks PSP01–PSP09. Schema, migrations, retry/unknown-outcome/concurrency and media cleanup remain open; confirmed bulk failure outcome approved | R07, R13–R19, R22 |
 | [P19 Contact checkpoint](specs/contact-ux-checkpoint.md) | Canonical owner-approved enquiry fields/channels: CT01–CT12; checks CTP01–CTP11. Telegram identity/no attachments, Contact result/email handling and Privacy note/page approved; factual copy/retention, identifier validation, delivery/spam and layout open | R10–R11, R20–R21 |
 | [Public UX](specs/public-ux-spec.md) | P19–P25 companion reconciled; W43/P17 historical boundaries explicit; PU01–PU09 revised, unrun | R01–R11, R23–R26 |

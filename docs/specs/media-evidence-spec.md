@@ -1,6 +1,6 @@
 # Project Images, Video, and Evidence
 
-Status: P19–P25 media ownership reconciled; P17 origin-aware focus approved for applicable figure-to-Evidence flows; W43 evidence historical, P15 detailed inspection proposed. Updated: 2026-10-15.
+Status: P19–P26 media ownership/presentation; UXD09 vertical showcase approved; P17 origin-aware focus approved for applicable figure-to-Evidence flows; W43 evidence historical, P15 detailed inspection proposed. Updated: 2026-10-15.
 Authority: [UXC01–UXC09 / UXD01–UXD02](ux-public-checkpoint.md), [PS01–PS13](project-story-spec.md). Historical [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) applies only to Work media/Problem figures.
 Authority: [PRD](../../PRD.md), [decisions](../decisions.md). Companions: [public UX](public-ux-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md), [visual system](visual-system-spec.md), [accessibility](accessibility-responsive-spec.md).
 Trace: R04, R06, R08–R09, R13–R19, R20–R26; A01–A12. Documentation only: no asset creation, application changes, or upload infrastructure approval.
@@ -44,9 +44,9 @@ Label true Design, Prototype, Local build, Production capture or Recreated local
 
 ## 4. Inspection and playback
 
-ME05: image enlargement and standard user-controlled video playback without autoplay are routine usability direction; **exact** gallery, detail zoom/return, poster behavior, player variants, placement and metadata controls are unapproved full-product design. Use accessible labelled Play/Pause/seek/captions as relevant, non-playback descriptions and no automatic start on load/hover/deep-link/theme/resize/return. No required media modal, carousel, second Play step, proprietary player or media-editing suite is inferred.
+ME05: image enlargement and standard user-controlled video playback without autoplay are routine usability direction; UXD09 approves the vertical Project showcase in authored order with optional short captions (typical 2–5, not a limit); UXD10 approves contextual Story media. Exact sizing, zoom/return, poster/player variants and metadata controls remain unapproved. Use accessible labelled Play/Pause/seek/captions as relevant, non-playback descriptions and no automatic start on load/hover/deep-link/theme/resize/return. No required media modal, carousel, second Play step, proprietary player or media-editing suite is inferred.
 **ME05 / P17 accepted:** wherever a contextual figure opens Evidence, Close restores its originating section and focuses the figure or a safe visible heading if figure/section is unavailable; Evidence-origin/direct-entry Close stays in Evidence with valid focus. Never focus hidden triggers; stop playback/audio on close or hide as applicable. W43's original Work Problem/Decisions figure-to-Evidence IDs/tests are historical, not a mandatory P19 section/schema/gallery.
-Unknown gallery/playback semantics remain for component/visual design and bounded technical specification; no owner image approval follows from these text rules.
+Remaining inspection/playback semantics remain for component/visual design and bounded technical specification; no owner image approval follows from these text rules.
 
 ## 5. Composition and delivery experience
 

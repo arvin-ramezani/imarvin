@@ -1,6 +1,6 @@
 # Components and Interaction Contract
 
-Status: reconciled P19–P25 responsibilities; components/widgets unapproved; P17 origin-aware Close/focus accepted wherever applicable; W43 implementation evidence historical. Updated: 2026-10-15.
+Status: P19–P26 responsibilities; scoped public presentation approved, exact components/editor widgets unapproved; P17 origin-aware Close/focus accepted wherever applicable; W43 implementation evidence historical. Updated: 2026-10-15.
 Authority: [public checkpoint](ux-public-checkpoint.md), [owner content](owner-content-checkpoint.md), [relationships](project-story-spec.md), [Contact](contact-ux-checkpoint.md); [visual system](visual-system-spec.md) keeps approved art direction.
 Authority: [visual system](visual-system-spec.md), [public UX](public-ux-spec.md), [navigation/state](navigation-state-spec.md), [owner UX](owner-ux-spec.md), [publishing](content-publishing-spec.md). Trace: R01–R27; A01–A12.
 Names describe design responsibilities, not React components, library choices, database models, or coding assignments. [W43](../implementation/43-work-p15-p16-media-motion-retrofit.md) bounds accepted Work behavior/roles without a Decisions model; proposals here do not expand it. New substantive composition needs [visual-source approval](visual-source-workflow-spec.md).
@@ -11,12 +11,12 @@ Names describe design responsibilities, not React components, library choices, d
 | --- | --- | --- |
 | Shared header / theme | Home name returns to top; Home section anchors, dedicated-page navigation; System/Light/Dark | Active destination and visible focus, keyboard/touch, no lost state |
 | Combined identity + Featured Project hero | Brief identity, one published manually configured Project, contribution, Explore Project, secondary Contact | No configured feature: identity/eligible sections only; no fallback or media requirement |
-| Home Stories / More Projects | Up to four Stories / three other Projects; latest or manually ordered Home selections | No duplicate featured Project; View all, absent/fewer items no fillers |
+| Home Stories / More Projects | UXH10 compact Story rows / smaller Project previews; existing four/three limits and Home curation | No duplicate featured Project; View all, absent/fewer items no fillers |
 | Home Experience / About / offerings | Logo/name, concise factual contributions and optional Project links; brief About; three offerings | No company page, About repetition, service selector or fabricated links |
 | Projects/Stories collections | Distinct items, one reusable label filter, published-only results, Load more | **Filter → pinned last-pinned-first → unpinned newest**; preserve filter/load/scroll |
-| Project detail | Name/overview → individual contribution → optional showcase → secondary facts/links → public Stories | Zero/one/many Project media; no blank children area or mandatory case-study sections |
-| Story detail | Title/introduction → concise designed explanation, optional contextual media/labels/public parent | Standalone or private-parent public Story complete; no forced tabs/article format |
-| Image/player content | Optional authored real capture, truthful stage and alternatives; explicitly controlled playback | No autoplay; exact gallery/zoom/player design pending; text remains complete |
+| Project detail | Name/overview → individual contribution → optional showcase → secondary facts/links → public Stories | UXD08 single scroll, openly visible opening; UXD09 vertical authored media order/optional captions; no empty areas |
+| Story detail | Title/introduction → concise designed explanation, optional contextual media/labels/public parent | UXD10 shared presentation, media with relevant explanation; no label templates; private-parent/standalone complete |
+| Image/player content | Optional authored real capture, truthful stage and alternatives; explicitly controlled playback | No autoplay; vertical Project showcase approved; exact sizing/zoom/player design pending; text remains complete |
 | Contact / Privacy | Email-or-phone form, conditional Telegram identity, direct channels; privacy note/page | Sending/safe accepted/failure statuses; no uploads, dashboard inbox or fake read receipt |
 | Public feedback | Loading/empty/unavailable/error and valid recovery | No leaked private data, dead CTA, misleading status or motion-only meaning |
 
