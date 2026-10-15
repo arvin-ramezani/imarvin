@@ -1,6 +1,6 @@
 # Responsive & Interaction Validation
 
-Status: original RV01–RV14 IDs and historical written evidence preserved; P19–P25 scenario expectations reconciled; **new** document/runtime checks pending. Updated: 2026-10-15.
+Status: original RV01–RV14 IDs and historical written evidence preserved; P19–P26 scenario expectations reconciled; **new** document/runtime checks pending. Updated: 2026-10-15.
 Earlier baseline: main `92867925b7021572a443fa861160110334e53ea5` (merged PR #2). P15 baseline: main `40ea65b8d891a78beb184a8481baa3ff981bc64b` (merged text-only #23). Scope: documents only.
 Authority: [decisions](decisions.md), [visual system](specs/visual-system-spec.md), [acceptance](specs/acceptance-spec.md). Behavior remains in linked specifications; this document owns validation coverage and evidence status.
 
@@ -34,19 +34,19 @@ Dimensions below are test viewports in CSS px, not mandatory breakpoints. The [v
 Run core public and owner loops at all four main profiles in both Light and Dark. Add keyboard-only wide/minimum runs, touch narrow runs, screen-reader public/owner runs, reduced motion, and System resolving to each theme. Apply stress profiles to affected rows; do not claim every combination was tested.
 Resize with a Project/Story detail, a label filter/pin/order and origin stored; separately resize an unsaved editor, arrangement view or open confirmation. Include an on-screen keyboard: keyboard/browser chrome can reduce available height.
 
-Required P19 fixtures: combined hero with/without configured feature, Home sections including About/offerings, standalone/linked/private-parent public Stories, Project with zero/one/many published Stories, distinct UI/CLI/backend Projects, concise minimum Project/Story text, optional no/one/many media/links, long title/URL, logo/name Home Experience, label filtered pin priority and unpublish/republish, zero collection/filter results, owner All items/Home selection/Apply failure, bulk Project Keep/Delete atomicity, Contact form/Telegram conditional/Privacy/Retry, conflict and expired session. Historical W43 Problem/Decisions/main-product cases remain regression fixtures only for the older implementation.
+Required P19 fixtures: combined hero with/without configured feature, Home sections including About/offerings, standalone/linked/private-parent public Stories, Project with zero/one/many published Stories, distinct UI/CLI/backend Projects, P26 vertical authored showcase with zero/one/>5 items and optional captions, shared Story contexts and dedicated About/previews, concise minimum Project/Story text, optional no/one/many media/links, long title/URL, logo/name Home Experience, label filtered pin priority and unpublish/republish, zero collection/filter results, owner All items/Home selection/Apply failure, bulk Project Keep/Delete atomicity, Contact form/Telegram conditional/Privacy/Retry, conflict and expired session. Historical W43 Problem/Decisions/main-product cases remain regression fixtures only for the older implementation.
 P15 media fixtures: cancelled/never-shipped local recording with completed/unfinished scope; published cover versus draft replacement; tall/wide screenshot and small UI detail; silent and narrated video with alternatives; no/failed poster, unsupported playback, slow delivery and removed public derivative. Use the same task profiles for [MV01–MV08](specs/media-evidence-spec.md#7-verification-boundary); real media facts/permission remain unconfirmed.
 Use P18 clearly FICTIONAL/TEST ONLY design data; no authentic Project captures, public employment claims, real contact address or implied shipped release. O01–O03 gate actual publication only.
 
 ## 3. Check matrix
 
-RV IDs are retained for traceability; their revised P19–P25 expected behavior is **Pending**, not historical PASS.
+RV IDs are retained for traceability; their revised P19–P26 expected behavior is **Pending**, not historical PASS.
 
 | ID / source | Intent / trigger | Observable result | Recovery / keyboard / narrow |
 | --- | --- | --- | --- |
-| RV01 · UXH01–UXH09, VS01 | Home configured/unconfigured → feature/Contact | Combined identity + Project if configured, remaining sections; About position correct | No-feature retains identity without replacement/dead action |
+| RV01 · UXH01–UXH10, UXD03, UXP21, VS01 | Home configured/unconfigured → feature/Stories/Projects/Contact | Combined identity + prominent Project, compact Story rows, smaller Project previews and About in approved order | Mobile stacks previews; no-feature retains identity without replacement/dead action |
 | RV02 · UXN04–UXN07, NS01 | Label filter → pins/latest → Load more → detail/return | Filter before sort; shared pin priority; loaded items and scroll preserved | Clear filter, missing item safe fallback |
-| RV03 · UXD01–UXD02, AR02 | Project and Story overview/detail | P25 distinct hierarchies; minimum text and no-media complete; no mandatory Story tabs | Readable headings/link names; contextual media optional |
+| RV03 · UXD01–UXD02/UXD08–UXD10, UXP18–UXP20, AR02 | Project/Story detail with no/one/>5 showcase media | Single scrolling Project, overview/contribution open, vertical authored order/captions; shared Story explanation/contextual media without forced tabs | Readable headings/links; no-media/long showcase reflows and preserves reading order |
 | RV04 · NS07, AR10 | Applicable figure/Evidence/direct-entry → Close; W43 regression separately | P17 origin figure/visible-heading fallback or valid Evidence focus, no Back pollution | No mandated P19 sections/gallery; historical W43 evidence does not certify new UI |
 | RV05 · UXH06, UXC06, PS05 | Home Experience → Project → published Story | Logo/name, Project links, safe optional Story parent, no company page | No private parent metadata; missing logo/media still useful |
 | RV06 · NS03/NS04, CT12 | Shared or stale Project/Story/Privacy → Back/Forward | Valid published destinations/return; private states neutral | No leaked title/asset, direct Contact available |
@@ -57,9 +57,9 @@ RV IDs are retained for traceability; their revised P19–P25 expected behavior 
 | RV11 · TH01–TH06 | Theme change reading/editing/dialog | All state/input/position preserved; no owner chrome animation | No focus steal, first-paint requires runtime test |
 | RV12 · AR02–AR05, TH05 | Keyboard/read/zoom/motion across public/owner | Focus/selection distinct, form alternatives, no hover/drag only | 320px/200%/400% accessible |
 | RV13 · CT07–CT12, NS04/NS05 | Contact send/privacy; empty/error/private removal | Accepted confirmation on Contact, failed input retained; neutral private fallback | Retry/direct choices and Privacy link available |
-| RV14 · VS01–VS06, A12 | Compare revised sources at wide/narrow/Light/Dark | P20 combined hero, P25 hierarchy, no-media and owner workspace retain Signal Studio | No CV/equal-card wall; exact-image VSRC approval required |
+| RV14 · VS01–VS06, UXP21–UXP22, A12 | Compare revised sources at wide/narrow/Light/Dark | P26 Home preview hierarchy, dedicated About and shared Story/vertical Project showcase preserve Signal Studio | No CV/equal-card wall; exact-image VSRC approval and runtime review Pending |
 
-P15/MV01–MV08 overlay: Project/Story media independence, no-media and authenticity cover RV01–RV06/RV14; optional media candidate/privacy cover RV07–RV10; player accessibility/error/theme cover RV11–RV13. P17 figure-to-Evidence Close/focus is accepted wherever applicable; W43 implementation evidence remains historical. MV06 still needs architecture-backed authorization; no visible Private label proves privacy. All new P19–P25 media/design checks are unrun.
+P15/MV01–MV08 overlay: Project/Story media independence, no-media and authenticity cover RV01–RV06/RV14; optional media candidate/privacy cover RV07–RV10; player accessibility/error/theme cover RV11–RV13. P17 figure-to-Evidence Close/focus is accepted wherever applicable; W43 implementation evidence remains historical. MV06 still needs architecture-backed authorization; no visible Private label proves privacy. All new P19–P26 media/design checks are unrun.
 
 Canonical scenarios: [public](specs/public-ux-spec.md), [navigation](specs/navigation-state-spec.md), [owner](specs/owner-ux-spec.md), [publishing](specs/content-publishing-spec.md), [accessibility](specs/accessibility-responsive-spec.md), [theme](specs/visual-system-spec.md#7-theme-behavior--p14--r27).
 A01–A06/A08–A12 receive responsive/interaction coverage. A07 security/privacy and atomic-delivery parts of A06/A08 require architecture/implementation checks; a visible private label is insufficient.
@@ -79,7 +79,7 @@ This is an author-led documentation review, not independent research, a screensh
 
 ## 5. Document reasoning result
 
-The canonical specifications were cross-read against RV01–RV14. At its original 2026-10-12 baseline, the prior Story-as-Project contracts were considered internally consistent; P19–P25 replaced that scope. This historical reasoning is **not a current PASS**.
+The canonical specifications were cross-read against RV01–RV14. At its original 2026-10-12 baseline, the prior Story-as-Project contracts were considered internally consistent; P19–P26 replaced that scope. This historical reasoning is **not a current PASS**.
 
 | Group | Document reasoning | Runtime evidence |
 | --- | --- | --- |
@@ -88,7 +88,7 @@ The canonical specifications were cross-read against RV01–RV14. At its origina
 | RV11–RV12 theme/accessibility | HISTORICAL written PASS only; current P19 revision unreviewed | Pending |
 | RV13–RV14 absence/signature | HISTORICAL written PASS only; current P20/P25 visual revision unreviewed | Pending |
 
-The historical written PASS applies only to the prior contract revision; the revised scenarios require fresh independent document and runtime checks. P10/P12 guarantees remain approved only where compatible with P19–P25.
+The historical written PASS applies only to the prior contract revision; the revised scenarios require fresh independent document and runtime checks. P10/P12 guarantees remain approved only where compatible with P19–P26.
 
 Runtime-only claims remain Pending: actual reflow/overflow, browser history restoration, focus movement/trapping, on-screen-keyboard behavior, theme first-paint/persistence, unsaved-input retention across real UI changes, session/concurrency/atomic delivery, and assistive-technology output.
 

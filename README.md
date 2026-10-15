@@ -6,7 +6,7 @@ Phase: bounded implementation is underway. Minimal scaffold, shadcn/agent founda
 
 Light and dark mode are in scope (P14); default follows the device, with System/Light/Dark choices.
 
-Project images/video and cancelled/never-shipped work now have [media guidance](docs/specs/media-evidence-spec.md) (P15). This is a documentation extension; the implemented #23 story slice remains text-only, and new media layouts/behavior await review and bounded implementation.
+Project images/video and cancelled/never-shipped work now have [media guidance](docs/specs/media-evidence-spec.md) (P15). This is a documentation extension; the implemented #23 story slice remains text-only, and P26 approves scoped media presentation as requirements; exact image, inspection/player/editor design and implementation remain pending.
 
 Current validation: [Responsive & Interaction Validation](docs/responsive-interaction-validation.md) defines the remaining rendered/task checks; written review is complete and implementation evidence is pending.
 
