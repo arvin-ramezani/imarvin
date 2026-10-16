@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Art Director"
+  short_description: "Explore distinctive Signal Studio compositions"
+  default_prompt: "Use $ui-art-director to explore three spec-grounded compositions for the selected imarvin screen."

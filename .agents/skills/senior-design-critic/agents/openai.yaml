@@ -1,0 +1,4 @@
+interface:
+  display_name: "Senior Design Critic"
+  short_description: "Critique actual mockups against UX and craft"
+  default_prompt: "Use $senior-design-critic to inspect the supplied imarvin image revisions and report required design corrections."
