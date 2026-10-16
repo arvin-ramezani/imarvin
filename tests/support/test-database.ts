@@ -56,8 +56,14 @@ export async function resetTestDatabase(): Promise<void> {
 
   await db.$transaction([
     db.publishedStoryProblemFigure.deleteMany(),
+    db.publishedStory.updateMany({ data: {
+      discoveryCoverEvidenceId: null, leadEvidenceId: null,
+    } }),
     db.publishedEvidence.deleteMany(),
     db.storyProblemFigure.deleteMany(),
+    db.story.updateMany({ data: {
+      discoveryCoverEvidenceId: null, leadEvidenceId: null,
+    } }),
     db.evidence.deleteMany(),
     db.publishedStory.deleteMany(),
     db.mediaAsset.deleteMany(),

@@ -102,6 +102,7 @@ export default async function StudioWorkPage() {
                         <p className="text-sm text-muted-ink">
                           {storyProgressLabel(story.progress)}
                         </p>
+                        <p className="text-sm text-muted-ink">{story._count.evidence} Evidence items in saved candidate</p>
                         <p className="text-sm font-medium text-ink">
                           {relationshipLabel(story)}
                         </p>

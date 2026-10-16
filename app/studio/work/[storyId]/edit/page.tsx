@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { loadOwnerStoryPage } from "@/features/work/page-data";
+import { loadOwnerMediaAssets, loadOwnerStoryPage } from "@/features/work/page-data";
 import { StoryEditorForm } from "@/features/work/story-editor-form";
 import { StudioWorkFrame } from "@/features/work/studio-work-frame";
 import { storyFormValuesFromDraft } from "@/features/work/validation";
@@ -40,7 +40,9 @@ export default async function EditStoryPage({
   searchParams,
 }: EditStoryPageProps) {
   const [{ storyId }, query] = await Promise.all([params, searchParams]);
-  const story = await loadOwnerStoryPage(storyId);
+  const [story, mediaAssets] = await Promise.all([
+    loadOwnerStoryPage(storyId), loadOwnerMediaAssets(storyId),
+  ]);
   const message = successMessage(query.saved, query.publication);
   const relationship =
     story.published === null
@@ -103,6 +105,29 @@ export default async function EditStoryPage({
           stateLabel={relationship}
           stateDescription={stateDescription}
           initialValues={storyFormValuesFromDraft(story)}
+          initialEvidence={story.evidence.map((evidence) => ({
+            id: evidence.id,
+            kind: evidence.kind,
+            title: evidence.title,
+            caption: evidence.caption,
+            captureStage: evidence.captureStage,
+            permissionConfirmed: evidence.permissionConfirmed,
+            alternativeText: evidence.alternativeText,
+            equivalentDescription: evidence.equivalentDescription,
+            transcript: evidence.transcript,
+            textLinkText: evidence.textLinkText,
+            textLinkUrl: evidence.textLinkUrl,
+            sourceAssetId: evidence.sourceAssetId,
+            posterAssetId: evidence.posterAssetId,
+            captionTrackAssetId: evidence.captionTrackAssetId,
+            recordingAccessibilityMode: evidence.recordingAccessibilityMode,
+          }))}
+          initialCover={story.discoveryCoverEvidenceId}
+          initialLead={story.leadEvidenceId}
+          initialFigures={story.evidence.flatMap((evidence) =>
+            evidence.problemFigures
+          ).sort((a, b) => a.position - b.position).map((figure) => figure.evidenceId)}
+          initialAssets={mediaAssets}
         />
       </section>
     </StudioWorkFrame>
