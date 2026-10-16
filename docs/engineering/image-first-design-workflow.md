@@ -42,20 +42,22 @@ Preserve complete no-media layouts, independent Project/Story identity, safe pri
 
 ## Using the skills in ChatGPT and Codex
 
-Repo-local skills are discoverable in a supporting Codex checkout. Merely committing them does **not** install them as ChatGPT skills/plugins or grant GitHub/image-generation capabilities.
-In Work, load the selected `SKILL.md`, this workflow and its referenced craft guidance through available GitHub/file tools. In normal ChatGPT, attach/paste those instructions and the scoped current specifications if repository access is unavailable. Supply the exact source revision; never claim to have fetched unavailable files.
-Use an available image-generation capability for actual mockups. If it is absent, report `BLOCKED — image generation unavailable`; a brief or prompt can be preparation only, never completed image delivery. Use actual image viewing for critique; report inaccessible sources rather than reviewing from filenames.
-Persist approvals in retrievable issue/PR evidence; chat recollection alone is insufficient. Installation into account-wide skill storage is a separate operation, not performed by this repository PR.
+Repo-local Codex skills and installed personal ChatGPT Skills are separate copies. GitHub changes do **not** automatically update installed Skills. Neither copy grants GitHub, image-generation, image-viewing or code-execution capabilities.
+In a verified Codex checkout, use `$skill-name` and the repository-relative references. In Work, invoke an installed skill with `@ui-art-director`, `@spec-to-ui-image` or `@senior-design-critic` (or select it in the skill picker); do not repeatedly paste/load its `SKILL.md`. The invoked skill still retrieves current scoped requirements through its bundled source-access guide.
+For a skill not installed, explicit one-off retrieval of its instructions/references at a verified SHA is preparation/use for that task, not installation. Never assume another skill or the repository is present locally.
+Follow [personal installation and revision management](chatgpt-skill-installation.md): verify current source SHA, install **one skill at a time**, validate, save and verify the resulting installed package; record provenance and compare/update it explicitly. Three personal installations were verified in this Work workspace on 2026-10-16. The earlier combined attempt returned HTTP 422; its detailed error was unavailable, so its root cause is **unproven**. Do not generalize this account's successful route to unsupported hosts.
+If a required GitHub source/ref cannot be verified, report `BLOCKED — required source unavailable`; never silently use chat recollection. If generation or viewing is absent, retain `BLOCKED — image generation unavailable` / `BLOCKED — image inspection unavailable`. A prompt is incomplete image delivery.
+Persist owner approvals in retrievable issue/PR evidence; installation, source updates and skill invocation confer no visual approval or implementation authorization. Account installation is separate from this repository PR.
 
-Example design-phase request:
+Example installed-Work request:
 
 ```text
-Load ui-art-director and the shared image-first workflow from current imarvin.
-For the authorized Home design issue, verify source SHA and scoped requirements.
-Prepare three different compositions within Signal Studio; no code.
-Then use spec-to-ui-image only when actual image generation is authorized.
-Use senior-design-critic on the resulting visible revisions before my approval.
+@ui-art-director Verify your installed revision and current imarvin requirements SHA.
+For the authorized Home design issue, prepare three distinct Signal Studio compositions.
+No code or images yet. Use current scoped specs; report unavailable sources explicitly.
 ```
+
+Later invoke `@spec-to-ui-image` only for authorized actual image work, and `@senior-design-critic` on the resulting actual revisions. Critique never substitutes for exact-image owner approval. Later coding retains the all-main-screen gate, separate authorization, plan/review gates and incremental scope above.
 
 ## Evidence and limits
 

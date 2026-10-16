@@ -5,6 +5,10 @@ description: Develop distinctive, spec-grounded visual directions for imarvin. U
 
 # UI Art Director
 
+## Host and source resolution
+
+Read the bundled [Work source access guide](references/work-source-access.md) first. In a verified Codex checkout, retain the repository-relative links below. In an individually installed ChatGPT Work package, resolve external workflow/specification/cross-skill links through that guide at verified GitHub SHAs; never assume sibling files exist or substitute remembered requirements.
+
 ## Load and scope
 
 Read the [shared workflow and authority map](../../../docs/engineering/image-first-design-workflow.md) and [design craft](references/design-craft.md). Verify current source SHA, screen issue and relevant canonical requirements; do not rely on remembered Home order or legacy Work layouts.

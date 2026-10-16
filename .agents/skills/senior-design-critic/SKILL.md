@@ -5,6 +5,12 @@ description: Critique actual imarvin UI mockup images for requirement compliance
 
 # Senior Design Critic
 
+## Host and source resolution
+
+Read the bundled [Work source access guide](references/work-source-access.md) first. In a verified Codex checkout, retain the repository-relative links below. In an individually installed ChatGPT Work package, resolve external workflow/specification/cross-skill links through that guide at verified GitHub SHAs; never assume sibling files exist or substitute remembered requirements.
+
+For standalone Work, use bundled [design craft](references/design-craft.md) and its [license](references/LICENSE.emilkowalski); the original sibling craft link below remains for Codex.
+
 ## Evidence first
 
 Read the [shared workflow](../../../docs/engineering/image-first-design-workflow.md), scoped canonical specs and [design craft](../ui-art-director/references/design-craft.md). Verify the specification SHA/IDs and image IDs/revisions being reviewed.

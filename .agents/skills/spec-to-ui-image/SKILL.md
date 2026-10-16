@@ -5,6 +5,12 @@ description: Generate actual proposed imarvin UI mockup images from current UX s
 
 # Spec to UI Image
 
+## Host and source resolution
+
+Read the bundled [Work source access guide](references/work-source-access.md) first. In a verified Codex checkout, retain the repository-relative links below. In an individually installed ChatGPT Work package, resolve external workflow/specification/cross-skill links through that guide at verified GitHub SHAs; never assume sibling files exist or substitute remembered requirements.
+
+For standalone Work, use bundled [design craft](references/design-craft.md) and its [license](references/LICENSE.emilkowalski); the original sibling craft link below remains for Codex.
+
 ## Verify the brief
 
 Read the [shared workflow](../../../docs/engineering/image-first-design-workflow.md) and its scoped authorities; verify current source SHA and canonical IDs. Read [design craft](../ui-art-director/references/design-craft.md) when interpreting the art direction.

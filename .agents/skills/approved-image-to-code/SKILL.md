@@ -5,6 +5,10 @@ description: Verify approved visual sources and guide bounded imarvin implementa
 
 # Approved Image to Code
 
+## Host and source resolution
+
+Read the bundled [Work source access guide](references/work-source-access.md) first. In a verified Codex checkout, retain the repository-relative links below. In an individually installed ChatGPT Work package, resolve external workflow/specification/cross-skill links through that guide at verified GitHub SHAs; never assume sibling files exist or substitute remembered requirements.
+
 ## Require concrete authority
 
 Read the [shared workflow](../../../docs/engineering/image-first-design-workflow.md), [engineering workflow](../../../docs/engineering/spec-driven-development.md), current agent rules, scoped implementation spec and [UI skill policy](../../../docs/engineering/ui-skill-policy.md).
